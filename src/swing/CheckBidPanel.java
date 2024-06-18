@@ -11,14 +11,14 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class MyPagePanel extends JPanel {
+public class CheckBidPanel extends JPanel {
 	
 	private ArrayList<JButton> productList = new ArrayList<>(12);
 	
 	private JPanel backgroundPanel;
 	private JLabel title;
 	
-	public MyPagePanel() {
+	public CheckBidPanel() {
 		initData();
 		setInitLayout();
 	} 
