@@ -19,6 +19,8 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
+import manager.SocketManager;
+
 public class LogInFrame extends JFrame {
 
 
@@ -47,7 +49,7 @@ public class LogInFrame extends JFrame {
 		private JTabbedPane tabPane;
 		
 		private JLabel title;
-		
+		private SocketManager socket;
 		
 		public LogInFrame() {
 			initData();
@@ -69,7 +71,7 @@ public class LogInFrame extends JFrame {
 		}
 
 		private void setInitLayout() {
-			
+			new Thread(socket = new SocketManager()).start();
 			setTitle("[로그인하기]");
 			setSize(1920,1080);
 			setLocationRelativeTo(null);
@@ -91,8 +93,8 @@ public class LogInFrame extends JFrame {
 			Icon backgroundIcon=new ImageIcon("image/back.png");
 			JLabel password=new JLabel("비밀번호 : ");
 			password.setFont(new Font("Freesentation 7 Bold",Font.BOLD,15));
-			JTextField idField=new JTextField(10);
-			JTextField passwordField=new JTextField(10);
+			idField=new JTextField(10);
+			passwordField=new JTextField(10);
 			logInButton=new JButton("로그인");
 			logInButton.setFont(new Font("Freesentation 7 Bold",Font.BOLD,17));
 			signUpButton=new JButton("회원가입");
@@ -129,6 +131,19 @@ public class LogInFrame extends JFrame {
 		
 		private void initListener() {
 			signUpButton.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent e) {
+					new MakeNewAccountFrame();
+				}
+			});
+			logInButton.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent e) {
+					String id = idField.getText();
+					String password = passwordField.getText();
+					System.out.println(id + password);
+					socket.sendOrder("login#" + id + "#" + password);
+				}
+			});
+			logInButton.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent e) {
 					new MakeNewAccountFrame();
 				}
