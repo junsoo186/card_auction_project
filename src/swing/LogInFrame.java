@@ -134,6 +134,12 @@ public class LogInFrame extends JFrame {
 				}
 			
 			});
+			logInButton.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent e) {
+					new MakeNewAccountFrame();
+				}
+			
+			});
 		}
 		
 		

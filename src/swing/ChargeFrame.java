@@ -118,22 +118,25 @@ public class ChargeFrame extends JFrame {
 	private void initListener() {
 		signUpButton.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				setTitle("[캐시 충전 완료]");
-				setSize(500, 500);
-				setLocationRelativeTo(null);
-				setResizable(false);
-				setLayout(null);
-				getContentPane().setBackground(Color.white);
-				setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-				backgroundPanel = new JPanel();
-				backgroundPanel.setSize(getWidth(), getHeight());
-				backgroundPanel.setLayout(null);
-				backgroundPanel.setBackground(Color.white);
-				add(backgroundPanel);
 			}
 
 		});
+	}
+	
+	private void successPanel() {
+		setTitle("[캐시 충전 완료]");
+		setSize(500, 500);
+		setLocationRelativeTo(null);
+		setResizable(false);
+		setLayout(null);
+		getContentPane().setBackground(Color.white);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		backgroundPanel = new JPanel();
+		backgroundPanel.setSize(getWidth(), getHeight());
+		backgroundPanel.setLayout(null);
+		backgroundPanel.setBackground(Color.white);
+		add(backgroundPanel);
 	}
 	
 public static void main(String[] args) {
