@@ -143,6 +143,12 @@ public class LogInFrame extends JFrame {
 					socket.sendOrder("login#" + id + "#" + password);
 				}
 			});
+			logInButton.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent e) {
+					new MakeNewAccountFrame();
+				}
+			
+			});
 		}
 		
 		
