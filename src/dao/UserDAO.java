@@ -137,7 +137,7 @@ public class UserDAO {
 			e.printStackTrace();
 		}
 	}
-
+	
 	private static boolean authenticateUser(Connection conn, String name, String password) {
 		boolean result = false;
 		try {
