@@ -30,7 +30,7 @@ public class UserDAO {
 	private static final String DELETE_ID_USER = " DELETE FROM user WHERE id = ? ";
 
 	// 유저 추가하기 (회원가입)
-	public void addUser(UserDTO dto) throws SQLException {
+	public static void addUser(UserDTO dto) throws SQLException {
 		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
 			PreparedStatement pstmt = conn.prepareStatement(ADD_USER);
 			pstmt.setString(1, dto.getName());
@@ -42,7 +42,7 @@ public class UserDAO {
 	}
 
 	// 유저 전체조회하기
-	public void infoUser() throws SQLException {
+	public static void infoUser() throws SQLException {
 		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
 			PreparedStatement pstmt = conn.prepareStatement(INFO_ALL_USER);
 			ResultSet rs = pstmt.executeQuery();
@@ -58,7 +58,7 @@ public class UserDAO {
 	}
 
 	// 유저 번호로 조회하기
-	public void infoUser(int id) throws SQLException {
+	public static void infoUser(int id) throws SQLException {
 		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
 			PreparedStatement pstmt = conn.prepareStatement(INFO_ID_USER);
 			pstmt.setInt(1, id);
@@ -75,7 +75,7 @@ public class UserDAO {
 	}
 
 	// 유저 이름으로 조회하기
-	public void infoUser(String name) throws SQLException {
+	public static void infoUser(String name) throws SQLException {
 		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
 			PreparedStatement pstmt = conn.prepareStatement(INFO_NAME_USER);
 			pstmt.setString(1, name);
@@ -92,7 +92,7 @@ public class UserDAO {
 	}
 
 	// 해당 유저 번호의 비밀번호, 닉네임 수정하기 update
-	public void updateUser(int id, String password, String nickname) throws SQLException {
+	public static void updateUser(int id, String password, String nickname) throws SQLException {
 		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
 			PreparedStatement pstmt = conn.prepareStatement(UPDATE_ID_USER);
 			pstmt.setString(1, password);
@@ -104,7 +104,7 @@ public class UserDAO {
 	}
 
 	// 해당 유저 이름의 비밀번호, 닉네임 수정하기
-	public void updateUser(String name, String password, String nickname) throws SQLException {
+	public static void updateUser(String name, String password, String nickname) throws SQLException {
 		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
 			PreparedStatement pstmt = conn.prepareStatement(UPDATE_NAME_USER);
 			pstmt.setString(1, password);
@@ -116,7 +116,7 @@ public class UserDAO {
 	}
 
 	// 해당 유저 번호의 포인트 수정하기
-	public void updatePoint(int id, int point) throws SQLException {
+	public static void updatePoint(int id, int point) throws SQLException {
 		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
 			PreparedStatement pstmt = conn.prepareStatement(UPDATE_ID_POINT);
 			pstmt.setInt(1, point);
@@ -127,7 +127,7 @@ public class UserDAO {
 	}
 
 	// 해당 유저번호로 유저 삭제하기 (회원탈퇴) delete
-	public void deleteUser(int id) throws SQLException {
+	public static void deleteUser(int id) throws SQLException {
 		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
 			PreparedStatement pstmt = conn.prepareStatement(DELETE_ID_USER);
 			pstmt.setInt(1, id);
