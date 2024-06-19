@@ -11,11 +11,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @Builder
 @ToString
-public class AuctionDTO {
-	private int id;
+public class InventoryDTO {
 	private int userId;
 	private int cardId;
-	private int bidPrice;
-	private String startDate; 
-	private String endDate;
 }

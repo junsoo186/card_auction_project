@@ -4,8 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Scanner;
-import java.util.logging.Level;
 
 import dto.UserDTO;
 import manager.DBConnectionManager;
@@ -137,7 +135,7 @@ public class UserDAO {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private static boolean authenticateUser(Connection conn, String name, String password) {
 		boolean result = false;
 		try {
