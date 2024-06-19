@@ -14,8 +14,10 @@ import java.util.Vector;
 
 import org.w3c.dom.UserDataHandler;
 
+import dao.InventoryDAO;
 import dao.UserDAO;
 import dto.CardDTO;
+import dto.InventoryDTO;
 import dto.UserDTO;
 import swing.MainFrame;
 import swing.ProductButton;
@@ -73,6 +75,8 @@ public class Server {
 				String message;
 				UserDTO user = new UserDTO();
 				UserDAO dao = new UserDAO();
+				InventoryDAO inven = new InventoryDAO();
+				InventoryDTO invenDTO = new InventoryDTO();
 				while((message = userOrder.readLine()) != null) {
 					System.out.println("와일문 작동");
 					if(message.startsWith("chat")) {
@@ -94,7 +98,8 @@ public class Server {
 							user.setName(DB[2]);
 							user.setPassword(DB[3]);
 							int cardId = random.nextInt(14)+1;
-							
+							invenDTO.setUserId(user.getName());
+							invenDTO.setCardId(cardId);
 							System.out.println("DB보냄");
 							
 							dao.addUser(user);
