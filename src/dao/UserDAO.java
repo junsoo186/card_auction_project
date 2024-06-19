@@ -127,6 +127,7 @@ public class UserDAO {
 	// 유저 로그인 확인
 	public void loginUser(String name, String password) {
 		try (Connection conn = DBConnectionManager.getInstance().getConnection();) {
+			System.out.println(name + " : " + password);
 			if (authenticateUser(conn, name, password)) {
 				System.out.println("로그인 성공 !");
 			} else {
@@ -141,7 +142,13 @@ public class UserDAO {
 		boolean result = false;
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(Query.USER_LOGIN);
-		} catch (Exception e) {
+			pstmt.setString(1, name);
+			pstmt.setString(2, password);
+			ResultSet rs = pstmt.executeQuery();
+			result = rs.next();
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
-}
+		return result;
+	}
 }

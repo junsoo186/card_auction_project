@@ -95,7 +95,7 @@ public class Server {
 						}
 					} else if (message.startsWith("login")) {
 						String[] login = message.split("#");
-						dao.logingUser(login[1], login[2]);
+						dao.loginUser(login[1], login[2]);
 					} else if (message.startsWith("cash")) {
 						String[] cash = message.split("#");
 						

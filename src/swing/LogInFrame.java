@@ -93,8 +93,8 @@ public class LogInFrame extends JFrame {
 			Icon backgroundIcon=new ImageIcon("image/back.png");
 			JLabel password=new JLabel("비밀번호 : ");
 			password.setFont(new Font("Freesentation 7 Bold",Font.BOLD,15));
-			JTextField idField=new JTextField(10);
-			JTextField passwordField=new JTextField(10);
+			idField=new JTextField(10);
+			passwordField=new JTextField(10);
 			logInButton=new JButton("로그인");
 			logInButton.setFont(new Font("Freesentation 7 Bold",Font.BOLD,17));
 			signUpButton=new JButton("회원가입");
@@ -139,6 +139,7 @@ public class LogInFrame extends JFrame {
 				public void mouseClicked(MouseEvent e) {
 					String id = idField.getText();
 					String password = passwordField.getText();
+					System.out.println(id + password);
 					socket.sendOrder("login#" + id + "#" + password);
 				}
 			});
