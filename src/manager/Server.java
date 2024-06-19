@@ -71,7 +71,6 @@ public class Server {
 			try (BufferedReader userOrder = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 					PrintWriter printWriter = new PrintWriter(socket.getOutputStream())){
 				String message;
-				ArrayList<CardDTO>cardDto = new ArrayList<>();
 				UserDTO user = new UserDTO();
 				UserDAO dao = new UserDAO();
 				while((message = userOrder.readLine()) != null) {
@@ -94,6 +93,8 @@ public class Server {
 							user.setNickname(DB[1]);
 							user.setName(DB[2]);
 							user.setPassword(DB[3]);
+							int cardId = random.nextInt(14)+1;
+							
 							System.out.println("DB보냄");
 							
 							dao.addUser(user);
