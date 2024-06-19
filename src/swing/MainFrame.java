@@ -50,6 +50,8 @@ public class MainFrame extends JFrame {
 	private SellProductPanel sellProductPanel; // 경매 출품하기 패널
 	private MyPagePanel myPagePanel; // 마이 페이지 패널
 	
+	private int state=1; // 현재 메뉴 상태 표시
+	
 	private JLabel title;
 
 	public MainFrame() {
@@ -134,6 +136,8 @@ public class MainFrame extends JFrame {
 		backgroundPanel.add(backgroundLabel);
 		backgroundPanel.add(webTitle);
 		
+		
+		
 		button1=new JButton("진행 중인 경매");
 		button2=new JButton("종료된 경매");
 		button3=new JButton("시세 알아보기");
@@ -182,6 +186,8 @@ public class MainFrame extends JFrame {
 		backgroundPanel.add(auctionPanel);
 		
 		setVisible(true);
+		
+		
 
 	}
 	
@@ -190,8 +196,14 @@ public class MainFrame extends JFrame {
 		// 진행중인 경매 이동
 		button1.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				auctionPanel=new AuctionPanel();
-				backgroundPanel.add(auctionPanel);
+				if(state==2) {
+					finishedPanel.setVisible(false);
+					auctionPanel=new AuctionPanel();
+					backgroundPanel.add(auctionPanel);
+					state=1;
+				} else {
+				}
+				
 			}
 		
 		});
@@ -199,17 +211,58 @@ public class MainFrame extends JFrame {
 		// 종료된 경매 이동
 		button2.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				finishedPanel=new FinishedPanel();
-				backgroundPanel.add(finishedPanel);
+				
+				if(state==1) {
+					auctionPanel.setVisible(false);
+					finishedPanel=new FinishedPanel();
+					backgroundPanel.add(finishedPanel);
+					state=2;
+				} else if (state==2) {
+				} else if (state==3) {
+					checkBidPanel.setVisible(false);
+					finishedPanel=new FinishedPanel();
+					backgroundPanel.add(finishedPanel);
+					state=2;
+				} else if(state==4) {
+					sellProductPanel.setVisible(false);
+					finishedPanel=new FinishedPanel();
+					backgroundPanel.add(finishedPanel);
+					state=2;
+				} else if(state==5) {
+					myPagePanel.setVisible(false);
+					finishedPanel=new FinishedPanel();
+					backgroundPanel.add(finishedPanel);
+					state=2;
+				}
+				
 			}
 		
 		});
 		
 		// 시세 체크 이동
 		button3.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				checkBidPanel=new CheckBidPanel();
-				backgroundPanel.add(checkBidPanel);
+			public void mouseClicked(MouseEvent e) {				
+				if(state==1) {
+					auctionPanel.setVisible(false);
+					checkBidPanel=new CheckBidPanel();
+					backgroundPanel.add(checkBidPanel);
+					state=3;
+				} else if (state==2) {
+					finishedPanel.setVisible(false);
+					checkBidPanel=new CheckBidPanel();
+					backgroundPanel.add(checkBidPanel);
+				} else if (state==3) {
+				} else if(state==4) {
+					sellProductPanel.setVisible(false);
+					checkBidPanel=new CheckBidPanel();
+					backgroundPanel.add(checkBidPanel);
+					state=3;
+				} else if(state==5) {
+					myPagePanel.setVisible(false);
+					checkBidPanel=new CheckBidPanel();
+					backgroundPanel.add(checkBidPanel);
+					state=3;
+				}
 			}
 		
 		});
@@ -217,8 +270,29 @@ public class MainFrame extends JFrame {
 		//경매 출품 이동
 		button4.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				sellProductPanel=new SellProductPanel();
-				backgroundPanel.add(sellProductPanel);
+				
+				if(state==1) {
+					auctionPanel.setVisible(false);
+					sellProductPanel=new SellProductPanel();
+					backgroundPanel.add(sellProductPanel);
+					state=4;
+				} else if (state==2) {
+					finishedPanel.setVisible(false);
+					sellProductPanel=new SellProductPanel();
+					backgroundPanel.add(sellProductPanel);
+					state=4;
+				} else if (state==3) {
+					checkBidPanel.setVisible(false);
+					sellProductPanel=new SellProductPanel();
+					backgroundPanel.add(sellProductPanel);
+					state=4;
+				} else if(state==4) {
+				} else if(state==5) {
+					myPagePanel.setVisible(false);
+					sellProductPanel=new SellProductPanel();
+					backgroundPanel.add(sellProductPanel);
+					state=4;
+				}
 			}
 		
 		});
@@ -226,8 +300,31 @@ public class MainFrame extends JFrame {
 		// 마이페이지 이동
 		button5.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				myPagePanel=new MyPagePanel();
-				backgroundPanel.add(myPagePanel);
+				
+				
+				if(state==1) {
+					auctionPanel.setVisible(false);
+					myPagePanel=new MyPagePanel();
+					backgroundPanel.add(myPagePanel);
+					state=5;
+				} else if (state==2) {
+					finishedPanel.setVisible(false);
+					myPagePanel=new MyPagePanel();
+					backgroundPanel.add(myPagePanel);
+					state=5;
+				} else if (state==3) {
+					checkBidPanel.setVisible(false);
+					myPagePanel=new MyPagePanel();
+					backgroundPanel.add(myPagePanel);
+					state=5;
+				} else if(state==4) {
+					sellProductPanel.setVisible(false);
+					myPagePanel=new MyPagePanel();
+					backgroundPanel.add(myPagePanel);
+					state=5;
+				} else if(state==5) {
+				}
+				
 			}
 		
 		});

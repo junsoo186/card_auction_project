@@ -34,13 +34,17 @@ public class FinishedPanel extends JPanel {
 		setSize(1920,710);
 		setLocation(0,370);
 		setLayout(null);
-		backgroundPanel.setBounds(0, 370, 1920, 710);
+		backgroundPanel.setBounds(0, 50, 1920, 710);
 		
 		add(backgroundPanel);
 		backgroundPanel.add(title);
 		
 		setVisible(true);
 
+	}
+	
+	public static void main(String[] args) {
+		new FinishedPanel();
 	}
 	
 

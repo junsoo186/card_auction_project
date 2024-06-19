@@ -31,7 +31,7 @@ public class SellProductPanel extends JPanel {
 		setSize(1920,710);
 		setLocation(0,370);
 		setLayout(null);
-		title=new JLabel("마이페이지");
+		title=new JLabel("경매 출품하기");
 		title.setFont(new Font("Freesentation 7 Bold",Font.PLAIN,28));
 		title.setBounds(100, 230, 100, 50);
 		backgroundPanel.setBounds(0, 50, 1920, 710);
