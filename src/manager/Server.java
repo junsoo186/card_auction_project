@@ -6,10 +6,15 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.Vector;
 
+import org.w3c.dom.UserDataHandler;
+
+import dao.UserDAO;
+import dto.UserDTO;
 import swing.MainFrame;
 import swing.ProductButton;
 
@@ -21,8 +26,7 @@ public class Server {
 	private static ArrayList<Integer> productId; // 상품 id
 	private static ArrayList<String> productName; // 상품 이름
 	
-	public Server(MainFrame mconText) {
-		this.mconText = mconText;
+	public Server() {
 		try (ServerSocket server = new ServerSocket(5000)){
 			
 			while(true) {
@@ -61,6 +65,7 @@ public class Server {
 		public void run() {
 			try (BufferedReader userOrder = new BufferedReader(new InputStreamReader(socket.getInputStream()))){
 				String message;
+				UserDTO user = new UserDTO();
 				while((message = userOrder.readLine()) != null) {
 					if(message.startsWith("chat")) {
 						broadCast(message);
@@ -74,7 +79,16 @@ public class Server {
 					} else if (message.startsWith("sell")) {
 						String[] sell = message.split("#");
 						productName.add(sell[1]);
-						ProductButton.createProduct(sell[2]); // 여기서 Image링크 받아오기
+					}  else if (message.startsWith("sendDB")) {
+						try {
+							String[] DB = message.split("#");
+							user.setNickname(DB[1]);
+							user.setName(DB[2]);
+							user.setPassword(DB[3]);
+							UserDAO.addUser(user);
+						} catch (SQLException e) {
+							e.printStackTrace();
+						}
 					}
 				}
 				
@@ -83,6 +97,8 @@ public class Server {
 			}
 		}
 	}
-	
+	public static void main(String[] args) {
+		new Server();
+	}
 	
 }

@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.BufferedReader;
+import java.io.PrintWriter;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -43,6 +45,7 @@ public class MainFrame extends JFrame {
 	
 	private JButton logInButton;
 	private JButton signUpButton;
+	private JButton sellButton; // 판매 버튼
 	
 	private AuctionPanel auctionPanel; // 진행중인 경매 패널
 	private FinishedPanel finishedPanel; // 종료된 경매 패널
@@ -53,7 +56,9 @@ public class MainFrame extends JFrame {
 	private int state=1; // 현재 메뉴 상태 표시
 	
 	private JLabel title;
-
+	private BufferedReader serverOrder; // 서버 명령
+	private PrintWriter userOrder; // 유저 명령
+	
 	public MainFrame() {
 		initData();
 		setInitLayout();
@@ -77,6 +82,7 @@ public class MainFrame extends JFrame {
 		getContentPane().setBackground(Color.white);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
+
 		JLabel webTitle=new JLabel("즐거움이 살아 숨쉬는 카드 경매 사이트!");
 		webTitle.setFont(new Font("Freesentation 7 Bold",Font.ITALIC,34));
 		webTitle.setBounds(830,140,900,200);
@@ -158,6 +164,7 @@ public class MainFrame extends JFrame {
 					auctionPanel=new AuctionPanel();
 					backgroundPanel.add(auctionPanel);
 					state=1;
+					
 				} else {
 				}
 				

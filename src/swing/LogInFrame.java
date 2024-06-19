@@ -8,6 +8,9 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.Socket;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -44,7 +47,10 @@ public class LogInFrame extends JFrame {
 		private JTabbedPane tabPane;
 		
 		private JLabel title;
-
+		private PrintWriter userDB;
+		private Socket socket;
+		
+		
 		public LogInFrame() {
 			initData();
 			setInitLayout();
@@ -65,6 +71,7 @@ public class LogInFrame extends JFrame {
 		}
 
 		private void setInitLayout() {
+			
 			setTitle("[로그인하기]");
 			setSize(1920,1080);
 			setLocationRelativeTo(null);
@@ -103,10 +110,12 @@ public class LogInFrame extends JFrame {
 			password.setBounds(900,560,100,100);
 			idField.setBounds(960,560,80,20);
 			passwordField.setBounds(960,600,80,20);
+			
 			logInButton.setBounds(830,650,120,50);
 			signUpButton.setBounds(970,650,120,50);
 			title.setBounds(850,480,300,60);
 			mainPanel=new JPanel();
+			
 			
 			backgroundPanel1.add(title);
 			backgroundPanel1.add(id);

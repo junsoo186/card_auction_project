@@ -14,7 +14,6 @@ import javax.swing.JPanel;
 public class AuctionPanel extends JPanel {
 	
 	private ArrayList<JButton> productList = new ArrayList<>(12);
-	
 	private JPanel backgroundPanel;
 	private JLabel title;
 	
@@ -36,9 +35,7 @@ public class AuctionPanel extends JPanel {
 		title=new JLabel("진행 중인 경매 둘러보기");
 		title.setFont(new Font("Freesentation 7 Bold",Font.PLAIN,28));
 		backgroundPanel.setBounds(0, 50, 1920, 710);
-		
 		backgroundPanel.add(title);
-		
 		setVisible(true);
 
 	}
