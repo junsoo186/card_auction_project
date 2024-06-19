@@ -121,6 +121,12 @@ public class ChargeFrame extends JFrame {
 			}
 
 		});
+		exitButton.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				dispose();
+			}
+
+		});
 	}
 	
 	private void successPanel() {

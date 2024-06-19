@@ -32,6 +32,7 @@ public class AuctionPanel extends JPanel {
 	
 	private AuctionDetailedPanel detailPage;
 	
+	
 	ArrayList<JButton>product = new ArrayList<>(20);
 	ArrayList<Integer>serialNum = new ArrayList<>(20);
 	private int x = 500;
@@ -43,11 +44,16 @@ public class AuctionPanel extends JPanel {
 		this.backgroundPanel=backgroundPanel;
 		initData();
 		setInitLayout();
-		//initListener();
+		initListener();
 	} 
 
 	private void initData() {
 		backgroundPanel1=new JPanel();
+		
+		cardList.add(new CardDTO(0,"image/card1.png","포켓몬스터 나오하 카드",1000));
+		cardList.add(new CardDTO(1,"image/card2.png","포켓몬스터 개굴닌자 카드",2000));
+		cardList.add(new CardDTO(2,"image/card3.jpg","포켓몬스터 이상해꽃 카드",4000));
+		cardList.add(new CardDTO(3,"image/card4.jpg","포켓몬스터 라이츄 카드",7000));
 	}
 	
 	public void createProduct(CardDTO card) {
@@ -84,6 +90,11 @@ public class AuctionPanel extends JPanel {
 		title.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 32));
 		title.setBounds(860, 10, 800, 50);
 		add(title);
+		ProductButton();
+		createProduct(cardList.get(0));
+		createProduct(cardList.get(1));
+		createProduct(cardList.get(2));
+		createProduct(cardList.get(3));
 		
 	}
 	
@@ -98,9 +109,8 @@ public class AuctionPanel extends JPanel {
 		// 진행중인 경매 이동
 		product.get(0).addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				System.out.println(backgroundPanel);
 				setVisible(false);
-				detailPage=new AuctionDetailedPanel(new ImageIcon("image/card1.png"));
+				detailPage=new AuctionDetailedPanel(cardList.get(0));
 				backgroundPanel.add(detailPage);
 				detailPage.setVisible(true);
 			}
