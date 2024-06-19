@@ -21,8 +21,6 @@ public class AuctionDTO {
 	private int userId;
 	private int cardId;
 	private int bidPrice;
-	LocalTime now = LocalTime.now();
-	  DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH시 mm분 ss초");
-	private String startDate = now.format(formatter); 
+	private String startDate; 
 	private String endDate;
 }
