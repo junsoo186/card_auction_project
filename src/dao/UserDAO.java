@@ -33,6 +33,9 @@ public class UserDAO {
 		}
 	}
 
+
+	// 유저 전체 조회하기
+
 	public void infoUser() throws SQLException {
 		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
 			PreparedStatement pstmt = conn.prepareStatement(INFO_ALL_USER);
@@ -106,7 +109,9 @@ public class UserDAO {
 		}
 	}
 
+
 	// 해당 유저 번호의 포인트 수정하기
+
 	// 유저 번호로 포인트 수정
 	public void updatePoint(int id, int point) throws SQLException {
 		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
@@ -117,6 +122,8 @@ public class UserDAO {
 			System.out.println("포인트 수정완료");
 		}
 	}
+
+
 
 	// 유저 번호로 유저 삭제 (회원탈퇴) delete
 	public void deleteUser(int id) throws SQLException {

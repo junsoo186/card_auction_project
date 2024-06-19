@@ -47,8 +47,6 @@ public class LogInFrame extends JFrame {
 		private JTabbedPane tabPane;
 		
 		private JLabel title;
-		private PrintWriter userDB;
-		private Socket socket;
 		
 		
 		public LogInFrame() {
