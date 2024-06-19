@@ -14,14 +14,14 @@ public class InventoryDAO {
 	public void invenAdd(InventoryDTO dto) throws SQLException {
 		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
 			PreparedStatement pstmt = conn.prepareStatement(Query.INVEN_ADD);
-			pstmt.setInt(1, dto.getUserId());
+			pstmt.setString(1, dto.getName());
 			pstmt.setInt(2, dto.getCardId());
 			pstmt.executeUpdate();
 			System.out.println("보관함에 카드 추가완료");
 		}
 	}
 
-	// 해당 유저 번호가 가지고 있는 카드 조회
+	// 해당 유저 번호가 가지고 있는 카드이미지경로, 카드이름 조회
 	public void invenInfo(int id) throws SQLException {
 		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
 			PreparedStatement pstmt = conn.prepareStatement(Query.INVEN_INFO_ID);
