@@ -133,8 +133,9 @@ public class MainFrame extends JFrame {
 		JButton searchButton = new JButton();
 		searchButton.setBounds(1175, 270, 60, 60);
 		searchButton.setBackground(null);
-		searchButton.setBorderPainted(true);
+		searchButton.setBorderPainted(false);
 		searchButton.setContentAreaFilled(false);
+		searchButton.setFocusPainted(false);
 		backgroundLabel.add(searchButton);
 		
 		button1 = new JButton("진행 중인 경매");
@@ -168,6 +169,11 @@ public class MainFrame extends JFrame {
 		button3.setForeground(Color.WHITE);
 		button4.setForeground(Color.WHITE);
 		button5.setForeground(Color.WHITE);
+		button1.setFocusPainted(false);
+		button2.setFocusPainted(false);
+		button3.setFocusPainted(false);
+		button4.setFocusPainted(false);
+		button5.setFocusPainted(false);
 		backgroundLabel.add(button1);
 		backgroundLabel.add(button2);
 		backgroundLabel.add(button3);

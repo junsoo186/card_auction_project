@@ -60,7 +60,7 @@ public class ChargeFrame extends JFrame {
 		new Thread(socket = new SocketManager()).start();
 		mainPanel = new JPanel();
 		setTitle("[캐시 충전하기]");
-		setSize(500, 600);
+		setSize(500, 500);
 		setLocationRelativeTo(null);
 		setResizable(false);
 		setLayout(null);
@@ -74,7 +74,10 @@ public class ChargeFrame extends JFrame {
 		add(backgroundPanel);
 
 		Icon pointIcon=new ImageIcon("image/poketpoint.gif");
-		JLabel 
+		JLabel point=new JLabel();
+		point.setIcon(pointIcon);
+		point.setBounds(222, 150, 35, 35);
+		backgroundPanel.add(point);
 		
 		bankAccount = new JLabel("계좌번호    :    123-456-678900");
 		JLabel charge = new JLabel("충전 금액 : ");
@@ -93,7 +96,7 @@ public class ChargeFrame extends JFrame {
 		backgroundLabel.setSize(279, 192);
 		backgroundLabel.setLocation(130, 50);
 		backgroundLabel.setHorizontalAlignment(JLabel.CENTER);
-		backgroundPanel.add(backgroundLabel);
+		
 
 		bankAccount.setBounds(150, 230, 300, 50);
 		charge.setBounds(150, 265, 100, 50);
@@ -115,18 +118,19 @@ public class ChargeFrame extends JFrame {
 	private void initListener() {
 		signUpButton.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				JPanel finishCharge=new JPanel();
-				finishCharge.setSize(getWidth(), getHeight());
-				finishCharge.setLayout(null);
-				finishCharge.setBackground(Color.white);
-				add(backgroundPanel);
-				
-			}
+				setTitle("[캐시 충전 완료]");
+				setSize(500, 500);
+				setLocationRelativeTo(null);
+				setResizable(false);
+				setLayout(null);
+				getContentPane().setBackground(Color.white);
+				setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		});
-		exitButton.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				dispose();
+				backgroundPanel = new JPanel();
+				backgroundPanel.setSize(getWidth(), getHeight());
+				backgroundPanel.setLayout(null);
+				backgroundPanel.setBackground(Color.white);
+				add(backgroundPanel);
 			}
 
 		});
