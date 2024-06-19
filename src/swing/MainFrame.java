@@ -61,7 +61,6 @@ public class MainFrame extends JFrame {
 			tabPane.addTab("시세 확인하기",null,PricePanel,null);
 			tabPane.addTab("경매 참여하기",null,JoinAuctionPanel,null);
 			tabPane.addTab("마이페이지",null,MyPagePanel,null);
-			
 
 			add(mainPanel);
 			setVisible(true);
