@@ -141,13 +141,7 @@ public class UserDAO {
 		boolean result = false;
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(Query.USER_LOGIN);
-			pstmt.setString(1, name);
-			pstmt.setString(2, password);
-			ResultSet rs = pstmt.executeQuery();
-			result = rs.next();
-		} catch (SQLException e) {
-			e.printStackTrace();
+		} catch (Exception e) {
 		}
-		return result;
-	}
+}
 }

@@ -46,7 +46,7 @@ public class Server {
 	private static void broadCast (String message) { 
 		for (Socket socket : client) {
 			try {
-				serverOrder = new PrintWriter(socket.getOutputStream());
+				serverOrder = new PrintWriter(socket.getOutputStream(),true);
 				serverOrder.write(message);
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -67,6 +67,7 @@ public class Server {
 			try (BufferedReader userOrder = new BufferedReader(new InputStreamReader(socket.getInputStream()))){
 				String message;
 				UserDTO user = new UserDTO();
+				UserDAO dao = new UserDAO();
 				while((message = userOrder.readLine()) != null) {
 					System.out.println("와일문 작동");
 					if(message.startsWith("chat")) {
@@ -88,10 +89,18 @@ public class Server {
 							user.setName(DB[2]);
 							user.setPassword(DB[3]);
 							System.out.println("DB보냄");
-							UserDAO.addUser(user);
+							dao.addUser(user);
 						} catch (SQLException e) {
 							e.printStackTrace();
 						}
+					} else if (message.startsWith("login")) {
+						String[] login = message.split("#");
+						dao.logingUser(login[1], login[2]);
+					} else if (message.startsWith("cash")) {
+						String[] cash = message.split("#");
+						
+					} else if (message.startsWith("")) {
+						
 					}
 				}
 				
