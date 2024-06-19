@@ -11,8 +11,18 @@ import manager.DBConnectionManager;
 //TODO Frame 에 연동시 수정
 
 // 카드 이미지 경로는 DB에 저장, 서버에 이미지파일 저장
+
+/**
+ * create table card(
+    id int auto_increment primary key,
+    url varchar(100),
+    name varchar(50),
+    price int
+	);
+*/
 public class CardDAO {
 
+	
 	private static final String ADD_CARD = " INSERT INTO card(url, name, price) VALUES(?, ?, ?) ";
 	private static final String INFO_ID_CARD = " SELECT * FROM card WHERE id = ? ";
 	private static final String INFO_NAME_CARD = " SELECT * FROM card WHERE name = ? ";
@@ -31,7 +41,9 @@ public class CardDAO {
 			System.out.println("카드 추가완료");
 		}
 	}
-
+	
+	
+	
 	// 카드 번호로 조회
 	public void infoCard(int id) throws SQLException {
 		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
@@ -99,5 +111,6 @@ public class CardDAO {
 			System.out.println("해당 카드 번호 삭제완료");
 		}
 	}
+	}
 
-}
+

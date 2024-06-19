@@ -1,5 +1,10 @@
 package dto;
 
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,6 +21,8 @@ public class AuctionDTO {
 	private int userId;
 	private int cardId;
 	private int bidPrice;
-	private String startDate;
+	LocalTime now = LocalTime.now();
+	  DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH시 mm분 ss초");
+	private String startDate = now.format(formatter); 
 	private String endDate;
 }

@@ -12,15 +12,15 @@ import lombok.Data;
 @Data
 public class SocketManager implements Runnable{
 
-	private Socket socket;
-	private PrintWriter userOrder;
-	private BufferedReader serverOrder;
+	private static Socket socket;
+	private static PrintWriter userOrder;
+	private static BufferedReader serverOrder;
 	
 	public SocketManager() {
 		
 	}
 	
-	public void sendOrder(String order) {
+	public static void sendOrder(String order) {
 		userOrder.println(order);
 	}
 
@@ -28,8 +28,8 @@ public class SocketManager implements Runnable{
 	public void run() {
 		String message;
 		try {
-			socket = new Socket("localhost",5050);
-			userOrder = new PrintWriter(socket.getOutputStream());
+			socket = new Socket("localhost",5000);
+			userOrder = new PrintWriter(socket.getOutputStream(), true);
 			serverOrder = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			while((message = serverOrder.readLine()) != null) {
 				
