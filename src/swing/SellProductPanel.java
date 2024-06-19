@@ -10,13 +10,17 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+
 
 public class SellProductPanel extends JPanel {
 	
-	private ArrayList<JButton> productList = new ArrayList<>(12);
-	
 	private JPanel backgroundPanel;
 	private JLabel title;
+	private JScrollPane scrollPane;
+	
+	private int x = 500;
+	private int y = 100;
 	
 	public SellProductPanel() {
 		initData();
@@ -27,21 +31,22 @@ public class SellProductPanel extends JPanel {
 		backgroundPanel=new JPanel();
 	}
 	
-	private void setInitLayout() {
-		setSize(1920,710);
-		setLocation(0,370);
-		setLayout(null);
-		title=new JLabel("경매 출품하기");
-		title.setFont(new Font("Freesentation 7 Bold",Font.PLAIN,28));
-		title.setBounds(100, 230, 100, 50);
-		backgroundPanel.setBounds(0, 50, 1920, 710);
-		
-		add(backgroundPanel);
-		backgroundPanel.add(title);
-		
-		setVisible(true);
-
-	}
 	
+	private void setInitLayout() {
+		setSize(1920,630);
+		setLocation(0,400);
+		setLayout(null);
+		setBackground(Color.WHITE);
+		add(backgroundPanel);
+		
+		scrollPane=new JScrollPane();	
+		scrollPane.setBounds(4,4,950,330);
+		
+		JLabel title=new JLabel("경매 출품하기");
+		title.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 32));
+		title.setBounds(860, 10, 800, 50);
+		add(title);
+		
+	}
 
 }
