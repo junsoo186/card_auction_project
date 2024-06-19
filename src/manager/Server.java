@@ -32,7 +32,8 @@ public class Server {
 			while(true) {
 				Socket sample = server.accept(); // 서버에 접속자가 들어올떄마다 임시로 소켓에 저장
 				client.add(sample);
-				int socketNum = client.capacity() - 1;
+				System.out.println(client.size());
+				int socketNum = client.size() - 1;
 				new Service(client.get(socketNum)).start();
 			}
 			
@@ -67,6 +68,7 @@ public class Server {
 				String message;
 				UserDTO user = new UserDTO();
 				while((message = userOrder.readLine()) != null) {
+					System.out.println("와일문 작동");
 					if(message.startsWith("chat")) {
 						broadCast(message);
 					} else if (message.startsWith("bid")) {
@@ -85,6 +87,7 @@ public class Server {
 							user.setNickname(DB[1]);
 							user.setName(DB[2]);
 							user.setPassword(DB[3]);
+							System.out.println("DB보냄");
 							UserDAO.addUser(user);
 						} catch (SQLException e) {
 							e.printStackTrace();

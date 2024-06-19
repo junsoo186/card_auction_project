@@ -33,13 +33,8 @@ public class UserDAO {
 		}
 	}
 
-<<<<<<< HEAD
-	// 유저 전체조회하기
-	public static void infoUser() throws SQLException {
-=======
 	// 유저 전체 조회하기
 	public void infoUser() throws SQLException {
->>>>>>> b282f1ffd4cf4a8c46a76d2210881246d13b48b2
 		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
 			PreparedStatement pstmt = conn.prepareStatement(INFO_ALL_USER);
 			ResultSet rs = pstmt.executeQuery();
@@ -87,14 +82,8 @@ public class UserDAO {
 			}
 		}
 	}
-
-<<<<<<< HEAD
-	// 해당 유저 번호의 비밀번호, 닉네임 수정하기 update
-	public static void updateUser(int id, String password, String nickname) throws SQLException {
-=======
 	// 유저 번호로 수정 ( 비밀번호, 닉네임 )
 	public void updateUser(int id, UserDTO dto) throws SQLException {
->>>>>>> b282f1ffd4cf4a8c46a76d2210881246d13b48b2
 		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
 			PreparedStatement pstmt = conn.prepareStatement(UPDATE_ID_USER);
 			pstmt.setString(1, dto.getPassword());
@@ -104,14 +93,8 @@ public class UserDAO {
 			System.out.println("비번,닉네임 수정완료");
 		}
 	}
-
-<<<<<<< HEAD
-	// 해당 유저 이름의 비밀번호, 닉네임 수정하기
-	public static void updateUser(String name, String password, String nickname) throws SQLException {
-=======
 	// 유저 이름으로 수정 ( 비밀번호, 닉네임)
 	public void updateUser(String name, UserDTO dto) throws SQLException {
->>>>>>> b282f1ffd4cf4a8c46a76d2210881246d13b48b2
 		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
 			PreparedStatement pstmt = conn.prepareStatement(UPDATE_NAME_USER);
 			pstmt.setString(1, dto.getPassword());
@@ -121,14 +104,8 @@ public class UserDAO {
 			System.out.println("비번,닉네임 수정완료");
 		}
 	}
-
-<<<<<<< HEAD
-	// 해당 유저 번호의 포인트 수정하기
-	public static void updatePoint(int id, int point) throws SQLException {
-=======
 	// 유저 번호로 포인트 수정
 	public void updatePoint(int id, int point) throws SQLException {
->>>>>>> b282f1ffd4cf4a8c46a76d2210881246d13b48b2
 		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
 			PreparedStatement pstmt = conn.prepareStatement(UPDATE_ID_POINT);
 			pstmt.setInt(1, point);
@@ -137,14 +114,8 @@ public class UserDAO {
 			System.out.println("포인트 수정완료");
 		}
 	}
-
-<<<<<<< HEAD
-	// 해당 유저번호로 유저 삭제하기 (회원탈퇴) delete
-	public static void deleteUser(int id) throws SQLException {
-=======
 	// 유저 번호로 유저 삭제 (회원탈퇴) delete
 	public void deleteUser(int id) throws SQLException {
->>>>>>> b282f1ffd4cf4a8c46a76d2210881246d13b48b2
 		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
 			PreparedStatement pstmt = conn.prepareStatement(DELETE_ID_USER);
 			pstmt.setInt(1, id);

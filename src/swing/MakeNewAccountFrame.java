@@ -42,6 +42,7 @@ public class MakeNewAccountFrame extends JFrame implements ActionListener {
 	}
 
 	private void setInitLayout() {
+		System.out.println("확인");
 		new Thread(socket = new SocketManager()).start();
 		mainPanel = new JPanel();
 		setTitle("[회원가입]");
@@ -87,7 +88,7 @@ public class MakeNewAccountFrame extends JFrame implements ActionListener {
 		phoneNumberField.setBounds(230, 370, 80, 20);
 		signUpButton.setBounds(140, 430, 100, 40);
 		exitButton.setBounds(250, 430, 100, 40);
-
+		signUpButton.addActionListener(this);
 
 		backgroundPanel.add(name);
 		backgroundPanel.add(id);
@@ -121,7 +122,7 @@ public class MakeNewAccountFrame extends JFrame implements ActionListener {
 			String name = nameField.getText();
 			String id = idField.getText();
 			String password = passwordField.getText();
-			socket.sendOrder("sendDB#" + name +"#" + id + "#"+ password);
+			socket.sendOrder("sendDB" + "#" + name +"#" + id + "#"+ password);
 		}
 	}
 
