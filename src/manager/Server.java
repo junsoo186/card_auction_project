@@ -97,12 +97,15 @@ public class Server {
 							user.setNickname(DB[1]);
 							user.setName(DB[2]);
 							user.setPassword(DB[3]);
-							int cardId = random.nextInt(14)+1;
-							invenDTO.setUserId(user.getName());
-							invenDTO.setCardId(cardId);
-							System.out.println("DB보냄");
-							
+							// 회원가입시 카드 5개 랜덤으로 증정
 							dao.addUser(user);
+							for(int i = 0; i < 5; i++) {
+								int cardId = random.nextInt(4)+1;
+								invenDTO.setName(user.getName());
+								invenDTO.setCardId(cardId);
+								inven.invenAdd(invenDTO);
+							}
+							System.out.println("DB보냄");
 						} catch (SQLException e) {
 							e.printStackTrace();
 						}
