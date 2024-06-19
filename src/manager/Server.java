@@ -11,6 +11,7 @@ import java.util.Timer;
 import java.util.Vector;
 
 import swing.MainFrame;
+import swing.ProductButton;
 
 public class Server {
 	
@@ -73,6 +74,7 @@ public class Server {
 					} else if (message.startsWith("sell")) {
 						String[] sell = message.split("#");
 						productName.add(sell[1]);
+						ProductButton.createProduct(sell[2]); // 여기서 Image링크 받아오기
 					}
 				}
 				

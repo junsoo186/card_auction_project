@@ -13,7 +13,7 @@ import lombok.ToString;
 @ToString
 public class CardDTO {
 	private int id;
-	private String url;
+	private String url; // 경로는 DB에 저장, 서버에 이미지파일 저장
 	private String name;
 	private int price;
 }

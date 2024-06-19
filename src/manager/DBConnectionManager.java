@@ -10,7 +10,7 @@ public class DBConnectionManager {
 
 	private static DBConnectionManager instance;
 	private HikariDataSource dataSource;
-	private String url = "jdbc:mysql://localhost:3306/demo3?serverTimezone=Asia/Seoul";
+	private String url = "jdbc:mysql://localhost:3306/db_card_auction?serverTimezone=Asia/Seoul";
 	private String name = "root";
 	private String password = "asd123";
 	

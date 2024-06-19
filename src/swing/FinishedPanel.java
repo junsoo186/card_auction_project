@@ -11,14 +11,14 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class MyPagePanel extends JPanel {
+public class FinishedPanel extends JPanel {
 	
 	private ArrayList<JButton> productList = new ArrayList<>(12);
 	
 	private JPanel backgroundPanel;
 	private JLabel title;
 	
-	public MyPagePanel() {
+	public FinishedPanel() {
 		initData();
 		setInitLayout();
 	} 
@@ -28,13 +28,13 @@ public class MyPagePanel extends JPanel {
 	}
 	
 	private void setInitLayout() {
+		title=new JLabel("종료된 경매 둘러보기");
+		title.setFont(new Font("Freesentation 7 Bold",Font.PLAIN,28));
+		title.setBounds(900, 230, 100, 50);
 		setSize(1920,710);
 		setLocation(0,370);
 		setLayout(null);
-		title=new JLabel("마이페이지");
-		title.setFont(new Font("Freesentation 7 Bold",Font.PLAIN,28));
-		title.setBounds(100, 230, 100, 50);
-		backgroundPanel.setBounds(0, 50, 1920, 710);
+		backgroundPanel.setBounds(0, 370, 1920, 710);
 		
 		add(backgroundPanel);
 		backgroundPanel.add(title);
