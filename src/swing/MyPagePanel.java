@@ -66,6 +66,7 @@ public class MyPagePanel extends JPanel {
 		JLabel name = new JLabel(" 이름 : ");
 		JLabel nickName = new JLabel(" 닉네임 : ");
 		JLabel currentPoint = new JLabel(" 포인트 : ");
+		JLabel cardNumber = new JLabel(" 보유 카드 수 : ");
 		
 		ID.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 24));
 		ID.setBounds(500, 100, 100, 50);
@@ -75,6 +76,8 @@ public class MyPagePanel extends JPanel {
 		nickName.setBounds(500, 200, 100, 50);
 		currentPoint.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 24));
 		currentPoint.setBounds(500, 250, 150, 50);
+		cardNumber.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 24));
+		cardNumber.setBounds(500, 300, 150, 50);
 		
 		add(profileLabel);
 		add(infoPanel);

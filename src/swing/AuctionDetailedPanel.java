@@ -14,6 +14,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import dto.CardDTO;
+
 
 public class AuctionDetailedPanel extends JPanel {
 	
@@ -21,7 +23,7 @@ public class AuctionDetailedPanel extends JPanel {
 	private JLabel title;
 	private JScrollPane scrollPane;
 	
-	public AuctionDetailedPanel(ImageIcon image) {
+	public AuctionDetailedPanel(CardDTO card) {
 		initData();
 		setInitLayout();
 	} 
@@ -44,6 +46,10 @@ public class AuctionDetailedPanel extends JPanel {
 		title.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 32));
 		title.setBounds(860, 10, 800, 50);
 		add(title);
+		
+		JLabel cardId=new JLabel(" 카드 ID : ");
+		JLabel cardName=new JLabel(" 카드명 : ");
+		JLabel cardPrice=new JLabel(" 카드 가격 : ");
 		
 	}
 	
