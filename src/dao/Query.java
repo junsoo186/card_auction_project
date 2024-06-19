@@ -22,9 +22,9 @@ public class Query {
 	public static final String CARD_DELETE_ID = " DELETE FROM card WHERE id = ? ";
 
 	// AuctionDAO 쿼리
-	public static final String AUCTION_ADD = " INSERT INTO auction(user_id, card_id, bid_price, start_date, end_date) VALUES(?, ?, ?, ?, ?)";
-	public static final String AUCTION_UPDATE = " UPDATE auction SET user_id = ?, card_id = ?, end_date =? WHERE user_id = ?";
-	public static final String AUCTION_DELETE = " DELETE FROM auction WHERE user_id = ? AND id = ?";
+	public static final String AUCTION_ADD = " INSERT INTO auction(user_id, card_id, bid_price, start_date, end_date) VALUES(?, ?, ?, ?, ?) ";
+	public static final String AUCTION_UPDATE = " UPDATE auction SET user_id = ?, card_id = ?, end_date =? WHERE user_id = ? ";
+	public static final String AUCTION_DELETE = " DELETE FROM auction WHERE user_id = ? AND id = ? ";
 	public static final String AUCTION_INFO_ALL = " SELECT a.id FROM auction a JOIN card c ON a.card_id = c.id ";
 	public static final String AUCTION_INFO_CARD = " SELECT a.id FROM auction a JOIN card c ON a.card_id = c.id WHERE c.name = ? ";
 

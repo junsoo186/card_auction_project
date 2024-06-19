@@ -141,7 +141,7 @@ public class UserDAO {
 		}
 		return login;
 	}
-
+	
 	private static boolean authenticateUser(Connection conn, String name, String password) {
 		boolean result = false;
 		try {
