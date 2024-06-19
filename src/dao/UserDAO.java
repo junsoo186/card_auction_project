@@ -135,7 +135,7 @@ public class UserDAO {
 		}
 	}
 	
-	public void	logingUser(String name, String password) {
+	public void logingUser(String name, String password) {
 		String query = "SELECT id FROM user WHERE(name, password) VALUES(?,?)";
 		try (Connection connect = DBConnectionManager.getInstance().getConnection()) {
 			PreparedStatement pstmt = connect.prepareStatement(query);	

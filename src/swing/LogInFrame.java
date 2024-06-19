@@ -19,6 +19,8 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
+import manager.SocketManager;
+
 public class LogInFrame extends JFrame {
 
 
@@ -47,7 +49,7 @@ public class LogInFrame extends JFrame {
 		private JTabbedPane tabPane;
 		
 		private JLabel title;
-		
+		private SocketManager socket;
 		
 		public LogInFrame() {
 			initData();
@@ -69,7 +71,7 @@ public class LogInFrame extends JFrame {
 		}
 
 		private void setInitLayout() {
-			
+			new Thread(socket = new SocketManager()).start();
 			setTitle("[로그인하기]");
 			setSize(1920,1080);
 			setLocationRelativeTo(null);
@@ -132,7 +134,13 @@ public class LogInFrame extends JFrame {
 				public void mouseClicked(MouseEvent e) {
 					new MakeNewAccountFrame();
 				}
-			
+			});
+			logInButton.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent e) {
+					String id = idField.getText();
+					String password = passwordField.getText();
+					socket.sendOrder("login#" + id + "#" + password);
+				}
 			});
 		}
 		
