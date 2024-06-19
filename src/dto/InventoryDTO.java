@@ -12,6 +12,6 @@ import lombok.ToString;
 @Builder
 @ToString
 public class InventoryDTO {
-	private int userId;
+	private String name;
 	private int cardId;
 }
