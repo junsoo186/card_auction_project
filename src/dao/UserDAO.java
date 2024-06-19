@@ -135,4 +135,18 @@ public class UserDAO {
 			System.out.println(id + " 유저 삭제완료");
 		}
 	}
+	
+	public void	logingUser(String name, String password) {
+		String query = "SELECT id FROM user WHERE(name, password) VALUES(?,?)";
+		try (Connection connect = DBConnectionManager.getInstance().getConnection()) {
+			PreparedStatement pstmt = connect.prepareStatement(query);	
+			pstmt.setString(1, name);
+			pstmt.setString(2, password);
+			System.out.println(name+ "님 로그인 하셨습니다.");
+		}catch (SQLException e) {
+		} 
+		
+	}
+	
+	
 }
