@@ -139,7 +139,6 @@ public class LogInFrame extends JFrame {
 				public void mouseClicked(MouseEvent e) {
 					String id = idField.getText();
 					String password = passwordField.getText();
-					System.out.println(id + password);
 					socket.sendOrder("login#" + id + "#" + password);
 				}
 			});

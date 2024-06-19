@@ -125,17 +125,21 @@ public class UserDAO {
 	}
 
 	// 유저 로그인 확인
-	public void loginUser(String name, String password) {
+	public boolean loginUser(String name, String password) {
+		boolean login = false;
 		try (Connection conn = DBConnectionManager.getInstance().getConnection();) {
 			System.out.println(name + " : " + password);
 			if (authenticateUser(conn, name, password)) {
 				System.out.println("로그인 성공 !");
+				login = true;
 			} else {
 				System.out.println("로그인 실패 - name 과 password 를 확인해주세요");
+				login = false;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		return login;
 	}
 
 	private static boolean authenticateUser(Connection conn, String name, String password) {
