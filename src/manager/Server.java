@@ -8,12 +8,16 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Timer;
 import java.util.Vector;
 
 import org.w3c.dom.UserDataHandler;
 
+import dao.InventoryDAO;
 import dao.UserDAO;
+import dto.CardDTO;
+import dto.InventoryDTO;
 import dto.UserDTO;
 import swing.MainFrame;
 import swing.ProductButton;
@@ -25,6 +29,7 @@ public class Server {
 	private static MainFrame mconText;
 	private static ArrayList<Integer> productId; // 상품 id
 	private static ArrayList<String> productName; // 상품 이름
+	private static Random random = new Random();
 	
 	public Server() {
 		try (ServerSocket server = new ServerSocket(5000)){
@@ -54,6 +59,7 @@ public class Server {
 		}
 	}
 	
+	
 	private static class Service extends Thread {
 		
 		private Socket socket;
@@ -64,10 +70,13 @@ public class Server {
 		
 		@Override
 		public void run() {
-			try (BufferedReader userOrder = new BufferedReader(new InputStreamReader(socket.getInputStream()))){
+			try (BufferedReader userOrder = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+					PrintWriter printWriter = new PrintWriter(socket.getOutputStream())){
 				String message;
 				UserDTO user = new UserDTO();
 				UserDAO dao = new UserDAO();
+				InventoryDAO inven = new InventoryDAO();
+				InventoryDTO invenDTO = new InventoryDTO();
 				while((message = userOrder.readLine()) != null) {
 					System.out.println("와일문 작동");
 					if(message.startsWith("chat")) {
@@ -88,18 +97,31 @@ public class Server {
 							user.setNickname(DB[1]);
 							user.setName(DB[2]);
 							user.setPassword(DB[3]);
-							System.out.println("DB보냄");
+							// 회원가입시 카드 5개 랜덤으로 증정
 							dao.addUser(user);
+							for(int i = 0; i < 5; i++) {
+								int cardId = random.nextInt(4)+1;
+								invenDTO.setName(user.getName());
+								invenDTO.setCardId(cardId);
+								inven.invenAdd(invenDTO);
+							}
+							System.out.println("DB보냄");
 						} catch (SQLException e) {
 							e.printStackTrace();
 						}
 					} else if (message.startsWith("login")) {
 						String[] login = message.split("#");
-						dao.loginUser(login[1], login[2]);
+						if(dao.loginUser(login[1], login[2])) {
+							user.setName(login[1]);
+							user.setPassword(login[2]);
+						} else {
+							printWriter.println("wrong");
+						}
 					} else if (message.startsWith("cash")) {
 						String[] cash = message.split("#");
 						
-					} else if (message.startsWith("")) {
+					} else if (message.startsWith("addCard")) {
+						String[] card = message.split("#");
 						
 					}
 				}
