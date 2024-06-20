@@ -3,15 +3,14 @@ package dao;
 public class Query {
 
 	// UserDAO 쿼리
-	public static final String USER_ADD = " INSERT INTO user(name, password, nickname,point) VALUES(?, ?, ?, ?) ";
+	public static final String USER_ADD = " INSERT INTO user(name, password, nickname, point) VALUES(?, ?, ?, ?) ";
 	public static final String USER_INFO_ALL = " SELECT * FROM user ";
-	public static final String USER_INFO_ID = " SELECT * FROM user WHERE id = ? ";
 	public static final String USER_INFO_NAME = " SELECT * FROM user WHERE name = ? ";
-	public static final String USER_UPDATE_ID = " UPDATE user SET password = ?, nickname = ? WHERE id = ? ";
 	public static final String USER_UPDATE_NAME = " UPDATE user SET password = ?, nickname = ? WHERE name = ? ";
-	public static final String USER_POINT_ID = " UPDATE user SET point = ? WHERE id = ? ";
-	public static final String USER_DELETE_ID = " DELETE FROM user WHERE id = ? ";
+	public static final String USER_POINT_NAME = " UPDATE user SET point = ? WHERE name = ? ";
+	public static final String USER_DELETE_ID = " DELETE FROM user WHERE name = ? ";
 	public static final String USER_LOGIN = " SELECT * FROM user WHERE name = ? and password = ? ";
+	public static final String USER_DUPLICATE_NAME = " SELECT * FROM user WHERE name = ? ";
 
 	// CardDAO 쿼리
 	public static final String CARD_ADD = " INSERT INTO card(url, name, price) VALUES(?, ?, ?) ";
@@ -22,9 +21,9 @@ public class Query {
 	public static final String CARD_DELETE_ID = " DELETE FROM card WHERE id = ? ";
 
 	// AuctionDAO 쿼리
-	public static final String AUCTION_ADD = " INSERT INTO auction(user_id,card_id, bid_price, start_date, end_date) VALUES(?, ?, ?, ?, ?) ";
-	public static final String AUCTION_UPDATE = " UPDATE auction SET user_id = ?, card_id = ?, end_date =? WHERE user_id = ? ";
-	public static final String AUCTION_DELETE = " DELETE FROM auction WHERE user_id = ? AND id = ? ";
+	public static final String AUCTION_ADD = " INSERT INTO auction(name, card_id, bid_price, start_date, end_date) VALUES(?, ?, ?, ?, ?) ";
+	public static final String AUCTION_UPDATE = " UPDATE auction SET name = ?, card_id = ?, end_date =? WHERE user_id = ? ";
+	public static final String AUCTION_DELETE = " DELETE FROM auction WHERE name = ? AND id = ? ";
 	public static final String AUCTION_INFO_ALL = " SELECT a.id FROM auction a JOIN card c ON a.card_id = c.id ";
 	public static final String AUCTION_INFO_CARD = " SELECT a.id FROM auction a JOIN card c ON a.card_id = c.id WHERE c.name = ? ";
 
