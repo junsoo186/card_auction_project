@@ -13,23 +13,41 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 import javax.swing.JViewport;
 import javax.swing.ScrollPaneConstants;
 
 import dto.CardDTO;
+import dto.UserDTO;
 
 
 public class AuctionPanel extends JPanel {
 	
+	public ArrayList<CardDTO> getCardList() {
+		return cardList;
+	}
+
+	public void setCardList(ArrayList<CardDTO> cardList) {
+		this.cardList = cardList;
+	}
+
+	public UserDTO getUser() {
+		return user;
+	}
+
+	public void setUser(UserDTO user) {
+		this.user = user;
+	}
+
 	private ArrayList<JButton> productList = new ArrayList<>(20);
 	private ArrayList<String> productTitleList = new ArrayList<>(20);
-	private ArrayList<CardDTO> cardList=new ArrayList(10);
+	public ArrayList<CardDTO> cardList=new ArrayList(10);
 	private JPanel backgroundPanel1;
 	private JLabel title;
-	private JScrollPane scrollPane;
-	
+	private UserDTO user;
 	private AuctionDetailedPanel detailPage;
 	
 	
@@ -40,8 +58,9 @@ public class AuctionPanel extends JPanel {
 	
 	private JPanel backgroundPanel;
 	
-	public AuctionPanel(JPanel backgroundPanel) {
+	public AuctionPanel(JPanel backgroundPanel,UserDTO user) {
 		this.backgroundPanel=backgroundPanel;
+		this.user=user;
 		initData();
 		setInitLayout();
 		initListener();
@@ -59,7 +78,8 @@ public class AuctionPanel extends JPanel {
 	public void createProduct(CardDTO card) {
 		System.out.println(serialNum.size());  // 시리얼 넘버 사이즈로 product버튼 인덱스 번호 지정
 		product.get(serialNum.size()).setIcon(new ImageIcon(card.getUrl())); // 유저가 올린 판매카드 이미지 버튼에 삽입 
-		cardList.add(serialNum.size(),card); // 카드 정보 불러오기
+		//cardList.add(serialNum.size(),card); // 카드 정보 불러오기
+		System.out.println(cardList.get(serialNum.size()));
 		serialNum.add(1); // 시리얼 넘버 사이즈도 증가 
 	}
 	
@@ -86,7 +106,7 @@ public class AuctionPanel extends JPanel {
 		setLayout(null);
 		setBackground(Color.WHITE);
 		
-		JLabel title=new JLabel("진행 중인 경매"+"("+product.size()+")");
+		JLabel title=new JLabel("진행 중인 경매"+"("+cardList.size()+")");
 		title.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 32));
 		title.setBounds(860, 10, 800, 50);
 		add(title);
@@ -110,10 +130,37 @@ public class AuctionPanel extends JPanel {
 		product.get(0).addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				setVisible(false);
-				detailPage=new AuctionDetailedPanel(cardList.get(0));
+				detailPage=new AuctionDetailedPanel(cardList.get(0),user,backgroundPanel);
 				backgroundPanel.add(detailPage);
 				detailPage.setVisible(true);
 			}
-			});}
+			});
+		product.get(1).addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				setVisible(false);
+				detailPage=new AuctionDetailedPanel(cardList.get(1),user,backgroundPanel);
+				backgroundPanel.add(detailPage);
+				detailPage.setVisible(true);
+			}
+			});
+		product.get(2).addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				setVisible(false);
+				detailPage=new AuctionDetailedPanel(cardList.get(2),user,backgroundPanel);
+				backgroundPanel.add(detailPage);
+				detailPage.setVisible(true);
+			}
+			});
+		product.get(3).addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				setVisible(false);
+				detailPage=new AuctionDetailedPanel(cardList.get(3),user,backgroundPanel);
+				backgroundPanel.add(detailPage);
+				detailPage.setVisible(true);
+			}
+			});
+		
+		
+		;}
 
 }

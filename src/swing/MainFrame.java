@@ -1,12 +1,12 @@
 package swing;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -14,17 +14,17 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
+import dto.CardDTO;
+import dto.UserDTO;
 import lombok.ToString;
 
 @ToString
 
 public class MainFrame extends JFrame {
 
-	
+	private UserDTO user;
 	private ChargeFrame chargeFrame;
 	
 	private JPanel backgroundPanel;
@@ -59,6 +59,8 @@ public class MainFrame extends JFrame {
 	private JButton sellButton; // 판매 버튼
 	private JButton directoryButton;
 	private JButton inventoryButton;
+	
+	private Icon pointIcon;
 
 	private AuctionPanel auctionPanel; // 진행중인 경매 패널
 	private FinishedPanel finishedPanel; // 종료된 경매 패널
@@ -74,7 +76,8 @@ public class MainFrame extends JFrame {
 	private BufferedReader serverOrder; // 서버 명령
 	private PrintWriter userOrder; // 유저 명령
 
-	public MainFrame() {
+	public MainFrame(UserDTO user) {
+		this.user=user;
 		initData();
 		setInitLayout();
 		initListener();
@@ -108,13 +111,12 @@ public class MainFrame extends JFrame {
 		backgroundLabel.setHorizontalAlignment(JLabel.CENTER);
 		backgroundPanel.add(backgroundLabel);
 
-		cash=new JLabel("0");
+		cash=new JLabel(user.getPoint()+"");
 		cash.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 18));
-		cash.setBounds(1480, 64, 500, 20);
+		cash.setBounds(1470, 64, 500, 20);
 		backgroundLabel.add(cash);
 		
-		Icon pointIcon=new ImageIcon("image/poketpoint.gif");
-		
+		pointIcon=new ImageIcon("image/poketpoint.gif");
 		poketPoint=new JButton();
 		poketPoint.setIcon(pointIcon);
 		poketPoint.setSize(35,35);
@@ -185,32 +187,61 @@ public class MainFrame extends JFrame {
 		backgroundLabel.add(button5);
 
 
-		auctionPanel = new AuctionPanel(backgroundPanel);
+		auctionPanel = new AuctionPanel(backgroundPanel,user);
 		backgroundPanel.add(auctionPanel);
 
 		setVisible(true);
 
 	}
 
+	private void changePoint(UserDTO user) {
+		remove(cash);
+		cash=new JLabel(user.getPoint()+"");
+		cash.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 18));
+		cash.setBounds(1470, 64, 500, 20);
+		backgroundLabel.add(cash);
+	}
+	
 	private void initListener() {
 
-		// 진행중인 경매 이동
+		// 1. 진행중인 경매 이동
 		button1.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				if (state == 2) {
+				if (state == 1) {
+					auctionPanel = new AuctionPanel(backgroundPanel,user);
+					backgroundPanel.add(auctionPanel);
+				} else if (state == 2) {
 					finishedPanel.setVisible(false);
-					auctionPanel = new AuctionPanel(backgroundPanel);
+					auctionPanel = new AuctionPanel(backgroundPanel,user);
+					backgroundPanel.add(auctionPanel);
+				} else if (state == 3) {
+					checkBidPanel.setVisible(false);
+					auctionPanel = new AuctionPanel(backgroundPanel,user);
 					backgroundPanel.add(auctionPanel);
 					state = 1;
-
-				} else {
+				} else if (state == 4) {
+					sellProductPanel.setVisible(false);
+					auctionPanel = new AuctionPanel(backgroundPanel,user);
+					backgroundPanel.add(auctionPanel);
+					state = 1;
+				} else if (state == 5) {
+					myPagePanel.setVisible(false);
+					auctionPanel = new AuctionPanel(backgroundPanel,user);
+					backgroundPanel.add(auctionPanel);
+					state = 1;
+				} else if (state == 6) {
+					inventoryPanel.setVisible(false);
+					auctionPanel = new AuctionPanel(backgroundPanel,user);
+					backgroundPanel.add(auctionPanel);
+					state = 1;
 				}
+				user.setPoint(auctionPanel.getUser().getPoint());
 
 			}
 
 		});
 
-		// 종료된 경매 이동
+		// 2. 종료된 경매 이동
 		button2.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 
@@ -218,9 +249,10 @@ public class MainFrame extends JFrame {
 					auctionPanel.setVisible(false);
 					finishedPanel = new FinishedPanel();
 					backgroundPanel.add(finishedPanel);
-					setVisible(true);
 					state = 2;
 				} else if (state == 2) {
+					finishedPanel = new FinishedPanel();
+					backgroundPanel.add(finishedPanel);
 				} else if (state == 3) {
 					checkBidPanel.setVisible(false);
 					finishedPanel = new FinishedPanel();
@@ -236,13 +268,18 @@ public class MainFrame extends JFrame {
 					finishedPanel = new FinishedPanel();
 					backgroundPanel.add(finishedPanel);
 					state = 2;
+				} else if (state == 6) {
+					inventoryPanel.setVisible(false);
+					finishedPanel = new FinishedPanel();
+					backgroundPanel.add(finishedPanel);
+					state = 2;
 				}
 
 			}
 
 		});
 
-		// 시세 체크 이동
+		// 3. 시세 체크 이동
 		button3.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				if (state == 1) {
@@ -256,6 +293,8 @@ public class MainFrame extends JFrame {
 					backgroundPanel.add(checkBidPanel);
 					state=3;
 				} else if (state == 3) {
+					checkBidPanel = new CheckBidPanel();
+					backgroundPanel.add(checkBidPanel);
 				} else if (state == 4) {
 					sellProductPanel.setVisible(false);
 					checkBidPanel = new CheckBidPanel();
@@ -266,7 +305,13 @@ public class MainFrame extends JFrame {
 					checkBidPanel = new CheckBidPanel();
 					backgroundPanel.add(checkBidPanel);
 					state = 3;
+				}else if (state == 6) {
+					inventoryPanel.setVisible(false);
+					checkBidPanel = new CheckBidPanel();
+					backgroundPanel.add(checkBidPanel);
+					state = 3;
 				}
+				
 			}
 
 		});
@@ -291,13 +336,15 @@ public class MainFrame extends JFrame {
 					backgroundPanel.add(sellProductPanel);
 					state = 4;
 				} else if (state == 4) {
+					sellProductPanel = new SellProductPanel();
+					backgroundPanel.add(sellProductPanel);
 				} else if (state == 5) {
 					myPagePanel.setVisible(false);
 					sellProductPanel = new SellProductPanel();
 					backgroundPanel.add(sellProductPanel);
 					state = 4;
 				}else if (state == 6) {
-					myPagePanel.setVisible(false);
+					inventoryPanel.setVisible(false);
 					sellProductPanel = new SellProductPanel();
 					backgroundPanel.add(sellProductPanel);
 					state = 4;
@@ -307,7 +354,8 @@ public class MainFrame extends JFrame {
 		});
 		poketPoint.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				chargeFrame=new ChargeFrame(); 
+				chargeFrame=new ChargeFrame(user); 
+				changePoint(chargeFrame.getUser());
 			}
 		});
 		// 5. 마이페이지
@@ -316,29 +364,35 @@ public class MainFrame extends JFrame {
 				System.out.println("인벤토리 클릭");
 				if (state == 1) {
 					auctionPanel.setVisible(false);
-					myPagePanel = new MyPagePanel();
+					myPagePanel = new MyPagePanel(user);
 					backgroundPanel.add(myPagePanel);
 					state = 5;
 				} else if (state == 2) {
 					finishedPanel.setVisible(false);
-					myPagePanel = new MyPagePanel();
+					myPagePanel = new MyPagePanel(user);
 					backgroundPanel.add(myPagePanel);
 					state = 5;
 				} else if (state == 3) {
 					checkBidPanel.setVisible(false);
-					myPagePanel = new MyPagePanel();
+					myPagePanel = new MyPagePanel(user);
 					backgroundPanel.add(myPagePanel);
 					state = 5;
 				} else if (state == 4) {
 					sellProductPanel.setVisible(false);
-					myPagePanel = new MyPagePanel();
+					myPagePanel = new MyPagePanel(user);
 					backgroundPanel.add(myPagePanel);
 					state = 5;
 				} else if (state == 5) {
+					myPagePanel = new MyPagePanel(user);
+					backgroundPanel.add(myPagePanel);
+				} else if (state == 6) {
+					inventoryPanel.setVisible(false);
+					myPagePanel = new MyPagePanel(user);
+					backgroundPanel.add(myPagePanel);
 				}
 			}
 		});
-		// 인벤토리 이동
+		// 6. 인벤토리 이동
 			inventoryButton.addMouseListener(new MouseAdapter() {
 					public void mouseClicked(MouseEvent e) {
 						if (state == 1) {
@@ -367,7 +421,8 @@ public class MainFrame extends JFrame {
 							backgroundPanel.add(inventoryPanel);
 							state = 6;
 						} else if(state==6) {
-							
+							inventoryPanel = new InventoryPanel();
+							backgroundPanel.add(inventoryPanel);
 						}
 
 					}
@@ -375,8 +430,10 @@ public class MainFrame extends JFrame {
 				});
 	}
 
+	
 	public static void main(String[] args) {
-		new MainFrame();
+		new MainFrame(new UserDTO(1,"엄송현","12345","클라이언트1",555));
 	}
+
 
 }
