@@ -19,6 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
+import dao.UserDAO;
 import dto.UserDTO;
 import manager.SocketManager;
 
@@ -27,6 +28,8 @@ public class LogInFrame extends JFrame {
 
 		private JPanel backgroundPanel1;
 		private JPanel backgroundPanel2;
+		
+		private UserDAO userDAO; 
 		
 		private JPanel mainPanel;
 		
@@ -143,6 +146,9 @@ public class LogInFrame extends JFrame {
 					String password = passwordField.getText();
 					System.out.println(id + password);
 					socket.sendOrder("login#" + id + "#" + password);
+					Boolean checkLongIn
+					userDAO.loginUser(id, password);
+					if(userDAO.)
 					user=new UserDTO();
 					new MainFrame(user);
 					dispose();
