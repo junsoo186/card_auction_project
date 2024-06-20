@@ -35,7 +35,7 @@ public class MakeNewAccountFrame extends JFrame implements ActionListener {
 	private JTextField nameField;
 	private JTextField passwordField;
 	private JTextField idField;
-	
+
 	public MakeNewAccountFrame() {
 		setInitLayout();
 		initListener();
@@ -51,7 +51,6 @@ public class MakeNewAccountFrame extends JFrame implements ActionListener {
 		setResizable(false);
 		setLayout(null);
 		getContentPane().setBackground(Color.white);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		backgroundPanel = new JPanel();
 		backgroundPanel.setSize(getWidth(), getHeight());
@@ -103,7 +102,6 @@ public class MakeNewAccountFrame extends JFrame implements ActionListener {
 		backgroundPanel.add(exitButton);
 
 		setVisible(true);
-
 	}
 
 	private void initListener() {
@@ -117,12 +115,12 @@ public class MakeNewAccountFrame extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		JButton selectedButton = (JButton)e.getSource();
-		if(selectedButton == signUpButton) {
+		JButton selectedButton = (JButton) e.getSource();
+		if (selectedButton == signUpButton) {
 			String name = nameField.getText();
 			String id = idField.getText();
 			String password = passwordField.getText();
-			socket.sendOrder("sendDB" + "#" + name +"#" + id + "#"+ password);
+			socket.sendOrder("sendDB" + "#" + name + "#" + id + "#" + password);
 		}
 	}
 

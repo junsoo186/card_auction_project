@@ -28,9 +28,6 @@ public class MainFrame extends JFrame implements Runnable {
 
 	private JPanel backgroundPanel;
 
-	// 버튼 1.진행중경매 2.종료된경매 3.시세체크 4.경매출품 5.마이페이지 6.인벤토리
-	JButton[] buttons = new JButton[6];
-
 	private JLabel id;
 	private JLabel password;
 	private JLabel backgroundLabel;
@@ -49,15 +46,19 @@ public class MainFrame extends JFrame implements Runnable {
 
 	private Icon pointIcon;
 
+	// 버튼 0.진행중경매 1.종료된경매 2.시세체크 3.경매출품 4.마이페이지 5.인벤토리
+	private JButton[] buttons = new JButton[6];
+
+	// 아래 패널들을 관리하기위한 리스트
+	private List<JPanel> panels = new ArrayList<>();
 	private AuctionPanel auctionPanel; // 진행중인 경매 패널
 	private FinishedPanel finishedPanel; // 종료된 경매 패널
 	private CheckBidPanel checkBidPanel; // 시세 알아보기 패널
 	private SellProductPanel sellProductPanel; // 경매 출품하기 패널
 	private MyPagePanel myPagePanel; // 마이 페이지 패널
 	private InventoryPanel inventoryPanel; // 보관함 패널
-	private List<JPanel> panels = new ArrayList<>();
 
-	private int state = 1; // 현재 메뉴 상태 표시
+	private int state = 0; // 현재 메뉴 상태 표시
 	private JButton poketPoint;
 
 	private BufferedReader serverOrder; // 서버 명령
@@ -78,7 +79,6 @@ public class MainFrame extends JFrame implements Runnable {
 	private void initData() {
 
 		backgroundPanel = new JPanel();
-
 		auctionPanel = new AuctionPanel(backgroundPanel, user);
 		finishedPanel = new FinishedPanel(user);
 		checkBidPanel = new CheckBidPanel();
@@ -127,6 +127,7 @@ public class MainFrame extends JFrame implements Runnable {
 		poketPoint.setBorder(null);
 		poketPoint.setLocation(1610, 55);
 		backgroundLabel.add(poketPoint);
+		user.setPoint(auctionPanel.getUser().getPoint());
 
 		searchBar = new JTextField(400);
 		searchBar.setBounds(685, 278, 490, 40);
@@ -141,7 +142,7 @@ public class MainFrame extends JFrame implements Runnable {
 		searchButton.setFocusPainted(false);
 		backgroundLabel.add(searchButton);
 
-		// 버튼 설정
+		// 버튼 설정 0.진행중경매 1.종료된경매 2.시세체크 3.경매출품 4.마이페이지 5.인벤토리
 		buttons[0] = new JButton("진행 중인 경매");
 		buttons[1] = new JButton("종료된 경매");
 		buttons[2] = new JButton("시세 알아보기");
@@ -163,18 +164,10 @@ public class MainFrame extends JFrame implements Runnable {
 			backgroundLabel.add(buttons[i]);
 		}
 
-		backgroundPanel.add(auctionPanel);
-		backgroundPanel.add(finishedPanel);
-		backgroundPanel.add(checkBidPanel);
-		backgroundPanel.add(sellProductPanel);
-		backgroundPanel.add(myPagePanel);
-		backgroundPanel.add(inventoryPanel);
-
-		finishedPanel.setVisible(false);
-		checkBidPanel.setVisible(false);
-		sellProductPanel.setVisible(false);
-		myPagePanel.setVisible(false);
-		inventoryPanel.setVisible(false);
+		for (int i = 0; i < panels.size(); i++) {
+			backgroundPanel.add(panels.get(i));
+			panels.get(i).setVisible(false);
+		}
 		auctionPanel.setVisible(true);
 
 		backgroundPanel.setVisible(true);
@@ -191,53 +184,72 @@ public class MainFrame extends JFrame implements Runnable {
 
 	}
 
-	private void visible(int state) {
+	private void setVisible(int state) {
 		for (int i = 0; i < panels.size(); i++) {
 			panels.get(i).setVisible(false);
 		}
-		panels.get(state - 1).setVisible(true);
+		panels.get(state).setVisible(true);
 		this.state = state;
 	}
 
 	private void initListener() {
 
-		// 1. 진행중인 경매 이동
+		// 0. 진행중인 경매 이동
 		buttons[0].addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				if (state != 1) {
+				if (state != 0) {
 					System.out.println("진행중 경매로 이동");
-					visible(1);
+					setVisible(0);
 				}
-				user.setPoint(auctionPanel.getUser().getPoint());
 			}
 		});
 
-		// 2. 종료된 경매 이동
+		// 1. 종료된 경매 이동
 		buttons[1].addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				if (state != 2) {
+				if (state != 1) {
 					System.out.println("종료된 경매로 이동");
-					visible(2);
+					setVisible(1);
 				}
 			}
 		});
 
-		// 3. 시세 체크 이동
+		// 2. 시세 체크 이동
 		buttons[2].addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				if (state != 3) {
+				if (state != 2) {
 					System.out.println("시세 체크로 이동");
-					visible(3);
+					setVisible(2);
 				}
 			}
 		});
 
-		// 4. 경매 출품 이동
+		// 3. 경매 출품 이동
 		buttons[3].addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				if (state != 4) {
+				if (state != 3) {
 					System.out.println("경매 출품으로 이동");
-					visible(4);
+					setVisible(3);
+				}
+			}
+		});
+
+		// 4. 마이페이지
+		buttons[4].addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				if (state != 4) {
+					System.out.println("마이페이지로 이동");
+					setVisible(4);
+				}
+			}
+		});
+
+		// 5. 인벤토리 이동
+		buttons[5].addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				if (state != 5) {
+					System.out.println("인벤토리로 이동");
+					setVisible(5);
 				}
 			}
 		});
@@ -247,24 +259,6 @@ public class MainFrame extends JFrame implements Runnable {
 			public void mouseClicked(MouseEvent e) {
 				chargeFrame = new ChargeFrame(user);
 				changePoint(chargeFrame.getUser());
-			}
-		});
-		// 5. 마이페이지
-		buttons[4].addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				if (state != 5) {
-					System.out.println("마이페이지로 이동");
-					visible(5);
-				}
-			}
-		});
-		// 6. 인벤토리 이동
-		buttons[5].addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				if (state != 6) {
-					System.out.println("인벤토리로 이동");
-					visible(6);
-				}
 			}
 		});
 	}
