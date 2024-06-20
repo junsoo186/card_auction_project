@@ -47,7 +47,6 @@ public class SellProductPanel extends JPanel {
 	
 	private UserDTO user;
 	
-	
 	public SellProductPanel() {
 		initData();
 		setInitLayout();
