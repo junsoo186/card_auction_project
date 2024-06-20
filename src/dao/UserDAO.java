@@ -7,8 +7,6 @@ import java.sql.SQLException;
 
 import dto.UserDTO;
 import manager.DBConnectionManager;
-import swing.LogInFrame;
-import swing.MainFrame;
 
 // TODO Frame 에 연동시 수정
 
@@ -23,6 +21,7 @@ public class UserDAO {
 				pstmt.setString(1, dto.getName());
 				pstmt.setString(2, dto.getPassword());
 				pstmt.setString(3, dto.getNickname());
+				pstmt.setInt(4, dto.getPoint());
 				pstmt.executeUpdate();
 				System.out.println("가입완료");
 				userAdd = true;
