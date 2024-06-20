@@ -2,6 +2,7 @@ package swing;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
@@ -11,6 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import dao.InventoryDAO;
+import dto.UserDTO;
 
 public class InventoryPanel_wonseok extends JPanel {
 	
@@ -19,6 +21,7 @@ public class InventoryPanel_wonseok extends JPanel {
 	private JPanel backgroundPanel;
 	private JLabel title;
 	private JScrollPane scrollPane;
+	private UserDTO user;
 	
 	ArrayList<JButton>product = new ArrayList<>(8);
 	ArrayList<Integer>serialNum = new ArrayList<>(8);
@@ -26,7 +29,8 @@ public class InventoryPanel_wonseok extends JPanel {
 	private int y = 100;
 	InventoryDAO inven = new InventoryDAO();
 	
-	public InventoryPanel_wonseok() {
+	public InventoryPanel_wonseok(UserDTO user) {
+		this.user = user;
 		initData();
 		setInitLayout();
 	} 
@@ -69,7 +73,11 @@ public class InventoryPanel_wonseok extends JPanel {
 		scrollPane.setBounds(4,4,950,330);
 		ProductButton();
 		
-		inven.invenInfo();
+		try {
+			inven.invenInfo(user.getName());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		
 		JLabel title=new JLabel("보유 카드 확인하기"+"("+product.size()+")");
 		title.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 32));

@@ -142,19 +142,15 @@ public class LogInFrame extends JFrame {
 					String id = idField.getText();
 					String password = passwordField.getText();
 					socket.sendOrder("login#" + id + "#" + password);
-					user=new UserDTO();
 					new MainFrame(user);
 					dispose();
 					}
 			});
-			logInButton.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent e) {
-					new MakeNewAccountFrame();
-				}
-			
-			});
 		}
-		
+	
+		public void acceptDTO (UserDTO user) {
+			this.user = user;
+		}
 		
 	public static void main(String[] args) {
 		new LogInFrame();

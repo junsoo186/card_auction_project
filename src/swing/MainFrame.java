@@ -74,8 +74,8 @@ public class MainFrame extends JFrame implements Runnable{
 	private BufferedReader serverOrder; // 서버 명령
 	private PrintWriter userOrder; // 유저 명령
 
-	public MainFrame() {
-		
+	public MainFrame(UserDTO user) {
+		this.user = user;
 		initData();
 		setInitLayout();
 		initListener();
@@ -398,31 +398,31 @@ public class MainFrame extends JFrame implements Runnable{
 					public void mouseClicked(MouseEvent e) {
 						if (state == 1) {
 							auctionPanel.setVisible(false);
-							inventoryPanel = new InventoryPanel();
+							inventoryPanel = new InventoryPanel(user);
 							backgroundPanel.add(inventoryPanel);
 							state = 6;
 						} else if (state == 2) {
 							finishedPanel.setVisible(false);
-							inventoryPanel = new InventoryPanel();
+							inventoryPanel = new InventoryPanel(user);
 							backgroundPanel.add(inventoryPanel);
 							state = 6;
 						} else if (state == 3) {
 							checkBidPanel.setVisible(false);
-							inventoryPanel = new InventoryPanel();
+							inventoryPanel = new InventoryPanel(user);
 							backgroundPanel.add(inventoryPanel);
 							state = 6;
 						} else if (state == 4) {
 							sellProductPanel.setVisible(false);
-							inventoryPanel = new InventoryPanel();
+							inventoryPanel = new InventoryPanel(user);
 							backgroundPanel.add(inventoryPanel);
 							state = 6;
 						} else if (state == 5) {
 							myPagePanel.setVisible(false);
-							inventoryPanel = new InventoryPanel();
+							inventoryPanel = new InventoryPanel(user);
 							backgroundPanel.add(inventoryPanel);
 							state = 6;
 						} else if(state==6) {
-							inventoryPanel = new InventoryPanel();
+							inventoryPanel = new InventoryPanel(user);
 							backgroundPanel.add(inventoryPanel);
 						}
 
@@ -431,13 +431,6 @@ public class MainFrame extends JFrame implements Runnable{
 				});
 	}
 	
-	public void acceptDTO (UserDTO user) {
-		this.user = user;
-	}
-	
-	public static void main(String[] args) {
-		new MainFrame();
-	}
 
 	@Override
 	public void run() {

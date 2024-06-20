@@ -7,6 +7,7 @@ import java.sql.SQLException;
 
 import dto.UserDTO;
 import manager.DBConnectionManager;
+import swing.LogInFrame;
 import swing.MainFrame;
 
 // TODO Frame 에 연동시 수정
@@ -156,8 +157,8 @@ public class UserDAO {
 				user.setPassword(rs.getString("password"));
 				user.setPoint(rs.getInt("point"));
 			}
-			MainFrame main = new MainFrame();
-			main.acceptDTO(user);
+			LogInFrame login = new LogInFrame();
+			login.acceptDTO(user);
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
