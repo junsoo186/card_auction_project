@@ -10,8 +10,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import dto.InventoryDTO;
+
 public class InventoryPanel extends JPanel {
 	
+	
+	private InventoryDTO inventory;
 	private ArrayList<JButton> productList = new ArrayList<>(12);
 	private ArrayList<String> productTitleList = new ArrayList<>(12);
 	private JPanel backgroundPanel;
@@ -68,8 +72,8 @@ public class InventoryPanel extends JPanel {
 		
 		createProduct("image/card1.png");
 		createProduct("image/card2.png");
+		createProduct("image/card3.jpg");
 		createProduct("image/card4.jpg");
-		createProduct("image/card5.jpg");
 		
 		JLabel title=new JLabel("보유 카드 확인하기"+"("+product.size()+")");
 		title.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 32));
@@ -77,6 +81,10 @@ public class InventoryPanel extends JPanel {
 		add(title);
 		
 	}
+	
+	
+	
+	
 
 }
 

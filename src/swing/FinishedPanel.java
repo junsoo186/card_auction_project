@@ -71,8 +71,8 @@ public class FinishedPanel extends JPanel {
 		
 		createProduct("image/card1.png");
 		createProduct("image/card2.png");
+		createProduct("image/card3.jpg");
 		createProduct("image/card4.jpg");
-		createProduct("image/card5.jpg");
 		createProduct("image/card1.png");
 		createProduct("image/card2.png");
 		
