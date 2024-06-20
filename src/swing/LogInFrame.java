@@ -19,7 +19,6 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
-import dao.UserDAO;
 import dto.UserDTO;
 import manager.SocketManager;
 
@@ -29,9 +28,9 @@ public class LogInFrame extends JFrame {
 		private JPanel backgroundPanel1;
 		private JPanel backgroundPanel2;
 		
-		private UserDAO userDAO; 
-		
 		private JPanel mainPanel;
+		
+		private MainFrame mainFrame;
 		
 		private JPanel AuctionPanel;
 		private JPanel LogInPanel;
@@ -144,22 +143,24 @@ public class LogInFrame extends JFrame {
 				public void mouseClicked(MouseEvent e) {
 					String id = idField.getText();
 					String password = passwordField.getText();
-					System.out.println(id + password);
 					socket.sendOrder("login#" + id + "#" + password);
-					Boolean checkLongIn
-					userDAO.loginUser(id, password);
-					if(userDAO.)
 					user=new UserDTO();
 					new MainFrame(user);
 					dispose();
 					}
 			});
+			
+			
 			logInButton.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent e) {
 					new MakeNewAccountFrame();
 				}
 			
 			});
+		}
+		
+		public void acceptDTO (UserDTO user) {
+			this.user = user;
 		}
 		
 		

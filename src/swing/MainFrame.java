@@ -74,8 +74,8 @@ public class MainFrame extends JFrame implements Runnable{
 	private BufferedReader serverOrder; // 서버 명령
 	private PrintWriter userOrder; // 유저 명령
 
-	public MainFrame() {
-		
+	public MainFrame(UserDTO user) {
+		this.user=user;
 		initData();
 		setInitLayout();
 		initListener();
@@ -98,6 +98,8 @@ public class MainFrame extends JFrame implements Runnable{
 		getContentPane().setBackground(Color.white);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+		user=new UserDTO();
+		
 		backgroundPanel.setSize(getWidth(), getHeight());
 		backgroundPanel.setLayout(null);
 		backgroundPanel.setBackground(Color.white);
@@ -246,30 +248,30 @@ public class MainFrame extends JFrame implements Runnable{
 
 				if (state == 1) {
 					auctionPanel.setVisible(false);
-					finishedPanel = new FinishedPanel();
+					finishedPanel = new FinishedPanel(user);
 					backgroundPanel.add(finishedPanel);
 					state = 2;
 				} else if (state == 2) {
-					finishedPanel = new FinishedPanel();
+					finishedPanel = new FinishedPanel(user);
 					backgroundPanel.add(finishedPanel);
 				} else if (state == 3) {
 					checkBidPanel.setVisible(false);
-					finishedPanel = new FinishedPanel();
+					finishedPanel = new FinishedPanel(user);
 					backgroundPanel.add(finishedPanel);
 					state = 2;
 				} else if (state == 4) {
 					sellProductPanel.setVisible(false);
-					finishedPanel = new FinishedPanel();
+					finishedPanel = new FinishedPanel(user);
 					backgroundPanel.add(finishedPanel);
 					state = 2;
 				} else if (state == 5) {
 					myPagePanel.setVisible(false);
-					finishedPanel = new FinishedPanel();
+					finishedPanel = new FinishedPanel(user);
 					backgroundPanel.add(finishedPanel);
 					state = 2;
 				} else if (state == 6) {
 					inventoryPanel.setVisible(false);
-					finishedPanel = new FinishedPanel();
+					finishedPanel = new FinishedPanel(user);
 					backgroundPanel.add(finishedPanel);
 					state = 2;
 				}
@@ -321,30 +323,30 @@ public class MainFrame extends JFrame implements Runnable{
 
 				if (state == 1) {
 					auctionPanel.setVisible(false);
-					sellProductPanel = new SellProductPanel();
+					sellProductPanel = new SellProductPanel(user);
 					backgroundPanel.add(sellProductPanel);
 					state = 4;
 				} else if (state == 2) {
 					finishedPanel.setVisible(false);
-					sellProductPanel = new SellProductPanel();
+					sellProductPanel = new SellProductPanel(user);
 					backgroundPanel.add(sellProductPanel);
 					state = 4;
 				} else if (state == 3) {
 					checkBidPanel.setVisible(false);
-					sellProductPanel = new SellProductPanel();
+					sellProductPanel = new SellProductPanel(user);
 					backgroundPanel.add(sellProductPanel);
 					state = 4;
 				} else if (state == 4) {
-					sellProductPanel = new SellProductPanel();
+					sellProductPanel = new SellProductPanel(user);
 					backgroundPanel.add(sellProductPanel);
 				} else if (state == 5) {
 					myPagePanel.setVisible(false);
-					sellProductPanel = new SellProductPanel();
+					sellProductPanel = new SellProductPanel(user);
 					backgroundPanel.add(sellProductPanel);
 					state = 4;
 				}else if (state == 6) {
 					inventoryPanel.setVisible(false);
-					sellProductPanel = new SellProductPanel();
+					sellProductPanel = new SellProductPanel(user);
 					backgroundPanel.add(sellProductPanel);
 					state = 4;
 				}
@@ -431,21 +433,10 @@ public class MainFrame extends JFrame implements Runnable{
 				});
 	}
 	
-	public void acceptDTO (UserDTO user) {
-		this.user = user;
-	}
-	
 	public static void main(String[] args) {
-		new MainFrame();
+		new MainFrame(new UserDTO(1,"aaa","엄송현","aaa",5000));
 	}
 
-	@Override
-	public void run() {
-		while(true) {
-			
-		}
-		
-	}
 
 
 }
