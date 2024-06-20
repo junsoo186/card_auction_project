@@ -123,6 +123,8 @@ public class Server {
 					} else if (message.startsWith("addCard")) {
 						String[] card = message.split("#");
 						
+					} else if (message.startsWith("userDTO")) {
+						
 					}
 				}
 				

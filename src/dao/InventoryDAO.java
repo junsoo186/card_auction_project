@@ -22,10 +22,10 @@ public class InventoryDAO {
 	}
 
 	// 해당 유저 번호가 가지고 있는 카드이미지경로, 카드이름 조회
-	public void invenInfo(int id) throws SQLException {
+	public void invenInfo(String name) throws SQLException {
 		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
 			PreparedStatement pstmt = conn.prepareStatement(Query.INVEN_INFO_ID);
-			pstmt.setInt(1, id);
+			pstmt.setString(1, name);
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
 				System.out.println("====================================");
