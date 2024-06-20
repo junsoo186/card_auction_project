@@ -14,13 +14,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-<<<<<<< HEAD
 import dto.CardDTO;
 import dto.UserDTO;
-=======
 import dto.UserDTO;
 
->>>>>>> ab9557331f40ea40669eb783c52fd1b18afa2a7f
 
 public class FinishedPanel extends JPanel {
 
@@ -32,24 +29,15 @@ public class FinishedPanel extends JPanel {
 	private JScrollPane scrollPane;
 	private UserDTO user;
 	
-	private UserDTO user;
-
 	private FinishedDetailedPanel finishedDetailedPanel;
 
 	ArrayList<JButton> product = new ArrayList<>(8);
 	ArrayList<Integer> serialNum = new ArrayList<>(8);
 	private int x = 500;
 	private int y = 100;
-<<<<<<< HEAD
 
 	public FinishedPanel(UserDTO user) {
-		this.user=user;
-=======
-	
-	public FinishedPanel(UserDTO user) {
-		this.user=user;
 		this.user = user;
->>>>>>> ab9557331f40ea40669eb783c52fd1b18afa2a7f
 		initData();
 		setInitLayout();
 	}

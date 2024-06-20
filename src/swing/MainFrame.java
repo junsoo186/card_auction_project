@@ -1,4 +1,4 @@
- package swing;
+  package swing;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -20,7 +20,7 @@ import lombok.ToString;
 
 @ToString
 
-public class MainFrame extends JFrame{
+public class MainFrame extends JFrame implements Runnable{
 
 	private UserDTO user;
 	private ChargeFrame chargeFrame;
@@ -98,8 +98,6 @@ public class MainFrame extends JFrame{
 		getContentPane().setBackground(Color.white);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		user=new UserDTO();
-		
 		backgroundPanel.setSize(getWidth(), getHeight());
 		backgroundPanel.setLayout(null);
 		backgroundPanel.setBackground(Color.white);
@@ -400,55 +398,31 @@ public class MainFrame extends JFrame{
 					public void mouseClicked(MouseEvent e) {
 						if (state == 1) {
 							auctionPanel.setVisible(false);
-<<<<<<< HEAD
-							InventoryPanel_wonseok inventoryPanel = new InventoryPanel_wonseok(user);
-=======
-							inventoryPanel = new InventoryPanel();
->>>>>>> ab9557331f40ea40669eb783c52fd1b18afa2a7f
+							inventoryPanel = new InventoryPanel(user);
 							backgroundPanel.add(inventoryPanel);
 							state = 6;
 						} else if (state == 2) {
 							finishedPanel.setVisible(false);
-<<<<<<< HEAD
-							InventoryPanel_wonseok inventoryPanel = new InventoryPanel_wonseok(user);
-=======
-							inventoryPanel = new InventoryPanel();
->>>>>>> ab9557331f40ea40669eb783c52fd1b18afa2a7f
+							inventoryPanel = new InventoryPanel(user);
 							backgroundPanel.add(inventoryPanel);
 							state = 6;
 						} else if (state == 3) {
 							checkBidPanel.setVisible(false);
-<<<<<<< HEAD
-							InventoryPanel_wonseok inventoryPanel = new InventoryPanel_wonseok(user);
-=======
-							inventoryPanel = new InventoryPanel();
->>>>>>> ab9557331f40ea40669eb783c52fd1b18afa2a7f
+							inventoryPanel = new InventoryPanel(user);
 							backgroundPanel.add(inventoryPanel);
 							state = 6;
 						} else if (state == 4) {
 							sellProductPanel.setVisible(false);
-<<<<<<< HEAD
-							InventoryPanel_wonseok inventoryPanel = new InventoryPanel_wonseok(user);
-=======
-							inventoryPanel = new InventoryPanel();
->>>>>>> ab9557331f40ea40669eb783c52fd1b18afa2a7f
+							inventoryPanel = new InventoryPanel(user);
 							backgroundPanel.add(inventoryPanel);
 							state = 6;
 						} else if (state == 5) {
 							myPagePanel.setVisible(false);
-<<<<<<< HEAD
-							InventoryPanel_wonseok inventoryPanel = new InventoryPanel_wonseok(user);
+							inventoryPanel = new InventoryPanel(user);
 							backgroundPanel.add(inventoryPanel);
 							state = 6;
 						} else if(state==6) {
-							InventoryPanel_wonseok inventoryPanel = new InventoryPanel_wonseok(user);
-=======
-							inventoryPanel = new InventoryPanel();
-							backgroundPanel.add(inventoryPanel);
-							state = 6;
-						} else if(state==6) {
-							inventoryPanel = new InventoryPanel();
->>>>>>> ab9557331f40ea40669eb783c52fd1b18afa2a7f
+							inventoryPanel = new InventoryPanel(user);
 							backgroundPanel.add(inventoryPanel);
 						}
 
@@ -457,10 +431,17 @@ public class MainFrame extends JFrame{
 				});
 	}
 	
-	
-	public static void main(String[] args) {
-		new MainFrame(new UserDTO(0,"a","a","a",0));
+
+	@Override
+	public void run() {
+		while(true) {
+			
+		}
+		
 	}
 	
-
+	public static void main(String[] args) {
+		new MainFrame(new UserDTO("a","a","a",0));
+	}
+	
 }
