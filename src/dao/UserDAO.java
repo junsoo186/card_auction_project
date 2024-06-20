@@ -21,6 +21,7 @@ public class UserDAO {
 			pstmt.setString(1, dto.getName());
 			pstmt.setString(2, dto.getPassword());
 			pstmt.setString(3, dto.getNickname());
+			pstmt.setInt(4, dto.getPoint());
 			pstmt.executeUpdate();
 			System.out.println("가입완료");
 		}

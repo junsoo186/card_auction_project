@@ -3,7 +3,7 @@ package dao;
 public class Query {
 
 	// UserDAO 쿼리
-	public static final String USER_ADD = " INSERT INTO user(name, password, nickname) VALUES(?, ?, ?) ";
+	public static final String USER_ADD = " INSERT INTO user(name, password, nickname,point) VALUES(?, ?, ?, ?) ";
 	public static final String USER_INFO_ALL = " SELECT * FROM user ";
 	public static final String USER_INFO_ID = " SELECT * FROM user WHERE id = ? ";
 	public static final String USER_INFO_NAME = " SELECT * FROM user WHERE name = ? ";
@@ -29,6 +29,6 @@ public class Query {
 	public static final String AUCTION_INFO_CARD = " SELECT a.id FROM auction a JOIN card c ON a.card_id = c.id WHERE c.name = ? ";
 
 	// InventoryDAO 쿼리
-	public static final String INVEN_ADD = " INSERT INTO inventory(user_id, card_id) VALUES(?, ?) ";
-	public static final String INVEN_INFO_ID = " SELECT c.url, c.name FROM inventory i JOIN user u ON i.user_id = u.id JOIN card c ON i.card_id = c.id WHERE i.user_id = ? ";
+	public static final String INVEN_ADD = " INSERT INTO inventory(name, card_id) VALUES(?, ?) ";
+	public static final String INVEN_INFO_ID = " SELECT c.url, c.name , c.id , c.price FROM inventory i JOIN user u ON i.name = u.name JOIN card c ON i.card_id = c.id WHERE i.name = ? ";
 }

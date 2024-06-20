@@ -97,6 +97,7 @@ public class Server {
 							user.setNickname(DB[1]);
 							user.setName(DB[2]);
 							user.setPassword(DB[3]);
+							user.setPoint(500);
 							// 회원가입시 카드 5개 랜덤으로 증정
 							dao.addUser(user);
 							for(int i = 0; i < 5; i++) {
