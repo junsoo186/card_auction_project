@@ -61,20 +61,23 @@ public class UserDAO {
 	}
 
 	// 유저 이름으로 조회하기
-	public static void infoUser(String name) throws SQLException {
+	public static UserDTO infoUser(String name) throws SQLException {
+		UserDTO user = new UserDTO();
 		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
 			PreparedStatement pstmt = conn.prepareStatement(Query.USER_INFO_NAME);
 			pstmt.setString(1, name);
 			ResultSet rs = pstmt.executeQuery();
-			while (rs.next()) {
-				System.out.println("====================================");
-				System.out.println("유저번호 : " + rs.getInt("id"));
-				System.out.println("유저이름 : " + rs.getString("name"));
-				System.out.println("비밀번호 : " + rs.getString("password"));
-				System.out.println("닉네임 : " + rs.getString("nickname"));
-				System.out.println("포인트 : " + rs.getInt("point"));
+			if (rs.next()) {
+				while (rs.next()) {
+					user.setName(rs.getString("name"));
+					user.setId(rs.getInt("id"));
+					user.setNickname(rs.getString("nickname"));
+					user.setPassword(rs.getString("password"));
+					user.setPoint(rs.getInt("point"));
+				}
 			}
 		}
+		return user;
 	}
 
 	// 유저 번호로 수정 ( 비밀번호, 닉네임 )
@@ -149,20 +152,12 @@ public class UserDAO {
 			pstmt.setString(1, name);
 			pstmt.setString(2, password);
 			ResultSet rs = pstmt.executeQuery();
-			UserDTO user = new UserDTO();
-			while(rs.next()) {
-				user.setName(rs.getString("name"));
-				user.setId(rs.getInt("id"));
-				user.setNickname(rs.getString("nickname"));
-				user.setPassword(rs.getString("password"));
-				user.setPoint(rs.getInt("point"));
-			}
-			LogInFrame login = new LogInFrame();
-			login.acceptDTO(user);
-			
+			result = rs.next();
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return result;
 	}
+
 }

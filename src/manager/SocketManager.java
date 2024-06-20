@@ -8,6 +8,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 import lombok.Data;
+import swing.LogInFrame;
 
 @Data
 public class SocketManager implements Runnable{
@@ -17,7 +18,6 @@ public class SocketManager implements Runnable{
 	private static BufferedReader serverOrder;
 	
 	public SocketManager() {
-		
 	}
 	
 	public static void sendOrder(String order) {

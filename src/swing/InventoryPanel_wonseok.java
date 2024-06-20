@@ -12,12 +12,15 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import dao.InventoryDAO;
+import dto.CardDTO;
+import dto.InventoryDTO;
 import dto.UserDTO;
 
 public class InventoryPanel_wonseok extends JPanel {
 	
 	private ArrayList<JButton> productList = new ArrayList<>(12);
 	private ArrayList<String> productTitleList = new ArrayList<>(12);
+	private ArrayList<CardDTO> userInventory = new ArrayList<>();
 	private JPanel backgroundPanel;
 	private JLabel title;
 	private JScrollPane scrollPane;
@@ -74,9 +77,12 @@ public class InventoryPanel_wonseok extends JPanel {
 		ProductButton();
 		
 		try {
-			inven.invenInfo(user.getName());
+			userInventory = inven.invenInfo(user.getName()); // 유저가 가지고있는 카드 목록 호출
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}
+		for(int i = 0; i < userInventory.size(); i++) {
+			createProduct(userInventory.get(i).getUrl()); // 유저가 가지고있는 카드 url 삽입
 		}
 		
 		JLabel title=new JLabel("보유 카드 확인하기"+"("+product.size()+")");

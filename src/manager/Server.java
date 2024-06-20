@@ -112,8 +112,7 @@ public class Server {
 					} else if (message.startsWith("login")) {
 						String[] login = message.split("#");
 						if(dao.loginUser(login[1], login[2])) {
-							user.setName(login[1]);
-							user.setPassword(login[2]);
+							printWriter.println("success");
 						} else {
 							printWriter.println("wrong");
 						}
