@@ -53,14 +53,14 @@ public class SellFrame extends JFrame{
 			add(backgroundPanel);
 			
 			JLabel cardTitle=new JLabel(card.getName());
-			JLabel guidText=new JLabel(" 시작 가격을 설정해주세요 (현재 가격 :"+card.getPrice()+")");
+			JLabel guidText=new JLabel("시작 가격을 설정해주세요 (평균 시세 :"+card.getPrice()+")");
 			cardTitle.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 30));
 			guidText.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 18));
 			addPriceField=new JTextField(20);
-			decidePriceButton=new JButton("가격 제시");
+			decidePriceButton=new JButton("경매 시작");
 			exitButton=new JButton("나가기");
 			cardTitle.setBounds(55, 40, 400, 50);
-			guidText.setBounds(40, 335, 400, 50);
+			guidText.setBounds(30, 335, 400, 50);
 			addPriceField.setBounds(80, 385, 200, 30);
 			decidePriceButton.setBounds(80, 425, 90, 30);
 			exitButton.setBounds(185, 425, 90, 30);
