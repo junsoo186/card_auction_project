@@ -71,8 +71,8 @@ public class CheckBidPanel extends JPanel {
 		
 		createProduct("image/card1.png");
 		createProduct("image/card2.png");
+		createProduct("image/card3.jpg");
 		createProduct("image/card4.jpg");
-		createProduct("image/card5.jpg");
 		
 		JLabel title=new JLabel("시세 확인하기"+"("+product.size()+")");
 		title.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 32));

@@ -19,6 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
+import dto.UserDTO;
 import manager.SocketManager;
 
 public class LogInFrame extends JFrame {
@@ -35,6 +36,7 @@ public class LogInFrame extends JFrame {
 		private JPanel FinishPanel;
 		private JPanel MyPagePanel;
 		private JPanel JoinAuctionPanel;
+		private UserDTO user;
 		
 		private JLabel id;
 		private JLabel password;
@@ -140,7 +142,10 @@ public class LogInFrame extends JFrame {
 					String id = idField.getText();
 					String password = passwordField.getText();
 					socket.sendOrder("login#" + id + "#" + password);
-				}
+					user=new UserDTO();
+					new MainFrame(user);
+					dispose();
+					}
 			});
 			logInButton.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent e) {
