@@ -22,6 +22,7 @@ import javax.swing.ScrollPaneConstants;
 
 import dto.CardDTO;
 import dto.UserDTO;
+import manager.AuctionManager;
 
 
 public class AuctionPanel extends JPanel {
@@ -50,6 +51,7 @@ public class AuctionPanel extends JPanel {
 	private CardDTO cardDTO;
 	private UserDTO user;
 	private AuctionDetailedPanel detailPage;
+	private AuctionManager auctionManager;
 	
 	
 	ArrayList<JButton>product = new ArrayList<>(20);
@@ -124,8 +126,6 @@ public class AuctionPanel extends JPanel {
 		createProduct(cardList.get(5));
 		createProduct(cardList.get(6));
 		createProduct(cardList.get(7));
-		createProduct(cardList.get(8));
-		createProduct(cardList.get(9));
 	}
 	
 	

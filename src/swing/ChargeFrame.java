@@ -184,6 +184,6 @@ public class ChargeFrame extends JFrame {
 	}
 	
 public static void main(String[] args) {
-	new ChargeFrame(new UserDTO(1,"엄송현","12345","클라이언트1",555));
+	new ChargeFrame(new UserDTO("엄송현","12345","클라이언트1",555));
 }
 }

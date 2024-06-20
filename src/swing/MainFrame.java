@@ -400,31 +400,31 @@ public class MainFrame extends JFrame{
 					public void mouseClicked(MouseEvent e) {
 						if (state == 1) {
 							auctionPanel.setVisible(false);
-							inventoryPanel = new InventoryPanel();
+							InventoryPanel_wonseok inventoryPanel = new InventoryPanel_wonseok(user);
 							backgroundPanel.add(inventoryPanel);
 							state = 6;
 						} else if (state == 2) {
 							finishedPanel.setVisible(false);
-							inventoryPanel = new InventoryPanel();
+							InventoryPanel_wonseok inventoryPanel = new InventoryPanel_wonseok(user);
 							backgroundPanel.add(inventoryPanel);
 							state = 6;
 						} else if (state == 3) {
 							checkBidPanel.setVisible(false);
-							inventoryPanel = new InventoryPanel();
+							InventoryPanel_wonseok inventoryPanel = new InventoryPanel_wonseok(user);
 							backgroundPanel.add(inventoryPanel);
 							state = 6;
 						} else if (state == 4) {
 							sellProductPanel.setVisible(false);
-							inventoryPanel = new InventoryPanel();
+							InventoryPanel_wonseok inventoryPanel = new InventoryPanel_wonseok(user);
 							backgroundPanel.add(inventoryPanel);
 							state = 6;
 						} else if (state == 5) {
 							myPagePanel.setVisible(false);
-							inventoryPanel = new InventoryPanel();
+							InventoryPanel_wonseok inventoryPanel = new InventoryPanel_wonseok(user);
 							backgroundPanel.add(inventoryPanel);
 							state = 6;
 						} else if(state==6) {
-							inventoryPanel = new InventoryPanel();
+							InventoryPanel_wonseok inventoryPanel = new InventoryPanel_wonseok(user);
 							backgroundPanel.add(inventoryPanel);
 						}
 
@@ -435,7 +435,7 @@ public class MainFrame extends JFrame{
 	
 	
 	public static void main(String[] args) {
-		new MainFrame(new UserDTO(0,"a","a","a",0));
+		new MainFrame(new UserDTO("a","a","a",0));
 	}
 	
 

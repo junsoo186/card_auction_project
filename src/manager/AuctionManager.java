@@ -28,7 +28,7 @@ public class AuctionManager extends Thread {
 	static String h;
 	static String m;
 	// BID 관련 변수
-	static int startBid;
+	int startBid;
 	int highbid;
 
 	
@@ -73,7 +73,6 @@ public class AuctionManager extends Thread {
 	public void timeOver() {
 		System.out.println("경매 종료");
 		AuctionDAO dao = new AuctionDAO();
-		dto.setUserId(maker.getId());
 		dto.setBidPrice(highbid);
 		dto.setEndDate(h+"시"+m+"분"+"00초");
 	try {

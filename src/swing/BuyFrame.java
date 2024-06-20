@@ -103,7 +103,7 @@ public class BuyFrame extends JFrame {
 		});
 	}
 	public static void main(String[] args) {
-		new BuyFrame(new CardDTO(0,"image/card1.png","포켓몬스터 나오하 카드",1000), new UserDTO(1,"엄송현","12345","클라이언트1",555));
+		new BuyFrame(new CardDTO(0,"image/card1.png","포켓몬스터 나오하 카드",1000), new UserDTO("엄송현","12345","클라이언트1",555));
 	}
 
 }
