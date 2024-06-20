@@ -1,4 +1,4 @@
-  package swing;
+ package swing;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -20,7 +20,7 @@ import lombok.ToString;
 
 @ToString
 
-public class MainFrame extends JFrame implements Runnable{
+public class MainFrame extends JFrame{
 
 	private UserDTO user;
 	private ChargeFrame chargeFrame;
@@ -98,6 +98,8 @@ public class MainFrame extends JFrame implements Runnable{
 		getContentPane().setBackground(Color.white);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+		user=new UserDTO();
+		
 		backgroundPanel.setSize(getWidth(), getHeight());
 		backgroundPanel.setLayout(null);
 		backgroundPanel.setBackground(Color.white);
@@ -246,30 +248,30 @@ public class MainFrame extends JFrame implements Runnable{
 
 				if (state == 1) {
 					auctionPanel.setVisible(false);
-					finishedPanel = new FinishedPanel();
+					finishedPanel = new FinishedPanel(user);
 					backgroundPanel.add(finishedPanel);
 					state = 2;
 				} else if (state == 2) {
-					finishedPanel = new FinishedPanel();
+					finishedPanel = new FinishedPanel(user);
 					backgroundPanel.add(finishedPanel);
 				} else if (state == 3) {
 					checkBidPanel.setVisible(false);
-					finishedPanel = new FinishedPanel();
+					finishedPanel = new FinishedPanel(user);
 					backgroundPanel.add(finishedPanel);
 					state = 2;
 				} else if (state == 4) {
 					sellProductPanel.setVisible(false);
-					finishedPanel = new FinishedPanel();
+					finishedPanel = new FinishedPanel(user);
 					backgroundPanel.add(finishedPanel);
 					state = 2;
 				} else if (state == 5) {
 					myPagePanel.setVisible(false);
-					finishedPanel = new FinishedPanel();
+					finishedPanel = new FinishedPanel(user);
 					backgroundPanel.add(finishedPanel);
 					state = 2;
 				} else if (state == 6) {
 					inventoryPanel.setVisible(false);
-					finishedPanel = new FinishedPanel();
+					finishedPanel = new FinishedPanel(user);
 					backgroundPanel.add(finishedPanel);
 					state = 2;
 				}
@@ -321,30 +323,30 @@ public class MainFrame extends JFrame implements Runnable{
 
 				if (state == 1) {
 					auctionPanel.setVisible(false);
-					sellProductPanel = new SellProductPanel();
+					sellProductPanel = new SellProductPanel(user);
 					backgroundPanel.add(sellProductPanel);
 					state = 4;
 				} else if (state == 2) {
 					finishedPanel.setVisible(false);
-					sellProductPanel = new SellProductPanel();
+					sellProductPanel = new SellProductPanel(user);
 					backgroundPanel.add(sellProductPanel);
 					state = 4;
 				} else if (state == 3) {
 					checkBidPanel.setVisible(false);
-					sellProductPanel = new SellProductPanel();
+					sellProductPanel = new SellProductPanel(user);
 					backgroundPanel.add(sellProductPanel);
 					state = 4;
 				} else if (state == 4) {
-					sellProductPanel = new SellProductPanel();
+					sellProductPanel = new SellProductPanel(user);
 					backgroundPanel.add(sellProductPanel);
 				} else if (state == 5) {
 					myPagePanel.setVisible(false);
-					sellProductPanel = new SellProductPanel();
+					sellProductPanel = new SellProductPanel(user);
 					backgroundPanel.add(sellProductPanel);
 					state = 4;
 				}else if (state == 6) {
 					inventoryPanel.setVisible(false);
-					sellProductPanel = new SellProductPanel();
+					sellProductPanel = new SellProductPanel(user);
 					backgroundPanel.add(sellProductPanel);
 					state = 4;
 				}
@@ -398,31 +400,31 @@ public class MainFrame extends JFrame implements Runnable{
 					public void mouseClicked(MouseEvent e) {
 						if (state == 1) {
 							auctionPanel.setVisible(false);
-							inventoryPanel = new InventoryPanel(user);
+							inventoryPanel = new InventoryPanel();
 							backgroundPanel.add(inventoryPanel);
 							state = 6;
 						} else if (state == 2) {
 							finishedPanel.setVisible(false);
-							inventoryPanel = new InventoryPanel(user);
+							inventoryPanel = new InventoryPanel();
 							backgroundPanel.add(inventoryPanel);
 							state = 6;
 						} else if (state == 3) {
 							checkBidPanel.setVisible(false);
-							inventoryPanel = new InventoryPanel(user);
+							inventoryPanel = new InventoryPanel();
 							backgroundPanel.add(inventoryPanel);
 							state = 6;
 						} else if (state == 4) {
 							sellProductPanel.setVisible(false);
-							inventoryPanel = new InventoryPanel(user);
+							inventoryPanel = new InventoryPanel();
 							backgroundPanel.add(inventoryPanel);
 							state = 6;
 						} else if (state == 5) {
 							myPagePanel.setVisible(false);
-							inventoryPanel = new InventoryPanel(user);
+							inventoryPanel = new InventoryPanel();
 							backgroundPanel.add(inventoryPanel);
 							state = 6;
 						} else if(state==6) {
-							inventoryPanel = new InventoryPanel(user);
+							inventoryPanel = new InventoryPanel();
 							backgroundPanel.add(inventoryPanel);
 						}
 
@@ -431,17 +433,10 @@ public class MainFrame extends JFrame implements Runnable{
 				});
 	}
 	
-
-	@Override
-	public void run() {
-		while(true) {
-			
-		}
-		
-	}
 	
 	public static void main(String[] args) {
-		new MainFrame(new UserDTO("a","a","a",0));
+		new MainFrame(new UserDTO(0,"a","a","a",0));
 	}
 	
+
 }

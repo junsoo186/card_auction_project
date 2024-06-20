@@ -12,6 +12,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import dto.UserDTO;
+
 
 public class FinishedPanel extends JPanel {
 	
@@ -20,13 +22,15 @@ public class FinishedPanel extends JPanel {
 	private JPanel backgroundPanel;
 	private JLabel title;
 	private JScrollPane scrollPane;
+	private UserDTO user;
 	
 	ArrayList<JButton>product = new ArrayList<>(8);
 	ArrayList<Integer>serialNum = new ArrayList<>(8);
 	private int x = 500;
 	private int y = 100;
 	
-	public FinishedPanel() {
+	public FinishedPanel(UserDTO user) {
+		this.user=user;
 		initData();
 		setInitLayout();
 	} 
