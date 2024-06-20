@@ -321,30 +321,30 @@ public class MainFrame extends JFrame implements Runnable{
 
 				if (state == 1) {
 					auctionPanel.setVisible(false);
-					sellProductPanel = new SellProductPanel();
+					sellProductPanel = new SellProductPanel(user);
 					backgroundPanel.add(sellProductPanel);
 					state = 4;
 				} else if (state == 2) {
 					finishedPanel.setVisible(false);
-					sellProductPanel = new SellProductPanel();
+					sellProductPanel = new SellProductPanel(user);
 					backgroundPanel.add(sellProductPanel);
 					state = 4;
 				} else if (state == 3) {
 					checkBidPanel.setVisible(false);
-					sellProductPanel = new SellProductPanel();
+					sellProductPanel = new SellProductPanel(user);
 					backgroundPanel.add(sellProductPanel);
 					state = 4;
 				} else if (state == 4) {
-					sellProductPanel = new SellProductPanel();
+					sellProductPanel = new SellProductPanel(user);
 					backgroundPanel.add(sellProductPanel);
 				} else if (state == 5) {
 					myPagePanel.setVisible(false);
-					sellProductPanel = new SellProductPanel();
+					sellProductPanel = new SellProductPanel(user);
 					backgroundPanel.add(sellProductPanel);
 					state = 4;
 				}else if (state == 6) {
 					inventoryPanel.setVisible(false);
-					sellProductPanel = new SellProductPanel();
+					sellProductPanel = new SellProductPanel(user);
 					backgroundPanel.add(sellProductPanel);
 					state = 4;
 				}

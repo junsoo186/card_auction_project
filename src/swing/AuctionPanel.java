@@ -80,8 +80,6 @@ public class AuctionPanel extends JPanel {
 		cardList.add(new CardDTO(5,"image/card6.png","[포켓몬스터] 루카리오 카드",8000));
 		cardList.add(new CardDTO(6,"image/card7.jpg","[포켓몬스터] 레시라무 카드",20000));
 		cardList.add(new CardDTO(7,"image/card8.jpg","[포켓몬스터] 마자용 카드",30000));
-		cardList.add(new CardDTO(8,"image/card9.png","[포켓몬스터] 파이리 카드",30000));
-		cardList.add(new CardDTO(9,"image/card10.jpg","[포켓몬스터] 빠모 카드",30000));
 	}
 	
 	public void createProduct(CardDTO card) {
@@ -128,8 +126,6 @@ public class AuctionPanel extends JPanel {
 		createProduct(cardList.get(5));
 		createProduct(cardList.get(6));
 		createProduct(cardList.get(7));
-		createProduct(cardList.get(8));
-		createProduct(cardList.get(9));
 	}
 	
 	

@@ -1,5 +1,6 @@
 package swing;
 
+import java.awt.Choice;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
@@ -18,8 +19,10 @@ import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
+import dao.InventoryDAO;
 import dto.CardDTO;
 import dto.UserDTO;
+import manager.SocketManager;
 
 
 public class SellProductPanel extends JPanel {
@@ -33,11 +36,15 @@ public class SellProductPanel extends JPanel {
 	
 	private JLabel title;
 	private JLabel name;
-	private JLabel photo;
+	private JButton selectCardButton;
 	private JLabel point;
+	private JLabel hour;
+	private JLabel second;
+	private JLabel timeLimit;
 	
 	private JTextField nameField;
-	private JTextField photoField;
+	private JTextField hoursField;
+	private JTextField secondsField;
 	private JTextField pointField;
 
 	private JButton sellButton;
@@ -46,10 +53,17 @@ public class SellProductPanel extends JPanel {
 	private int y = 100;
 	
 	private UserDTO user;
+	private Choice choice;
 	
+<<<<<<< HEAD
 	public SellProductPanel() {
+=======
+	public SellProductPanel(UserDTO user) {
+		this.user=user;
+>>>>>>> main
 		initData();
 		setInitLayout();
+		initListener();
 	} 
 
 	private void initData() {
@@ -81,57 +95,88 @@ public class SellProductPanel extends JPanel {
 		infoPanel.setBounds(500,100,900,450);
 		infoPanel.setLayout(null);
 		
-		name = new JLabel(" 카드 이름 : ");
-		photo = new JLabel(" 사진 : ");
+		name = new JLabel(" 카드 고르기 ");
 		point = new JLabel(" 포인트 : ");
-		nameField=new JTextField(50);
-		photoField=new JTextField(50);
+		hour = new JLabel(" 시 ");
+		second = new JLabel(" 분 ");
+		timeLimit = new JLabel(" 마감 시간 : ");
+		selectCardButton=new JButton("인벤토리 들어가기");
+		selectCardButton.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 20));
+		selectCardButton.setBackground(new Color(255,204,100));
+		selectCardButton.setBounds(380, 360, 190, 100);
+		hoursField=new JTextField(50);
+		secondsField=new JTextField(50);
 		pointField=new JTextField(50);
 		
 		sellButton=new JButton("판매하기");
 		sellButton.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 20));
-		sellButton.setBounds(380, 360, 150, 50);
-		sellButton.setBackground(new Color(255,204,3));
-		sellButton.setBorderPainted(false);
+		sellButton.setBounds(380, 360, 150, 60);
+		sellButton.setBackground(new Color(255,204,30));
 		
 		name.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 20));
 		name.setBounds(330, 200, 300, 50);
-		nameField.setBounds(440, 210, 150, 25);
-		photo.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 20));
-		photo.setBounds(360, 240, 300, 50);
-		photoField.setBounds(440, 250, 150, 25);
+		selectCardButton.setBounds(440, 210, 150, 25);
 		point.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 20));
-		point.setBounds(350, 280, 350, 50);
-		pointField.setBounds(440, 290, 150, 25);
+		timeLimit.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 20));
+		hour.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 20));
+		second.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 20));
+		point.setBounds(350, 270, 350, 50);
+		timeLimit.setBounds(340, 250, 100, 25);
+		hour.setBounds(492, 251, 50, 25);
+		second.setBounds(580, 251, 50, 25);
+		hoursField.setBounds(440, 251, 50, 25);
+		secondsField.setBounds(530, 251, 50, 25);
+		pointField.setBounds(440, 290, 80, 25);
 		
 		add(profileLabel);
 		add(infoPanel);
 		infoPanel.add(name);
-		infoPanel.add(photo);
 		infoPanel.add(point);
-		infoPanel.add(nameField);
-		infoPanel.add(photoField);
-		infoPanel.add(pointField);
+		infoPanel.add(selectCardButton);
+		infoPanel.add(hour);
+		infoPanel.add(second);
+		infoPanel.add(timeLimit);
+		infoPanel.add(hoursField);
+		infoPanel.add(secondsField);
 		infoPanel.add(sellButton);
+		infoPanel.add(pointField);
 	}
 	
 	private void initListener() {
 		// 진행중인 경매 이동
 		sellButton.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				int id=0;
-				String name=nameField.getText();
-				String image=photoField.getText();
 				int price=Integer.parseInt(pointField.getText());
-				CardDTO card=new CardDTO(id,name,image,price);
-				
-				auctionPanel.cardList.add(card);
 				JOptionPane.showMessageDialog(null,"경매 참여가 완료되었습니다.");
 				System.out.println("완료!");
 			}
 
 		});
+		selectCardButton.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				selectInventory(user);
+			}
+
+		});
 		
+	}
+	
+	private void selectInventory(UserDTO user) {
+		JFrame inventoryFrame=new JFrame();
+		inventoryFrame.setTitle("[나의 카드 인벤토리]");
+		inventoryFrame.setSize(500,700);
+		inventoryFrame.setLocationRelativeTo(null);
+		inventoryFrame.setResizable(false);
+		setLayout(null);
+		inventoryFrame.getContentPane().setBackground(Color.white);
+		inventoryFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		System.out.println("인벤토리 입장");
+		
+		ArrayList<JButton> productList = new ArrayList<>(20);
+		ArrayList<String> productTitleList = new ArrayList<>(20);
+		ArrayList<CardDTO> cardList=new ArrayList(10);
+		
+		inventoryFrame.setVisible(true);
 	}
 
 }
