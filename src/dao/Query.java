@@ -29,6 +29,6 @@ public class Query {
 	public static final String AUCTION_INFO_CARD = " SELECT a.id FROM auction a JOIN card c ON a.card_id = c.id WHERE c.name = ? ";
 
 	// InventoryDAO 쿼리
-	public static final String INVEN_ADD = " INSERT INTO inventory(user_id, card_id) VALUES(?, ?) ";
-	public static final String INVEN_INFO_ID = " SELECT c.url, c.name FROM inventory i JOIN user u ON i.user_id = u.id JOIN card c ON i.card_id = c.id WHERE i.user_id = ? ";
+	public static final String INVEN_ADD = " INSERT INTO inventory(name, card_id) VALUES(?, ?) ";
+	public static final String INVEN_INFO_ID = " SELECT c.url, c.name FROM inventory i JOIN user u ON i.name = u.id JOIN card c ON i.name = c.id WHERE i.name = ? ";
 }
