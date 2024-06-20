@@ -28,6 +28,7 @@ public class InventoryPanel extends JPanel {
 	private JScrollPane scrollPane;
 	private UserDTO user;
 	private MainFrame mconText;
+	private InventoryDetailedPanel detail;
 	
 	ArrayList<JButton>product = new ArrayList<>();
 	ArrayList<Integer>serialNum = new ArrayList<>();
@@ -38,7 +39,6 @@ public class InventoryPanel extends JPanel {
 	public InventoryPanel(UserDTO user,MainFrame mconText) {
 		this.mconText = mconText;
 		this.user = user;
-		this.backgroundPanel = backgroundPanel;
 		initData();
 		setInitLayout();
 	} 
@@ -108,9 +108,8 @@ public class InventoryPanel extends JPanel {
 			product.get(i).addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					System.out.println("버튼 작동!!!");
 					setVisible(false);
-					InventoryDetailedPanel detail = new InventoryDetailedPanel(userInventory.get(num));
+					detail = new InventoryDetailedPanel(userInventory.get(num),user);
 					mconText.getBackgroundPanel().add(detail);
 					mconText.repaint();
 				}
@@ -119,4 +118,8 @@ public class InventoryPanel extends JPanel {
 		
 	}
 	
+	public void deletePanel() {
+		detail.setVisible(false);
+		mconText.repaint();
+	}
 }

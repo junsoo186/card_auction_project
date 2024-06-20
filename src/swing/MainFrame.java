@@ -93,6 +93,10 @@ public class MainFrame extends JFrame implements Runnable{
 
 		mainPanel = new JPanel();
 		add(backgroundPanel);
+		sellProductPanel = new SellProductPanel(user);
+		backgroundPanel.add(sellProductPanel);
+		auctionPanel = new AuctionPanel(backgroundPanel,user);
+		backgroundPanel.add(auctionPanel);
 	}
 
 	private void setInitLayout() {
@@ -190,12 +194,8 @@ public class MainFrame extends JFrame implements Runnable{
 		backgroundLabel.add(button4);
 		backgroundLabel.add(button5);
 
-
-		auctionPanel = new AuctionPanel(backgroundPanel,user);
-		backgroundPanel.add(auctionPanel);
-
 		setVisible(true);
-
+		
 	}
 
 	// 포인트 갱신
@@ -221,8 +221,6 @@ public class MainFrame extends JFrame implements Runnable{
 					backgroundPanel.add(auctionPanel);
 				} else if (state == 3) {
 					checkBidPanel.setVisible(false);
-					auctionPanel = new AuctionPanel(backgroundPanel,user);
-					backgroundPanel.add(auctionPanel);
 					state = 1;
 				} else if (state == 4) {
 					sellProductPanel.setVisible(false);
@@ -236,8 +234,10 @@ public class MainFrame extends JFrame implements Runnable{
 					state = 1;
 				} else if (state == 6) {
 					inventoryPanel.setVisible(false);
+					inventoryPanel.deletePanel();
 					auctionPanel = new AuctionPanel(backgroundPanel,user);
 					backgroundPanel.add(auctionPanel);
+					backgroundPanel.repaint();
 					state = 1;
 				}
 				user.setPoint(auctionPanel.getUser().getPoint());
@@ -275,6 +275,7 @@ public class MainFrame extends JFrame implements Runnable{
 					state = 2;
 				} else if (state == 6) {
 					inventoryPanel.setVisible(false);
+					inventoryPanel.deletePanel();
 					finishedPanel = new FinishedPanel(user);
 					backgroundPanel.add(finishedPanel);
 					state = 2;
@@ -312,6 +313,7 @@ public class MainFrame extends JFrame implements Runnable{
 					state = 3;
 				}else if (state == 6) {
 					inventoryPanel.setVisible(false);
+					inventoryPanel.deletePanel();
 					checkBidPanel = new CheckBidPanel();
 					backgroundPanel.add(checkBidPanel);
 					state = 3;
@@ -327,8 +329,6 @@ public class MainFrame extends JFrame implements Runnable{
 
 				if (state == 1) {
 					auctionPanel.setVisible(false);
-					sellProductPanel = new SellProductPanel(user);
-					backgroundPanel.add(sellProductPanel);
 					state = 4;
 				} else if (state == 2) {
 					finishedPanel.setVisible(false);
@@ -350,6 +350,7 @@ public class MainFrame extends JFrame implements Runnable{
 					state = 4;
 				}else if (state == 6) {
 					inventoryPanel.setVisible(false);
+					inventoryPanel.deletePanel();
 					sellProductPanel = new SellProductPanel(user);
 					backgroundPanel.add(sellProductPanel);
 					state = 4;
@@ -394,6 +395,7 @@ public class MainFrame extends JFrame implements Runnable{
 					backgroundPanel.add(myPagePanel);
 				} else if (state == 6) {
 					inventoryPanel.setVisible(false);
+					inventoryPanel.deletePanel();
 					myPagePanel = new MyPagePanel(user);
 					backgroundPanel.add(myPagePanel);
 				}
@@ -428,6 +430,7 @@ public class MainFrame extends JFrame implements Runnable{
 							backgroundPanel.add(inventoryPanel);
 							state = 6;
 						} else if(state==6) {
+							inventoryPanel.deletePanel();
 							inventoryPanel = new InventoryPanel(user,mconText);
 							backgroundPanel.add(inventoryPanel);
 						}

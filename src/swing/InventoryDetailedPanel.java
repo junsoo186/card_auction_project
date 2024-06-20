@@ -26,14 +26,18 @@ import dto.CardDTO;
 		private JPanel backgroundPanel1;
 		private JLabel title;
 		private JScrollPane scrollPane;
+		
 		private CardDTO card;
-		private JButton buyCard;
+		private UserDTO user;
+		
+		private JButton sellCard;
 		private JButton goBackButton;
 		private BuyFrame buyFrame;
 		private AuctionManager auctionManager;
 
-		public InventoryDetailedPanel(CardDTO card) {
+		public InventoryDetailedPanel(CardDTO card,UserDTO user) {
 			this.card = card;
+			this.user = user;
 			initData();
 			setInitLayout();
 		}
@@ -58,27 +62,34 @@ import dto.CardDTO;
 			JLabel cardName = new JLabel(" 카드명 : " + card.getName());
 			JLabel cardPrice = new JLabel(" 현재 카드 가격 : " + card.getPrice());
 			JLabel cardIcon = new JLabel(new ImageIcon(card.getUrl()));
-			buyCard = new JButton("판매하기");
+			sellCard = new JButton("판매하기");
 
 			cardId.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 24));
 			cardName.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 24));
 			cardPrice.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 24));
 			cardIcon.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 24));
-			buyCard.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 24));
+			sellCard.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 24));
 
 			cardId.setBounds(900, 100, 400, 100);
 			cardName.setBounds(900, 150, 400, 100);
 			cardPrice.setBounds(900, 200, 400, 100);
 			cardIcon.setBounds(600, 150, 150, 200);
-			buyCard.setBounds(900, 300, 200, 70);
-			buyCard.setBackground(new Color(255, 204, 3));
-			buyCard.setBorderPainted(false);
+			sellCard.setBounds(900, 300, 200, 70);
+			sellCard.setBackground(new Color(255, 204, 3));
+			sellCard.setBorderPainted(false);
 
 			add(cardId);
 			add(cardName);
 			add(cardPrice);
 			add(cardIcon);
-			add(buyCard);
+			add(sellCard);
+			
+			sellCard.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					new SellFrame(card,user);
+				}
+			});
 
 		}
 		
