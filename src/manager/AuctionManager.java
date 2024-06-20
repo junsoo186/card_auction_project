@@ -28,7 +28,7 @@ public class AuctionManager extends Thread {
 	static String h;
 	static String m;
 	// BID 관련 변수
-	static int startBid;
+	int startBid;
 	int highbid;
 
 	

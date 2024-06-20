@@ -33,10 +33,9 @@ public class AuctionDetailedPanel extends JPanel {
 	private BuyFrame buyFrame;
 	private AuctionManager auctionManager;
 
-	public AuctionDetailedPanel(CardDTO card,UserDTO user,JPanel background , AuctionManager auctionManager) {
+	public AuctionDetailedPanel(CardDTO card, UserDTO user, JPanel background) {
 		this.card = card;
 		this.user=user;
-		this.auctionManager= auctionManager;
 		this.backgroundPanel=backgroundPanel;
 		initData();
 		setInitLayout();
