@@ -25,12 +25,13 @@ import manager.DBConnectionManager;
 
 public class AuctionDAO {
 
-	// 옥션 추가기능
+	// 완료된 옥션 올리기
 	public void addAuction(AuctionDTO dto) throws SQLException {
 		try (Connection connect = DBConnectionManager.getInstance().getConnection()) {
 			PreparedStatement pstmt = connect.prepareStatement(Query.AUCTION_ADD);
 			pstmt.setInt(1, dto.getUserId());
 			pstmt.setInt(2, dto.getCardId());
+			
 			pstmt.setInt(3, dto.getBidPrice());
 			pstmt.setString(4, dto.getStartDate());
 			pstmt.setString(5, dto.getEndDate());

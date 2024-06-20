@@ -16,6 +16,7 @@ import javax.swing.JScrollPane;
 
 import dto.CardDTO;
 import dto.UserDTO;
+import manager.AuctionManager;
 
 public class AuctionDetailedPanel extends JPanel {
 
@@ -30,8 +31,9 @@ public class AuctionDetailedPanel extends JPanel {
 	private JButton buyCard;
 	private JButton goBackButton;
 	private BuyFrame buyFrame;
+	private AuctionManager auctionManager;
 
-	public AuctionDetailedPanel(CardDTO card,UserDTO user,JPanel background) {
+	public AuctionDetailedPanel(CardDTO card, UserDTO user, JPanel background) {
 		this.card = card;
 		this.user=user;
 		this.backgroundPanel=backgroundPanel;
