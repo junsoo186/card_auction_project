@@ -2,6 +2,8 @@ package swing;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -25,15 +27,18 @@ public class InventoryPanel extends JPanel {
 	private JLabel title;
 	private JScrollPane scrollPane;
 	private UserDTO user;
+	private MainFrame mconText;
 	
 	ArrayList<JButton>product = new ArrayList<>();
 	ArrayList<Integer>serialNum = new ArrayList<>();
+	InventoryDAO inven = new InventoryDAO();
 	private int x = 500;
 	private int y = 100;
-	InventoryDAO inven = new InventoryDAO();
 	
-	public InventoryPanel(UserDTO user) {
+	public InventoryPanel(UserDTO user,MainFrame mconText) {
+		this.mconText = mconText;
 		this.user = user;
+		this.backgroundPanel = backgroundPanel;
 		initData();
 		setInitLayout();
 	} 
@@ -84,6 +89,9 @@ public class InventoryPanel extends JPanel {
 		for(int i = 0; i < userInventory.size(); i++) {
 			createProduct(userInventory.get(i).getUrl()); // 유저가 가지고있는 카드 url 삽입
 		}
+		System.out.println("카드 등록 까지 ");
+		addActionListner(userInventory);
+		
 		
 		JLabel title=new JLabel("보유 카드 확인하기"+"("+product.size()+")");
 		title.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 32));
@@ -92,4 +100,23 @@ public class InventoryPanel extends JPanel {
 		
 	}
 
+	// 카드 정보 조회기능 추가
+	public void addActionListner(ArrayList<CardDTO> userInventory) {
+		
+		for(int i = 0; i < userInventory.size(); i++) {
+			int num = i;
+			product.get(i).addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					System.out.println("버튼 작동!!!");
+					setVisible(false);
+					InventoryDetailedPanel detail = new InventoryDetailedPanel(userInventory.get(num));
+					mconText.getBackgroundPanel().add(detail);
+					mconText.repaint();
+				}
+			});
+		}
+		
+	}
+	
 }

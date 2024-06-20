@@ -55,12 +55,8 @@ public class SellProductPanel extends JPanel {
 	private UserDTO user;
 	private Choice choice;
 	
-<<<<<<< HEAD
-	public SellProductPanel() {
-=======
 	public SellProductPanel(UserDTO user) {
 		this.user=user;
->>>>>>> main
 		initData();
 		setInitLayout();
 		initListener();

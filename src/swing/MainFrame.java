@@ -16,10 +16,11 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import dto.UserDTO;
+import lombok.Data;
+import lombok.Getter;
 import lombok.ToString;
 
 @ToString
-
 public class MainFrame extends JFrame implements Runnable{
 
 	private UserDTO user;
@@ -73,7 +74,8 @@ public class MainFrame extends JFrame implements Runnable{
 	private JLabel title;
 	private BufferedReader serverOrder; // 서버 명령
 	private PrintWriter userOrder; // 유저 명령
-
+	private MainFrame mconText = this;
+	
 	public MainFrame(UserDTO user) {
 		this.user = user;
 		initData();
@@ -81,6 +83,10 @@ public class MainFrame extends JFrame implements Runnable{
 		initListener();
 	}
 
+	public JPanel getBackgroundPanel() {
+		return this.backgroundPanel;
+	}
+	
 	private void initData() {
 
 		backgroundPanel = new JPanel();
@@ -398,31 +404,31 @@ public class MainFrame extends JFrame implements Runnable{
 					public void mouseClicked(MouseEvent e) {
 						if (state == 1) {
 							auctionPanel.setVisible(false);
-							inventoryPanel = new InventoryPanel(user);
+							inventoryPanel = new InventoryPanel(user,mconText);
 							backgroundPanel.add(inventoryPanel);
 							state = 6;
 						} else if (state == 2) {
 							finishedPanel.setVisible(false);
-							inventoryPanel = new InventoryPanel(user);
+							inventoryPanel = new InventoryPanel(user,mconText);
 							backgroundPanel.add(inventoryPanel);
 							state = 6;
 						} else if (state == 3) {
 							checkBidPanel.setVisible(false);
-							inventoryPanel = new InventoryPanel(user);
+							inventoryPanel = new InventoryPanel(user,mconText);
 							backgroundPanel.add(inventoryPanel);
 							state = 6;
 						} else if (state == 4) {
 							sellProductPanel.setVisible(false);
-							inventoryPanel = new InventoryPanel(user);
+							inventoryPanel = new InventoryPanel(user,mconText);
 							backgroundPanel.add(inventoryPanel);
 							state = 6;
 						} else if (state == 5) {
 							myPagePanel.setVisible(false);
-							inventoryPanel = new InventoryPanel(user);
+							inventoryPanel = new InventoryPanel(user,mconText);
 							backgroundPanel.add(inventoryPanel);
 							state = 6;
 						} else if(state==6) {
-							inventoryPanel = new InventoryPanel(user);
+							inventoryPanel = new InventoryPanel(user,mconText);
 							backgroundPanel.add(inventoryPanel);
 						}
 
