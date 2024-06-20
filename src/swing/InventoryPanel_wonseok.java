@@ -2,6 +2,7 @@ package swing;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
@@ -10,15 +11,16 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import dao.InventoryDAO;
+import dto.CardDTO;
 import dto.InventoryDTO;
 import dto.UserDTO;
 
-public class InventoryPanel extends JPanel {
+public class InventoryPanel_wonseok extends JPanel {
 	
-	
-	private InventoryDTO inventory;
 	private ArrayList<JButton> productList = new ArrayList<>(12);
 	private ArrayList<String> productTitleList = new ArrayList<>(12);
+	private ArrayList<CardDTO> userInventory = new ArrayList<>();
 	private JPanel backgroundPanel;
 	private JLabel title;
 	private JScrollPane scrollPane;
@@ -28,8 +30,9 @@ public class InventoryPanel extends JPanel {
 	ArrayList<Integer>serialNum = new ArrayList<>(8);
 	private int x = 500;
 	private int y = 100;
+	InventoryDAO inven = new InventoryDAO();
 	
-	public InventoryPanel(UserDTO user) {
+	public InventoryPanel_wonseok(UserDTO user) {
 		this.user = user;
 		initData();
 		setInitLayout();
@@ -73,7 +76,14 @@ public class InventoryPanel extends JPanel {
 		scrollPane.setBounds(4,4,950,330);
 		ProductButton();
 		
-		
+		try {
+			userInventory = inven.invenInfo(user.getName()); // 유저가 가지고있는 카드 목록 호출
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		for(int i = 0; i < userInventory.size(); i++) {
+			createProduct(userInventory.get(i).getUrl()); // 유저가 가지고있는 카드 url 삽입
+		}
 		
 		JLabel title=new JLabel("보유 카드 확인하기"+"("+product.size()+")");
 		title.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 32));
@@ -81,10 +91,6 @@ public class InventoryPanel extends JPanel {
 		add(title);
 		
 	}
-	
-	
-	
-	
 
 }
 
