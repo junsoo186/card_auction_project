@@ -441,7 +441,7 @@ public class MainFrame extends JFrame implements Runnable{
 	}
 	
 	public static void main(String[] args) {
-		new MainFrame(new UserDTO(0,"a","a","a",0));
+		new MainFrame(new UserDTO("a","a","a",0));
 	}
 	
 }

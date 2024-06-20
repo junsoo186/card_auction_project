@@ -79,14 +79,11 @@ public class MyPagePanel extends JPanel {
 		infoPanel.setBounds(500,100,900,450);
 		infoPanel.setLayout(null);
 		
-		JLabel ID = new JLabel(" ID : "+user.getId());
 		JLabel name = new JLabel(" 이름 : "+user.getName());
 		JLabel nickName = new JLabel(" 닉네임 : "+user.getNickname());
 		JLabel currentPoint = new JLabel(" 포인트 : "+user.getPoint());
 		JLabel cardNumber = new JLabel(" 보유 카드 수 : ");
 		
-		ID.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 24));
-		ID.setBounds(500, 110, 300, 50);
 		name.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 24));
 		name.setBounds(500, 160, 300, 50);
 		nickName.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 24));
@@ -98,7 +95,6 @@ public class MyPagePanel extends JPanel {
 		
 		add(profileLabel);
 		add(infoPanel);
-		infoPanel.add(ID);
 		infoPanel.add(name);
 		infoPanel.add(nickName);
 		infoPanel.add(currentPoint);

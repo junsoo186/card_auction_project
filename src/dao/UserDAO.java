@@ -66,16 +66,14 @@ public class UserDAO {
 		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
 			PreparedStatement pstmt = conn.prepareStatement(Query.USER_INFO_NAME);
 			pstmt.setString(1, name);
+			System.out.println(name);
 			ResultSet rs = pstmt.executeQuery();
-			if (rs.next()) {
 				while (rs.next()) {
 					user.setName(rs.getString("name"));
-					user.setId(rs.getInt("id"));
 					user.setNickname(rs.getString("nickname"));
 					user.setPassword(rs.getString("password"));
 					user.setPoint(rs.getInt("point"));
 				}
-			}
 		}
 		return user;
 	}
