@@ -1,4 +1,4 @@
-package swing;
+  package swing;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -22,7 +22,7 @@ import lombok.ToString;
 
 @ToString
 
-public class MainFrame extends JFrame {
+public class MainFrame extends JFrame implements Runnable{
 
 	private UserDTO user;
 	private ChargeFrame chargeFrame;
@@ -93,7 +93,7 @@ public class MainFrame extends JFrame {
 
 	private void setInitLayout() {
 		setTitle("[카드 경매 사이트 포켓 옥션]");
-		setSize(1920, 1080);
+		setSize(1920, 1000);
 		setLocationRelativeTo(null);
 		setResizable(false);
 		setLayout(null);
@@ -194,7 +194,8 @@ public class MainFrame extends JFrame {
 
 	}
 
-	private void changePoint(UserDTO user) {
+	// 포인트 갱신
+	public void changePoint(UserDTO user) {
 		remove(cash);
 		cash=new JLabel(user.getPoint()+"");
 		cash.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 18));
@@ -352,6 +353,8 @@ public class MainFrame extends JFrame {
 			}
 
 		});
+		
+		// 포인트 충전
 		poketPoint.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				chargeFrame=new ChargeFrame(user); 
@@ -433,6 +436,14 @@ public class MainFrame extends JFrame {
 	
 	public static void main(String[] args) {
 		new MainFrame(new UserDTO(1,"엄송현","12345","클라이언트1",555));
+	}
+
+	@Override
+	public void run() {
+		while(true) {
+			
+		}
+		
 	}
 
 

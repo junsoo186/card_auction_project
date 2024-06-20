@@ -63,7 +63,7 @@ public class MyPagePanel extends JPanel {
 		
 		updateButton=new JButton("회원정보 수정");
 		updateButton.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 20));
-		updateButton.setBounds(380, 360, 150, 50);
+		updateButton.setBounds(400, 360, 150, 50);
 		updateButton.setBackground(new Color(255,204,3));
 		updateButton.setBorderPainted(false);
 		

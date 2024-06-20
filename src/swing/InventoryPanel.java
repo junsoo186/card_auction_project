@@ -83,6 +83,8 @@ public class InventoryPanel extends JPanel {
 	}
 	
 	
+	
+	
 
 }
 
