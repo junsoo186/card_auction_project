@@ -31,6 +31,7 @@ public class FinishedPanel extends JPanel {
 	
 	public FinishedPanel(UserDTO user) {
 		this.user=user;
+		this.user = user;
 		initData();
 		setInitLayout();
 	} 
