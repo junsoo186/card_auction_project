@@ -108,9 +108,10 @@ public class InventoryPanel extends JPanel {
 			product.get(i).addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					setVisible(false);
-					detail = new InventoryDetailedPanel(userInventory.get(num),user);
-					mconText.getBackgroundPanel().add(detail);
+					detail = new InventoryDetailedPanel(userInventory.get(num),user,mconText.socket);
+					System.out.println("보관함 클릭이벤트 : "  + userInventory.get(num));
+					mconText.getPanles().add(detail);
+					mconText.setVisible(6);
 					mconText.repaint();
 				}
 			});

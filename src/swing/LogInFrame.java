@@ -158,7 +158,7 @@ public class LogInFrame extends JFrame {
 					socket.sendOrder("login#" + id + "#" + password);
 					UserDAO dao = new UserDAO();
 					try {
-						new MainFrame(dao.infoUser(id));
+						new MainFrame(dao.infoUser(id),socket);
 					} catch (SQLException e1) {
 						e1.printStackTrace();
 					}

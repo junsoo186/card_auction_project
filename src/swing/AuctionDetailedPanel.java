@@ -33,10 +33,9 @@ public class AuctionDetailedPanel extends JPanel {
 	private BuyFrame buyFrame;
 	private AuctionManager auctionManager;
 
-	public AuctionDetailedPanel(CardDTO card, UserDTO user, JPanel background) {
+	public AuctionDetailedPanel(CardDTO card, UserDTO user) {
 		this.card = card;
 		this.user=user;
-		this.backgroundPanel=backgroundPanel;
 		initData();
 		setInitLayout();
 		initListener();
@@ -112,7 +111,6 @@ public class AuctionDetailedPanel extends JPanel {
 		goBackButton.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				setVisible(false);
-				auctionPanel=new AuctionPanel(null,user);
 				backgroundPanel.add(auctionPanel);
 			}
 

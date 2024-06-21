@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.PrintWriter;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -18,6 +19,7 @@ import com.sun.java.accessibility.util.GUIInitializedListener;
 
 import dto.CardDTO;
 import dto.UserDTO;
+import manager.SocketManager;
 
 public class SellFrame extends JFrame{
 		
@@ -28,9 +30,12 @@ public class SellFrame extends JFrame{
 		private JTextField addPriceField;
 		private JButton exitButton;
 		private JButton decidePriceButton;
+		private SocketManager socket;
 		
-		public SellFrame(CardDTO card,UserDTO user) {
+		
+		public SellFrame(CardDTO card,UserDTO user,SocketManager socket) {
 			System.out.println("가격제시 생성");
+			this.socket = socket;
 			this.card=card;
 			this.user=user;
 			setInitLayout();
@@ -83,13 +88,8 @@ public class SellFrame extends JFrame{
 		private void initListener() {
 			decidePriceButton.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent e) {
-					JOptionPane.showMessageDialog(null,addPriceField.getText()+"원 을 제시합니다");
-					int checkPrice=Integer.parseInt(addPriceField.getText());
-					if(checkPrice>user.getPoint()) {
-						JOptionPane.showMessageDialog(null,"소지중인 포인트 이상을 제시할 수 없습니다.");
-					} else if(checkPrice<card.getPrice()) {
-						JOptionPane.showMessageDialog(null,"현재 가격보다 낮은 가격을 제시할 수 없습니다.");
-					}
+					socket.sendOrder("auction#" + card.getId());
+					System.out.println("서버에 카드 아이디 전송");
 					dispose();
 				}
 

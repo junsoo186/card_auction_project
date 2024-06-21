@@ -31,18 +31,18 @@ public class CardDAO {
 	}
 
 	// 카드 번호로 조회
-	public void infoCard(int id) throws SQLException {
+	public CardDTO infoCard(int id) throws SQLException {
 		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
 			PreparedStatement pstmt = conn.prepareStatement(Query.CARD_INFO_ID);
 			pstmt.setInt(1, id);
 			ResultSet rs = pstmt.executeQuery();
+			CardDTO card = new CardDTO();
 			while (rs.next()) {
-				System.out.println("====================================");
-				System.out.println("카드번호 : " + rs.getInt("id"));
-				System.out.println("이미지경로 : " + rs.getString("url"));
-				System.out.println("카드이름 : " + rs.getString("name"));
-				System.out.println("카드가격 : " + rs.getInt("price"));
+				card.setId(rs.getInt("id"));
+				card.setName(rs.getString("name"));
+				card.setUrl(rs.getString("url"));
 			}
+			return card;
 		}
 	}
 
