@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.function.IntPredicate;
 
 import dto.CardDTO;
 import manager.DBConnectionManager;
@@ -97,24 +98,22 @@ public class CardDAO {
 			System.out.println("해당 카드 번호 삭제완료");
 		}
 	}
-	
-	public void cardAvg(String name) {
-		
-		
-		
-		try(Connection conn = DBConnectionManager.getInstance().getConnection()){
+
+	public int cardAvg(String name) throws SQLException {
+
+		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
 			PreparedStatement pstmt = conn.prepareStatement(Query.CARD_AVGPRICE);
 			pstmt.setString(1, name);
 			pstmt.setString(2, name);
 			ResultSet rs = pstmt.executeQuery();
-			while (rs.next()) {
-				
+			System.out.println(rs.next());
+			while (true) {
+				System.out.println("while문");
 				System.out.println("카드이름 : " + rs.getString("name"));
 				System.out.println("카드가격 : " + rs.getInt("price"));
+				return rs.getInt("price");
 			}
-		} catch (Exception e) {
 		}
 	}
-	
-	
+
 }

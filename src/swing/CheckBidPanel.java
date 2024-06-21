@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,9 +35,11 @@ public class CheckBidPanel extends JPanel {
 	private int y = 100;
 	int state;
 	private List<JPanel>panel;
+	private MainFrame mContext;
 	
 	public CheckBidPanel(List<JPanel> panels,MainFrame mContext) {
 		this.backgroundPanel=mContext.getBackgroundPanel();
+		this.mContext=mContext;
 		this.panel=panels;
 		initData();
 		setInitLayout();
@@ -90,11 +93,11 @@ public class CheckBidPanel extends JPanel {
 		
 		ProductButton();
 		
-		cardList.add(new CardDTO(0, "image/card9.png", "[포켓몬스터] 파이리 카드", 1000));
-		cardList.add(new CardDTO(1, "image/card2.png", "[포켓몬스터] 개굴닌자 카드", 2000));
-		cardList.add(new CardDTO(2, "image/card7.jpg", "[포켓몬스터] 레시라무 카드", 4000));
-		cardList.add(new CardDTO(3, "image/card4.jpg", "[포켓몬스터] 라이츄 카드", 7000));
-		cardList.add(new CardDTO(4, "image/card5.jpg", "[포켓몬스터] 리자몽 카드", 50000));
+		cardList.add(new CardDTO(0, "image/card9.png", "파이리", 1000));
+		cardList.add(new CardDTO(1, "image/card2.png", "찬란한 개굴닌자", 2000));
+		cardList.add(new CardDTO(2, "image/card7.jpg", "레시라무", 4000));
+		cardList.add(new CardDTO(3, "image/card4.jpg", "라이츄", 7000));
+		cardList.add(new CardDTO(4, "image/card5.jpg", "리자몽", 50000));
 
 		createProduct(cardList.get(0));
 		createProduct(cardList.get(1));
@@ -121,9 +124,17 @@ public class CheckBidPanel extends JPanel {
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					System.out.println(cardList.size());
-					detailedPanel = new CheckBidDetailedPanel(cardList.get(num));
+					try {
+						detailedPanel = new CheckBidDetailedPanel(cardList.get(num),mContext);
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					System.out.println("판넬사이즈 : " + panel.size());
 					panel.add(detailedPanel);
-					setVisible(6);
+					System.out.println("판넬"+panel.size());
+					mContext.addPanel(6);
+					mContext.setVisible(6);
 				}
 			});
 		}

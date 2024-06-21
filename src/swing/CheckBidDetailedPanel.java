@@ -4,7 +4,8 @@ package swing;
 	import java.awt.Font;
 	import java.awt.event.MouseAdapter;
 	import java.awt.event.MouseEvent;
-	import java.util.ArrayList;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 	import javax.swing.Icon;
 	import javax.swing.ImageIcon;
@@ -16,6 +17,7 @@ package swing;
 
 import com.mysql.cj.protocol.x.SyncFlushDeflaterOutputStream;
 
+import dao.CardDAO;
 import dto.CardDTO;
 	import dto.UserDTO;
 	import manager.AuctionManager;
@@ -29,9 +31,12 @@ import dto.CardDTO;
 		private CardDTO card;
 		private BuyFrame buyFrame;
 		private AuctionManager auctionManager;
+		private CardDAO dao;
+		private MainFrame mContext;
 
-		public CheckBidDetailedPanel(CardDTO card) {
+		public CheckBidDetailedPanel(CardDTO card,MainFrame mContext) throws SQLException {
 			this.card = card;
+			this.mContext=mContext;
 			initData();
 			setInitLayout();
 		}
@@ -39,7 +44,7 @@ import dto.CardDTO;
 		private void initData() {
 		}
 
-		private void setInitLayout() {
+		private void setInitLayout() throws SQLException {
 			setSize(1920, 630);
 			setLocation(0, 400);
 			setLayout(null);
@@ -49,10 +54,12 @@ import dto.CardDTO;
 			title.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 32));
 			title.setBounds(860, 10, 800, 50);
 			add(title);
+			
+			dao=new CardDAO();
 
 			JLabel cardId = new JLabel(" 카드 ID : " + card.getId());
-			JLabel cardName = new JLabel(" 카드명 : " + card.getName());
-			JLabel cardPrice = new JLabel(" 카드 평균 가격 : " + card.getPrice());
+			JLabel cardName = new JLabel(" 카드명 : "+card.getName());
+			JLabel cardPrice = new JLabel(" 카드 평균 가격 : " + dao.cardAvg(card.getName()));
 			JLabel cardIcon = new JLabel(new ImageIcon(card.getUrl()));
 
 			cardId.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 24));
@@ -65,6 +72,7 @@ import dto.CardDTO;
 			cardPrice.setBounds(900, 200, 400, 100);
 			cardIcon.setBounds(600, 150, 150, 200);
 
+			
 			add(cardId);
 			add(cardName);
 			add(cardPrice);

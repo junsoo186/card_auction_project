@@ -91,7 +91,7 @@ public class MainFrame extends JFrame{
 		backgroundPanel = new JPanel();
 		auctionPanel = new AuctionPanel(panels, user,socket);
 		finishedPanel = new FinishedPanel(user,this);
-		checkBidPanel = new CheckBidPanel(panels,this);
+		checkBidPanel = new CheckBidPanel(panels,mconText);
 		sellProductPanel = new SellProductPanel(user);
 		myPagePanel = new MyPagePanel(user);
 		inventoryPanel = new InventoryPanel(user, mconText);
