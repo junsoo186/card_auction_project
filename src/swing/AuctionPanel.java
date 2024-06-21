@@ -140,7 +140,8 @@ public class AuctionPanel extends JPanel {
 			product.get(i).addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					detailPage = new AuctionDetailedPanel(cardList.get(num), user,panel);
+					System.out.println(cardList.size());
+					detailPage = new AuctionDetailedPanel(cardList.get(num), user,auctionManager);
 					panel.add(detailPage);
 					setVisible(6);
 				}

@@ -28,8 +28,7 @@ public class AuctionManager extends Thread {
 	int set_Min ; // 수정예정
 	
 	LocalDateTime time = LocalDateTime.now();
-	LocalDateTime endTime = LocalDateTime.of(2024, 06, 21, sellProductPanel.getThisHour(),
-			sellProductPanel.getThisMin(), 0);
+	LocalDateTime endTime;
 	// BID 관련 변수
 	int startBid;
 	int highbid;
