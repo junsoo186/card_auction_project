@@ -86,13 +86,14 @@ public class MakeNewAccountFrame extends JFrame implements ActionListener {
 		backgroundPanel.add(background);
 		
 		JLabel exit=new JLabel(new ImageIcon("image/exit.png"));
+		JLabel signUp=new JLabel(new ImageIcon("image/Account(2).png"));
 
 		nameField.setBounds(170, 225, 170, 30);
 		idField.setBounds(170, 310, 170, 30);
 		passwordField.setBounds(170, 390, 170, 30);
 		phoneNumberField.setBounds(170, 470, 170, 30);
 		signUpButton.setBounds(135, 530, 164, 69);
-		exitButton.setBounds(260, 530, 100, 40);
+		exitButton.setBounds(260, 530, 164, 69);
 		signUpButton.addActionListener(this);
 
 		background.add(idField);
