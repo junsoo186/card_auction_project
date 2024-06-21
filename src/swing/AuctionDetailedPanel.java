@@ -5,7 +5,6 @@ import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -18,11 +17,12 @@ import javax.swing.JScrollPane;
 import dto.CardDTO;
 import dto.UserDTO;
 import manager.AuctionManager;
+import manager.Server;
 
 public class AuctionDetailedPanel extends JPanel {
 
 	private AuctionPanel auctionPanel;
-	
+
 	private JPanel backgroundPanel;
 	private JPanel backgroundPanel1;
 	private JLabel title;
@@ -32,13 +32,20 @@ public class AuctionDetailedPanel extends JPanel {
 	private JButton buyCard;
 	private JButton goBackButton;
 	private BuyFrame buyFrame;
-	private AuctionManager auctionManager;
-	private List<JPanel> panels;
 
-	public AuctionDetailedPanel(CardDTO card, UserDTO user,List<JPanel> panels) {
-		this.panels = panels;
+	// 옥션 매니저
+	private AuctionManager auctionManager;
+	boolean flag = true;
+	SellProductPanel sell = new SellProductPanel(user);
+	String time; // 시간
+	Server mContext;
+	int bid;
+
+	public AuctionDetailedPanel(CardDTO card, UserDTO user, AuctionManager auctionManager) {
 		this.card = card;
-		this.user=user;
+		this.user = user;
+		auctionManager = new AuctionManager(card.getId(), card.getPrice(), user, card, mContext, bid);
+		this.auctionManager = auctionManager;
 		initData();
 		setInitLayout();
 		initListener();
@@ -62,38 +69,64 @@ public class AuctionDetailedPanel extends JPanel {
 		title.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 32));
 		title.setBounds(860, 10, 800, 50);
 		add(title);
-		
+
 		JLabel cardId = new JLabel(" 카드 ID : " + card.getId());
 		JLabel cardName = new JLabel(" 카드명 : " + card.getName());
-		JLabel cardPrice = new JLabel(" 현재 카드 가격 : " + card.getPrice());
+		JLabel cardPrice = new JLabel(" 현재 카드 가격 : " + auctionManager.getHighbid());
 		JLabel cardIcon = new JLabel(new ImageIcon(card.getUrl()));
-		buyCard=new JButton("가격 제시하기");
-		goBackButton=new JButton("뒤로 가기");
-		
+		JLabel endTime = new JLabel("종료시간" + auctionManager.getCurrent_time());
+		buyCard = new JButton("가격 제시하기");
+		goBackButton = new JButton("뒤로 가기");
+
 		cardId.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 24));
 		cardName.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 24));
 		cardPrice.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 24));
 		cardIcon.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 24));
+		endTime.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 24));
 		buyCard.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 24));
 		goBackButton.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 24));
-		
+
 		cardId.setBounds(900, 100, 400, 100);
 		cardName.setBounds(900, 150, 400, 100);
 		cardPrice.setBounds(900, 200, 400, 100);
 		cardIcon.setBounds(600, 150, 150, 200);
+		endTime.setBounds(900, 0, 400, 200);
 		buyCard.setBounds(900, 300, 200, 70);
-		buyCard.setBackground(new Color(255,204,3));
+		buyCard.setBackground(new Color(255, 204, 3));
 		buyCard.setBorderPainted(false);
 		goBackButton.setBounds(600, 20, 130, 50);
-		goBackButton.setBackground(new Color(255,204,3));
+		goBackButton.setBackground(new Color(255, 204, 3));
 		goBackButton.setBorderPainted(false);
-		
+
 		add(cardId);
 		add(cardName);
 		add(cardPrice);
 		add(cardIcon);
 		add(buyCard);
 		add(goBackButton);
+// 시간 확인 쓰레드
+		time = "19시 55분 50초";
+		new Thread(() -> {
+			while (flag) {
+				String s = Long.toString(auctionManager.getCurrent_time());
+				if (!s.equals(time)) {
+					time = s;
+					endTime.setText("남은시간 :" + time + "초");
+					if (time.equals("0")) {
+						endTime.setText("경매 종료");
+						endTime.setForeground(Color.RED);
+						buyCard.setVisible(false);
+						flag = false;
+					}
+				}
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+
+		}).start();
 
 	}
 
@@ -107,7 +140,7 @@ public class AuctionDetailedPanel extends JPanel {
 		});
 		buyCard.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				buyFrame=new BuyFrame(card,user);
+				buyFrame = new BuyFrame(card, user);
 			}
 
 		});
