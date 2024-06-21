@@ -33,6 +33,10 @@ public class AuctionPanel extends JPanel {
 	private AuctionDetailedPanel detailPage;
 	private AuctionManager auctionManager;
 	private SocketManager socket;
+	private ArrayList<Integer> hour = new ArrayList<>();
+	private ArrayList<Integer> min = new ArrayList<>();
+	private ArrayList<Integer> startBid = new ArrayList<>();
+	private MainFrame mconText;
 
 	int state;
 	List<JPanel>panel;
@@ -42,7 +46,8 @@ public class AuctionPanel extends JPanel {
 	private int y = 100;
 
 
-	public AuctionPanel(List<JPanel> panels, UserDTO user,SocketManager socket) {
+	public AuctionPanel(List<JPanel> panels, UserDTO user,SocketManager socket,MainFrame mcontext) {
+		this.mconText = mcontext;
 		this.panel = panels;
 		this.user = user;
 		this.socket = socket;
@@ -54,7 +59,6 @@ public class AuctionPanel extends JPanel {
 	public void createProduct(CardDTO card) {
 		System.out.println(serialNum.size()); // 시리얼 넘버 사이즈로 product버튼 인덱스 번호 지정
 		product.get(serialNum.size()).setIcon(new ImageIcon(card.getUrl())); // 유저가 올린 판매카드 이미지 버튼에 삽입
-		cardList.add(serialNum.size(),card); // 카드 정보 불러오기
 		System.out.println(cardList.get(serialNum.size()));
 		serialNum.add(1); // 시리얼 넘버 사이즈도 증가
 	}
@@ -80,6 +84,9 @@ public class AuctionPanel extends JPanel {
 		for(int i = 0; i < socket.getAuctionList().size(); i++) {
 			CardDAO dao = new CardDAO();
 			CardDTO card;
+			hour.add(socket.getHour().get(i));
+			min.add(socket.getMin().get(i));
+			startBid.add(socket.getStartBid().get(i));
 			try {
 				card = dao.infoCard(socket.getAuctionList().get(i));
 				cardList.add(card);
@@ -98,6 +105,7 @@ public class AuctionPanel extends JPanel {
 			panel.get(i).setVisible(false);
 		}
 		panel.get(state).setVisible(true);
+		System.out.println("판넬 선택 : " + panel.get(state));
 		this.state = state;
 	}
 	
@@ -133,8 +141,9 @@ public class AuctionPanel extends JPanel {
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					System.out.println(cardList.size());
-					detailPage = new AuctionDetailedPanel(cardList.get(num), user,auctionManager);
+					detailPage = new AuctionDetailedPanel(cardList.get(num), user,auctionManager,hour.get(num),min.get(num),startBid.get(num));
 					panel.add(detailPage);
+					mconText.addPanel(6);
 					setVisible(6);
 				}
 			});

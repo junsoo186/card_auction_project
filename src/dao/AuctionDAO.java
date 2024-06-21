@@ -25,13 +25,12 @@ import manager.DBConnectionManager;
 
 public class AuctionDAO {
 
-	// 완료된 옥션 올리기
+	// 진행중인 옥션 올리기
 	public void addAuction(AuctionDTO dto) throws SQLException {
 		try (Connection connect = DBConnectionManager.getInstance().getConnection()) {
 			PreparedStatement pstmt = connect.prepareStatement(Query.AUCTION_ADD);
-			pstmt.setInt(1, dto.getUserId());
+			pstmt.setString(1, dto.getUserId());
 			pstmt.setInt(2, dto.getCardId());
-			
 			pstmt.setInt(3, dto.getBidPrice());
 			pstmt.setString(4, dto.getStartDate());
 			pstmt.setString(5, dto.getEndDate());
@@ -45,16 +44,15 @@ public class AuctionDAO {
 			pstmt.setInt(1, dto.getCardId());
 			pstmt.setInt(2, dto.getBidPrice());
 			pstmt.setString(3, dto.getEndDate());
-			pstmt.setInt(4, dto.getUserId());
 			pstmt.executeLargeUpdate();
 		}
 	}
 
 	// 옥션 삭제
-	public void deletAuction(int userId, int id) throws SQLException {
+	public void deletAuction(String userId, int id) throws SQLException {
 		try (Connection connect = DBConnectionManager.getInstance().getConnection()) {
 			PreparedStatement pstmt = connect.prepareStatement(Query.AUCTION_DELETE);
-			pstmt.setInt(1, userId);
+			pstmt.setString(1, userId);
 			pstmt.setInt(1, id);
 			pstmt.executeUpdate();
 			System.out.println("방삭제 완료");

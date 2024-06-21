@@ -33,16 +33,15 @@ public class AuctionManager extends Thread {
 	int startBid;
 	int highbid;
 
-	public AuctionManager(int room, int startBid,
-			UserDTO user_DTO, CardDTO card_DTO,
-			Server mContext, int moreBid) {
-		this.room_Id = room;
+	public AuctionManager(int startBid, UserDTO user_DTO, CardDTO card_DTO, int hour, int min) {
 		sellProductPanel = new SellProductPanel(user_DTO);
-		endTime = LocalDateTime.of(2024, 06, 21,sellProductPanel.getThisHour(),
-				sellProductPanel.getThisMin(), 0);
+		this.endTime = LocalDateTime.of(2024, 06, 21,hour,min, 0); // 사용자가 지정한 종료시간
 		this.startBid = startBid;
-		highbid = startBid;
+		highbid = startBid; // 최종 비드
 		// DTO 
+		System.out.println("받아온 비드 : " + startBid);
+		System.out.println("받아온 시간 : " + hour );
+		System.out.println("받아온 분 : " + min);
 		this.user_DTO = user_DTO;
 		this.card_DTO = card_DTO;
 		Vector<UserDTO> userID = new Vector<>();
@@ -50,7 +49,7 @@ public class AuctionManager extends Thread {
 	}
 	@Override
 	public void run() {
-
+        // 남은 시간 표시
 		while (true) {
 			time = LocalDateTime.now();
 			long remainSecond = time.until(endTime, ChronoUnit.SECONDS);
@@ -62,7 +61,7 @@ public class AuctionManager extends Thread {
 			}
 		}
 	}
-
+	
 	public void see(long remainSecond) {
 		this.current_time = remainSecond;
 	}
