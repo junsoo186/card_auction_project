@@ -23,7 +23,7 @@ import lombok.ToString;
 import manager.SocketManager;
 
 @ToString
-public class MainFrame extends JFrame implements Runnable {
+public class MainFrame extends JFrame{
 
 	private UserDTO user;
 	private ChargeFrame chargeFrame;
@@ -91,7 +91,7 @@ public class MainFrame extends JFrame implements Runnable {
 		backgroundPanel = new JPanel();
 		auctionPanel = new AuctionPanel(panels, user,socket);
 		finishedPanel = new FinishedPanel(user,this);
-		checkBidPanel = new CheckBidPanel(this);
+		checkBidPanel = new CheckBidPanel(panels,this);
 		sellProductPanel = new SellProductPanel(user);
 		myPagePanel = new MyPagePanel(user);
 		inventoryPanel = new InventoryPanel(user, mconText);
@@ -305,8 +305,5 @@ public class MainFrame extends JFrame implements Runnable {
 			}
 		});
 	}
-
-	@Override
-	public void run() {
-	}
+	
 }

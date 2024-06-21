@@ -65,7 +65,7 @@ public class SellFrame extends JFrame{
 			addPriceField=new JTextField(20);
 			decidePriceButton=new JButton("경매 시작");
 			exitButton=new JButton("나가기");
-			cardTitle.setBounds(55, 40, 400, 50);
+			cardTitle.setBounds(85, 40, 400, 50);
 			guidText.setBounds(30, 335, 400, 50);
 			addPriceField.setBounds(80, 385, 200, 30);
 			decidePriceButton.setBounds(80, 425, 90, 30);

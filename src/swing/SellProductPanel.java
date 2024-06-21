@@ -3,8 +3,11 @@ package swing;
 import java.awt.Choice;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.swing.Icon;
@@ -20,6 +23,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
 import dao.InventoryDAO;
+import dao.UserDAO;
 import dto.CardDTO;
 import dto.UserDTO;
 import manager.SocketManager;
@@ -138,6 +142,33 @@ public class SellProductPanel extends JPanel {
 		infoPanel.add(minField);
 		infoPanel.add(sellButton);
 		infoPanel.add(pointField);
+		
+		pointField.addKeyListener(new KeyListener() {
+
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if(e.getKeyCode()==KeyEvent.VK_ENTER) {
+					int price=Integer.parseInt(pointField.getText());
+					JOptionPane.showMessageDialog(null,"경매 참여가 완료되었습니다.");
+					System.out.println("완료!");
+				}
+				
+			}
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode()==KeyEvent.VK_ENTER) {
+					int price=Integer.parseInt(pointField.getText());
+					JOptionPane.showMessageDialog(null,"경매 참여가 완료되었습니다.");
+					System.out.println("완료!");
+				}
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+			}
+			
+		});
 	}
 	
 	private void initListener() {

@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -24,17 +25,19 @@ public class CheckBidPanel extends JPanel {
 	public ArrayList<CardDTO> cardList = new ArrayList(5);
 	private JPanel backgroundPanel;
 	private JLabel title;
-	private JScrollPane scrollPane;
 	
-	private CheckBidDetailedPanel checkBidDetailedPanel;
+	private CheckBidDetailedPanel detailedPanel;
 	
-	ArrayList<JButton>product = new ArrayList<>(5);
-	ArrayList<Integer>serialNum = new ArrayList<>(5);
+	private ArrayList<JButton>product = new ArrayList<>(5);
+	private ArrayList<Integer>serialNum = new ArrayList<>(5);
 	private int x = 500;
 	private int y = 100;
+	int state;
+	private List<JPanel>panel;
 	
-	public CheckBidPanel(MainFrame mContext) {
+	public CheckBidPanel(List<JPanel> panels,MainFrame mContext) {
 		this.backgroundPanel=mContext.getBackgroundPanel();
+		this.panel=panels;
 		initData();
 		setInitLayout();
 		initListener();
@@ -70,6 +73,14 @@ public class CheckBidPanel extends JPanel {
 		}
 	}
 	
+	private void setVisible(int state) {
+		for (int i = 0; i < panel.size(); i++) {
+			panel.get(i).setVisible(false);
+		}
+		panel.get(state).setVisible(true);
+		this.state = state;
+	}
+	
 	private void setInitLayout() {
 		setSize(1920,630);
 		setLocation(0,400);
@@ -98,50 +109,24 @@ public class CheckBidPanel extends JPanel {
 	}
 	
 	private void initListener() {
-
 		// 진행중인 경매 이동
 		product.get(0).addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				setVisible(false);
-				System.out.println(cardList.get(0));
-				checkBidDetailedPanel= new CheckBidDetailedPanel(cardList.get(0));
-				backgroundPanel.add(checkBidDetailedPanel);
-				checkBidDetailedPanel.setVisible(true);
-				System.out.println();
+				setVisible(0);
 			}
 		});
-		product.get(1).addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				setVisible(false);
-				checkBidDetailedPanel = new CheckBidDetailedPanel(cardList.get(1));
-				backgroundPanel.add(checkBidDetailedPanel);
-				checkBidDetailedPanel.setVisible(true);
-			}
-		});
-		product.get(2).addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				setVisible(false);
-				checkBidDetailedPanel = new CheckBidDetailedPanel(cardList.get(2));
-				backgroundPanel.add(checkBidDetailedPanel);
-				checkBidDetailedPanel.setVisible(true);
-			}
-		});
-		product.get(3).addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				setVisible(false);
-				checkBidDetailedPanel = new CheckBidDetailedPanel(cardList.get(3));
-				backgroundPanel.add(checkBidDetailedPanel);
-				checkBidDetailedPanel.setVisible(true);
-			}
-		});
-		product.get(4).addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				setVisible(false);
-				checkBidDetailedPanel = new CheckBidDetailedPanel(cardList.get(4));
-				backgroundPanel.add(checkBidDetailedPanel);
-				checkBidDetailedPanel.setVisible(true);
-			}
-		});
+		for(int i = 0; i < product.size(); i++) {
+			int num = i;
+			product.get(i).addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					System.out.println(cardList.size());
+					detailedPanel = new CheckBidDetailedPanel(cardList.get(num));
+					panel.add(detailedPanel);
+					setVisible(6);
+				}
+			});
+		}
 	}
 
 }
