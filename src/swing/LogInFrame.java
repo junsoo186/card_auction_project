@@ -106,8 +106,8 @@ public class LogInFrame extends JFrame {
 			JLabel logIn=new JLabel(logInIcon);
 			JLabel signUp=new JLabel(makeAccountIcon);
 			signUpButton=new JButton();
-			//logInButton.setForeground(null);
-			//signUpButton.setForeground(null);
+			logInButton.setForeground(null);
+			signUpButton.setForeground(null);
 			
 			backgroundLabel=new JLabel(backgroundIcon);
 			backgroundLabel.setSize(1920,1000);

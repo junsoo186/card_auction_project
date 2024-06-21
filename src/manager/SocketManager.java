@@ -18,7 +18,10 @@ public class SocketManager implements Runnable{
 	private  Socket socket;
 	private  PrintWriter userOrder;
 	private BufferedReader serverOrder;
-	private ArrayList<Integer> auctionList = new ArrayList<>();
+	private ArrayList<Integer> auctionList = new ArrayList<>(); // 카드 id 저장
+	private ArrayList<Integer> hour = new ArrayList<>(); // 사용자가 지정한 종료 시간
+	private ArrayList<Integer> min = new ArrayList<>(); // 사용자가 지정한 종료 분
+	private ArrayList<Integer> startBid = new ArrayList<>(); // 사용자가 지정한 시작가격
 	
 	public SocketManager() {
 	}
@@ -38,8 +41,17 @@ public class SocketManager implements Runnable{
 				if(message.startsWith("list")) {
 					String[] cardId = message.split("#");
 					int id = Integer.valueOf(cardId[1]);
+					int startBidDB = Integer.valueOf(cardId[2]);
+					int hourDB = Integer.valueOf(cardId[3]);
+					int minDB = Integer.valueOf(cardId[4]);
 					System.out.println("서버에서 카드 id 보냄 : " + id);
+					System.out.println("서버에서 보낸 분 : " + minDB);
 					auctionList.add(id);
+					hour.add(hourDB);
+					min.add(minDB);
+					startBid.add(startBidDB);
+				} else if (message.startsWith("auction")) {
+					
 				}
 			}
 		} catch (IOException e) {

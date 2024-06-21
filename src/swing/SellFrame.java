@@ -28,10 +28,11 @@ public class SellFrame extends JFrame{
 		
 		private JPanel backgroundPanel;
 		private JTextField addPriceField;
+		private JTextField addEndhour;
+		private JTextField addEndmin;
 		private JButton exitButton;
 		private JButton decidePriceButton;
 		private SocketManager socket;
-		
 		
 		public SellFrame(CardDTO card,UserDTO user,SocketManager socket) {
 			System.out.println("가격제시 생성");
@@ -59,27 +60,38 @@ public class SellFrame extends JFrame{
 			
 			JLabel cardTitle=new JLabel(card.getName());
 			JLabel guidText=new JLabel("시작 가격을 설정해주세요 (평균 시세 :"+card.getPrice()+")");
+			JLabel guidText2=new JLabel("경매를 끝내실 시간을 설정해주세요 시/분");
 			cardTitle.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 30));
 			guidText.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 18));
+			guidText2.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 18));
 			addPriceField=new JTextField(20);
 			decidePriceButton=new JButton("경매 시작");
 			exitButton=new JButton("나가기");
-			cardTitle.setBounds(55, 40, 400, 50);
-			guidText.setBounds(30, 335, 400, 50);
-			addPriceField.setBounds(80, 385, 200, 30);
+			addEndhour = new JTextField();
+			addEndmin = new JTextField();
+			cardTitle.setBounds(30, 5, 400, 50);
+			guidText.setBounds(30, 250, 400, 50);
+			guidText2.setBounds(30, 330, 400, 50);
+			addPriceField.setBounds(80, 300, 200, 30);
+			addEndhour.setBounds(80, 380, 100, 20);
+			addEndmin.setBounds(200, 380, 100, 20);
 			decidePriceButton.setBounds(80, 425, 90, 30);
 			exitButton.setBounds(185, 425, 90, 30);
 			
+			
 			backgroundPanel.add(cardTitle);
 			backgroundPanel.add(guidText);
+			backgroundPanel.add(guidText2);
 			backgroundPanel.add(addPriceField);
 			backgroundPanel.add(decidePriceButton);
 			backgroundPanel.add(exitButton);
+			backgroundPanel.add(addEndmin);
+			backgroundPanel.add(addEndhour);
 			
 			Icon cardImage=new ImageIcon(card.getUrl());
 			JLabel cardLabel=new JLabel();
 			cardLabel.setIcon(cardImage);
-			cardLabel.setBounds(100, 110, 150, 210);
+			cardLabel.setBounds(100, 50, 150, 210);
 			backgroundPanel.add(cardLabel);
 			
 			setVisible(true);	
@@ -88,7 +100,7 @@ public class SellFrame extends JFrame{
 		private void initListener() {
 			decidePriceButton.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent e) {
-					socket.sendOrder("auction#" + card.getId());
+					socket.sendOrder("auction#" + card.getId()+"#" + addPriceField.getText()+"#" + addEndhour.getText()+"#" + addEndmin.getText());
 					System.out.println("서버에 카드 아이디 전송");
 					dispose();
 				}
@@ -103,7 +115,6 @@ public class SellFrame extends JFrame{
 			});
 		}
 		public static void main(String[] args) {
-			new BuyFrame(new CardDTO(0,"image/card1.png","포켓몬스터 나오하 카드",1000), new UserDTO("엄송현","12345","클라이언트1",555));
 		}
 
 	}
