@@ -108,7 +108,9 @@ public class CardDAO {
 			pstmt.setString(2, name);
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
-				
+				System.out.println("====================================");
+				System.out.println("카드번호 : " + rs.getInt("id"));
+				System.out.println("이미지경로 : " + rs.getString("url"));
 				System.out.println("카드이름 : " + rs.getString("name"));
 				System.out.println("카드가격 : " + rs.getInt("price"));
 			}

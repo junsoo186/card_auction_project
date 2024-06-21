@@ -61,9 +61,9 @@ public class ChargeFrame extends JFrame {
 	
 	private Icon backgroundIcon;
 
-	private JButton exitButton;
 	private SocketManager socket;
 	private JButton signUpButton;
+	private JLabel buttonImg;
 	
 	private UserDTO user;
 	
@@ -85,17 +85,25 @@ public class ChargeFrame extends JFrame {
 		getContentPane().setBackground(Color.white);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+		
+		backgroundIcon=new ImageIcon("image/충전창.png");
+		JLabel backIcon = new JLabel(backgroundIcon); 
+		buttonImg = new JLabel(new ImageIcon("image/충전하기.png"));
+		buttonImg.setBounds(185, 320,115,65);
+		backIcon.setBounds(0,0,500,500);
 		backgroundPanel = new JPanel();
-		backgroundPanel.setSize(getWidth(), getHeight());
+		backgroundPanel.setSize(500, 500);
 		backgroundPanel.setLayout(null);
 		backgroundPanel.setBackground(Color.white);
 		add(backgroundPanel);
+		backgroundPanel.add(backIcon);
 
 		pointIcon=new ImageIcon("image/poketpoint.gif");
 		point=new JLabel();
 		point.setIcon(pointIcon);
 		point.setBounds(222, 130, 35, 35);
-		backgroundPanel.add(point);
+		backIcon.add(point);
+		backIcon.add(buttonImg);
 		
 		bankAccount = new JLabel("계좌번호    :    123-456-678900");
 		bankAccount = new JLabel("계좌번호    :    123-456-678900");
@@ -108,8 +116,7 @@ public class ChargeFrame extends JFrame {
 		choice.add("30,000원");
 		choice.add("50,000원");
 		choice.add("100,000원");
-		signUpButton = new JButton("충전하기");
-		exitButton = new JButton("종료하기");
+		signUpButton = new JButton();
 
 		Icon backgroundIcon = new ImageIcon("image/back2.png");
 		backgroundLabel = new JLabel(backgroundIcon);
@@ -121,16 +128,17 @@ public class ChargeFrame extends JFrame {
 		bankAccount.setBounds(150, 230, 300, 50);
 		charge.setBounds(150, 265, 100, 50);
 		choice.setBounds(230,280,100,20);
-		signUpButton.setBounds(140, 320, 100, 20);
-		exitButton.setBounds(250, 320, 100, 20);
+		signUpButton.setBounds(185, 320,110,60);
 
 		
-		backgroundPanel.add(nowMoney);
-		backgroundPanel.add(choice);
-		backgroundPanel.add(bankAccount);
-		backgroundPanel.add(charge);
-		backgroundPanel.add(signUpButton);
-		backgroundPanel.add(exitButton);
+		backIcon.add(nowMoney);
+		backIcon.add(choice);
+		backIcon.add(bankAccount);
+		backIcon.add(charge);
+		signUpButton.setBackground(null);
+		signUpButton.setBorderPainted(false);
+		signUpButton.setContentAreaFilled(false);
+		buttonImg.add(signUpButton);
 
 		setVisible(true);
 
@@ -156,12 +164,6 @@ public class ChargeFrame extends JFrame {
 				}
 				
 				System.out.println(user.getPoint());
-				dispose();
-			}
-
-		});
-		exitButton.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
 				dispose();
 			}
 
