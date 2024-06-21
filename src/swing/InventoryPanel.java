@@ -29,7 +29,7 @@ public class InventoryPanel extends JPanel {
 	private UserDTO user;
 	private MainFrame mconText;
 	private InventoryDetailedPanel detail;
-	
+
 	ArrayList<JButton>product = new ArrayList<>();
 	ArrayList<Integer>serialNum = new ArrayList<>();
 	InventoryDAO inven = new InventoryDAO();
@@ -77,8 +77,6 @@ public class InventoryPanel extends JPanel {
 		setBackground(Color.WHITE);
 		add(backgroundPanel);
 		
-		scrollPane=new JScrollPane();	
-		scrollPane.setBounds(4,4,950,330);
 		ProductButton();
 		
 		try {

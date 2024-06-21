@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.SQLException;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -17,6 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
+import dao.UserDAO;
 import dto.UserDTO;
 import manager.SocketManager;
 
@@ -30,6 +32,7 @@ public class ChargeFrame extends JFrame {
 		this.user = user;
 	}
 
+	private UserDAO userDAO;
 	private JPanel backgroundPanel1;
 	private JPanel backgroundPanel2;
 	
@@ -82,7 +85,6 @@ public class ChargeFrame extends JFrame {
 		setResizable(false);
 		setLayout(null);
 		getContentPane().setBackground(Color.white);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		backgroundPanel = new JPanel();
 		backgroundPanel.setSize(getWidth(), getHeight());
@@ -110,6 +112,8 @@ public class ChargeFrame extends JFrame {
 		signUpButton = new JButton("충전하기");
 		exitButton = new JButton("종료하기");
 
+		userDAO=new UserDAO();
+		
 		Icon backgroundIcon = new ImageIcon("image/back2.png");
 		backgroundLabel = new JLabel(backgroundIcon);
 		backgroundLabel.setSize(279, 192);
@@ -154,6 +158,13 @@ public class ChargeFrame extends JFrame {
 					user.setPoint(user.getPoint()+100000);
 				}
 				
+				try {
+					userDAO.updatePoint(user.getName(),user.getPoint());
+					System.out.println(userDAO.infoUser(user.getName()));
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+			
 				System.out.println(user.getPoint());
 				dispose();
 			}
@@ -184,6 +195,5 @@ public class ChargeFrame extends JFrame {
 	}
 	
 public static void main(String[] args) {
-	new ChargeFrame(new UserDTO("엄송현","12345","클라이언트1",555));
 }
 }

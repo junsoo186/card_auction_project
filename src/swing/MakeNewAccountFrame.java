@@ -51,7 +51,6 @@ public class MakeNewAccountFrame extends JFrame implements ActionListener {
 		setResizable(false);
 		setLayout(null);
 		getContentPane().setBackground(Color.white);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		backgroundPanel = new JPanel();
 		backgroundPanel.setSize(getWidth(), getHeight());

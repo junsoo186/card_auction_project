@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -16,6 +17,7 @@ import javax.swing.JTextField;
 
 import com.sun.java.accessibility.util.GUIInitializedListener;
 
+import dao.InventoryDAO;
 import dto.CardDTO;
 import dto.UserDTO;
 
@@ -23,6 +25,14 @@ public class SellFrame extends JFrame{
 		
 		private CardDTO card;
 		private UserDTO user;
+		private ArrayList<JButton> productList = new ArrayList<>();
+		private ArrayList<String> productTitleList = new ArrayList<>();
+		private ArrayList<CardDTO> userInventory = new ArrayList<>();
+		ArrayList<JButton>product = new ArrayList<>();
+		ArrayList<Integer>serialNum = new ArrayList<>();
+		InventoryDAO inven = new InventoryDAO();
+		private int x = 500;
+		private int y = 100;
 		
 		private JPanel backgroundPanel;
 		private JTextField addPriceField;
@@ -36,10 +46,33 @@ public class SellFrame extends JFrame{
 			setInitLayout();
 			initListener();
 		}
+		
+		public void createProduct(String image) {
+			System.out.println(serialNum.size());  // 시리얼 넘버 사이즈로 product버튼 인덱스 번호 지정
+			product.get(serialNum.size()).setIcon(new ImageIcon(image)); // 유저가 올린 판매카드 이미지 버튼에 삽입 
+			serialNum.add(1); // 시리얼 넘버 사이즈도 증가 
+		}
+		
+		public void ProductButton() {
+			// 처음 생성 될때 8개 버튼 생성
+			for(int i = 0; i < 16; i++) {
+				product.add(i, new JButton());
+				product.get(i).setBounds(x,y,150,200);
+				
+				if((i/4)>=1 && i%4==0) {
+					x=500;
+					y+=300;
+				} else {
+					x+=200;
+				}
+				add(product.get(i));
+				setVisible(true);
+			}
+		}
 
 		private void setInitLayout() {
 			setTitle("[카드 판매하기]");
-			setSize(500, 650);
+			setSize(600, 800);
 			setLocationRelativeTo(null);
 			setResizable(false);
 			setLayout(null);

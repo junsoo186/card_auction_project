@@ -23,7 +23,7 @@ import dto.CardDTO;
 	public class FinishedDetailedPanel extends JPanel {
 
 
-		private JPanel backgroundPanel1;
+		private JPanel backgroundPanel;
 		private JLabel title;
 		private JScrollPane scrollPane;
 		private CardDTO card;
@@ -32,14 +32,15 @@ import dto.CardDTO;
 		private BuyFrame buyFrame;
 		private AuctionManager auctionManager;
 
-		public FinishedDetailedPanel(CardDTO card) {
+		public FinishedDetailedPanel(CardDTO card, JPanel backgroundPanel) {
+			this.backgroundPanel=backgroundPanel;
 			this.card = card;
 			initData();
 			setInitLayout();
 		}
 
 		private void initData() {
-			backgroundPanel1 = new JPanel();
+			backgroundPanel = new JPanel();
 		}
 
 		private void setInitLayout() {
@@ -47,12 +48,12 @@ import dto.CardDTO;
 			setLocation(0, 400);
 			setLayout(null);
 			setBackground(Color.WHITE);
-			add(backgroundPanel1);
+			add(backgroundPanel);
 
-			JLabel title = new JLabel("내 카드 보기 : " + card.getName());
+			JLabel title = new JLabel("종료된 카드 보기 : " + card.getName());
 			title.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 32));
 			title.setBounds(860, 10, 800, 50);
-			add(title);
+			backgroundPanel.add(title);
 
 			JLabel cardId = new JLabel(" 카드 ID : " + card.getId());
 			JLabel cardName = new JLabel(" 카드명 : " + card.getName());
@@ -74,11 +75,13 @@ import dto.CardDTO;
 			buyCard.setBackground(new Color(255, 204, 3));
 			buyCard.setBorderPainted(false);
 
-			add(cardId);
-			add(cardName);
-			add(cardPrice);
-			add(cardIcon);
-			add(buyCard);
+			backgroundPanel.add(cardId);
+			backgroundPanel.add(cardName);
+			backgroundPanel.add(cardPrice);
+			backgroundPanel.add(cardIcon);
+			backgroundPanel.add(buyCard);
+			
+			setVisible(true);
 
 		}
 		

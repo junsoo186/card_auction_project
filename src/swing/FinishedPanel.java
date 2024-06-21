@@ -21,9 +21,9 @@ import dto.UserDTO;
 
 public class FinishedPanel extends JPanel {
 
-	private ArrayList<JButton> productList = new ArrayList<>(12);
-	private ArrayList<String> productTitleList = new ArrayList<>(12);
-	public ArrayList<CardDTO> cardList = new ArrayList(10);
+	private ArrayList<JButton> productList = new ArrayList<>(5);
+	private ArrayList<String> productTitleList = new ArrayList<>(5);
+	public ArrayList<CardDTO> cardList = new ArrayList(5);
 	private JPanel backgroundPanel;
 	private JLabel title;
 	private JScrollPane scrollPane;
@@ -32,8 +32,8 @@ public class FinishedPanel extends JPanel {
 	
 	private FinishedDetailedPanel finishedDetailedPanel;
 
-	ArrayList<JButton> product = new ArrayList<>(8);
-	ArrayList<Integer> serialNum = new ArrayList<>(8);
+	ArrayList<JButton> product = new ArrayList<>(5);
+	ArrayList<Integer> serialNum = new ArrayList<>(5);
 	private int x = 500;
 	private int y = 100;
 
@@ -42,6 +42,7 @@ public class FinishedPanel extends JPanel {
 		mContext=this.mContext;
 		initData();
 		setInitLayout();
+		initListener();
 	}
 
 	private void initData() {
@@ -80,10 +81,6 @@ public class FinishedPanel extends JPanel {
 		setBackground(Color.WHITE);
 		add(backgroundPanel);
 
-		scrollPane = new JScrollPane();
-		scrollPane.setBounds(4, 4, 950, 330);
-		ProductButton();
-
 		cardList.add(new CardDTO(0, "image/card6.png", "[포켓몬스터] 루카리오 카드", 1000));
 		cardList.add(new CardDTO(1, "image/card2.png", "[포켓몬스터] 개굴닌자 카드", 2000));
 		cardList.add(new CardDTO(2, "image/card7.jpg", "[포켓몬스터] 레시라무 카드", 4000));
@@ -109,7 +106,8 @@ public class FinishedPanel extends JPanel {
 		product.get(0).addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				setVisible(false);
-				finishedDetailedPanel = new FinishedDetailedPanel(cardList.get(0));
+				System.out.println(1111111);
+				finishedDetailedPanel = new FinishedDetailedPanel(cardList.get(0),mContext.getBackgroundPanel());
 				backgroundPanel.add(finishedDetailedPanel);
 				finishedDetailedPanel.setVisible(true);
 			}
@@ -117,7 +115,7 @@ public class FinishedPanel extends JPanel {
 		product.get(1).addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				setVisible(false);
-				finishedDetailedPanel = new FinishedDetailedPanel(cardList.get(1));
+				finishedDetailedPanel = new FinishedDetailedPanel(cardList.get(1),mContext.getBackgroundPanel());
 				backgroundPanel.add(finishedDetailedPanel);
 				finishedDetailedPanel.setVisible(true);
 			}
@@ -125,7 +123,7 @@ public class FinishedPanel extends JPanel {
 		product.get(2).addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				setVisible(false);
-				finishedDetailedPanel = new FinishedDetailedPanel(cardList.get(2));
+				finishedDetailedPanel = new FinishedDetailedPanel(cardList.get(2),mContext.getBackgroundPanel());
 				backgroundPanel.add(finishedDetailedPanel);
 				finishedDetailedPanel.setVisible(true);
 			}
@@ -133,7 +131,7 @@ public class FinishedPanel extends JPanel {
 		product.get(3).addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				setVisible(false);
-				finishedDetailedPanel = new FinishedDetailedPanel(cardList.get(3));
+				finishedDetailedPanel = new FinishedDetailedPanel(cardList.get(3),mContext.getBackgroundPanel());
 				backgroundPanel.add(finishedDetailedPanel);
 				finishedDetailedPanel.setVisible(true);
 			}
@@ -141,61 +139,11 @@ public class FinishedPanel extends JPanel {
 		product.get(4).addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				setVisible(false);
-				finishedDetailedPanel = new FinishedDetailedPanel(cardList.get(4));
+				finishedDetailedPanel = new FinishedDetailedPanel(cardList.get(4),mContext.getBackgroundPanel());
 				backgroundPanel.add(finishedDetailedPanel);
 				finishedDetailedPanel.setVisible(true);
 			}
 		});
-		product.get(5).addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				setVisible(false);
-				finishedDetailedPanel = new FinishedDetailedPanel(cardList.get(5));
-				backgroundPanel.add(finishedDetailedPanel);
-				finishedDetailedPanel.setVisible(true);
-			}
-		});
-		product.get(6).addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				setVisible(false);
-				finishedDetailedPanel = new FinishedDetailedPanel(cardList.get(6));
-				backgroundPanel.add(finishedDetailedPanel);
-				finishedDetailedPanel.setVisible(true);
-			}
-		});
-		product.get(7).addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				setVisible(false);
-				finishedDetailedPanel = new FinishedDetailedPanel(cardList.get(7));
-				backgroundPanel.add(finishedDetailedPanel);
-				finishedDetailedPanel.setVisible(true);
-			}
-		});
-		product.get(8).addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				setVisible(false);
-				finishedDetailedPanel = new FinishedDetailedPanel(cardList.get(8));
-				backgroundPanel.add(finishedDetailedPanel);
-				finishedDetailedPanel.setVisible(true);
-			}
-		});
-		product.get(9).addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				setVisible(false);
-				finishedDetailedPanel = new FinishedDetailedPanel(cardList.get(9));
-				backgroundPanel.add(finishedDetailedPanel);
-				finishedDetailedPanel.setVisible(true);
-			}
-		});
-		product.get(10).addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				setVisible(false);
-				finishedDetailedPanel = new FinishedDetailedPanel(cardList.get(10));
-				backgroundPanel.add(finishedDetailedPanel);
-				finishedDetailedPanel.setVisible(true);
-			}
-		});
-
-		;
 	}
 
 }

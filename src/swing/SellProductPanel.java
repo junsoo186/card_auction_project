@@ -27,6 +27,8 @@ import manager.SocketManager;
 
 public class SellProductPanel extends JPanel {
 	
+	private SelectInventoryFrame selectInventoryFrame;
+	
 	private Icon profileIcon;
 	private JLabel profileLabel;
 	
@@ -47,6 +49,7 @@ public class SellProductPanel extends JPanel {
 	private JTextField secondsField;
 	private JTextField pointField;
 
+	private MainFrame mContext;
 	private JButton sellButton;
 	
 	private int x = 500;
@@ -54,9 +57,19 @@ public class SellProductPanel extends JPanel {
 	
 	private UserDTO user;
 	private Choice choice;
+	private CardDTO selectedCard;
 	
-	public SellProductPanel(UserDTO user) {
+	public CardDTO getSelectedCard() {
+		return selectedCard;
+	}
+
+	public void setSelectedCard(CardDTO selectedCard) {
+		this.selectedCard = selectedCard;
+	}
+
+	public SellProductPanel(UserDTO user,MainFrame mContext) {
 		this.user=user;
+		this.mContext=mContext;
 		initData();
 		setInitLayout();
 		initListener();
@@ -150,29 +163,12 @@ public class SellProductPanel extends JPanel {
 		});
 		selectCardButton.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				selectInventory(user);
+				selectInventoryFrame=new SelectInventoryFrame(user,mContext);
+				selectInventoryFrame.setVisible(true);
 			}
 
 		});
 		
-	}
-	
-	private void selectInventory(UserDTO user) {
-		JFrame inventoryFrame=new JFrame();
-		inventoryFrame.setTitle("[나의 카드 인벤토리]");
-		inventoryFrame.setSize(500,700);
-		inventoryFrame.setLocationRelativeTo(null);
-		inventoryFrame.setResizable(false);
-		setLayout(null);
-		inventoryFrame.getContentPane().setBackground(Color.white);
-		inventoryFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		System.out.println("인벤토리 입장");
-		
-		ArrayList<JButton> productList = new ArrayList<>(20);
-		ArrayList<String> productTitleList = new ArrayList<>(20);
-		ArrayList<CardDTO> cardList=new ArrayList(10);
-		
-		inventoryFrame.setVisible(true);
 	}
 
 }

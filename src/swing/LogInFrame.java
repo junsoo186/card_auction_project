@@ -6,6 +6,11 @@ import java.awt.Font;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
@@ -140,6 +145,48 @@ public class LogInFrame extends JFrame {
 			signUpButton.setBorderPainted(false);
 			signUpButton.setContentAreaFilled(false);
 			backgroundLabel.add(signUpButton);
+			passwordField.addKeyListener(new KeyListener() {
+
+				@Override
+				public void keyTyped(KeyEvent e) {
+					if(e.getKeyCode()==KeyEvent.VK_ENTER) {
+						System.out.println("aa");
+						String id = idField.getText();
+						String password = passwordField.getText();
+						socket.sendOrder("login#" + id + "#" + password);
+						UserDAO dao = new UserDAO();
+						try {
+							new MainFrame(dao.infoUser(id));
+						} catch (SQLException e1) {
+							e1.printStackTrace();
+						}
+						dispose();
+					}
+					
+				}
+
+				@Override
+				public void keyPressed(KeyEvent e) {
+					if(e.getKeyCode()==KeyEvent.VK_ENTER) {
+						System.out.println("bb");
+						String id = idField.getText();
+						String password = passwordField.getText();
+						socket.sendOrder("login#" + id + "#" + password);
+						UserDAO dao = new UserDAO();
+						try {
+							new MainFrame(dao.infoUser(id));
+						} catch (SQLException e1) {
+							e1.printStackTrace();
+						}
+						dispose();
+					}
+				}
+
+				@Override
+				public void keyReleased(KeyEvent e) {
+				}
+				
+			});
 			
 			setVisible(true);
 
@@ -165,6 +212,7 @@ public class LogInFrame extends JFrame {
 					dispose();
 					}
 			});
+		
 		}
 	
 		

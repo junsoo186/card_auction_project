@@ -37,7 +37,6 @@ public class AuctionPanel extends JPanel {
 	private ArrayList<JButton> productList = new ArrayList<>(20);
 	private ArrayList<String> productTitleList = new ArrayList<>(20);
 	public ArrayList<CardDTO> cardList = new ArrayList(10);
-	private JPanel backgroundPanel1;
 	private JLabel title;
 	private CardDTO cardDTO;
 	private UserDTO user;
@@ -60,8 +59,6 @@ public class AuctionPanel extends JPanel {
 	}
 
 	private void initData() {
-		backgroundPanel1 = new JPanel();
-
 		cardList.add(new CardDTO(0, "image/card1.png", "[포켓몬스터] 나오하 카드", 1000));
 		cardList.add(new CardDTO(1, "image/card2.png", "[포켓몬스터] 개굴닌자 카드", 2000));
 		cardList.add(new CardDTO(2, "image/card3.jpg", "[포켓몬스터] 이상해꽃 카드", 4000));
@@ -116,10 +113,6 @@ public class AuctionPanel extends JPanel {
 		createProduct(cardList.get(5));
 		createProduct(cardList.get(6));
 		createProduct(cardList.get(7));
-	}
-
-	private void ScrollPane(Component view) {
-
 	}
 
 	private void initListener() {
