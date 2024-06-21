@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -32,8 +33,10 @@ public class AuctionDetailedPanel extends JPanel {
 	private JButton goBackButton;
 	private BuyFrame buyFrame;
 	private AuctionManager auctionManager;
+	private List<JPanel> panels;
 
-	public AuctionDetailedPanel(CardDTO card, UserDTO user) {
+	public AuctionDetailedPanel(CardDTO card, UserDTO user,List<JPanel> panels) {
+		this.panels = panels;
 		this.card = card;
 		this.user=user;
 		initData();

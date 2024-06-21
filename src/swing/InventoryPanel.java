@@ -99,6 +99,12 @@ public class InventoryPanel extends JPanel {
 		add(title);
 		
 	}
+	
+	public void productAdd() {
+		for(int i = 0; i < userInventory.size(); i++) {
+			createProduct(userInventory.get(i).getUrl()); // 유저가 가지고있는 카드 url 삽입
+		}
+	}
 
 	// 카드 정보 조회기능 추가
 	public void addActionListner(ArrayList<CardDTO> userInventory) {
@@ -111,16 +117,12 @@ public class InventoryPanel extends JPanel {
 					detail = new InventoryDetailedPanel(userInventory.get(num),user,mconText.socket);
 					System.out.println("보관함 클릭이벤트 : "  + userInventory.get(num));
 					mconText.getPanles().add(detail);
+					mconText.addPanel(6);
 					mconText.setVisible(6);
-					mconText.repaint();
 				}
 			});
 		}
 		
 	}
 	
-	public void deletePanel() {
-		detail.setVisible(false);
-		mconText.repaint();
-	}
 }

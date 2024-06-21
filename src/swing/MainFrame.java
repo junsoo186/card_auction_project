@@ -67,8 +67,10 @@ public class MainFrame extends JFrame implements Runnable {
 	private PrintWriter userOrder; // 유저 명령
 	private MainFrame mconText = this;
 	public SocketManager socket;
+	private int size; // 경매중인 카드 수
 
 	public MainFrame(UserDTO user,SocketManager socket) {
+		size = 0;
 		this.socket = socket;
 		this.user = user;
 		initData();
@@ -200,6 +202,17 @@ public class MainFrame extends JFrame implements Runnable {
 		System.out.println("판넬 선택 : " + panels.get(state));
 		this.state = state;
 	}
+	
+	public void addPanel(int state) {
+		backgroundPanel.add(panels.get(state));
+	}
+	
+	public void removePanel() {
+		backgroundPanel.remove(7);
+		panels.remove(6);
+		auctionPanel.removeData();
+		System.out.println("판넬 사이즈 : " + panels.size());
+	}
 
 	private void initListener() {
 
@@ -208,9 +221,16 @@ public class MainFrame extends JFrame implements Runnable {
 			public void mouseClicked(MouseEvent e) {
 				if (state != 0) {
 					System.out.println("진행중 경매로 이동");
-					auctionPanel.addAuction();
+					if(socket.getAuctionList().size() != size) {
+						System.out.println("소켓 사이즈 : " + socket.getAuctionList().size());
+						System.out.println("그냥 사이즈 : " + size);
+						auctionPanel.addAuction();
+						size = socket.getAuctionList().size();
+					}
+					if(panels.size() > 6) {
+						removePanel();
+					}
 					setVisible(0);
-					repaint();
 				}
 			}
 		});
@@ -220,6 +240,9 @@ public class MainFrame extends JFrame implements Runnable {
 			public void mouseClicked(MouseEvent e) {
 				if (state != 1) {
 					System.out.println("종료된 경매로 이동");
+					if(panels.size() > 6) {
+						removePanel();
+					}
 					setVisible(1);
 				}
 			}
@@ -230,6 +253,9 @@ public class MainFrame extends JFrame implements Runnable {
 			public void mouseClicked(MouseEvent e) {
 				if (state != 2) {
 					System.out.println("시세 체크로 이동");
+					if(panels.size() > 6) {
+						removePanel();
+					}
 					setVisible(2);
 				}
 			}
@@ -240,6 +266,9 @@ public class MainFrame extends JFrame implements Runnable {
 			public void mouseClicked(MouseEvent e) {
 				if (state != 3) {
 					System.out.println("경매 출품으로 이동");
+					if(panels.size() > 6) {
+						removePanel();
+					}
 					setVisible(3);
 				}
 			}
@@ -250,6 +279,9 @@ public class MainFrame extends JFrame implements Runnable {
 			public void mouseClicked(MouseEvent e) {
 				if (state != 4) {
 					System.out.println("마이페이지로 이동");
+					if(panels.size() > 6) {
+						removePanel();
+					}
 					setVisible(4);
 				}
 			}
@@ -260,6 +292,10 @@ public class MainFrame extends JFrame implements Runnable {
 			public void mouseClicked(MouseEvent e) {
 				if (state != 5) {
 					System.out.println("인벤토리로 이동");
+					// 보관함 정보가 열려있으면 닫아주기
+					if(panels.size() > 6) {
+						removePanel();
+					}
 					setVisible(5);
 				}
 			}
@@ -276,8 +312,5 @@ public class MainFrame extends JFrame implements Runnable {
 
 	@Override
 	public void run() {
-		while (true) {
-
-		}
 	}
 }

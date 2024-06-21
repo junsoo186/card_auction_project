@@ -5,6 +5,7 @@ import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,9 +24,9 @@ import manager.SocketManager;
 public class AuctionPanel extends JPanel {
 
 
-	private ArrayList<JButton> productList = new ArrayList<>(20);
-	private ArrayList<String> productTitleList = new ArrayList<>(20);
-	public ArrayList<CardDTO> cardList = new ArrayList(10);
+	private ArrayList<JButton> productList = new ArrayList<>();
+	private ArrayList<String> productTitleList = new ArrayList<>();
+	public ArrayList<CardDTO> cardList = new ArrayList();
 	private JLabel title;
 	private CardDTO cardDTO;
 	private UserDTO user;
@@ -35,8 +36,8 @@ public class AuctionPanel extends JPanel {
 
 	int state;
 	List<JPanel>panel;
-	ArrayList<JButton> product = new ArrayList<>(20);
-	ArrayList<Integer> serialNum = new ArrayList<>(20);
+	ArrayList<JButton> product = new ArrayList<>();
+	ArrayList<Integer> serialNum = new ArrayList<>();
 	private int x = 500;
 	private int y = 100;
 
@@ -87,11 +88,8 @@ public class AuctionPanel extends JPanel {
 			}
 		}
 		for(int i = 0; i < cardList.size(); i++) {
+			System.out.println("경매 카드리스트 사이즈 : " + cardList.size());
 			createProduct(cardList.get(i));
-		}
-		for(int i = 0; i < cardList.size(); i++) {
-			detailPage = new AuctionDetailedPanel(cardList.get(i), user);
-			panel.add(detailPage);
 		}
 		
 	}
@@ -117,7 +115,11 @@ public class AuctionPanel extends JPanel {
 		ProductButton();
 		
 	}
-
+	
+	public void removeData() {
+		cardList.removeAll(cardList);
+		serialNum.removeAll(serialNum);
+	}
 
 	private void initListener() {
 		// 진행중인 경매 이동
@@ -126,58 +128,17 @@ public class AuctionPanel extends JPanel {
 				setVisible(0);
 			}
 		});
-		product.get(1).addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				setVisible(1);
-			}
-		});
-		product.get(2).addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				setVisible(2);
-			}
-		});
-		product.get(3).addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				setVisible(3);
-			}
-		});
-		product.get(4).addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				setVisible(4);
-			}
-		});
-		product.get(5).addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				setVisible(5);
-			}
-		});
-		product.get(6).addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				setVisible(6);
-			}
-		});
-		product.get(7).addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				setVisible(7);
-			}
-		});
-		product.get(8).addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				setVisible(8);
-			}
-		});
-		product.get(9).addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				setVisible(9);
-			}
-		});
-		product.get(10).addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				setVisible(10);
-			}
-		});
-
-		;
+		for(int i = 0; i < product.size(); i++) {
+			int num = i;
+			product.get(i).addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					detailPage = new AuctionDetailedPanel(cardList.get(num), user,panel);
+					panel.add(detailPage);
+					setVisible(6);
+				}
+			});
+		}
 	}
 
 }
