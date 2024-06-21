@@ -13,7 +13,7 @@ import lombok.ToString;
 @ToString
 public class AuctionDTO {
 	private int id;
-	private int userId;
+	private String userId;
 	private int cardId;
 	private int bidPrice;
 	private String startDate; 

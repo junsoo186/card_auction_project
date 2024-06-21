@@ -1,7 +1,6 @@
 
 package manager;
 
-import java.awt.PrintGraphics;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -16,7 +15,7 @@ import java.util.Vector;
 import dao.CardDAO;
 import dao.InventoryDAO;
 import dao.UserDAO;
-import dto.CardDTO;
+import dto.AuctionDTO;
 import dto.InventoryDTO;
 import dto.UserDTO;
 import swing.MainFrame;
@@ -29,6 +28,10 @@ public class Server {
 	private static ArrayList<Integer> productId; // 상품 id
 	private static ArrayList<String> productName; // 상품 이름
 	private static ArrayList<Integer> auctionList = new ArrayList<>(); // 경매 물품 리스트
+	private static ArrayList<AuctionDTO> auctionData = new ArrayList<>();// 경매 물품 정보
+	private static ArrayList<Integer> hour = new ArrayList<>(); // 시간 저장
+	private static ArrayList<Integer> min = new ArrayList<>(); // 분 저장
+	private static ArrayList<Integer> highBid = new ArrayList<>(); // 경매 현재 가격
 	private static Random random = new Random();
 
 	public Server() {
@@ -133,9 +136,17 @@ public class Server {
 					} else if (message.startsWith("auction")) {
 						String[] cardId = message.split("#");
 						int id = Integer.valueOf(cardId[1]);
+						int startBid = Integer.valueOf(cardId[2]);
+						int hourDB = Integer.valueOf(cardId[3]);
+						int minDB = Integer.valueOf(cardId[4]);
 						System.out.println("카드 id 받아옴 : " + id);
+						System.out.println("시간 받아옴 : " + hourDB);
+						System.out.println("분 받아옴 : " + minDB);
 						auctionList.add(id);
-						printWriter.println("list#" + id);
+						hour.add(hourDB);
+						min.add(minDB);
+						
+						printWriter.println("list#" + id +"#"+startBid+"#"+ hourDB+"#" + minDB);
 					}
 				}
 

@@ -89,7 +89,7 @@ public class MainFrame extends JFrame{
 	private void initData() {
 
 		backgroundPanel = new JPanel();
-		auctionPanel = new AuctionPanel(panels, user,socket);
+		auctionPanel = new AuctionPanel(panels, user,socket,mconText);
 		finishedPanel = new FinishedPanel(user,this);
 		checkBidPanel = new CheckBidPanel(panels,mconText);
 		sellProductPanel = new SellProductPanel(user);
@@ -225,6 +225,7 @@ public class MainFrame extends JFrame{
 					if(panels.size() > 6) {
 						removePanel();
 					}
+					auctionPanel.removeData();
 					auctionPanel.addAuction();
 					setVisible(0);
 				}

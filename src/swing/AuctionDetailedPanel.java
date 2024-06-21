@@ -41,10 +41,11 @@ public class AuctionDetailedPanel extends JPanel {
 	Server mContext;
 	int bid;
 
-	public AuctionDetailedPanel(CardDTO card, UserDTO user, AuctionManager auctionManager) {
+	public AuctionDetailedPanel(CardDTO card, UserDTO user, AuctionManager auctionManager,int hour , int min , int startbid) {
+		this.bid = startbid;
 		this.card = card;
 		this.user = user;
-		auctionManager = new AuctionManager(card.getId(), card.getPrice(), user, card, mContext, bid);
+		auctionManager = new AuctionManager(bid,user,card,hour,min);
 		this.auctionManager = auctionManager;
 		sell = new SellProductPanel(user);
 		initData();
@@ -99,6 +100,7 @@ public class AuctionDetailedPanel extends JPanel {
 		goBackButton.setBackground(new Color(255, 204, 3));
 		goBackButton.setBorderPainted(false);
 
+		add(endTime);
 		add(cardId);
 		add(cardName);
 		add(cardPrice);
@@ -112,6 +114,7 @@ public class AuctionDetailedPanel extends JPanel {
 				String s = Long.toString(auctionManager.getCurrent_time());
 				if (!s.equals(time)) {
 					time = s;
+					System.out.println("남은시간 dd : " + time);
 					endTime.setText("남은시간 :" + time + "초");
 					if (time.equals("0")) {
 						endTime.setText("경매 종료");
