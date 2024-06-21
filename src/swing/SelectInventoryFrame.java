@@ -134,7 +134,6 @@ public class SelectInventoryFrame extends JFrame{
 			product.get(i).addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					detail = new InventoryDetailedPanel(userInventory.get(num),user,mContext.socket);
 					selectCard=userInventory.get(num);
 					System.out.println(selectCard);
 				}
