@@ -126,6 +126,9 @@ public class AuctionPanel extends JPanel {
 	public void removeData() {
 		cardList.removeAll(cardList);
 		serialNum.removeAll(serialNum);
+		startBid.removeAll(startBid);
+		hour.removeAll(hour);
+		min.removeAll(min);
 	}
 
 	private void initListener() {

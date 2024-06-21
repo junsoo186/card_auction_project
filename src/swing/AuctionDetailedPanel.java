@@ -74,7 +74,8 @@ public class AuctionDetailedPanel extends JPanel {
 
 		JLabel cardId = new JLabel(" 카드 ID : " + card.getId());
 		JLabel cardName = new JLabel(" 카드명 : " + card.getName());
-		JLabel cardPrice = new JLabel(" 현재 카드 가격 : " + auctionManager.getHighbid());
+		JLabel cardPrice = new JLabel(" 시작 가격 : " + auctionManager.getStartBid());
+		JLabel cardBid = new JLabel(" 현재 비드 가격 : " + auctionManager.getHighbid());
 		JLabel cardIcon = new JLabel(new ImageIcon(card.getUrl()));
 		JLabel endTime = new JLabel("종료시간" + auctionManager.getCurrent_time());
 		buyCard = new JButton("가격 제시하기");
@@ -83,6 +84,7 @@ public class AuctionDetailedPanel extends JPanel {
 		cardId.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 24));
 		cardName.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 24));
 		cardPrice.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 24));
+		cardBid.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 24));
 		cardIcon.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 24));
 		endTime.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 24));
 		buyCard.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 24));
@@ -91,15 +93,17 @@ public class AuctionDetailedPanel extends JPanel {
 		cardId.setBounds(900, 100, 400, 100);
 		cardName.setBounds(900, 150, 400, 100);
 		cardPrice.setBounds(900, 200, 400, 100);
+		cardBid.setBounds(900, 250, 400, 100);
 		cardIcon.setBounds(600, 150, 150, 200);
 		endTime.setBounds(900, 0, 400, 200);
-		buyCard.setBounds(900, 300, 200, 70);
+		buyCard.setBounds(900, 350, 200, 70);
 		buyCard.setBackground(new Color(255, 204, 3));
 		buyCard.setBorderPainted(false);
 		goBackButton.setBounds(600, 20, 130, 50);
 		goBackButton.setBackground(new Color(255, 204, 3));
 		goBackButton.setBorderPainted(false);
-
+		
+		add(cardBid);
 		add(endTime);
 		add(cardId);
 		add(cardName);
@@ -122,6 +126,9 @@ public class AuctionDetailedPanel extends JPanel {
 						buyCard.setVisible(false);
 						flag = false;
 					}
+				}
+				if(auctionManager.getHighbid() != bid) {
+					cardBid.setText(" 현재 비드 가격 : " + auctionManager.getHighbid());
 				}
 				try {
 					Thread.sleep(1000);

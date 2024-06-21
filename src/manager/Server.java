@@ -54,7 +54,7 @@ public class Server {
 		for (Socket socket : client) {
 			try {
 				serverOrder = new PrintWriter(socket.getOutputStream(), true);
-				serverOrder.write(message);
+				serverOrder.println(message);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -81,7 +81,7 @@ public class Server {
 				InventoryDTO invenDTO = new InventoryDTO();
 				// 처음에 들어온 사용자들에게 현재 경매물품 리스트 송출
 				for(int i = 0; i < auctionList.size(); i++) {
-					printWriter.println("list#" + auctionList.get(i));
+					broadCast("list#" + auctionList.get(i));
 				}
 				while ((message = userOrder.readLine()) != null) {
 					System.out.println("와일문 작동");
@@ -144,8 +144,7 @@ public class Server {
 						auctionList.add(id);
 						hour.add(hourDB);
 						min.add(minDB);
-						
-						printWriter.println("list#" + id +"#"+startBid+"#"+ hourDB+"#" + minDB);
+						broadCast("list#" + id +"#"+startBid+"#"+ hourDB+"#" + minDB);
 					}
 				}
 
