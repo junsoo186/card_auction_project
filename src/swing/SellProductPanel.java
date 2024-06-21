@@ -27,8 +27,6 @@ import manager.SocketManager;
 
 public class SellProductPanel extends JPanel {
 	
-	private SelectInventoryFrame selectInventoryFrame;
-	
 	private Icon profileIcon;
 	private JLabel profileLabel;
 	
@@ -46,10 +44,9 @@ public class SellProductPanel extends JPanel {
 	
 	private JTextField nameField;
 	private JTextField hoursField;
-	private JTextField secondsField;
+	private JTextField minField;
 	private JTextField pointField;
 
-	private MainFrame mContext;
 	private JButton sellButton;
 	
 	private int x = 500;
@@ -57,16 +54,8 @@ public class SellProductPanel extends JPanel {
 	
 	private UserDTO user;
 	private Choice choice;
-	private CardDTO selectedCard;
+	private MainFrame mContext;
 	
-	public CardDTO getSelectedCard() {
-		return selectedCard;
-	}
-
-	public void setSelectedCard(CardDTO selectedCard) {
-		this.selectedCard = selectedCard;
-	}
-
 	public SellProductPanel(UserDTO user,MainFrame mContext) {
 		this.user=user;
 		this.mContext=mContext;
@@ -114,7 +103,7 @@ public class SellProductPanel extends JPanel {
 		selectCardButton.setBackground(new Color(255,204,100));
 		selectCardButton.setBounds(380, 360, 190, 100);
 		hoursField=new JTextField(50);
-		secondsField=new JTextField(50);
+		minField=new JTextField(50);
 		pointField=new JTextField(50);
 		
 		sellButton=new JButton("판매하기");
@@ -134,7 +123,7 @@ public class SellProductPanel extends JPanel {
 		hour.setBounds(492, 251, 50, 25);
 		second.setBounds(580, 251, 50, 25);
 		hoursField.setBounds(440, 251, 50, 25);
-		secondsField.setBounds(530, 251, 50, 25);
+		minField.setBounds(530, 251, 50, 25);
 		pointField.setBounds(440, 290, 80, 25);
 		
 		add(profileLabel);
@@ -146,7 +135,7 @@ public class SellProductPanel extends JPanel {
 		infoPanel.add(second);
 		infoPanel.add(timeLimit);
 		infoPanel.add(hoursField);
-		infoPanel.add(secondsField);
+		infoPanel.add(minField);
 		infoPanel.add(sellButton);
 		infoPanel.add(pointField);
 	}
@@ -163,12 +152,40 @@ public class SellProductPanel extends JPanel {
 		});
 		selectCardButton.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				selectInventoryFrame=new SelectInventoryFrame(user,mContext);
-				selectInventoryFrame.setVisible(true);
+				new SelectInventoryFrame(user, mContext); 
 			}
 
 		});
 		
 	}
+	
+	private void selectInventory(UserDTO user) {
+		JFrame inventoryFrame=new JFrame();
+		inventoryFrame.setTitle("[나의 카드 인벤토리]");
+		inventoryFrame.setSize(500,700);
+		inventoryFrame.setLocationRelativeTo(null);
+		inventoryFrame.setResizable(false);
+		setLayout(null);
+		inventoryFrame.getContentPane().setBackground(Color.white);
+		inventoryFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		System.out.println("인벤토리 입장");
+		
+		ArrayList<JButton> productList = new ArrayList<>(20);
+		ArrayList<String> productTitleList = new ArrayList<>(20);
+		ArrayList<CardDTO> cardList=new ArrayList(10);
+		
+		inventoryFrame.setVisible(true);
+	}
+	public int getThisHour() {
+	int give_Hour = Integer.parseInt(hoursField.getText());
+	return give_Hour;
+	}
+	
+	
+	public int getThisMin() {
+		int give_Min = Integer.parseInt(minField.getText());
+		return give_Min;
+	}
+	
 
 }

@@ -18,7 +18,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import dto.UserDTO;
+import lombok.Data;
 import lombok.ToString;
+import manager.SocketManager;
 
 @ToString
 public class MainFrame extends JFrame implements Runnable {
@@ -64,8 +66,10 @@ public class MainFrame extends JFrame implements Runnable {
 	private BufferedReader serverOrder; // 서버 명령
 	private PrintWriter userOrder; // 유저 명령
 	private MainFrame mconText = this;
+	public SocketManager socket;
 
-	public MainFrame(UserDTO user) {
+	public MainFrame(UserDTO user,SocketManager socket) {
+		this.socket = socket;
 		this.user = user;
 		initData();
 		setInitLayout();
@@ -75,11 +79,15 @@ public class MainFrame extends JFrame implements Runnable {
 	public JPanel getBackgroundPanel() {
 		return this.backgroundPanel;
 	}
-
+	
+	public List<JPanel> getPanles() {
+		return this.panels;
+	}
+	
 	private void initData() {
 
 		backgroundPanel = new JPanel();
-		auctionPanel = new AuctionPanel(backgroundPanel, user);
+		auctionPanel = new AuctionPanel(panels, user,socket);
 		finishedPanel = new FinishedPanel(user,this);
 		checkBidPanel = new CheckBidPanel();
 		sellProductPanel = new SellProductPanel(user,this);
@@ -127,7 +135,7 @@ public class MainFrame extends JFrame implements Runnable {
 		poketPoint.setBorder(null);
 		poketPoint.setLocation(1610, 55);
 		backgroundLabel.add(poketPoint);
-		user.setPoint(auctionPanel.getUser().getPoint());
+		user.setPoint(user.getPoint());
 
 		searchBar = new JTextField(400);
 		searchBar.setBounds(685, 278, 490, 40);
@@ -184,11 +192,12 @@ public class MainFrame extends JFrame implements Runnable {
 
 	}
 
-	private void setVisible(int state) {
+	public void setVisible(int state) {
 		for (int i = 0; i < panels.size(); i++) {
 			panels.get(i).setVisible(false);
 		}
 		panels.get(state).setVisible(true);
+		System.out.println("판넬 선택 : " + panels.get(state));
 		this.state = state;
 	}
 
@@ -199,7 +208,9 @@ public class MainFrame extends JFrame implements Runnable {
 			public void mouseClicked(MouseEvent e) {
 				if (state != 0) {
 					System.out.println("진행중 경매로 이동");
+					auctionPanel.addAuction();
 					setVisible(0);
+					repaint();
 				}
 			}
 		});

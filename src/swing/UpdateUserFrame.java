@@ -42,6 +42,7 @@ public class UpdateUserFrame extends JFrame {
 		setResizable(false);
 		setLayout(null);
 		getContentPane().setBackground(new Color(255,204,3));
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		backgroundPanel = new JPanel();
 		backgroundPanel.setBounds(80,60,350,500);

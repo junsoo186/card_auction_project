@@ -6,21 +6,24 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 
 import lombok.Data;
+import swing.AuctionPanel;
 import swing.LogInFrame;
 
 @Data
 public class SocketManager implements Runnable{
 
-	private static Socket socket;
-	private static PrintWriter userOrder;
-	private static BufferedReader serverOrder;
+	private  Socket socket;
+	private  PrintWriter userOrder;
+	private BufferedReader serverOrder;
+	private ArrayList<Integer> auctionList = new ArrayList<>();
 	
 	public SocketManager() {
 	}
 	
-	public static void sendOrder(String order) {
+	public void sendOrder(String order) {
 		userOrder.println(order);
 	}
 
@@ -32,7 +35,12 @@ public class SocketManager implements Runnable{
 			userOrder = new PrintWriter(socket.getOutputStream(), true);
 			serverOrder = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			while((message = serverOrder.readLine()) != null) {
-				
+				if(message.startsWith("list")) {
+					String[] cardId = message.split("#");
+					int id = Integer.valueOf(cardId[1]);
+					System.out.println("서버에서 카드 id 보냄 : " + id);
+					auctionList.add(id);
+				}
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

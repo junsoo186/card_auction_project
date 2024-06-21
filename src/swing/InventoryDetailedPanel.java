@@ -19,6 +19,7 @@ import com.mysql.cj.protocol.x.SyncFlushDeflaterOutputStream;
 import dto.CardDTO;
 	import dto.UserDTO;
 	import manager.AuctionManager;
+import manager.SocketManager;
 
 	public class InventoryDetailedPanel extends JPanel {
 
@@ -34,8 +35,10 @@ import dto.CardDTO;
 		private JButton goBackButton;
 		private BuyFrame buyFrame;
 		private AuctionManager auctionManager;
+		private SocketManager socket;
 
-		public InventoryDetailedPanel(CardDTO card,UserDTO user) {
+		public InventoryDetailedPanel(CardDTO card,UserDTO user,SocketManager socket) {
+			this.socket = socket;
 			this.card = card;
 			this.user = user;
 			initData();
@@ -87,7 +90,7 @@ import dto.CardDTO;
 			sellCard.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					new SellFrame(card,user);
+					new SellFrame(card,user,socket);
 				}
 			});
 

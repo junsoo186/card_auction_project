@@ -1,5 +1,6 @@
 package manager;
 
+import java.awt.PrintGraphics;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -9,18 +10,15 @@ import java.net.Socket;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.Timer;
 import java.util.Vector;
 
-import org.w3c.dom.UserDataHandler;
-
+import dao.CardDAO;
 import dao.InventoryDAO;
 import dao.UserDAO;
 import dto.CardDTO;
 import dto.InventoryDTO;
 import dto.UserDTO;
 import swing.MainFrame;
-import swing.ProductButton;
 
 public class Server {
 
@@ -29,6 +27,7 @@ public class Server {
 	private static MainFrame mconText;
 	private static ArrayList<Integer> productId; // 상품 id
 	private static ArrayList<String> productName; // 상품 이름
+	private static ArrayList<Integer> auctionList = new ArrayList<>(); // 경매 물품 리스트
 	private static Random random = new Random();
 
 	public Server() {
@@ -59,7 +58,7 @@ public class Server {
 		}
 	}
 
-	private static class Service extends Thread {
+	private static class Service extends Thread{
 
 		private Socket socket;
 
@@ -70,12 +69,17 @@ public class Server {
 		@Override
 		public void run() {
 			try (BufferedReader userOrder = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-					PrintWriter printWriter = new PrintWriter(socket.getOutputStream())) {
+					PrintWriter printWriter = new PrintWriter(socket.getOutputStream(),true)) {
 				String message;
 				UserDTO user = new UserDTO();
 				UserDAO dao = new UserDAO();
+				CardDAO cardDao = new CardDAO();
 				InventoryDAO inven = new InventoryDAO();
 				InventoryDTO invenDTO = new InventoryDTO();
+				// 처음에 들어온 사용자들에게 현재 경매물품 리스트 송출
+				for(int i = 0; i < auctionList.size(); i++) {
+					printWriter.println("list#" + auctionList.get(i));
+				}
 				while ((message = userOrder.readLine()) != null) {
 					System.out.println("와일문 작동");
 					if (message.startsWith("chat")) {
@@ -125,8 +129,12 @@ public class Server {
 					} else if (message.startsWith("addCard")) {
 						String[] card = message.split("#");
 
-					} else if (message.startsWith("userDTO")) {
-
+					} else if (message.startsWith("auction")) {
+						String[] cardId = message.split("#");
+						int id = Integer.valueOf(cardId[1]);
+						System.out.println("카드 id 받아옴 : " + id);
+						auctionList.add(id);
+						printWriter.println("list#" + id);
 					}
 				}
 
@@ -135,7 +143,9 @@ public class Server {
 			}
 		}
 	}
-
+	
+	
+	
 	public static void main(String[] args) {
 		new Server();
 	}

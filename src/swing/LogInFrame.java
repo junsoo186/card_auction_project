@@ -7,8 +7,6 @@ import java.awt.Font;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
@@ -150,13 +148,12 @@ public class LogInFrame extends JFrame {
 				@Override
 				public void keyTyped(KeyEvent e) {
 					if(e.getKeyCode()==KeyEvent.VK_ENTER) {
-						System.out.println("aa");
 						String id = idField.getText();
 						String password = passwordField.getText();
 						socket.sendOrder("login#" + id + "#" + password);
 						UserDAO dao = new UserDAO();
 						try {
-							new MainFrame(dao.infoUser(id));
+							new MainFrame(dao.infoUser(id),socket);
 						} catch (SQLException e1) {
 							e1.printStackTrace();
 						}
@@ -168,13 +165,12 @@ public class LogInFrame extends JFrame {
 				@Override
 				public void keyPressed(KeyEvent e) {
 					if(e.getKeyCode()==KeyEvent.VK_ENTER) {
-						System.out.println("bb");
 						String id = idField.getText();
 						String password = passwordField.getText();
 						socket.sendOrder("login#" + id + "#" + password);
 						UserDAO dao = new UserDAO();
 						try {
-							new MainFrame(dao.infoUser(id));
+							new MainFrame(dao.infoUser(id),socket);
 						} catch (SQLException e1) {
 							e1.printStackTrace();
 						}
@@ -189,6 +185,7 @@ public class LogInFrame extends JFrame {
 			});
 			
 			setVisible(true);
+
 
 		}
 		
@@ -205,14 +202,13 @@ public class LogInFrame extends JFrame {
 					socket.sendOrder("login#" + id + "#" + password);
 					UserDAO dao = new UserDAO();
 					try {
-						new MainFrame(dao.infoUser(id));
+						new MainFrame(dao.infoUser(id),socket);
 					} catch (SQLException e1) {
 						e1.printStackTrace();
 					}
 					dispose();
 					}
 			});
-		
 		}
 	
 		

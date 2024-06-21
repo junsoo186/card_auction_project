@@ -21,9 +21,9 @@ import dto.UserDTO;
 
 public class FinishedPanel extends JPanel {
 
-	private ArrayList<JButton> productList = new ArrayList<>(5);
-	private ArrayList<String> productTitleList = new ArrayList<>(5);
-	public ArrayList<CardDTO> cardList = new ArrayList(5);
+	private ArrayList<JButton> productList = new ArrayList<>(12);
+	private ArrayList<String> productTitleList = new ArrayList<>(12);
+	public ArrayList<CardDTO> cardList = new ArrayList(10);
 	private JPanel backgroundPanel;
 	private JLabel title;
 	private JScrollPane scrollPane;
@@ -32,21 +32,21 @@ public class FinishedPanel extends JPanel {
 	
 	private FinishedDetailedPanel finishedDetailedPanel;
 
-	ArrayList<JButton> product = new ArrayList<>(5);
-	ArrayList<Integer> serialNum = new ArrayList<>(5);
+	ArrayList<JButton> product = new ArrayList<>(8);
+	ArrayList<Integer> serialNum = new ArrayList<>(8);
 	private int x = 500;
 	private int y = 100;
 
 	public FinishedPanel(UserDTO user, MainFrame mContext) {
 		this.user = user;
-		mContext=this.mContext;
+		this.mContext=mContext;
 		initData();
 		setInitLayout();
 		initListener();
 	}
 
 	private void initData() {
-		backgroundPanel = new JPanel();
+		backgroundPanel =mContext.getBackgroundPanel();
 	}
 
 	public void createProduct(CardDTO card) {
@@ -81,6 +81,10 @@ public class FinishedPanel extends JPanel {
 		setBackground(Color.WHITE);
 		add(backgroundPanel);
 
+		scrollPane = new JScrollPane();
+		scrollPane.setBounds(4, 4, 950, 330);
+		ProductButton();
+
 		cardList.add(new CardDTO(0, "image/card6.png", "[포켓몬스터] 루카리오 카드", 1000));
 		cardList.add(new CardDTO(1, "image/card2.png", "[포켓몬스터] 개굴닌자 카드", 2000));
 		cardList.add(new CardDTO(2, "image/card7.jpg", "[포켓몬스터] 레시라무 카드", 4000));
@@ -106,8 +110,7 @@ public class FinishedPanel extends JPanel {
 		product.get(0).addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				setVisible(false);
-				System.out.println(1111111);
-				finishedDetailedPanel = new FinishedDetailedPanel(cardList.get(0),mContext.getBackgroundPanel());
+				finishedDetailedPanel = new FinishedDetailedPanel(cardList.get(0));
 				backgroundPanel.add(finishedDetailedPanel);
 				finishedDetailedPanel.setVisible(true);
 			}
@@ -115,7 +118,7 @@ public class FinishedPanel extends JPanel {
 		product.get(1).addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				setVisible(false);
-				finishedDetailedPanel = new FinishedDetailedPanel(cardList.get(1),mContext.getBackgroundPanel());
+				finishedDetailedPanel = new FinishedDetailedPanel(cardList.get(1));
 				backgroundPanel.add(finishedDetailedPanel);
 				finishedDetailedPanel.setVisible(true);
 			}
@@ -123,7 +126,7 @@ public class FinishedPanel extends JPanel {
 		product.get(2).addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				setVisible(false);
-				finishedDetailedPanel = new FinishedDetailedPanel(cardList.get(2),mContext.getBackgroundPanel());
+				finishedDetailedPanel = new FinishedDetailedPanel(cardList.get(2));
 				backgroundPanel.add(finishedDetailedPanel);
 				finishedDetailedPanel.setVisible(true);
 			}
@@ -131,7 +134,7 @@ public class FinishedPanel extends JPanel {
 		product.get(3).addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				setVisible(false);
-				finishedDetailedPanel = new FinishedDetailedPanel(cardList.get(3),mContext.getBackgroundPanel());
+				finishedDetailedPanel = new FinishedDetailedPanel(cardList.get(3));
 				backgroundPanel.add(finishedDetailedPanel);
 				finishedDetailedPanel.setVisible(true);
 			}
@@ -139,7 +142,7 @@ public class FinishedPanel extends JPanel {
 		product.get(4).addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				setVisible(false);
-				finishedDetailedPanel = new FinishedDetailedPanel(cardList.get(4),mContext.getBackgroundPanel());
+				finishedDetailedPanel = new FinishedDetailedPanel(cardList.get(4));
 				backgroundPanel.add(finishedDetailedPanel);
 				finishedDetailedPanel.setVisible(true);
 			}

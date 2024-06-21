@@ -29,7 +29,7 @@ public class InventoryPanel extends JPanel {
 	private UserDTO user;
 	private MainFrame mconText;
 	private InventoryDetailedPanel detail;
-
+	
 	ArrayList<JButton>product = new ArrayList<>();
 	ArrayList<Integer>serialNum = new ArrayList<>();
 	InventoryDAO inven = new InventoryDAO();
@@ -77,6 +77,8 @@ public class InventoryPanel extends JPanel {
 		setBackground(Color.WHITE);
 		add(backgroundPanel);
 		
+		scrollPane=new JScrollPane();	
+		scrollPane.setBounds(4,4,950,330);
 		ProductButton();
 		
 		try {
@@ -106,9 +108,10 @@ public class InventoryPanel extends JPanel {
 			product.get(i).addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					setVisible(false);
-					detail = new InventoryDetailedPanel(userInventory.get(num),user);
-					mconText.getBackgroundPanel().add(detail);
+					detail = new InventoryDetailedPanel(userInventory.get(num),user,mconText.socket);
+					System.out.println("보관함 클릭이벤트 : "  + userInventory.get(num));
+					mconText.getPanles().add(detail);
+					mconText.setVisible(6);
 					mconText.repaint();
 				}
 			});
