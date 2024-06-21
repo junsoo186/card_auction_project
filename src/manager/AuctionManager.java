@@ -66,5 +66,6 @@ public class AuctionManager extends Thread {
 	public void see(long remainSecond) {
 		this.current_time = remainSecond;
 	}
+	
 
 }
