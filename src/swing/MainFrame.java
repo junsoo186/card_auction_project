@@ -111,6 +111,7 @@ public class MainFrame extends JFrame implements Runnable {
 		setLocationRelativeTo(null);
 		setResizable(false);
 		setLayout(null);
+		setIconImage(java.awt.Toolkit.getDefaultToolkit().getImage("image/파비콘2.png"));
 		getContentPane().setBackground(Color.white);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 

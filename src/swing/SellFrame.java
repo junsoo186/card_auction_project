@@ -47,6 +47,7 @@ public class SellFrame extends JFrame{
 			setSize(500, 650);
 			setLocationRelativeTo(null);
 			setResizable(false);
+			setIconImage(java.awt.Toolkit.getDefaultToolkit().getImage("image/파비콘2.png"));
 			setLayout(null);
 			getContentPane().setBackground(new Color(255,204,3));
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
