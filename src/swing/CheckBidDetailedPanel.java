@@ -20,7 +20,7 @@ import dto.CardDTO;
 	import dto.UserDTO;
 	import manager.AuctionManager;
 
-	public class FinishedDetailedPanel extends JPanel {
+	public class CheckBidDetailedPanel extends JPanel {
 
 
 		private JPanel backgroundPanel;
@@ -30,7 +30,7 @@ import dto.CardDTO;
 		private BuyFrame buyFrame;
 		private AuctionManager auctionManager;
 
-		public FinishedDetailedPanel(CardDTO card) {
+		public CheckBidDetailedPanel(CardDTO card) {
 			this.card = card;
 			initData();
 			setInitLayout();
