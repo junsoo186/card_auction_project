@@ -19,7 +19,6 @@ import dao.InventoryDAO;
 import dao.UserDAO;
 import dto.CardDTO;
 import dto.UserDTO;
-import manager.SocketManager;
 
 public class SelectInventoryFrame extends JFrame{
 	
@@ -135,8 +134,8 @@ public class SelectInventoryFrame extends JFrame{
 			product.get(i).addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					detail = new InventoryDetailedPanel(userInventory.get(num),user,mContext.socket);
 					selectCard=userInventory.get(num);
+					System.out.println(selectCard);
 				}
 			});
 		}
@@ -148,8 +147,6 @@ public class SelectInventoryFrame extends JFrame{
 					System.out.println(selectCard);
 					JOptionPane.showMessageDialog(null,selectCard.getName()+" 을/를 선택합니다.");
 					dispose();
-				} else {
-					JOptionPane.showMessageDialog(null," 카드를 선택해주세요. ");
 				}
 			}
 		});
@@ -163,5 +160,6 @@ public class SelectInventoryFrame extends JFrame{
 		});		
 	}
 
+	
 
 }

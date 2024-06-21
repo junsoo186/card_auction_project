@@ -20,7 +20,7 @@ import dto.CardDTO;
 	import dto.UserDTO;
 	import manager.AuctionManager;
 
-	public class FinishedDetailedPanel extends JPanel {
+	public class CheckBidDetailedPanel extends JPanel {
 
 
 		private JPanel backgroundPanel;
@@ -30,7 +30,7 @@ import dto.CardDTO;
 		private BuyFrame buyFrame;
 		private AuctionManager auctionManager;
 
-		public FinishedDetailedPanel(CardDTO card) {
+		public CheckBidDetailedPanel(CardDTO card) {
 			this.card = card;
 			initData();
 			setInitLayout();
@@ -45,14 +45,14 @@ import dto.CardDTO;
 			setLayout(null);
 			setBackground(Color.WHITE);
 
-			JLabel title = new JLabel("종료된 카드 보기 : " + card.getName());
+			JLabel title = new JLabel("카드 시세 확인 : " + card.getName());
 			title.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 32));
 			title.setBounds(860, 10, 800, 50);
 			add(title);
 
 			JLabel cardId = new JLabel(" 카드 ID : " + card.getId());
 			JLabel cardName = new JLabel(" 카드명 : " + card.getName());
-			JLabel cardPrice = new JLabel(" 판매된 카드 가격 : " + card.getPrice());
+			JLabel cardPrice = new JLabel(" 카드 평균 가격 : " + card.getPrice());
 			JLabel cardIcon = new JLabel(new ImageIcon(card.getUrl()));
 
 			cardId.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 24));

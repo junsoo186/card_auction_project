@@ -23,6 +23,7 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
+
 import dao.UserDAO;
 import dto.UserDTO;
 import manager.SocketManager;
@@ -95,7 +96,7 @@ public class LogInFrame extends JFrame {
 			backgroundPanel2.setSize(getWidth(),getHeight());
 			backgroundPanel2.setLayout(null);
 			backgroundPanel2.setBackground(Color.BLUE.darker());
-			
+			setIconImage(java.awt.Toolkit.getDefaultToolkit().getImage("image/파비콘2.png"));
 			Icon backgroundIcon=new ImageIcon("image/logInBack.gif");
 			Icon logInIcon=new ImageIcon("image/logInButton.png");
 			Icon makeAccountIcon=new ImageIcon("image/makeAccount.png");
@@ -121,7 +122,6 @@ public class LogInFrame extends JFrame {
 			passwordField.setBounds(835,760,260,47);
 			idField.setBorder(null);
 			passwordField.setBorder(null);
-			
 			title.setBounds(850,480,300,60);
 			mainPanel=new JPanel();
 			

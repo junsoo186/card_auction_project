@@ -91,7 +91,7 @@ public class MainFrame extends JFrame implements Runnable {
 		backgroundPanel = new JPanel();
 		auctionPanel = new AuctionPanel(panels, user,socket,mconText);
 		finishedPanel = new FinishedPanel(user,this);
-		checkBidPanel = new CheckBidPanel();
+		checkBidPanel = new CheckBidPanel(this);
 		sellProductPanel = new SellProductPanel(user);
 		myPagePanel = new MyPagePanel(user);
 		inventoryPanel = new InventoryPanel(user, mconText);
@@ -111,6 +111,7 @@ public class MainFrame extends JFrame implements Runnable {
 		setLocationRelativeTo(null);
 		setResizable(false);
 		setLayout(null);
+		setIconImage(java.awt.Toolkit.getDefaultToolkit().getImage("image/파비콘2.png"));
 		getContentPane().setBackground(Color.white);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 

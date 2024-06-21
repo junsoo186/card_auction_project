@@ -158,24 +158,6 @@ public class SellProductPanel extends JPanel {
 		});
 		
 	}
-	
-	private void selectInventory(UserDTO user) {
-		JFrame inventoryFrame=new JFrame();
-		inventoryFrame.setTitle("[나의 카드 인벤토리]");
-		inventoryFrame.setSize(500,700);
-		inventoryFrame.setLocationRelativeTo(null);
-		inventoryFrame.setResizable(false);
-		setLayout(null);
-		inventoryFrame.getContentPane().setBackground(Color.white);
-		inventoryFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		System.out.println("인벤토리 입장");
-		
-		ArrayList<JButton> productList = new ArrayList<>(20);
-		ArrayList<String> productTitleList = new ArrayList<>(20);
-		ArrayList<CardDTO> cardList=new ArrayList(10);
-		
-		inventoryFrame.setVisible(true);
-	}
 	public int getThisHour() {
 	int give_Hour = Integer.parseInt(hoursField.getText());
 	return give_Hour;
