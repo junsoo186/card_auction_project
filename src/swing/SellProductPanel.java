@@ -56,7 +56,7 @@ public class SellProductPanel extends JPanel {
 	private Choice choice;
 	private MainFrame mContext;
 	
-	public SellProductPanel(UserDTO user,MainFrame mContext) {
+	public SellProductPanel(UserDTO user) {
 		this.user=user;
 		this.mContext=mContext;
 		initData();

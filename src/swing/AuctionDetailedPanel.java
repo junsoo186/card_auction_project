@@ -36,7 +36,7 @@ public class AuctionDetailedPanel extends JPanel {
 	// 옥션 매니저
 	private AuctionManager auctionManager;
 	boolean flag = true;
-	SellProductPanel sell = new SellProductPanel(user);
+	SellProductPanel sell;
 	String time; // 시간
 	Server mContext;
 	int bid;
@@ -46,6 +46,7 @@ public class AuctionDetailedPanel extends JPanel {
 		this.user = user;
 		auctionManager = new AuctionManager(card.getId(), card.getPrice(), user, card, mContext, bid);
 		this.auctionManager = auctionManager;
+		sell = new SellProductPanel(user);
 		initData();
 		setInitLayout();
 		initListener();
