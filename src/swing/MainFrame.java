@@ -91,7 +91,7 @@ public class MainFrame extends JFrame implements Runnable {
 		backgroundPanel = new JPanel();
 		auctionPanel = new AuctionPanel(panels, user,socket);
 		finishedPanel = new FinishedPanel(user,this);
-		checkBidPanel = new CheckBidPanel();
+		checkBidPanel = new CheckBidPanel(this);
 		sellProductPanel = new SellProductPanel(user);
 		myPagePanel = new MyPagePanel(user);
 		inventoryPanel = new InventoryPanel(user, mconText);
