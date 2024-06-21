@@ -221,15 +221,10 @@ public class MainFrame extends JFrame implements Runnable {
 			public void mouseClicked(MouseEvent e) {
 				if (state != 0) {
 					System.out.println("진행중 경매로 이동");
-					if(socket.getAuctionList().size() != size) {
-						System.out.println("소켓 사이즈 : " + socket.getAuctionList().size());
-						System.out.println("그냥 사이즈 : " + size);
-						auctionPanel.addAuction();
-						size = socket.getAuctionList().size();
-					}
 					if(panels.size() > 6) {
 						removePanel();
 					}
+					auctionPanel.addAuction();
 					setVisible(0);
 				}
 			}
