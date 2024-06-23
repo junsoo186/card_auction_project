@@ -4,19 +4,20 @@ import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import dao.InventoryDAO;
 import dto.CardDTO;
 import dto.UserDTO;
 import lombok.Setter;
 
 @Setter
+
+// TODO 카드검색 후에 페이지 넘기기 기능
+
 public class InventoryPanel extends JPanel {
 
 	private MainFrame mContext;
@@ -30,7 +31,6 @@ public class InventoryPanel extends JPanel {
 	private ArrayList<CardDTO> searchInventory = new ArrayList<>(); // 검색된 인벤토리 카드목록
 
 	private JPanel backgroundPanel;
-	private UserDTO user;
 
 	// 버튼 좌표
 	private int x;
@@ -47,9 +47,8 @@ public class InventoryPanel extends JPanel {
 	ArrayList<JButton> buttons = new ArrayList<>();
 	ArrayList<Integer> serialNum = new ArrayList<>();
 
-	public InventoryPanel(UserDTO user, MainFrame mContext) {
+	public InventoryPanel(MainFrame mContext) {
 		this.mContext = mContext;
-		this.user = user;
 		initData();
 		setInitLayout();
 		clickPage();
@@ -69,11 +68,7 @@ public class InventoryPanel extends JPanel {
 
 		productButton();
 
-		try {
-			userInventory = InventoryDAO.invenInfo(user.getName()); // 유저가 가지고있는 카드 목록 호출
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		userInventory = mContext.getUserInventory();
 		createProduct(userInventory);
 
 		System.out.println("카드 등록 까지 ");
@@ -110,7 +105,7 @@ public class InventoryPanel extends JPanel {
 		}
 	}
 
-	// 버튼에 카드이미지 URL 삽입
+	// 버튼에 카드이미지 URL 삽입함수
 	public void createProduct(ArrayList<CardDTO> inventory) {
 		for (int i = 0; i < buttons.size(); i++) {
 			if (i < inventory.size()) {
@@ -125,10 +120,17 @@ public class InventoryPanel extends JPanel {
 
 	// 카드이름으로 검색 기능
 	public void searchInventory(String card_name) {
+		page = 1;
 		searchInventory.clear();
-		for (int i = 0; i < userInventory.size(); i++) {
-			if (userInventory.get(i).getName().equals(card_name)) {
+		if (card_name.equals("")) {
+			for (int i = 0; i < userInventory.size(); i++) {
 				searchInventory.add(userInventory.get(i));
+			}
+		} else {
+			for (int i = 0; i < userInventory.size(); i++) {
+				if (userInventory.get(i).getName().equals(card_name)) {
+					searchInventory.add(userInventory.get(i));
+				}
 			}
 		}
 		createProduct(searchInventory);
@@ -138,7 +140,6 @@ public class InventoryPanel extends JPanel {
 	// 카드 정보 조회기능 추가
 	public void addActionListner(ArrayList<CardDTO> inventory) {
 		for (int i = 0; i < buttons.size(); i++) {
-//			buttons.get(i).removeMouseListener(listener[i]);
 			int num = i;
 			listener[i] = new MouseAdapter() {
 				@Override

@@ -33,8 +33,8 @@ public class FinishedPanel extends JPanel {
 	private int x = 500;
 	private int y = 100;
 
-	public FinishedPanel(UserDTO user, MainFrame mContext) {
-		this.user = user;
+	public FinishedPanel(MainFrame mContext) {
+		this.user = mContext.getUser();
 		this.mContext = mContext;
 		initData();
 		setInitLayout();

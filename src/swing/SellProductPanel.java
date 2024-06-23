@@ -47,11 +47,9 @@ public class SellProductPanel extends JPanel {
 
 	private UserDTO user;
 	private Choice choice;
-	private MainFrame mContext;
 
 	public SellProductPanel(UserDTO user) {
 		this.user = user;
-		this.mContext = mContext;
 		initData();
 		setInitLayout();
 		initListener();
@@ -144,7 +142,7 @@ public class SellProductPanel extends JPanel {
 		});
 		selectCardButton.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				new SelectInventoryFrame(user, mContext);
+				new SelectInventoryFrame(user);
 			}
 
 		});

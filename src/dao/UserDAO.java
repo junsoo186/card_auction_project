@@ -93,7 +93,7 @@ public class UserDAO {
 	}
 
 	// 유저 이름으로 포인트 수정
-	public void updatePoint(String name, int point) throws SQLException {
+	public static void updatePoint(String name, int point) throws SQLException {
 		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
 			PreparedStatement pstmt = conn.prepareStatement(Query.USER_POINT_NAME);
 			pstmt.setInt(1, point);

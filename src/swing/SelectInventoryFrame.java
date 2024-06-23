@@ -37,7 +37,6 @@ public class SelectInventoryFrame extends JFrame {
 
 	private CardDTO selectCard;
 	private SellProductPanel sellProductPanel;
-	private MainFrame mContext;
 
 	ArrayList<JButton> product = new ArrayList<>(7);
 	ArrayList<Integer> serialNum = new ArrayList<>(7);
@@ -53,9 +52,8 @@ public class SelectInventoryFrame extends JFrame {
 		this.selectCard = selectCard;
 	}
 
-	public SelectInventoryFrame(UserDTO user, MainFrame mContext) {
+	public SelectInventoryFrame(UserDTO user) {
 		this.user = user;
-		this.mconText = mContext;
 		initLayout();
 		initListener();
 	}

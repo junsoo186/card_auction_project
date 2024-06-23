@@ -35,9 +35,9 @@ public class InventoryDetailedPanel extends JPanel {
 	private AuctionManager auctionManager;
 	private SocketManager socket;
 
-	public InventoryDetailedPanel(UserDTO user, SocketManager socket) {
-		this.socket = socket;
-		this.user = user;
+	public InventoryDetailedPanel(MainFrame mContext) {
+		this.user = mContext.getUser();
+		this.socket = mContext.getSocket();
 		initData();
 		setInitLayout();
 	}

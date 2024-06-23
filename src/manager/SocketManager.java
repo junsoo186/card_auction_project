@@ -7,10 +7,16 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
 
+import dto.UserDTO;
 import lombok.Data;
+import swing.LogInFrame;
 
 @Data
 public class SocketManager implements Runnable {
+
+	private LogInFrame logInFrame;
+
+	private UserDTO userDTO = new UserDTO();
 
 	private Socket socket;
 	private PrintWriter userOrder;
@@ -35,6 +41,7 @@ public class SocketManager implements Runnable {
 			userOrder = new PrintWriter(socket.getOutputStream(), true);
 			serverOrder = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			while ((message = serverOrder.readLine()) != null) {
+				System.out.println(message + " Socket에서 읽음");
 				if (message.startsWith("list")) {
 					String[] cardId = message.split("#");
 					int id = Integer.valueOf(cardId[1]);

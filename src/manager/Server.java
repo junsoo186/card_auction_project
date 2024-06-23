@@ -35,7 +35,6 @@ public class Server {
 
 	public Server() {
 		try (ServerSocket server = new ServerSocket(5000)) {
-
 			while (true) {
 				Socket sample = server.accept(); // 서버에 접속자가 들어올떄마다 임시로 소켓에 저장
 				client.add(sample);
@@ -65,14 +64,23 @@ public class Server {
 
 		private Socket socket;
 
+		private BufferedReader userOrder;
+		private PrintWriter printWriter;
+
 		public Service(Socket socket) {
 			this.socket = socket;
 		}
 
+//		// 서버 -> 클라이언트 메세지 전송하기
+//		private void sendOrder(String msg) {
+//			printWriter.println(msg);
+//		}
+
 		@Override
 		public void run() {
-			try (BufferedReader userOrder = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-					PrintWriter printWriter = new PrintWriter(socket.getOutputStream(), true)) {
+			try {
+				userOrder = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+				printWriter = new PrintWriter(socket.getOutputStream(), true);
 				String message;
 				UserDTO user = new UserDTO();
 				UserDAO dao = new UserDAO();
@@ -84,7 +92,7 @@ public class Server {
 					broadCast("list#" + auctionList.get(i));
 				}
 				while ((message = userOrder.readLine()) != null) {
-					System.out.println("와일문 작동");
+					System.out.println(message + " Server에서 읽음 ");
 					if (message.startsWith("chat")) {
 						broadCast(message);
 					} else if (message.startsWith("bid")) {
@@ -128,7 +136,7 @@ public class Server {
 						}
 					} else if (message.startsWith("cash")) {
 						String[] cash = message.split("#");
-
+						UserDAO.updatePoint(cash[1], Integer.parseInt(cash[2]));
 					} else if (message.startsWith("addCard")) {
 						String[] card = message.split("#");
 
@@ -147,8 +155,11 @@ public class Server {
 						broadCast("list#" + id + "#" + startBid + "#" + hourDB + "#" + minDB);
 					}
 				}
-
 			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
+			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 		}

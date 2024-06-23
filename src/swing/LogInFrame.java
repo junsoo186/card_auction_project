@@ -135,7 +135,7 @@ public class LogInFrame extends JFrame {
 					} catch (SQLException e1) {
 						e1.printStackTrace();
 					}
-					dispose();
+					setVisible(false);
 				}
 
 			}
@@ -191,5 +191,4 @@ public class LogInFrame extends JFrame {
 	public static void main(String[] args) {
 		new LogInFrame();
 	}
-
 }

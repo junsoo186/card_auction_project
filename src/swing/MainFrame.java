@@ -37,8 +37,6 @@ public class MainFrame extends JFrame implements Runnable {
 	private JLabel id;
 	private JLabel password;
 
-	private ChargeFrame chargeFrame;
-
 	private JPanel backgroundPanel;
 	private JLabel backgroundLabel;
 	private Icon backgroundIcon;
@@ -60,7 +58,6 @@ public class MainFrame extends JFrame implements Runnable {
 
 	// 아래 패널들을 관리하기위한 리스트
 	private List<JPanel> panels = new ArrayList<>();
-
 	private AuctionPanel auctionPanel; // 진행중인 경매 패널
 	private FinishedPanel finishedPanel; // 종료된 경매 패널
 	private CheckBidPanel checkBidPanel; // 시세 알아보기 패널
@@ -71,6 +68,9 @@ public class MainFrame extends JFrame implements Runnable {
 	private AuctionDetailedPanel auctionDetailedPanel; // 경매 상세보기 패널
 
 	private ArrayList<CardDTO> userInventory = new ArrayList<>(); // 보관함 카드목록
+
+	// 캐시 충전하기 서브프레임
+	private ChargeFrame chargeFrame;
 
 	// 0.진행중경매 1.종료된경매 2.시세체크 3.경매출품 4. 마이페이지 5.인벤토리
 	// 6.보관함상세보기 7.경매상세보기
@@ -94,7 +94,6 @@ public class MainFrame extends JFrame implements Runnable {
 		initData();
 		setInitLayout();
 		initListener();
-
 	}
 
 	public JPanel getBackgroundPanel() {
@@ -108,14 +107,16 @@ public class MainFrame extends JFrame implements Runnable {
 	private void initData() {
 
 		backgroundPanel = new JPanel();
-		auctionPanel = new AuctionPanel(panels, user, socket, this);
-		finishedPanel = new FinishedPanel(user, this);
+
+		auctionPanel = new AuctionPanel(panels, this);
+		finishedPanel = new FinishedPanel(this);
 		checkBidPanel = new CheckBidPanel(this);
 		sellProductPanel = new SellProductPanel(user);
 		myPagePanel = new MyPagePanel(this);
-		inventoryPanel = new InventoryPanel(user, this);
-		inventoryDetailedPanel = new InventoryDetailedPanel(user, socket);
-//		auctionDetailedPanel = new AuctionDetailedPanel(null, user, null, state, state, state);
+		inventoryPanel = new InventoryPanel(this);
+		inventoryDetailedPanel = new InventoryDetailedPanel(this);
+
+		chargeFrame = new ChargeFrame(this);
 
 		panels.add(auctionPanel);
 		panels.add(finishedPanel);
@@ -149,9 +150,10 @@ public class MainFrame extends JFrame implements Runnable {
 		backgroundLabel.setHorizontalAlignment(JLabel.CENTER);
 		backgroundPanel.add(backgroundLabel);
 
-		cash = new JLabel(user.getPoint() + "");
+		// 캐시 라벨
+		cash = new JLabel(user.getPoint() + " 원");
 		cash.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 18));
-		cash.setBounds(1470, 64, 500, 20);
+		cash.setBounds(1460, 64, 500, 20);
 		backgroundLabel.add(cash);
 
 		pointIcon = new ImageIcon("image/poketpoint.gif");
@@ -205,16 +207,6 @@ public class MainFrame extends JFrame implements Runnable {
 		auctionPanel.setVisible(true);
 		backgroundPanel.setVisible(true);
 		setVisible(true);
-	}
-
-	// 포인트 갱신
-	public void changePoint(UserDTO user) {
-		remove(cash);
-		cash = new JLabel(user.getPoint() + "");
-		cash.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 18));
-		cash.setBounds(1470, 64, 500, 20);
-		backgroundLabel.add(cash);
-
 	}
 
 	public void setVisible(int state) {
@@ -308,11 +300,10 @@ public class MainFrame extends JFrame implements Runnable {
 			}
 		});
 
-		// 포인트 충전
+		// 캐시충전 서브프레임 열기
 		poketPoint.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				chargeFrame = new ChargeFrame(user);
-				changePoint(chargeFrame.getUser());
+				chargeFrame.setVisible(true);
 			}
 		});
 

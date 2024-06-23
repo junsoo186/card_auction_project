@@ -18,6 +18,8 @@ import manager.Server;
 
 public class AuctionDetailedPanel extends JPanel {
 
+	private MainFrame mContext;
+
 	private AuctionPanel auctionPanel;
 
 	private JPanel backgroundPanel;
@@ -42,14 +44,14 @@ public class AuctionDetailedPanel extends JPanel {
 	boolean flag = true;
 	SellProductPanel sell;
 	String time; // 시간
-	Server mContext;
 	int bid;
 
-	public AuctionDetailedPanel(CardDTO card, UserDTO user, AuctionManager auctionManager, int hour, int min,
+	public AuctionDetailedPanel(MainFrame mContext, CardDTO card, AuctionManager auctionManager, int hour, int min,
 			int startbid) {
+		this.mContext = mContext;
 		this.bid = startbid;
 		this.card = card;
-		this.user = user;
+		this.user = mContext.getUser();
 		auctionManager = new AuctionManager(bid, user, card, hour, min);
 		this.auctionManager = auctionManager;
 		sell = new SellProductPanel(user);
