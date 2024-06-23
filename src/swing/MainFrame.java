@@ -59,17 +59,17 @@ public class MainFrame extends JFrame implements Runnable {
 	private SellProductPanel sellProductPanel; // 경매 출품하기 패널
 	private MyPagePanel myPagePanel; // 마이 페이지 패널
 	private InventoryPanel inventoryPanel; // 보관함 패널
+	private InventoryDetailedPanel inventoryDetailedPanel; // 보관함 카드보기 패널
 
 	private int state = 0; // 현재 메뉴 상태 표시
 	private JButton poketPoint;
 
 	private BufferedReader serverOrder; // 서버 명령
 	private PrintWriter userOrder; // 유저 명령
-	private MainFrame mconText = this;
 	public SocketManager socket;
 	private int size; // 경매중인 카드 수
 
-	public MainFrame(UserDTO user,SocketManager socket) {
+	public MainFrame(UserDTO user, SocketManager socket) {
 		size = 0;
 		this.socket = socket;
 		this.user = user;
@@ -81,20 +81,20 @@ public class MainFrame extends JFrame implements Runnable {
 	public JPanel getBackgroundPanel() {
 		return this.backgroundPanel;
 	}
-	
+
 	public List<JPanel> getPanles() {
 		return this.panels;
 	}
-	
+
 	private void initData() {
 
 		backgroundPanel = new JPanel();
-		auctionPanel = new AuctionPanel(panels, user,socket,mconText);
-		finishedPanel = new FinishedPanel(user,this);
+		auctionPanel = new AuctionPanel(panels, user, socket, this);
+		finishedPanel = new FinishedPanel(user, this);
 		checkBidPanel = new CheckBidPanel(this);
 		sellProductPanel = new SellProductPanel(user);
 		myPagePanel = new MyPagePanel(user);
-		inventoryPanel = new InventoryPanel(user, mconText);
+		inventoryPanel = new InventoryPanel(user, this);
 		panels.add(auctionPanel);
 		panels.add(finishedPanel);
 		panels.add(checkBidPanel);
@@ -203,11 +203,11 @@ public class MainFrame extends JFrame implements Runnable {
 		System.out.println("판넬 선택 : " + panels.get(state));
 		this.state = state;
 	}
-	
+
 	public void addPanel(int state) {
 		backgroundPanel.add(panels.get(state));
 	}
-	
+
 	public void removePanel() {
 		backgroundPanel.remove(7);
 		panels.remove(6);
@@ -220,81 +220,69 @@ public class MainFrame extends JFrame implements Runnable {
 		// 0. 진행중인 경매 이동
 		buttons[0].addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				if (state != 0) {
-					System.out.println("진행중 경매로 이동");
-					if(panels.size() > 6) {
-						removePanel();
-					}
-					auctionPanel.removeData();
-					auctionPanel.addAuction();
-					setVisible(0);
+				System.out.println("진행중 경매로 이동");
+				if (panels.size() > 6) {
+					removePanel();
 				}
+				auctionPanel.removeData();
+				auctionPanel.addAuction();
+				setVisible(0);
 			}
 		});
 
 		// 1. 종료된 경매 이동
 		buttons[1].addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				if (state != 1) {
-					System.out.println("종료된 경매로 이동");
-					if(panels.size() > 6) {
-						removePanel();
-					}
-					setVisible(1);
+				System.out.println("종료된 경매로 이동");
+				if (panels.size() > 6) {
+					removePanel();
 				}
+				setVisible(1);
 			}
 		});
 
 		// 2. 시세 체크 이동
 		buttons[2].addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				if (state != 2) {
-					System.out.println("시세 체크로 이동");
-					if(panels.size() > 6) {
-						removePanel();
-					}
-					setVisible(2);
+				System.out.println("시세 체크로 이동");
+				if (panels.size() > 6) {
+					removePanel();
 				}
+				setVisible(2);
 			}
 		});
 
 		// 3. 경매 출품 이동
 		buttons[3].addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				if (state != 3) {
-					System.out.println("경매 출품으로 이동");
-					if(panels.size() > 6) {
-						removePanel();
-					}
-					setVisible(3);
+				System.out.println("경매 출품으로 이동");
+				if (panels.size() > 6) {
+					removePanel();
 				}
+				setVisible(3);
 			}
 		});
 
 		// 4. 마이페이지
 		buttons[4].addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				if (state != 4) {
-					System.out.println("마이페이지로 이동");
-					if(panels.size() > 6) {
-						removePanel();
-					}
-					setVisible(4);
+				System.out.println("마이페이지로 이동");
+				if (panels.size() > 6) {
+					removePanel();
 				}
+				setVisible(4);
 			}
 		});
 
 		// 5. 인벤토리 이동
 		buttons[5].addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				if (state != 5) {
-					System.out.println("인벤토리로 이동");
-					// 보관함 정보가 열려있으면 닫아주기
-					if(panels.size() > 6) {
-						removePanel();
-					}
-					setVisible(5);
-				}
+				System.out.println("인벤토리로 이동");
+				// 보관함 정보가 열려있으면 닫아주기
+//				if (panels.size() > 6) {
+//					removePanel();
+//				}
+				setVisible(5);
 			}
 		});
 
