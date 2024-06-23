@@ -58,6 +58,7 @@ public class MainFrame extends JFrame implements Runnable {
 
 	// 아래 패널들을 관리하기위한 리스트
 	private List<JPanel> panels = new ArrayList<>();
+
 	private AuctionPanel auctionPanel; // 진행중인 경매 패널
 	private FinishedPanel finishedPanel; // 종료된 경매 패널
 	private CheckBidPanel checkBidPanel; // 시세 알아보기 패널

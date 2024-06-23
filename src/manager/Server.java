@@ -11,19 +11,16 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Vector;
 
-import dao.CardDAO;
 import dao.InventoryDAO;
 import dao.UserDAO;
 import dto.AuctionDTO;
 import dto.InventoryDTO;
 import dto.UserDTO;
-import swing.MainFrame;
 
 public class Server {
 
 	private static Vector<Socket> client = new Vector<>(); // 접속자 소켓을 저장할 벡터
 	private static PrintWriter serverOrder; // 서버가 사용자들에게 보내는 메세지
-	private static MainFrame mconText;
 	private static ArrayList<Integer> productId; // 상품 id
 	private static ArrayList<String> productName; // 상품 이름
 	private static ArrayList<Integer> auctionList = new ArrayList<>(); // 경매 물품 리스트
@@ -83,9 +80,6 @@ public class Server {
 				printWriter = new PrintWriter(socket.getOutputStream(), true);
 				String message;
 				UserDTO user = new UserDTO();
-				UserDAO dao = new UserDAO();
-				CardDAO cardDao = new CardDAO();
-				InventoryDAO inven = new InventoryDAO();
 				InventoryDTO invenDTO = new InventoryDTO();
 				// 처음에 들어온 사용자들에게 현재 경매물품 리스트 송출
 				for (int i = 0; i < auctionList.size(); i++) {
@@ -113,12 +107,12 @@ public class Server {
 							user.setPassword(DB[3]);
 							user.setPoint(500);
 							// 회원가입시 카드 5개 랜덤으로 증정
-							if (dao.addUser(user)) {
+							if (UserDAO.addUser(user)) {
 								for (int i = 0; i < 5; i++) {
 									int cardId = random.nextInt(4) + 1;
 									invenDTO.setName(user.getName());
 									invenDTO.setCardId(cardId);
-									inven.invenAdd(invenDTO);
+									InventoryDAO.invenAdd(invenDTO);
 								}
 								System.out.println("DB보냄");
 							} else {
@@ -129,7 +123,7 @@ public class Server {
 						}
 					} else if (message.startsWith("login")) {
 						String[] login = message.split("#");
-						if (dao.loginUser(login[1], login[2])) {
+						if (UserDAO.loginUser(login[1], login[2])) {
 							printWriter.println("success");
 						} else {
 							printWriter.println("wrong");

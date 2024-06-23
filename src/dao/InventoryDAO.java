@@ -13,7 +13,7 @@ import manager.DBConnectionManager;
 public class InventoryDAO {
 
 	// 해당 유저 번호에 카드 추가
-	public void invenAdd(InventoryDTO dto) throws SQLException {
+	public static void invenAdd(InventoryDTO dto) throws SQLException {
 		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
 			PreparedStatement pstmt = conn.prepareStatement(Query.INVEN_ADD);
 			pstmt.setString(1, dto.getName());

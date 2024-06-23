@@ -13,7 +13,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -45,6 +44,7 @@ public class LogInFrame extends JFrame {
 	}
 
 	private void initData() {
+		new Thread(socket = new SocketManager()).start();
 
 		backgroundPanel1 = new JPanel();
 		backgroundPanel2 = new JPanel();
@@ -58,7 +58,6 @@ public class LogInFrame extends JFrame {
 	}
 
 	private void setInitLayout() {
-		new Thread(socket = new SocketManager()).start();
 		setTitle("[로그인하기]");
 		setSize(1920, 1000);
 		setLocationRelativeTo(null);

@@ -16,11 +16,12 @@ public class SocketManager implements Runnable {
 
 	private LogInFrame logInFrame;
 
-	private UserDTO userDTO = new UserDTO();
-
 	private Socket socket;
 	private PrintWriter userOrder;
 	private BufferedReader serverOrder;
+
+	private UserDTO userDTO = new UserDTO();
+
 	private ArrayList<Integer> auctionList = new ArrayList<>(); // 카드 id 저장
 	private ArrayList<Integer> hour = new ArrayList<>(); // 사용자가 지정한 종료 시간
 	private ArrayList<Integer> min = new ArrayList<>(); // 사용자가 지정한 종료 분

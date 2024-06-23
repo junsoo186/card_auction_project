@@ -144,9 +144,7 @@ public class SellProductPanel extends JPanel {
 			public void mouseClicked(MouseEvent e) {
 				new SelectInventoryFrame(user);
 			}
-
 		});
-
 	}
 
 	public int getThisHour() {

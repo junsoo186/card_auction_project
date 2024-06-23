@@ -26,8 +26,8 @@ public class InventoryDetailedPanel extends JPanel {
 	private JLabel cardPrice = new JLabel();
 	private JLabel cardIcon = new JLabel();
 
-	private CardDTO card = new CardDTO();
-	private UserDTO user;
+	private CardDTO cardDTO = new CardDTO();
+	private UserDTO userDTO;
 
 	private JButton sellCard;
 	private JButton goBackButton;
@@ -36,7 +36,7 @@ public class InventoryDetailedPanel extends JPanel {
 	private SocketManager socket;
 
 	public InventoryDetailedPanel(MainFrame mContext) {
-		this.user = mContext.getUser();
+		this.userDTO = mContext.getUser();
 		this.socket = mContext.getSocket();
 		initData();
 		setInitLayout();
@@ -75,7 +75,7 @@ public class InventoryDetailedPanel extends JPanel {
 		sellCard.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				new SellFrame(card, user, socket);
+				new SellFrame(userDTO, cardDTO, socket);
 			}
 		});
 
@@ -88,10 +88,10 @@ public class InventoryDetailedPanel extends JPanel {
 	}
 
 	public void clickDetailedButton() {
-		title.setText("내 카드 보기 : " + card.getName());
-		cardId.setText(" 카드 ID : " + card.getId());
-		cardName.setText(" 카드명 : " + card.getName());
-		cardPrice.setText(" 현재 카드 가격 : " + card.getPrice());
-		cardIcon.setIcon(new ImageIcon(card.getUrl()));
+		title.setText("내 카드 보기 : " + cardDTO.getName());
+		cardId.setText(" 카드 ID : " + cardDTO.getId());
+		cardName.setText(" 카드명 : " + cardDTO.getName());
+		cardPrice.setText(" 현재 카드 가격 : " + cardDTO.getPrice());
+		cardIcon.setIcon(new ImageIcon(cardDTO.getUrl()));
 	}
 }

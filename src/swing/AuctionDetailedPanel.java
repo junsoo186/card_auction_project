@@ -14,7 +14,6 @@ import javax.swing.JScrollPane;
 import dto.CardDTO;
 import dto.UserDTO;
 import manager.AuctionManager;
-import manager.Server;
 
 public class AuctionDetailedPanel extends JPanel {
 

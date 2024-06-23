@@ -12,7 +12,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
 
 import dto.UserDTO;
 import manager.SocketManager;
@@ -21,26 +20,8 @@ public class ChargeFrame extends JFrame {
 
 	private MainFrame mContext;
 
-	public UserDTO getUser() {
-		return user;
-	}
-
-	public void setUser(UserDTO user) {
-		this.user = user;
-	}
-
-	private JPanel backgroundPanel1;
-	private JPanel backgroundPanel2;
-
-	private JPanel mainPanel;
-
-	private JButton logInButton;
 	private Icon pointIcon;
 	private Choice choice;
-
-	private JTabbedPane tabPane;
-
-	private JLabel title;
 
 	private JPanel backgroundPanel;
 
@@ -60,18 +41,17 @@ public class ChargeFrame extends JFrame {
 	private JButton signUpButton;
 	private JLabel buttonImg;
 
-	private UserDTO user;
+	private UserDTO userDTO;
 
 	public ChargeFrame(MainFrame mContext) {
 		this.mContext = mContext;
-		this.user = mContext.getUser();
+		this.userDTO = mContext.getUser();
 		this.socket = mContext.getSocket();
 		setInitLayout();
 		initListener();
 	}
 
 	private void setInitLayout() {
-		mainPanel = new JPanel();
 		setTitle("[캐시 충전하기]");
 		setSize(500, 500);
 		setLocationRelativeTo(null);
@@ -101,7 +81,8 @@ public class ChargeFrame extends JFrame {
 
 		bankAccount = new JLabel("계좌번호    :    123-456-678900");
 		charge = new JLabel("충전 금액 : ");
-		nowMoney = new JLabel("현재 금액 :       " + user.getPoint() + " 원");
+		nowMoney = new JLabel("현재 금액 :       " + userDTO.getPoint() + " 원");
+
 		choice = new Choice();
 		choice.add("1,000원");
 		choice.add("5,000원");
@@ -141,24 +122,27 @@ public class ChargeFrame extends JFrame {
 				System.out.println("충전하기 클릭");
 				int chargeMoney = choice.getSelectedIndex();
 				if (chargeMoney == 0) {
-					user.setPoint(user.getPoint() + 1000);
+					userDTO.setPoint(userDTO.getPoint() + 1000);
 				} else if (chargeMoney == 1) {
-					user.setPoint(user.getPoint() + 5000);
+					userDTO.setPoint(userDTO.getPoint() + 5000);
 				} else if (chargeMoney == 2) {
-					user.setPoint(user.getPoint() + 10000);
+					userDTO.setPoint(userDTO.getPoint() + 10000);
 				} else if (chargeMoney == 3) {
-					user.setPoint(user.getPoint() + 30000);
+					userDTO.setPoint(userDTO.getPoint() + 30000);
 				} else if (chargeMoney == 4) {
-					user.setPoint(user.getPoint() + 50000);
+					userDTO.setPoint(userDTO.getPoint() + 50000);
 				} else if (chargeMoney == 5) {
-					user.setPoint(user.getPoint() + 100000);
+					userDTO.setPoint(userDTO.getPoint() + 100000);
 				}
-				socket.sendOrder("cash#" + user.getName() + "#" + user.getPoint());
+
+				socket.sendOrder("cash#" + userDTO.getName() + "#" + userDTO.getPoint());
 
 				JOptionPane.showMessageDialog(point, "충전이 완료되었습니다.");
-				mContext.getUser().setPoint(user.getPoint());
-				mContext.getCash().setText(user.getPoint() + " 원");
-				dispose();
+
+				nowMoney.setText("현재 금액 :       " + userDTO.getPoint() + " 원");
+				mContext.getUser().setPoint(userDTO.getPoint());
+				mContext.getCash().setText(userDTO.getPoint() + " 원");
+				setVisible(false);
 			}
 		});
 	}

@@ -20,8 +20,8 @@ import manager.SocketManager;
 
 public class SellFrame extends JFrame {
 
-	private CardDTO card;
-	private UserDTO user;
+	private CardDTO cardDTO;
+	private UserDTO userDTO;
 
 	private JPanel backgroundPanel;
 	private JTextField addPriceField;
@@ -31,13 +31,14 @@ public class SellFrame extends JFrame {
 	private JButton decidePriceButton;
 	private SocketManager socket;
 
-	public SellFrame(CardDTO card, UserDTO user, SocketManager socket) {
+	public SellFrame(UserDTO userDTO, CardDTO cardDTO, SocketManager socket) {
 		System.out.println("가격제시 생성");
 		this.socket = socket;
-		this.card = card;
-		this.user = user;
+		this.cardDTO = cardDTO;
+		this.userDTO = userDTO;
 		setInitLayout();
 		initListener();
+		addEventListener();
 	}
 
 	private void setInitLayout() {
@@ -56,8 +57,8 @@ public class SellFrame extends JFrame {
 		backgroundPanel.setBackground(Color.WHITE);
 		add(backgroundPanel);
 
-		JLabel cardTitle = new JLabel(card.getName());
-		JLabel guidText = new JLabel("시작 가격을 설정해주세요 (평균 시세 :" + card.getPrice() + ")");
+		JLabel cardTitle = new JLabel(cardDTO.getName());
+		JLabel guidText = new JLabel("시작 가격을 설정해주세요 (평균 시세 :" + cardDTO.getPrice() + ")");
 		JLabel guidText2 = new JLabel("경매를 끝내실 시간을 설정해주세요 시/분");
 		cardTitle.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 30));
 		guidText.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 18));
@@ -85,7 +86,7 @@ public class SellFrame extends JFrame {
 		backgroundPanel.add(addEndmin);
 		backgroundPanel.add(addEndhour);
 
-		Icon cardImage = new ImageIcon(card.getUrl());
+		Icon cardImage = new ImageIcon(cardDTO.getUrl());
 		JLabel cardLabel = new JLabel();
 		cardLabel.setIcon(cardImage);
 		cardLabel.setBounds(100, 50, 150, 210);
@@ -97,8 +98,8 @@ public class SellFrame extends JFrame {
 	private void initListener() {
 		decidePriceButton.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				socket.sendOrder("auction#" + card.getId() + "#" + addPriceField.getText() + "#" + addEndhour.getText()
-						+ "#" + addEndmin.getText());
+				socket.sendOrder("auction#" + cardDTO.getId() + "#" + addPriceField.getText() + "#"
+						+ addEndhour.getText() + "#" + addEndmin.getText());
 				System.out.println("서버에 카드 아이디 전송");
 				dispose();
 			}
@@ -109,11 +110,10 @@ public class SellFrame extends JFrame {
 				JOptionPane.showMessageDialog(null, "입찰을 종료합니다");
 				dispose();
 			}
-
 		});
 	}
 
-	public static void main(String[] args) {
-	}
+	private void addEventListener() {
 
+	}
 }
