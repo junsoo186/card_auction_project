@@ -2,8 +2,6 @@ package swing;
 
 import java.awt.Choice;
 import java.awt.Color;
-import java.awt.Font;
-import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -15,7 +13,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
-import javax.swing.JTextField;
 
 import dto.UserDTO;
 import manager.SocketManager;

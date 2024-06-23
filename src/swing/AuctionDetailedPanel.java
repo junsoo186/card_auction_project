@@ -4,12 +4,9 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -41,11 +38,12 @@ public class AuctionDetailedPanel extends JPanel {
 	Server mContext;
 	int bid;
 
-	public AuctionDetailedPanel(CardDTO card, UserDTO user, AuctionManager auctionManager,int hour , int min , int startbid) {
+	public AuctionDetailedPanel(CardDTO card, UserDTO user, AuctionManager auctionManager, int hour, int min,
+			int startbid) {
 		this.bid = startbid;
 		this.card = card;
 		this.user = user;
-		auctionManager = new AuctionManager(bid,user,card,hour,min);
+		auctionManager = new AuctionManager(bid, user, card, hour, min);
 		this.auctionManager = auctionManager;
 		sell = new SellProductPanel(user);
 		initData();
@@ -102,7 +100,7 @@ public class AuctionDetailedPanel extends JPanel {
 		goBackButton.setBounds(600, 20, 130, 50);
 		goBackButton.setBackground(new Color(255, 204, 3));
 		goBackButton.setBorderPainted(false);
-		
+
 		add(cardBid);
 		add(endTime);
 		add(cardId);
@@ -127,7 +125,7 @@ public class AuctionDetailedPanel extends JPanel {
 						flag = false;
 					}
 				}
-				if(auctionManager.getHighbid() != bid) {
+				if (auctionManager.getHighbid() != bid) {
 					cardBid.setText(" 현재 비드 가격 : " + auctionManager.getHighbid());
 				}
 				try {

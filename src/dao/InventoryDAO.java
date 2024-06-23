@@ -29,7 +29,7 @@ public class InventoryDAO {
 			PreparedStatement pstmt = conn.prepareStatement(Query.INVEN_INFO_ID);
 			pstmt.setString(1, name);
 			ResultSet rs = pstmt.executeQuery();
-			ArrayList<CardDTO>card = new ArrayList<>();
+			ArrayList<CardDTO> card = new ArrayList<>();
 			while (rs.next()) {
 				int num = 0;
 				CardDTO add = new CardDTO();

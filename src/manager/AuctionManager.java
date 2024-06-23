@@ -8,7 +8,7 @@ import dto.AuctionDTO;
 import dto.CardDTO;
 import dto.UserDTO;
 import lombok.Data;
-import swing.SellProductPanel; 
+import swing.SellProductPanel;
 
 @Data
 public class AuctionManager extends Thread {
@@ -23,10 +23,10 @@ public class AuctionManager extends Thread {
 
 	// 시간 관련 변수
 	long current_time; // 로컬 컴퓨터 시간 변수 담을
-	
-	int set_Hour ; // 수정예정
-	int set_Min ; // 수정예정
-	
+
+	int set_Hour; // 수정예정
+	int set_Min; // 수정예정
+
 	LocalDateTime time = LocalDateTime.now();
 	LocalDateTime endTime;
 	// BID 관련 변수
@@ -35,21 +35,22 @@ public class AuctionManager extends Thread {
 
 	public AuctionManager(int startBid, UserDTO user_DTO, CardDTO card_DTO, int hour, int min) {
 		sellProductPanel = new SellProductPanel(user_DTO);
-		this.endTime = LocalDateTime.of(2024, 06, 21,hour,min, 0); // 사용자가 지정한 종료시간
+		this.endTime = LocalDateTime.of(2024, 06, 21, hour, min, 0); // 사용자가 지정한 종료시간
 		this.startBid = startBid;
 		highbid = startBid; // 최종 비드
-		// DTO 
+		// DTO
 		System.out.println("받아온 비드 : " + startBid);
-		System.out.println("받아온 시간 : " + hour );
+		System.out.println("받아온 시간 : " + hour);
 		System.out.println("받아온 분 : " + min);
 		this.user_DTO = user_DTO;
 		this.card_DTO = card_DTO;
 		Vector<UserDTO> userID = new Vector<>();
 		start();
 	}
+
 	@Override
 	public void run() {
-        // 남은 시간 표시
+		// 남은 시간 표시
 		while (true) {
 			time = LocalDateTime.now();
 			long remainSecond = time.until(endTime, ChronoUnit.SECONDS);
@@ -61,18 +62,9 @@ public class AuctionManager extends Thread {
 			}
 		}
 	}
-	
+
 	public void see(long remainSecond) {
 		this.current_time = remainSecond;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 }

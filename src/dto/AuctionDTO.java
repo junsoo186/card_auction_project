@@ -16,6 +16,6 @@ public class AuctionDTO {
 	private String userId;
 	private int cardId;
 	private int bidPrice;
-	private String startDate; 
+	private String startDate;
 	private String endDate;
 }

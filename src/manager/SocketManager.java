@@ -5,12 +5,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 import lombok.Data;
-import swing.AuctionPanel;
-import swing.LogInFrame;
 
 @Data
 public class SocketManager implements Runnable {

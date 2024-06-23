@@ -97,12 +97,10 @@ public class CardDAO {
 			System.out.println("해당 카드 번호 삭제완료");
 		}
 	}
-	
+
 	public void cardAvg(String name) {
-		
-		
-		
-		try(Connection conn = DBConnectionManager.getInstance().getConnection()){
+
+		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
 			PreparedStatement pstmt = conn.prepareStatement(Query.CARD_AVGPRICE);
 			pstmt.setString(1, name);
 			pstmt.setString(2, name);
@@ -117,6 +115,5 @@ public class CardDAO {
 		} catch (Exception e) {
 		}
 	}
-	
-	
+
 }

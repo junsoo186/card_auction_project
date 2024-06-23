@@ -56,16 +56,10 @@ public class InventoryPanel extends JPanel {
 
 	private void initData() {
 		backgroundPanel = new JPanel();
-
-		nextPage = new JButton("다음");
-		nextPage.setBounds(1500, 50, 150, 50);
-		add(nextPage);
-		previousPage = new JButton("이전");
-		previousPage.setBounds(300, 50, 150, 50);
-		add(previousPage);
 	}
 
 	private void setInitLayout() {
+
 		setSize(1920, 630);
 		setLocation(0, 400);
 		setLayout(null);
@@ -89,9 +83,16 @@ public class InventoryPanel extends JPanel {
 //		title.setBounds(860, 10, 800, 50);
 //		add(title);
 
+		nextPage = new JButton("다음");
+		nextPage.setBounds(1500, 50, 150, 50);
+		add(nextPage);
+		previousPage = new JButton("이전");
+		previousPage.setBounds(300, 50, 150, 50);
+		add(previousPage);
+
 	}
 
-	// 버튼 생성
+	// 버튼 10개 생성
 	public void productButton() {
 		x = 500;
 		for (int i = 0; i < 10; i++) {
@@ -140,6 +141,7 @@ public class InventoryPanel extends JPanel {
 		}
 	}
 
+	// 이전, 다음 페이지 버튼 MouseListener
 	public void clickPage() {
 		nextPage.addMouseListener(new MouseAdapter() {
 			@Override

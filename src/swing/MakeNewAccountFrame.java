@@ -35,7 +35,7 @@ public class MakeNewAccountFrame extends JFrame implements ActionListener {
 	private JTextField nameField;
 	private JTextField passwordField;
 	private JTextField idField;
-	
+
 	public MakeNewAccountFrame() {
 		setInitLayout();
 		initListener();
@@ -68,7 +68,7 @@ public class MakeNewAccountFrame extends JFrame implements ActionListener {
 		passwordField.setBorder(null);
 		nameField.setBorder(null);
 		phoneNumberField.setBorder(null);
-		
+
 		signUpButton = new JButton();
 		exitButton = new JButton();
 		signUpButton.setBackground(null);
@@ -77,16 +77,16 @@ public class MakeNewAccountFrame extends JFrame implements ActionListener {
 		exitButton.setBackground(null);
 		exitButton.setBorderPainted(false);
 		exitButton.setContentAreaFilled(false);
-		
-		Icon image1=new ImageIcon("image/Account.png");
-		
-		JLabel background=new JLabel(image1);
+
+		Icon image1 = new ImageIcon("image/Account.png");
+
+		JLabel background = new JLabel(image1);
 		background.setBounds(0, 0, 500, 700);
 		background.setHorizontalAlignment(JLabel.CENTER);
 		backgroundPanel.add(background);
-		
-		JLabel exit=new JLabel(new ImageIcon("image/exit.png"));
-		JLabel signUp=new JLabel(new ImageIcon("image/Account(2).png"));
+
+		JLabel exit = new JLabel(new ImageIcon("image/exit.png"));
+		JLabel signUp = new JLabel(new ImageIcon("image/Account(2).png"));
 
 		nameField.setBounds(170, 225, 170, 30);
 		idField.setBounds(170, 310, 170, 30);
@@ -122,12 +122,12 @@ public class MakeNewAccountFrame extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		JButton selectedButton = (JButton)e.getSource();
-		if(selectedButton == signUpButton) {
+		JButton selectedButton = (JButton) e.getSource();
+		if (selectedButton == signUpButton) {
 			String name = nameField.getText();
 			String id = idField.getText();
 			String password = passwordField.getText();
-			socket.sendOrder("sendDB" + "#" + name +"#" + id + "#"+ password);
+			socket.sendOrder("sendDB" + "#" + name + "#" + id + "#" + password);
 		}
 	}
 

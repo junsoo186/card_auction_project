@@ -61,7 +61,7 @@ public class Server {
 		}
 	}
 
-	private static class Service extends Thread{
+	private static class Service extends Thread {
 
 		private Socket socket;
 
@@ -72,7 +72,7 @@ public class Server {
 		@Override
 		public void run() {
 			try (BufferedReader userOrder = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-					PrintWriter printWriter = new PrintWriter(socket.getOutputStream(),true)) {
+					PrintWriter printWriter = new PrintWriter(socket.getOutputStream(), true)) {
 				String message;
 				UserDTO user = new UserDTO();
 				UserDAO dao = new UserDAO();
@@ -80,7 +80,7 @@ public class Server {
 				InventoryDAO inven = new InventoryDAO();
 				InventoryDTO invenDTO = new InventoryDTO();
 				// 처음에 들어온 사용자들에게 현재 경매물품 리스트 송출
-				for(int i = 0; i < auctionList.size(); i++) {
+				for (int i = 0; i < auctionList.size(); i++) {
 					broadCast("list#" + auctionList.get(i));
 				}
 				while ((message = userOrder.readLine()) != null) {
@@ -144,7 +144,7 @@ public class Server {
 						auctionList.add(id);
 						hour.add(hourDB);
 						min.add(minDB);
-						broadCast("list#" + id +"#"+startBid+"#"+ hourDB+"#" + minDB);
+						broadCast("list#" + id + "#" + startBid + "#" + hourDB + "#" + minDB);
 					}
 				}
 
@@ -153,9 +153,7 @@ public class Server {
 			}
 		}
 	}
-	
-	
-	
+
 	public static void main(String[] args) {
 		new Server();
 	}
