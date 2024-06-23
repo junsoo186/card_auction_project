@@ -2,6 +2,8 @@ package swing;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
@@ -32,20 +34,20 @@ public class MainFrame extends JFrame implements Runnable {
 	private SocketManager socket;
 
 	private UserDTO user;
+	private JLabel id;
+	private JLabel password;
+
 	private ChargeFrame chargeFrame;
 
 	private JPanel backgroundPanel;
-
-	private JLabel id;
-	private JLabel password;
 	private JLabel backgroundLabel;
 	private Icon backgroundIcon;
-	private JTextField idField;
-	private JTextField passwordField;
 
 	private JLabel cash;
 
+	// 검색창
 	private JTextField searchBar;
+	private JButton searchButton;
 
 	private JButton logInButton;
 	private JButton signUpButton;
@@ -110,7 +112,7 @@ public class MainFrame extends JFrame implements Runnable {
 		finishedPanel = new FinishedPanel(user, this);
 		checkBidPanel = new CheckBidPanel(this);
 		sellProductPanel = new SellProductPanel(user);
-		myPagePanel = new MyPagePanel(user);
+		myPagePanel = new MyPagePanel(this);
 		inventoryPanel = new InventoryPanel(user, this);
 		inventoryDetailedPanel = new InventoryDetailedPanel(user, socket);
 //		auctionDetailedPanel = new AuctionDetailedPanel(null, user, null, state, state, state);
@@ -166,7 +168,7 @@ public class MainFrame extends JFrame implements Runnable {
 		searchBar.setBorder(null);
 		backgroundLabel.add(searchBar);
 
-		JButton searchButton = new JButton();
+		searchButton = new JButton();
 		searchButton.setBounds(1175, 270, 60, 60);
 		searchButton.setBackground(null);
 		searchButton.setBorderPainted(false);
@@ -313,6 +315,34 @@ public class MainFrame extends JFrame implements Runnable {
 				changePoint(chargeFrame.getUser());
 			}
 		});
+
+		// 검색버튼
+		searchButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// 보관함에서 검색
+				if (state == 5) {
+					inventoryPanel.searchInventory(searchBar.getText());
+				}
+			}
+		});
+
+		searchBar.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				switch (e.getKeyCode()) {
+				case KeyEvent.VK_ENTER:
+					if (state == 5 || state == 6) {
+						inventoryPanel.searchInventory(searchBar.getText());
+						setVisible(5);
+					}
+					break;
+				default:
+					break;
+				}
+			}
+		});
+
 	}
 
 	@Override

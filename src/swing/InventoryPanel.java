@@ -19,7 +19,7 @@ import lombok.Setter;
 @Setter
 public class InventoryPanel extends JPanel {
 
-	private MainFrame mconText;
+	private MainFrame mContext;
 
 	private MouseListener[] listener = new MouseListener[10];
 
@@ -27,6 +27,7 @@ public class InventoryPanel extends JPanel {
 	private ArrayList<String> productTitleList = new ArrayList<>();
 	private ArrayList<CardDTO> userInventory = new ArrayList<>(); // 유저인벤토리 전체 카드목록
 	private ArrayList<CardDTO> pageInventory = new ArrayList<>(); // 현재페이지 유저인벤토리 카드목록
+	private ArrayList<CardDTO> searchInventory = new ArrayList<>(); // 검색된 인벤토리 카드목록
 
 	private JPanel backgroundPanel;
 	private UserDTO user;
@@ -46,8 +47,8 @@ public class InventoryPanel extends JPanel {
 	ArrayList<JButton> buttons = new ArrayList<>();
 	ArrayList<Integer> serialNum = new ArrayList<>();
 
-	public InventoryPanel(UserDTO user, MainFrame mconText) {
-		this.mconText = mconText;
+	public InventoryPanel(UserDTO user, MainFrame mContext) {
+		this.mContext = mContext;
 		this.user = user;
 		initData();
 		setInitLayout();
@@ -113,14 +114,26 @@ public class InventoryPanel extends JPanel {
 	public void createProduct(ArrayList<CardDTO> inventory) {
 		for (int i = 0; i < buttons.size(); i++) {
 			if (i < inventory.size()) {
-				buttons.get(i).setIcon(null);
 				ImageIcon imageIcon = new ImageIcon(inventory.get(i).getUrl());
 				buttons.get(i).setIcon(imageIcon);
+				buttons.get(i).setVisible(true);
 			} else {
-				buttons.get(i).setIcon(null);
+				buttons.get(i).setVisible(false);
 			}
 		}
 	}
+
+	// 카드이름으로 검색 기능
+	public void searchInventory(String card_name) {
+		searchInventory.clear();
+		for (int i = 0; i < userInventory.size(); i++) {
+			if (userInventory.get(i).getName().equals(card_name)) {
+				searchInventory.add(userInventory.get(i));
+			}
+		}
+		createProduct(searchInventory);
+		addActionListner(searchInventory);
+	};
 
 	// 카드 정보 조회기능 추가
 	public void addActionListner(ArrayList<CardDTO> inventory) {
@@ -130,10 +143,10 @@ public class InventoryPanel extends JPanel {
 			listener[i] = new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					mconText.getInventoryDetailedPanel().setCard(inventory.get(num));
-					mconText.getInventoryDetailedPanel().clickDetailedButton();
+					mContext.getInventoryDetailedPanel().setCard(inventory.get(num));
+					mContext.getInventoryDetailedPanel().clickDetailedButton();
 					setVisible(false);
-					mconText.setVisible(6);
+					mContext.setVisible(6);
 					System.out.println("보관함 클릭이벤트 : " + inventory.get(num));
 				}
 			};

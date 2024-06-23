@@ -1,11 +1,9 @@
 package swing;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +21,8 @@ import manager.SocketManager;
 
 public class AuctionPanel extends JPanel {
 
+	private MainFrame mContext;
+
 	private ArrayList<JButton> productList = new ArrayList<>();
 	private ArrayList<String> productTitleList = new ArrayList<>();
 	public ArrayList<CardDTO> cardList = new ArrayList();
@@ -35,10 +35,10 @@ public class AuctionPanel extends JPanel {
 	private ArrayList<Integer> hour = new ArrayList<>();
 	private ArrayList<Integer> min = new ArrayList<>();
 	private ArrayList<Integer> startBid = new ArrayList<>();
-	private MainFrame mconText;
 
 	int state;
 	List<JPanel> panel;
+
 	ArrayList<JButton> buttons = new ArrayList<>();
 	ArrayList<Integer> serialNum = new ArrayList<>();
 
@@ -54,8 +54,9 @@ public class AuctionPanel extends JPanel {
 	private int x;
 	private int y;
 
-	public AuctionPanel(List<JPanel> panels, UserDTO user, SocketManager socket, MainFrame mcontext) {
-		this.mconText = mcontext;
+	public AuctionPanel(List<JPanel> panels, UserDTO user, SocketManager socket, MainFrame mContext) {
+		this.mContext = mContext;
+		;
 		this.panel = panels;
 		this.user = user;
 		this.socket = socket;
@@ -129,12 +130,11 @@ public class AuctionPanel extends JPanel {
 		setLayout(null);
 		setBackground(Color.WHITE);
 
-		JLabel title = new JLabel("진행 중인 경매" + "(" + cardList.size() + ")");
+		title = new JLabel("진행 중인 경매" + "(" + cardList.size() + ")");
 		title.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 32));
 		title.setBounds(860, 10, 800, 50);
 		add(title);
 		productButton();
-
 	}
 
 	public void removeData() {
@@ -161,7 +161,7 @@ public class AuctionPanel extends JPanel {
 					detailPage = new AuctionDetailedPanel(cardList.get(num), user, auctionManager, hour.get(num),
 							min.get(num), startBid.get(num));
 					panel.add(detailPage);
-					mconText.addPanel(7);
+					mContext.addPanel(7);
 					setVisible(7);
 				}
 			});

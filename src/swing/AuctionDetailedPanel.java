@@ -30,6 +30,13 @@ public class AuctionDetailedPanel extends JPanel {
 	private JButton goBackButton;
 	private BuyFrame buyFrame;
 
+	private JLabel cardId;
+	private JLabel cardName;
+	private JLabel cardPrice;
+	private JLabel cardBid;
+	private JLabel cardIcon;
+	private JLabel endTime;
+
 	// 옥션 매니저
 	private AuctionManager auctionManager;
 	boolean flag = true;
@@ -70,12 +77,13 @@ public class AuctionDetailedPanel extends JPanel {
 		title.setBounds(860, 10, 800, 50);
 		add(title);
 
-		JLabel cardId = new JLabel(" 카드 ID : " + card.getId());
-		JLabel cardName = new JLabel(" 카드명 : " + card.getName());
-		JLabel cardPrice = new JLabel(" 시작 가격 : " + auctionManager.getStartBid());
-		JLabel cardBid = new JLabel(" 현재 비드 가격 : " + auctionManager.getHighbid());
-		JLabel cardIcon = new JLabel(new ImageIcon(card.getUrl()));
-		JLabel endTime = new JLabel("종료시간" + auctionManager.getCurrent_time());
+		cardId = new JLabel(" 카드 ID : " + card.getId());
+		cardIcon = new JLabel(new ImageIcon(card.getUrl()));
+		cardName = new JLabel(" 카드명 : " + card.getName());
+		cardPrice = new JLabel(" 시작 가격 : " + auctionManager.getStartBid());
+		cardBid = new JLabel(" 현재 비드 가격 : " + auctionManager.getHighbid());
+		endTime = new JLabel("종료시간" + auctionManager.getCurrent_time());
+
 		buyCard = new JButton("가격 제시하기");
 		goBackButton = new JButton("뒤로 가기");
 
@@ -158,7 +166,6 @@ public class AuctionDetailedPanel extends JPanel {
 				setVisible(false);
 				backgroundPanel.add(auctionPanel);
 			}
-
 		});
 	}
 
