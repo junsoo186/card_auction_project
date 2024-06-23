@@ -29,34 +29,21 @@ import manager.SocketManager;
 
 public class LogInFrame extends JFrame {
 
+	private SocketManager socket;
+
 	private JPanel backgroundPanel1;
 	private JPanel backgroundPanel2;
 
 	private JPanel mainPanel;
 
-	private JPanel AuctionPanel;
-	private JPanel LogInPanel;
-	private JPanel PricePanel;
-	private JPanel FinishPanel;
-	private JPanel MyPagePanel;
-	private JPanel JoinAuctionPanel;
-	private UserDTO user;
-
-	private JLabel id;
-	private JLabel password;
 	private JLabel backgroundLabel;
-	private Icon backgroundIcon;
 	private JTextField idField;
 	private JTextField passwordField;
 
 	private JButton logInButton;
 	private JButton signUpButton;
 
-	private JTabbedPane tabPane;
-
 	private JLabel title;
-	private SocketManager socket;
-	private MainFrame mainFrame;
 
 	public LogInFrame() {
 		initData();

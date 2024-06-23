@@ -4,30 +4,29 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-
-import com.mysql.cj.protocol.x.SyncFlushDeflaterOutputStream;
 
 import dto.CardDTO;
 import dto.UserDTO;
+import lombok.Data;
 import manager.AuctionManager;
 import manager.SocketManager;
 
+@Data
 public class InventoryDetailedPanel extends JPanel {
 
 	private JPanel backgroundPanel1;
-	private JLabel title;
-	private JScrollPane scrollPane;
+	private JLabel title = new JLabel();
+	private JLabel cardId = new JLabel();
+	private JLabel cardName = new JLabel();
+	private JLabel cardPrice = new JLabel();
+	private JLabel cardIcon = new JLabel();
 
-	private CardDTO card;
+	private CardDTO card = new CardDTO();
 	private UserDTO user;
 
 	private JButton sellCard;
@@ -36,9 +35,8 @@ public class InventoryDetailedPanel extends JPanel {
 	private AuctionManager auctionManager;
 	private SocketManager socket;
 
-	public InventoryDetailedPanel(CardDTO card, UserDTO user, SocketManager socket) {
+	public InventoryDetailedPanel(UserDTO user, SocketManager socket) {
 		this.socket = socket;
-		this.card = card;
 		this.user = user;
 		initData();
 		setInitLayout();
@@ -55,36 +53,24 @@ public class InventoryDetailedPanel extends JPanel {
 		setBackground(Color.WHITE);
 		add(backgroundPanel1);
 
-		JLabel title = new JLabel("내 카드 보기 : " + card.getName());
 		title.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 32));
 		title.setBounds(860, 10, 800, 50);
-		add(title);
-
-		JLabel cardId = new JLabel(" 카드 ID : " + card.getId());
-		JLabel cardName = new JLabel(" 카드명 : " + card.getName());
-		JLabel cardPrice = new JLabel(" 현재 카드 가격 : " + card.getPrice());
-		JLabel cardIcon = new JLabel(new ImageIcon(card.getUrl()));
-		sellCard = new JButton("판매하기");
 
 		cardId.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 24));
 		cardName.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 24));
 		cardPrice.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 24));
 		cardIcon.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 24));
-		sellCard.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 24));
 
 		cardId.setBounds(900, 100, 400, 100);
 		cardName.setBounds(900, 150, 400, 100);
 		cardPrice.setBounds(900, 200, 400, 100);
 		cardIcon.setBounds(600, 150, 150, 200);
+
+		sellCard = new JButton("판매하기");
+		sellCard.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 24));
 		sellCard.setBounds(900, 300, 200, 70);
 		sellCard.setBackground(new Color(255, 204, 3));
 		sellCard.setBorderPainted(false);
-
-		add(cardId);
-		add(cardName);
-		add(cardPrice);
-		add(cardIcon);
-		add(sellCard);
 
 		sellCard.addMouseListener(new MouseAdapter() {
 			@Override
@@ -93,6 +79,19 @@ public class InventoryDetailedPanel extends JPanel {
 			}
 		});
 
+		add(title);
+		add(cardId);
+		add(cardName);
+		add(cardPrice);
+		add(cardIcon);
+		add(sellCard);
 	}
 
+	public void clickDetailedButton() {
+		title.setText("내 카드 보기 : " + card.getName());
+		cardId.setText(" 카드 ID : " + card.getId());
+		cardName.setText(" 카드명 : " + card.getName());
+		cardPrice.setText(" 현재 카드 가격 : " + card.getPrice());
+		cardIcon.setIcon(new ImageIcon(card.getUrl()));
+	}
 }

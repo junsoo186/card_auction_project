@@ -6,6 +6,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,13 +18,18 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import dao.InventoryDAO;
+import dto.CardDTO;
 import dto.UserDTO;
 import lombok.Data;
 import lombok.ToString;
 import manager.SocketManager;
 
 @ToString
+@Data
 public class MainFrame extends JFrame implements Runnable {
+
+	private SocketManager socket;
 
 	private UserDTO user;
 	private ChargeFrame chargeFrame;
@@ -48,34 +54,45 @@ public class MainFrame extends JFrame implements Runnable {
 
 	private Icon pointIcon;
 
-	// 버튼 0.진행중경매 1.종료된경매 2.시세체크 3.경매출품 4.마이페이지 5.인벤토리
 	private JButton[] buttons = new JButton[6];
 
 	// 아래 패널들을 관리하기위한 리스트
 	private List<JPanel> panels = new ArrayList<>();
+
 	private AuctionPanel auctionPanel; // 진행중인 경매 패널
 	private FinishedPanel finishedPanel; // 종료된 경매 패널
 	private CheckBidPanel checkBidPanel; // 시세 알아보기 패널
 	private SellProductPanel sellProductPanel; // 경매 출품하기 패널
 	private MyPagePanel myPagePanel; // 마이 페이지 패널
 	private InventoryPanel inventoryPanel; // 보관함 패널
-	private InventoryDetailedPanel inventoryDetailedPanel; // 보관함 카드보기 패널
+	private InventoryDetailedPanel inventoryDetailedPanel; // 보관함 상세보기 패널
+	private AuctionDetailedPanel auctionDetailedPanel; // 경매 상세보기 패널
 
+	private ArrayList<CardDTO> userInventory = new ArrayList<>(); // 보관함 카드목록
+
+	// 0.진행중경매 1.종료된경매 2.시세체크 3.경매출품 4. 마이페이지 5.인벤토리
+	// 6.보관함상세보기 7.경매상세보기
 	private int state = 0; // 현재 메뉴 상태 표시
+
 	private JButton poketPoint;
 
 	private BufferedReader serverOrder; // 서버 명령
 	private PrintWriter userOrder; // 유저 명령
-	public SocketManager socket;
-	private int size; // 경매중인 카드 수
+//	private int size; // 경매중인 카드 수
 
 	public MainFrame(UserDTO user, SocketManager socket) {
-		size = 0;
+//		size = 0;
 		this.socket = socket;
 		this.user = user;
+		try {
+			userInventory = InventoryDAO.invenInfo(user.getName()); // 유저가 가지고있는 카드 목록 호출
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		initData();
 		setInitLayout();
 		initListener();
+
 	}
 
 	public JPanel getBackgroundPanel() {
@@ -95,12 +112,16 @@ public class MainFrame extends JFrame implements Runnable {
 		sellProductPanel = new SellProductPanel(user);
 		myPagePanel = new MyPagePanel(user);
 		inventoryPanel = new InventoryPanel(user, this);
+		inventoryDetailedPanel = new InventoryDetailedPanel(user, socket);
+//		auctionDetailedPanel = new AuctionDetailedPanel(null, user, null, state, state, state);
+
 		panels.add(auctionPanel);
 		panels.add(finishedPanel);
 		panels.add(checkBidPanel);
 		panels.add(sellProductPanel);
 		panels.add(myPagePanel);
 		panels.add(inventoryPanel);
+		panels.add(inventoryDetailedPanel);
 
 		add(backgroundPanel);
 	}
@@ -180,7 +201,6 @@ public class MainFrame extends JFrame implements Runnable {
 			panels.get(i).setVisible(false);
 		}
 		auctionPanel.setVisible(true);
-
 		backgroundPanel.setVisible(true);
 		setVisible(true);
 	}
@@ -208,12 +228,12 @@ public class MainFrame extends JFrame implements Runnable {
 		backgroundPanel.add(panels.get(state));
 	}
 
-	public void removePanel() {
-		backgroundPanel.remove(7);
-		panels.remove(6);
-		auctionPanel.removeData();
-		System.out.println("판넬 사이즈 : " + panels.size());
-	}
+//	public void removePanel() {
+//		backgroundPanel.remove(7);
+//		panels.remove(6);
+//		auctionPanel.removeData();
+//		System.out.println("판넬 사이즈 : " + panels.size());
+//	}
 
 	private void initListener() {
 
@@ -221,9 +241,9 @@ public class MainFrame extends JFrame implements Runnable {
 		buttons[0].addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				System.out.println("진행중 경매로 이동");
-				if (panels.size() > 6) {
-					removePanel();
-				}
+//				if (panels.size() > 6) {
+//					removePanel();
+//				}
 				auctionPanel.removeData();
 				auctionPanel.addAuction();
 				setVisible(0);
@@ -234,9 +254,9 @@ public class MainFrame extends JFrame implements Runnable {
 		buttons[1].addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				System.out.println("종료된 경매로 이동");
-				if (panels.size() > 6) {
-					removePanel();
-				}
+//				if (panels.size() > 6) {
+//					removePanel();
+//				}
 				setVisible(1);
 			}
 		});
@@ -245,9 +265,9 @@ public class MainFrame extends JFrame implements Runnable {
 		buttons[2].addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				System.out.println("시세 체크로 이동");
-				if (panels.size() > 6) {
-					removePanel();
-				}
+//				if (panels.size() > 6) {
+//					removePanel();
+//				}
 				setVisible(2);
 			}
 		});
@@ -256,9 +276,9 @@ public class MainFrame extends JFrame implements Runnable {
 		buttons[3].addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				System.out.println("경매 출품으로 이동");
-				if (panels.size() > 6) {
-					removePanel();
-				}
+//				if (panels.size() > 6) {
+//					removePanel();
+//				}
 				setVisible(3);
 			}
 		});
@@ -267,9 +287,9 @@ public class MainFrame extends JFrame implements Runnable {
 		buttons[4].addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				System.out.println("마이페이지로 이동");
-				if (panels.size() > 6) {
-					removePanel();
-				}
+//				if (panels.size() > 6) {
+//					removePanel();
+//				}
 				setVisible(4);
 			}
 		});
@@ -278,7 +298,7 @@ public class MainFrame extends JFrame implements Runnable {
 		buttons[5].addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				System.out.println("인벤토리로 이동");
-				// 보관함 정보가 열려있으면 닫아주기
+//				// 보관함 정보가 열려있으면 닫아주기
 //				if (panels.size() > 6) {
 //					removePanel();
 //				}

@@ -3,6 +3,7 @@ package swing;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -18,28 +19,32 @@ import lombok.Setter;
 @Setter
 public class InventoryPanel extends JPanel {
 
+	private MainFrame mconText;
+
+	private MouseListener[] listener = new MouseListener[10];
+
 	private ArrayList<JButton> productList = new ArrayList<>();
 	private ArrayList<String> productTitleList = new ArrayList<>();
-	private ArrayList<CardDTO> userInventory = new ArrayList<>();
-	private ArrayList<CardDTO> pageInventory = new ArrayList<>();
+	private ArrayList<CardDTO> userInventory = new ArrayList<>(); // 유저인벤토리 전체 카드목록
+	private ArrayList<CardDTO> pageInventory = new ArrayList<>(); // 현재페이지 유저인벤토리 카드목록
 
 	private JPanel backgroundPanel;
 	private UserDTO user;
-	private MainFrame mconText;
-	private InventoryDetailedPanel detail;
 
 	// 버튼 좌표
 	private int x;
 	private int y;
 
+	// 페이지 버튼
 	private JButton nextPage;
 	private JButton previousPage;
+
+	// 페이지 변수
 	private int page = 1;
 	private int pageEnd;
 
 	ArrayList<JButton> buttons = new ArrayList<>();
 	ArrayList<Integer> serialNum = new ArrayList<>();
-	InventoryDAO inven = new InventoryDAO();
 
 	public InventoryPanel(UserDTO user, MainFrame mconText) {
 		this.mconText = mconText;
@@ -70,7 +75,7 @@ public class InventoryPanel extends JPanel {
 		productButton();
 
 		try {
-			userInventory = inven.invenInfo(user.getName()); // 유저가 가지고있는 카드 목록 호출
+			userInventory = InventoryDAO.invenInfo(user.getName()); // 유저가 가지고있는 카드 목록 호출
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -119,17 +124,19 @@ public class InventoryPanel extends JPanel {
 	// 카드 정보 조회기능 추가
 	public void addActionListner(ArrayList<CardDTO> inventory) {
 		for (int i = 0; i < buttons.size(); i++) {
+//			buttons.get(i).removeMouseListener(listener[i]);
 			int num = i;
-			buttons.get(i).addMouseListener(new MouseAdapter() {
+			listener[i] = new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					detail = new InventoryDetailedPanel(inventory.get(num), user, mconText.socket);
-					System.out.println("보관함 클릭이벤트 : " + inventory.get(num));
-					mconText.getPanles().add(detail);
-					mconText.addPanel(6);
+					mconText.getInventoryDetailedPanel().setCard(inventory.get(num));
+					mconText.getInventoryDetailedPanel().clickDetailedButton();
+					setVisible(false);
 					mconText.setVisible(6);
+					System.out.println("보관함 클릭이벤트 : " + inventory.get(num));
 				}
-			});
+			};
+			buttons.get(i).addMouseListener(listener[i]);
 		}
 	}
 
@@ -140,8 +147,8 @@ public class InventoryPanel extends JPanel {
 				pageInventory.clear();
 				pageEnd = ((userInventory.size() - 1) / 10) + 1;
 				if (page < pageEnd) {
-					page++;
 					System.out.println("다음페이지로 넘김");
+					page++;
 					if (page == pageEnd) {
 						for (int i = 0; i < (userInventory.size() % 10); i++) {
 							pageInventory.add(userInventory.get(i + (page - 1) * 10));
@@ -161,8 +168,8 @@ public class InventoryPanel extends JPanel {
 			public void mouseClicked(MouseEvent e) {
 				pageInventory.clear();
 				if (page > 1) {
-					page--;
 					System.out.println("이전페이지로 넘김");
+					page--;
 					for (int i = 0; i < buttons.size(); i++) {
 						pageInventory.add(userInventory.get(i + (page - 1) * 10));
 					}
@@ -172,5 +179,4 @@ public class InventoryPanel extends JPanel {
 			}
 		});
 	}
-
 }
