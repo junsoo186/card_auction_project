@@ -148,6 +148,8 @@ public class Server {
 						hour.add(hourDB);
 						min.add(minDB);
 						broadCast("list#" + id + "#" + startBid + "#" + hourDB + "#" + minDB);
+					} else if (message.startsWith("endAuctionList")) {
+						
 					}
 				}
 			} catch (IOException e) {

@@ -7,6 +7,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
 
+import dto.AuctionDTO;
 import dto.UserDTO;
 import lombok.Data;
 import swing.LogInFrame;
@@ -26,6 +27,8 @@ public class SocketManager implements Runnable {
 	private ArrayList<Integer> hour = new ArrayList<>(); // 사용자가 지정한 종료 시간
 	private ArrayList<Integer> min = new ArrayList<>(); // 사용자가 지정한 종료 분
 	private ArrayList<Integer> startBid = new ArrayList<>(); // 사용자가 지정한 시작가격
+
+	private ArrayList<AuctionDTO> endAuctionList = new ArrayList<>(); // 종료된 경매 리스트
 
 	public SocketManager() {
 	}
@@ -56,6 +59,8 @@ public class SocketManager implements Runnable {
 					min.add(minDB);
 					startBid.add(startBidDB);
 				} else if (message.startsWith("auction")) {
+
+				} else if (message.startsWith("endAuctionList")) {
 
 				}
 			}

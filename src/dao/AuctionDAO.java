@@ -82,4 +82,14 @@ public class AuctionDAO {
 		}
 	}
 
+	public static AuctionDTO endAuctionList() throws SQLException {
+		try (Connection connect = DBConnectionManager.getInstance().getConnection()) {
+			PreparedStatement pstmt = connect.prepareStatement(Query.AUCTION_INFO_ALL);
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				System.out.println("조회된 옥션" + rs.getInt("a.id"));
+			}
+		}
+		return null;
+	}
 }
