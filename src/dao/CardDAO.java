@@ -108,12 +108,16 @@ public class CardDAO {
 			ResultSet rs = pstmt.executeQuery();
 			System.out.println(rs.next());
 			while (true) {
-				System.out.println("while문");
+			while (rs.next()) {
+				System.out.println("====================================");
+				System.out.println("카드번호 : " + rs.getInt("id"));
+				System.out.println("이미지경로 : " + rs.getString("url"));
 				System.out.println("카드이름 : " + rs.getString("name"));
 				System.out.println("카드가격 : " + rs.getInt("price"));
 				return rs.getInt("price");
 			}
 		}
+	}
 	}
 
 }
