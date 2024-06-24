@@ -31,7 +31,7 @@ import manager.SocketManager;
 @Data
 public class MainFrame extends JFrame implements Runnable {
 
-	private SocketManager socket;
+	public SocketManager socket;
 
 	private UserDTO user;
 	private JLabel id;

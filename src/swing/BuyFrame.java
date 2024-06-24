@@ -26,11 +26,16 @@ public class BuyFrame extends JFrame {
 	private JTextField addPriceField;
 	private JButton exitButton;
 	private JButton decidePriceButton;
-
-	public BuyFrame(CardDTO card, UserDTO user) {
-		System.out.println("가격제시 생성");
-		this.card = card;
-		this.user = user;
+	private MainFrame mconText;
+	private int price;
+	private int page;
+	
+	public BuyFrame(CardDTO card,UserDTO user,MainFrame mconText , int price , int page) {
+		this.page = page;
+		this.price = price;
+		this.mconText = mconText;
+		this.card=card;
+		this.user=user;
 		setInitLayout();
 		initListener();
 	}
@@ -81,13 +86,16 @@ public class BuyFrame extends JFrame {
 	private void initListener() {
 		decidePriceButton.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
+				int checkPrice=Integer.parseInt(addPriceField.getText());
+				if(checkPrice>user.getPoint()) {
+					JOptionPane.showMessageDialog(null,"소지중인 포인트 이상을 제시할 수 없습니다.");
+				} else if(checkPrice < price){
+					JOptionPane.showMessageDialog(null,"현재 가격보다 낮은 금액을 제시할수없습니다.");
+				} else {
+					mconText.socket.sendOrder("bid#" + checkPrice + "#" + page);
+					JOptionPane.showMessageDialog(null,checkPrice + "원을 제시했습니다.");
 				JOptionPane.showMessageDialog(null, addPriceField.getText() + "원 을 제시합니다");
-				int checkPrice = Integer.parseInt(addPriceField.getText());
-				if (checkPrice > user.getPoint()) {
-					JOptionPane.showMessageDialog(null, "소지중인 포인트 이상을 제시할 수 없습니다.");
-				} else if (checkPrice < card.getPrice()) {
-					JOptionPane.showMessageDialog(null, "현재 가격보다 낮은 가격을 제시할 수 없습니다.");
-				}
+				} 
 				dispose();
 			}
 
@@ -101,3 +109,4 @@ public class BuyFrame extends JFrame {
 		});
 	}
 }
+

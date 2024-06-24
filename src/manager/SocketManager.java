@@ -26,7 +26,8 @@ public class SocketManager implements Runnable {
 	private ArrayList<Integer> hour = new ArrayList<>(); // 사용자가 지정한 종료 시간
 	private ArrayList<Integer> min = new ArrayList<>(); // 사용자가 지정한 종료 분
 	private ArrayList<Integer> startBid = new ArrayList<>(); // 사용자가 지정한 시작가격
-
+	private ArrayList<Integer> highBid = new ArrayList<>(); // 최고 비드
+	
 	public SocketManager() {
 	}
 
@@ -55,6 +56,12 @@ public class SocketManager implements Runnable {
 					hour.add(hourDB);
 					min.add(minDB);
 					startBid.add(startBidDB);
+					highBid.add(startBidDB);
+				} else if (message.startsWith("bid")) {
+					String[] bid = message.split("#");
+					int page = Integer.valueOf(bid[2]);
+					int money = Integer.valueOf(bid[1]);
+					highBid.add(page,money);
 				} else if (message.startsWith("auction")) {
 
 				}
