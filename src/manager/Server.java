@@ -79,6 +79,7 @@ public class Server {
 		@Override
 		public void run() {
 			try {
+				System.out.println("서버프로토콜 스레드실행");
 				userOrder = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 				printWriter = new PrintWriter(socket.getOutputStream(), true);
 				String message;
@@ -149,9 +150,9 @@ public class Server {
 						min.add(minDB);
 						CardDTO dto = new CardDTO();
 						dto = CardDAO.infoCard(id);
-						broadCast("list#" + dto.getId() + "#" + dto.getName() + "#" + dto.getUrl()
-					+ "#" + startBid + "#" + hourDB + "#" + minDB);
-						
+						broadCast("list#" + dto.getId() + "#" + dto.getName() + "#" + dto.getUrl() + "#" + startBid
+								+ "#" + hourDB + "#" + minDB);
+
 					} else if (message.startsWith("EndAuctionList")) {
 						ArrayList<AuctionDTO> endAuctionList = new ArrayList<>();
 						endAuctionList = AuctionDAO.endAuctionList();
@@ -194,8 +195,8 @@ public class Server {
 						String[] msg = message.split("#");
 						UserDTO dto = new UserDTO();
 						dto = UserDAO.infoUser(msg[1]);
-						sendOrder("userDTO#" + dto.getName() + "#" + dto.getNickname() + "#" + dto.getPassword() + "#" +
-						dto.getPoint());
+						sendOrder("userDTO#" + dto.getName() + "#" + dto.getNickname() + "#" + dto.getPassword() + "#"
+								+ dto.getPoint());
 					}
 				}
 			} catch (IOException e) {

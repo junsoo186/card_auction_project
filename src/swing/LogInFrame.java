@@ -122,14 +122,13 @@ public class LogInFrame extends JFrame {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-					String id = idField.getText();
-					String password = passwordField.getText();
-					socket.sendOrder("Login#" + id + "#" + password);
+					socket.sendOrder("Login#" + idField.getText() + "#" + passwordField.getText());
 					try {
-						Thread.sleep(50);
+						Thread.sleep(500);
 					} catch (InterruptedException e1) {
 						e1.printStackTrace();
 					}
+					System.out.println(socket.isLogin());
 					if (socket.isLogin()) {
 						new MainFrame(socket.getUserDTO(), socket);
 						dispose();
@@ -149,11 +148,9 @@ public class LogInFrame extends JFrame {
 		});
 		logInButton.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				String id = idField.getText();
-				String password = passwordField.getText();
-				socket.sendOrder("Login#" + id + "#" + password);
+				socket.sendOrder("Login#" + idField.getText() + "#" + passwordField.getText());
 				try {
-					Thread.sleep(50);
+					Thread.sleep(500);
 				} catch (InterruptedException e1) {
 					e1.printStackTrace();
 				}

@@ -18,7 +18,7 @@ public class CheckBidPanel extends JPanel {
 
 	private MainFrame mContext;
 
-	private ArrayList<CardDTO> allCardList = new ArrayList<>();
+	private ArrayList<CardDTO> allCardList = new ArrayList<>(); // 모든 카드 목록
 
 	public ArrayList<CardDTO> cardList = new ArrayList();
 
