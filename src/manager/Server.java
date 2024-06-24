@@ -38,7 +38,7 @@ public class Server {
 				client.add(sample);
 				System.out.println(client.size());
 				int socketNum = client.size() - 1;
-				new Servicse(client.get(socketNum)).start();
+				new Service(client.get(socketNum)).start();
 			}
 
 		} catch (IOException e) {

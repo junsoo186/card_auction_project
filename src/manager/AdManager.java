@@ -14,10 +14,7 @@ public class AdManager extends Thread {
 		public void run() {
 			
 				System.out.println("5초뒤에 팝업");
-			
 		}
-		
-
 		
 	};
 	

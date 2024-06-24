@@ -46,6 +46,7 @@ public class AuctionPanel extends JPanel {
 	private JButton nextPage;
 	private JButton previousPage;
 
+
 	// 페이지 변수
 	private int page = 1;
 	private int pageEnd;
@@ -124,6 +125,7 @@ public class AuctionPanel extends JPanel {
 		previousPage.setBounds(300, 50, 150, 50);
 		add(previousPage);
 
+		
 		setSize(1920, 630);
 		setLocation(0, 400);
 		setLayout(null);
@@ -142,6 +144,7 @@ public class AuctionPanel extends JPanel {
 		startBid.removeAll(startBid);
 		hour.removeAll(hour);
 		min.removeAll(min);
+
 	}
 
 	private void initListener() {
@@ -157,7 +160,8 @@ public class AuctionPanel extends JPanel {
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					System.out.println(cardList.size());
-					detailPage = new AuctionDetailedPanel(cardList.get(num), user,auctionManager,hour.get(num),min.get(num),startBid.get(num),mconText,num);
+					detailPage = new AuctionDetailedPanel(cardList.get(num), user, auctionManager, hour.get(num),
+							min.get(num), startBid.get(num), mconText, num);
 					panel.add(detailPage);
 					mconText.addPanel(7);
 					setVisible(7);
