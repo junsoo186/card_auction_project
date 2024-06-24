@@ -53,4 +53,31 @@
 ### (1) 로그인 시퀀스
 ![시퀀스-(1)로그인](https://github.com/junsoo186/card_auction_project/assets/169410809/f2f55ec4-7502-4f89-9017-0a478d8b4e45)
 ### (2) 회원가입 시퀀스
+![시퀀스-(2)회원가입](https://github.com/junsoo186/card_auction_project/assets/169410809/ed1153f6-fe96-43ec-928f-eb95be0359b0)
 ### (3) 경매 시퀀스
+![시퀀스-(3)경매](https://github.com/junsoo186/card_auction_project/assets/169410809/e5c8fbd5-4e43-4ea1-b89a-3192226bc88c)
+## 6️⃣ 주요 기능 소개
+1. 로그인 및 메인 화면
+![로그인](https://github.com/junsoo186/card_auction_project/assets/169410809/0ebb4f00-841b-466e-b998-477143c43631)
+2. 진행중인 경매 페이지
+![Screenshot_2](https://github.com/junsoo186/card_auction_project/assets/169410809/1c2ba2c2-a2e4-447a-a726-976c6c311425)
+3. 종료된 경매 페이지
+![종료 패널](https://github.com/junsoo186/card_auction_project/assets/169410809/2dc024d5-a9b1-43de-b97c-019c65623fda)
+4. 시세 확인 페이지
+![시세 확인](https://github.com/junsoo186/card_auction_project/assets/169410809/654dce06-593e-4caa-ba78-88b555248586)
+![시세 확인 디테일](https://github.com/junsoo186/card_auction_project/assets/169410809/41eda036-eaba-4927-a074-03ba9a9d4bbd)
+5. 경매 출품 페이지
+![카드판매](https://github.com/junsoo186/card_auction_project/assets/169410809/c7eb076e-8b92-4286-820e-ef1c2ca717db)
+![카드판매 디테일](https://github.com/junsoo186/card_auction_project/assets/169410809/b509c532-c767-4135-a7c0-3eb4dacf833e)
+6. 회원정보 페이지(마이페이지)
+![마이페이지](https://github.com/junsoo186/card_auction_project/assets/169410809/9db4e776-e4db-40da-90bf-d8b3d3277b9d)
+7. 인벤토리 페이지
+![인벤토리](https://github.com/junsoo186/card_auction_project/assets/169410809/987913bb-551d-47db-b60b-9e72292ec72c)
+![인벤토리 디테일](https://github.com/junsoo186/card_auction_project/assets/169410809/718ada31-3cca-440b-bddd-1546fcdea693)
+8. 캐시 충전창
+![캐시 충전](https://github.com/junsoo186/card_auction_project/assets/169410809/1a8816d0-37ce-4c68-a8e5-7208de39c897)
+9. 광고 배너
+![Screenshot_2](https://github.com/junsoo186/card_auction_project/assets/169410809/55c2c5d0-a5f9-442e-bc56-aff179821730)
+
+
+
