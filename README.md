@@ -5,6 +5,14 @@
 
 ![5356574d8814be54](https://github.com/junsoo186/card_auction_project/assets/169410809/d8e958ce-e7fe-4056-a242-c25d4b8ef48b)
 
+## 목차
+1. 프로젝트 개요
+2. 팀원 및 맡은 역할
+3. 
+
+
+## 1. 프로젝트 개요
+
 
 
 
