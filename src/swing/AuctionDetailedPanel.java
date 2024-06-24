@@ -168,18 +168,10 @@ public class AuctionDetailedPanel extends JPanel {
 		auction.setCardId(card.getId());
 		auction.setName(mconText.socket.getBidUser().get(page));
 		mconText.socket.sendOrder("endAuctionDB#" + auction.getEndDate() + "#" + auction.getStartDate() + "#" 
-		+ auction.getBidPrice() + "#" + auction.getCardId() + "#" + auction.getName());
+		+ auction.getBidPrice() + "#" + auction.getCardId() + "#" + auction.getName() + "#" + 
+		mconText.socket.getBidUser().get(page) +"#" + auctionManager.getHighbid());
 		AuctionDAO dao = new AuctionDAO();
 		UserDAO dao2 = new UserDAO();
-		try {
-			dao.addAuction(auction);
-			System.out.println(mconText.socket.getBidUser().get(page) + "는 구매한사람");
-			dao2.subtractPoint(mconText.socket.getBidUser().get(page), auctionManager.getHighbid());
-			System.out.println("구매한 사람 : " + mconText.socket.getBidUser().get(page));
-			System.out.println("차감되는 포인트 : " + auctionManager.getHighbid());
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
 	}
 
 	private void initListener() {

@@ -27,7 +27,7 @@ import manager.DBConnectionManager;
 public class AuctionDAO {
 
 	// 진행중인 옥션 올리기
-	public void addAuction(AuctionDTO dto) throws SQLException {
+	public static void addAuction(AuctionDTO dto) throws SQLException {
 		try (Connection connect = DBConnectionManager.getInstance().getConnection()) {
 			PreparedStatement pstmt = connect.prepareStatement(Query.AUCTION_ADD);
 			pstmt.setString(1, dto.getName());

@@ -177,6 +177,19 @@ public class Server {
 									+ userInventory.get(i).getUrl() + "#" + userInventory.get(i).getName() + "#"
 									+ userInventory.get(i).getPrice());
 						}
+					} else if (message.startsWith("endAuctionDB")) {
+						String[] msg = message.split("#");
+						AuctionDTO dto = new AuctionDTO();
+						int price = Integer.valueOf(msg[3]);
+						int card = Integer.valueOf(msg[4]);
+						int money = Integer.valueOf(msg[7]);
+						dto.setBidPrice(price);
+						dto.setCardId(card);
+						dto.setEndDate(msg[1]);
+						dto.setStartDate(msg[2]);
+						dto.setName(msg[5]);
+						AuctionDAO.addAuction(dto);
+						UserDAO.subtractPoint(msg[6], money);
 					}
 				}
 			} catch (IOException e) {

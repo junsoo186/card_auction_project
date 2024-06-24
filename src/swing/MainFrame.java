@@ -279,13 +279,8 @@ public class MainFrame extends JFrame implements Runnable {
 	}
 
 	public void removePanel() {
-<<<<<<< HEAD
 		backgroundPanel.remove(7);
-		panels.remove(6);
-=======
-		backgroundPanel.remove(panels.get(8));
 		panels.remove(8);
->>>>>>> 272ebe5ef20a2f83ed313dbf7123fce1b0a2d7cb
 		auctionPanel.removeData();
 		System.out.println("판넬 사이즈 : " + panels.size());
 	}
@@ -296,11 +291,8 @@ public class MainFrame extends JFrame implements Runnable {
 		buttons[0].addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				System.out.println("진행중 경매로 이동");
-<<<<<<< HEAD
 				if (panels.size() > 6) {
-=======
 				if (panels.size() > 8) {
->>>>>>> 272ebe5ef20a2f83ed313dbf7123fce1b0a2d7cb
 					removePanel();
 				}
 				auctionPanel.removeData();
