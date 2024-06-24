@@ -58,7 +58,7 @@ public class FinishedPanel extends JPanel {
 		socket.sendOrder("AllCardList");
 		socket.sendOrder("EndAuctionList");
 
-		insertList();
+		getList();
 		initData();
 		setInitLayout();
 		clickPage();
@@ -66,25 +66,6 @@ public class FinishedPanel extends JPanel {
 
 	private void initData() {
 		backgroundPanel = mContext.getBackgroundPanel();
-
-	}
-
-	public void insertList() {
-		try {
-			Thread.sleep(300);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		allCardList = socket.getAllCardList();
-		endAuctionList = socket.getEndAuctionList();
-
-		for (int i = 0; i < endAuctionList.size(); i++) {
-			for (int j = 0; j < allCardList.size(); j++) {
-				if (endAuctionList.get(i).getCardId() == allCardList.get(j).getId()) {
-					endCardList.add(i, allCardList.get(j));
-				}
-			}
-		}
 	}
 
 	private void setInitLayout() {
@@ -109,6 +90,25 @@ public class FinishedPanel extends JPanel {
 		productButton();
 		createProduct(endCardList);
 		addActionListner(endCardList);
+	}
+
+	public void getList() {
+		// 프로토콜 주고받는데 최소0.05초 필요했음
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		allCardList = socket.getAllCardList();
+		endAuctionList = socket.getEndAuctionList();
+
+		for (int i = 0; i < endAuctionList.size(); i++) {
+			for (int j = 0; j < allCardList.size(); j++) {
+				if (endAuctionList.get(i).getCardId() == allCardList.get(j).getId()) {
+					endCardList.add(i, allCardList.get(j));
+				}
+			}
+		}
 	}
 
 	// 버튼에 카드이미지 URL 삽입함수

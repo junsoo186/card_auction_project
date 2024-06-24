@@ -35,6 +35,8 @@ public class AuctionDAO {
 			pstmt.setInt(3, dto.getBidPrice());
 			pstmt.setString(4, dto.getStartDate());
 			pstmt.setString(5, dto.getEndDate());
+			pstmt.executeUpdate();
+			System.out.println("옥션 추가 완료");
 		}
 	}
 

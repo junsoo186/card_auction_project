@@ -144,7 +144,6 @@ public class AuctionPanel extends JPanel {
 		startBid.removeAll(startBid);
 		hour.removeAll(hour);
 		min.removeAll(min);
-
 	}
 
 	private void initListener() {

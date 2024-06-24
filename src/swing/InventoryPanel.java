@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 
 import dto.CardDTO;
 import lombok.Setter;
+import manager.SocketManager;
 
 @Setter
 
@@ -20,6 +21,7 @@ import lombok.Setter;
 public class InventoryPanel extends JPanel {
 
 	private MainFrame mContext;
+	private SocketManager socket;
 
 	private MouseListener[] listener = new MouseListener[10];
 
@@ -48,7 +50,11 @@ public class InventoryPanel extends JPanel {
 
 	public InventoryPanel(MainFrame mContext) {
 		this.mContext = mContext;
-		this.userInventory = mContext.getUserInventory();
+		this.socket = mContext.socket;
+
+		socket.sendOrder("UserInventory#" + mContext.getUser().getName()); // DB에서 유저인벤토리 불러오기
+
+		getList();
 		initData();
 		setInitLayout();
 		clickPage();
@@ -81,6 +87,16 @@ public class InventoryPanel extends JPanel {
 		productButton();
 		createProduct(userInventory);
 		addActionListner(userInventory);
+	}
+
+	public void getList() {
+		// 프로토콜 주고받는데 최소0.05초 필요했음
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		userInventory = socket.getUserInventory();
 	}
 
 	// 버튼 10개 생성

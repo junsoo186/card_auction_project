@@ -89,8 +89,8 @@ public class BuyFrame extends JFrame {
 				int checkPrice=Integer.parseInt(addPriceField.getText());
 				if(checkPrice>user.getPoint()) {
 					JOptionPane.showMessageDialog(null,"소지중인 포인트 이상을 제시할 수 없습니다.");
-				} else if(checkPrice < price){
-					JOptionPane.showMessageDialog(null,"현재 가격보다 낮은 금액을 제시할수없습니다.");
+				} else if(checkPrice <= price){
+					JOptionPane.showMessageDialog(null,"현재 가격보다 높은 금액을 제시해주세요.");
 				} else {
 					mconText.socket.sendOrder("bid#" + checkPrice + "#" + page + "#" + user.getName());
 					JOptionPane.showMessageDialog(null,checkPrice + "원을 제시했습니다.");

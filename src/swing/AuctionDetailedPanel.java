@@ -137,6 +137,8 @@ public class AuctionDetailedPanel extends JPanel {
 						endTime.setText("경매 종료");
 						endTime.setForeground(Color.RED);
 						addDto();
+						mconText.socket.deleteData(page);
+						mconText.getAuctionPanel().buttons.get(page).setIcon(null);
 						buyCard.setVisible(false);
 						flag = false;
 					}
@@ -169,6 +171,7 @@ public class AuctionDetailedPanel extends JPanel {
 		UserDAO dao2 = new UserDAO();
 		try {
 			dao.addAuction(auction);
+			System.out.println(mconText.socket.getBidUser().get(page) + "는 구매한사람");
 			dao2.subtractPoint(mconText.socket.getBidUser().get(page), auctionManager.getHighbid());
 			System.out.println("구매한 사람 : " + mconText.socket.getBidUser().get(page));
 			System.out.println("차감되는 포인트 : " + auctionManager.getHighbid());
