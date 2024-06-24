@@ -1,17 +1,9 @@
 package swing;
 
 import java.awt.Color;
-import java.awt.Desktop;
 import java.awt.Font;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,10 +18,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-
-import dao.InventoryDAO;
 import dao.UserDAO;
-import dto.AuctionDTO;
 import dto.CardDTO;
 import dto.UserDTO;
 import lombok.Data;
@@ -105,8 +94,8 @@ public class MainFrame extends JFrame implements Runnable {
 		setInitLayout();
 		initListener();
 		adTimmer = new Timer();
-		adTimmer.schedule(task,3000,3000);
-		
+		adTimmer.schedule(task, 3000, 3000);
+
 	}
 
 	public JPanel getBackgroundPanel() {
@@ -118,12 +107,6 @@ public class MainFrame extends JFrame implements Runnable {
 	}
 
 	private void initData() {
-
-		try {
-			userInventory = InventoryDAO.invenInfo(user.getName()); // 유저가 가지고있는 카드 목록 호출
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
 		backgroundPanel = new JPanel();
 
 		auctionPanel = new AuctionPanel(panels, this);
@@ -162,9 +145,7 @@ public class MainFrame extends JFrame implements Runnable {
 		backgroundPanel.setSize(getWidth(), getHeight());
 		backgroundPanel.setLayout(null);
 		backgroundPanel.setBackground(Color.white);
-	
-		
-			
+
 		Icon backgroundIcon = new ImageIcon("image/background.png");
 		backgroundLabel = new JLabel(backgroundIcon);
 		backgroundLabel.setSize(1920, 414);
@@ -201,15 +182,15 @@ public class MainFrame extends JFrame implements Runnable {
 		backgroundLabel.add(searchButton);
 
 		// ------------광고 --------------
-		
+
 		Icon adIcon = new ImageIcon("image/광고.png");
 		JLabel ad = new JLabel(adIcon);
-		
+
 		ad.setBounds(0, 275, 300, 680);
 		Icon adIcon2 = new ImageIcon("image/광고2.png");
 		JLabel ad2 = new JLabel(adIcon2);
 		ad2.setBounds(1650, 275, 300, 680);
-		
+
 		backgroundPanel.add(ad, 0);
 		backgroundPanel.add(ad2, 0);
 		adFinder = 1;
@@ -226,27 +207,24 @@ public class MainFrame extends JFrame implements Runnable {
 		adButton2.setContentAreaFilled(false);
 		backgroundPanel.add(adButton2, 0);
 		task = new TimerTask() {
-			
-		
+
 			@Override
 			public void run() {
-				
-			
-			if(adFinder == 2 ) {
-				ad.setIcon(new ImageIcon("image/광고.png"));
-				ad2.setIcon(new ImageIcon("image/광고2.png"));
-				adFinder = 1;
-				
-			}else if (adFinder == 1) {
-				ad.setIcon(new ImageIcon("image/광고3.png"));
-				ad2.setIcon(new ImageIcon("image/광고4.png"));
-				adFinder = 2;
-				
-			}
+
+				if (adFinder == 2) {
+					ad.setIcon(new ImageIcon("image/광고.png"));
+					ad2.setIcon(new ImageIcon("image/광고2.png"));
+					adFinder = 1;
+
+				} else if (adFinder == 1) {
+					ad.setIcon(new ImageIcon("image/광고3.png"));
+					ad2.setIcon(new ImageIcon("image/광고4.png"));
+					adFinder = 2;
+
+				}
 			}
 		};
 
-	
 		// 버튼 설정 0.진행중경매 1.종료된경매 2.시세체크 3.경매출품 4.마이페이지 5.인벤토리
 		buttons[0] = new JButton("진행 중인 경매");
 		buttons[1] = new JButton("종료된 경매");
@@ -300,8 +278,13 @@ public class MainFrame extends JFrame implements Runnable {
 	}
 
 	public void removePanel() {
+<<<<<<< HEAD
 		backgroundPanel.remove(7);
 		panels.remove(6);
+=======
+		backgroundPanel.remove(panels.get(8));
+		panels.remove(8);
+>>>>>>> 272ebe5ef20a2f83ed313dbf7123fce1b0a2d7cb
 		auctionPanel.removeData();
 		System.out.println("판넬 사이즈 : " + panels.size());
 	}
@@ -312,7 +295,11 @@ public class MainFrame extends JFrame implements Runnable {
 		buttons[0].addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				System.out.println("진행중 경매로 이동");
+<<<<<<< HEAD
 				if (panels.size() > 6) {
+=======
+				if (panels.size() > 8) {
+>>>>>>> 272ebe5ef20a2f83ed313dbf7123fce1b0a2d7cb
 					removePanel();
 				}
 				auctionPanel.removeData();
@@ -325,7 +312,11 @@ public class MainFrame extends JFrame implements Runnable {
 		buttons[1].addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				System.out.println("종료된 경매로 이동");
+<<<<<<< HEAD
 				if (panels.size() > 6) {
+=======
+				if (panels.size() > 8) {
+>>>>>>> 272ebe5ef20a2f83ed313dbf7123fce1b0a2d7cb
 					removePanel();
 				}
 				setVisible(1);
@@ -336,7 +327,11 @@ public class MainFrame extends JFrame implements Runnable {
 		buttons[2].addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				System.out.println("시세 체크로 이동");
+<<<<<<< HEAD
 				if (panels.size() > 6) {
+=======
+				if (panels.size() > 8) {
+>>>>>>> 272ebe5ef20a2f83ed313dbf7123fce1b0a2d7cb
 					removePanel();
 				}
 				setVisible(2);
@@ -347,7 +342,11 @@ public class MainFrame extends JFrame implements Runnable {
 		buttons[3].addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				System.out.println("경매 출품으로 이동");
+<<<<<<< HEAD
 				if (panels.size() > 6) {
+=======
+				if (panels.size() > 8) {
+>>>>>>> 272ebe5ef20a2f83ed313dbf7123fce1b0a2d7cb
 					removePanel();
 				}
 				setVisible(3);
@@ -358,7 +357,11 @@ public class MainFrame extends JFrame implements Runnable {
 		buttons[4].addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				System.out.println("마이페이지로 이동");
+<<<<<<< HEAD
 				if (panels.size() > 6) {
+=======
+				if (panels.size() > 8) {
+>>>>>>> 272ebe5ef20a2f83ed313dbf7123fce1b0a2d7cb
 					removePanel();
 				}
 				setVisible(4);
@@ -370,7 +373,11 @@ public class MainFrame extends JFrame implements Runnable {
 			public void mouseClicked(MouseEvent e) {
 				System.out.println("인벤토리로 이동");
 				// 보관함 정보가 열려있으면 닫아주기
+<<<<<<< HEAD
 				if (panels.size() > 6) {
+=======
+				if (panels.size() > 8) {
+>>>>>>> 272ebe5ef20a2f83ed313dbf7123fce1b0a2d7cb
 					removePanel();
 				}
 				setVisible(5);
@@ -425,47 +432,50 @@ public class MainFrame extends JFrame implements Runnable {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				Desktop desktop = Desktop.getDesktop();
-				if(adFinder == 1) {
-				 try {
-					URI uri = new URI("https://df.nexon.com/pg/summerbingo?bn=gdnbasic&st=displayB&ev=240620&gclid=EAIaIQobChMIzobr-6DzhgMVcOlMAh2Y6QiKEAEYASAAEgLM4fD_BwE");
-					desktop.browse(uri);
-				 } catch (URISyntaxException | IOException e1) {
-					e1.printStackTrace();
-				}
-				}else if(adFinder ==2) {
+				if (adFinder == 1) {
+					try {
+						URI uri = new URI(
+								"https://df.nexon.com/pg/summerbingo?bn=gdnbasic&st=displayB&ev=240620&gclid=EAIaIQobChMIzobr-6DzhgMVcOlMAh2Y6QiKEAEYASAAEgLM4fD_BwE");
+						desktop.browse(uri);
+					} catch (URISyntaxException | IOException e1) {
+						e1.printStackTrace();
+					}
+				} else if (adFinder == 2) {
 					try {
 						URI uri = new URI("https://lineagem.plaync.com/conts/2024/240529_update");
 						desktop.browse(uri);
-					 } catch (URISyntaxException | IOException e1) {
-						e1.printStackTrace();}
+					} catch (URISyntaxException | IOException e1) {
+						e1.printStackTrace();
+					}
 				}
-				
+
 			}
 
 		});
 		adButton.addMouseListener(new MouseAdapter() {
-			
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				Desktop desktop = Desktop.getDesktop();
-				if(adFinder == 1) {
-				try {
-					URI uri = new URI("https://playeternalreturn.com/main?hl=ko-KR");
-					desktop.browse(uri);
-				} catch (URISyntaxException | IOException e1) {
-					e1.printStackTrace();
-				}
-				} else if(adFinder ==2) {
-					
+				if (adFinder == 1) {
 					try {
-						URI uri = new URI("https://www.ktmmobile.com/event/eventDetail.do?ntcartSeq=940&sbstCtg=E&pageNo=1&utm_source=gdn&utm_medium=display&utm_campaign=pcpromo_2401_SL&utm_content=bn175&gclid=EAIaIQobChMIk-OeuJ3zhgMVnuZMAh1TGQg9EAEYASAAEgJUMvD_BwE");
+						URI uri = new URI("https://playeternalreturn.com/main?hl=ko-KR");
+						desktop.browse(uri);
+					} catch (URISyntaxException | IOException e1) {
+						e1.printStackTrace();
+					}
+				} else if (adFinder == 2) {
+
+					try {
+						URI uri = new URI(
+								"https://www.ktmmobile.com/event/eventDetail.do?ntcartSeq=940&sbstCtg=E&pageNo=1&utm_source=gdn&utm_medium=display&utm_campaign=pcpromo_2401_SL&utm_content=bn175&gclid=EAIaIQobChMIk-OeuJ3zhgMVnuZMAh1TGQg9EAEYASAAEgJUMvD_BwE");
 						desktop.browse(uri);
 					} catch (URISyntaxException | IOException e1) {
 						e1.printStackTrace();
 					}
 				}
 			}
-			
+
 		});
 
 	}
@@ -473,9 +483,5 @@ public class MainFrame extends JFrame implements Runnable {
 	@Override
 	public void run() {
 	}
-	
 
-	
-
-	
 }

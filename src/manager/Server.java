@@ -43,7 +43,6 @@ public class Server {
 				int socketNum = client.size() - 1;
 				new Service(client.get(socketNum)).start();
 			}
-
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -61,7 +60,7 @@ public class Server {
 		}
 	}
 
-	private static class Service extends Thread {
+	private class Service extends Thread {
 
 		private Socket socket;
 
@@ -72,10 +71,10 @@ public class Server {
 			this.socket = socket;
 		}
 
-//		// 서버 -> 클라이언트 메세지 전송하기
-//		private void sendOrder(String msg) {
-//			printWriter.println(msg);
-//		}
+		// 서버 -> 클라이언트 메세지 전송하기
+		private void sendOrder(String msg) {
+			printWriter.println(msg);
+		}
 
 		@Override
 		public void run() {
@@ -150,7 +149,7 @@ public class Server {
 						ArrayList<AuctionDTO> endAuctionList = new ArrayList<>();
 						endAuctionList = AuctionDAO.endAuctionList();
 						for (int i = 0; i < endAuctionList.size(); i++) {
-							broadCast("EndAuctionList#" + endAuctionList.get(i).getId() + "#"
+							sendOrder("EndAuctionList#" + endAuctionList.get(i).getId() + "#"
 									+ endAuctionList.get(i).getName() + "#" + endAuctionList.get(i).getCardId() + "#"
 									+ endAuctionList.get(i).getBidPrice() + "#" + endAuctionList.get(i).getStartDate()
 									+ "#" + endAuctionList.get(i).getEndDate());
@@ -159,8 +158,17 @@ public class Server {
 						ArrayList<CardDTO> allCardList = new ArrayList<>();
 						allCardList = CardDAO.allCardList();
 						for (int i = 0; i < allCardList.size(); i++) {
-							broadCast("AllCardList#" + allCardList.get(i).getId() + "#" + allCardList.get(i).getUrl()
+							sendOrder("AllCardList#" + allCardList.get(i).getId() + "#" + allCardList.get(i).getUrl()
 									+ "#" + allCardList.get(i).getName() + "#" + allCardList.get(i).getPrice());
+						}
+					} else if (message.startsWith("UserInventory")) {
+						String[] msg = message.split("#");
+						ArrayList<CardDTO> userInventory = new ArrayList<>();
+						userInventory = InventoryDAO.invenInfo(msg[1]);
+						for (int i = 0; i < userInventory.size(); i++) {
+							sendOrder("UserInventory#" + userInventory.get(i).getId() + "#"
+									+ userInventory.get(i).getUrl() + "#" + userInventory.get(i).getName() + "#"
+									+ userInventory.get(i).getPrice());
 						}
 					}
 				}
