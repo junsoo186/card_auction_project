@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import dto.AuctionDTO;
 import manager.DBConnectionManager;
@@ -29,7 +30,7 @@ public class AuctionDAO {
 	public void addAuction(AuctionDTO dto) throws SQLException {
 		try (Connection connect = DBConnectionManager.getInstance().getConnection()) {
 			PreparedStatement pstmt = connect.prepareStatement(Query.AUCTION_ADD);
-			pstmt.setString(1, dto.getUserId());
+			pstmt.setString(1, dto.getName());
 			pstmt.setInt(2, dto.getCardId());
 			pstmt.setInt(3, dto.getBidPrice());
 			pstmt.setString(4, dto.getStartDate());
@@ -82,14 +83,23 @@ public class AuctionDAO {
 		}
 	}
 
-	public static AuctionDTO endAuctionList() throws SQLException {
-		try (Connection connect = DBConnectionManager.getInstance().getConnection()) {
-			PreparedStatement pstmt = connect.prepareStatement(Query.AUCTION_INFO_ALL);
+	// 모든 종료된 경매 목록 조회
+	public static ArrayList<AuctionDTO> endAuctionList() throws SQLException {
+		ArrayList<AuctionDTO> endAuctionList = new ArrayList<>();
+		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
+			PreparedStatement pstmt = conn.prepareStatement(Query.AUCTION_LIST);
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
-				System.out.println("조회된 옥션" + rs.getInt("a.id"));
+				AuctionDTO auctionDTO = new AuctionDTO();
+				auctionDTO.setId(rs.getInt("id"));
+				auctionDTO.setName(rs.getString("name"));
+				auctionDTO.setCardId(rs.getInt("card_id"));
+				auctionDTO.setBidPrice(rs.getInt("bid_price"));
+				auctionDTO.setStartDate(rs.getString("start_date"));
+				auctionDTO.setEndDate(rs.getString("end_date"));
+				endAuctionList.add(auctionDTO);
 			}
 		}
-		return null;
+		return endAuctionList;
 	}
 }

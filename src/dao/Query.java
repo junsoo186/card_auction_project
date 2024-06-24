@@ -14,6 +14,7 @@ public class Query {
 
 	// CardDAO 쿼리
 	public static final String CARD_ADD = " INSERT INTO card(url, name, price) VALUES(?, ?, ?) ";
+	public static final String CARD_ALL = " SELECT * FROM card ";
 	public static final String CARD_INFO_ID = " SELECT * FROM card WHERE id = ? ";
 	public static final String CARD_INFO_NAME = " SELECT * FROM card WHERE name = ? ";
 	public static final String CARD_UPDATE_ID = " UPDATE card SET url = ?, name = ?, price = ? WHERE id = ? ";
