@@ -101,7 +101,7 @@ public class MyPagePanel extends JPanel {
 		infoPanel.add(nickName);
 		infoPanel.add(currentPoint);
 		infoPanel.add(cardNumber);
-		infoPanel.add(updateButton);
+		//infoPanel.add(updateButton);
 		add(profileLabel);
 		add(infoPanel);
 	}

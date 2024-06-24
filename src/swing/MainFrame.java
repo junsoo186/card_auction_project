@@ -287,6 +287,7 @@ public class MainFrame extends JFrame implements Runnable {
 	}
 
 	public void removePanel() {
+		backgroundPanel.remove(7);
 		backgroundPanel.remove(panels.get(8));
 		panels.remove(8);
 		auctionPanel.removeData();
