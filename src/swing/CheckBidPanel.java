@@ -16,9 +16,12 @@ import dto.CardDTO;
 
 public class CheckBidPanel extends JPanel {
 
-	private ArrayList<JButton> productList = new ArrayList<>(5);
-	private ArrayList<String> productTitleList = new ArrayList<>(5);
-	public ArrayList<CardDTO> cardList = new ArrayList(5);
+	private MainFrame mContext;
+
+	private ArrayList<CardDTO> allCardList = new ArrayList<>();
+
+	public ArrayList<CardDTO> cardList = new ArrayList();
+
 	private JPanel backgroundPanel;
 	private JLabel title;
 	private JScrollPane scrollPane;
@@ -31,6 +34,7 @@ public class CheckBidPanel extends JPanel {
 	private int y = 100;
 
 	public CheckBidPanel(MainFrame mContext) {
+		this.mContext = mContext;
 		this.backgroundPanel = mContext.getBackgroundPanel();
 		initData();
 		setInitLayout();
@@ -96,49 +100,6 @@ public class CheckBidPanel extends JPanel {
 
 	private void initListener() {
 
-		// 진행중인 경매 이동
-		product.get(0).addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				setVisible(false);
-				System.out.println(cardList.get(0));
-				checkBidDetailedPanel = new CheckBidDetailedPanel(cardList.get(0));
-				backgroundPanel.add(checkBidDetailedPanel);
-				checkBidDetailedPanel.setVisible(true);
-				System.out.println();
-			}
-		});
-		product.get(1).addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				setVisible(false);
-				checkBidDetailedPanel = new CheckBidDetailedPanel(cardList.get(1));
-				backgroundPanel.add(checkBidDetailedPanel);
-				checkBidDetailedPanel.setVisible(true);
-			}
-		});
-		product.get(2).addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				setVisible(false);
-				checkBidDetailedPanel = new CheckBidDetailedPanel(cardList.get(2));
-				backgroundPanel.add(checkBidDetailedPanel);
-				checkBidDetailedPanel.setVisible(true);
-			}
-		});
-		product.get(3).addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				setVisible(false);
-				checkBidDetailedPanel = new CheckBidDetailedPanel(cardList.get(3));
-				backgroundPanel.add(checkBidDetailedPanel);
-				checkBidDetailedPanel.setVisible(true);
-			}
-		});
-		product.get(4).addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				setVisible(false);
-				checkBidDetailedPanel = new CheckBidDetailedPanel(cardList.get(4));
-				backgroundPanel.add(checkBidDetailedPanel);
-				checkBidDetailedPanel.setVisible(true);
-			}
-		});
 	}
 
 }
