@@ -26,9 +26,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import dao.InventoryDAO;
 import dao.UserDAO;
-import dto.AuctionDTO;
 import dto.CardDTO;
 import dto.UserDTO;
 import lombok.Data;
@@ -461,13 +459,10 @@ public class MainFrame extends JFrame implements Runnable {
 		});
 
 	}
-	
-	 void logout() {
 
-		 
-		 
-	 }
-	
+	void logout() {
+
+	}
 
 	@Override
 	public void run() {

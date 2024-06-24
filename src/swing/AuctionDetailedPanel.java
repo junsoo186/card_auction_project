@@ -52,9 +52,10 @@ public class AuctionDetailedPanel extends JPanel {
 	int bid;
 	int page;
 
-	public AuctionDetailedPanel(CardDTO card, UserDTO user, AuctionManager auctionManager,int hour , int min , int startbid, MainFrame mconText,int num) {
+	public AuctionDetailedPanel(CardDTO card, UserDTO user, AuctionManager auctionManager, int hour, int min,
+			int startbid, MainFrame mconText, int num) {
 		this.page = num;
-		this.mconText =mconText;
+		this.mconText = mconText;
 		this.bid = startbid;
 		this.card = card;
 		this.user = user;
@@ -143,7 +144,7 @@ public class AuctionDetailedPanel extends JPanel {
 						flag = false;
 					}
 				}
-				if(auctionManager.getHighbid() != mconText.socket.getHighBid().get(page)) {
+				if (auctionManager.getHighbid() != mconText.socket.getHighBid().get(page)) {
 					auctionManager.setHighbid(mconText.socket.getHighBid().get(page));
 					cardBid.setText(" 현재 비드 가격 : " + auctionManager.getHighbid());
 					System.out.println("가격 변경됨 : " + mconText.socket.getHighBid().get(page));
@@ -158,7 +159,7 @@ public class AuctionDetailedPanel extends JPanel {
 		}).start();
 
 	}
-	
+
 	private void addDto() {
 		AuctionDTO auction = new AuctionDTO();
 		auction.setEndDate(LocalDateTime.now().toString());
@@ -190,7 +191,7 @@ public class AuctionDetailedPanel extends JPanel {
 		});
 		buyCard.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				buyFrame = new BuyFrame(card, user, mconText,auctionManager.getHighbid(),page);
+				buyFrame = new BuyFrame(card, user, mconText, auctionManager.getHighbid(), page);
 			}
 
 		});
