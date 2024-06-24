@@ -34,14 +34,14 @@
 ||BackEnd| Java 17 7 MySQL 8.0.26 |
 ||Version/Issue 관리| GitHub & GitBash |
 ||Communication| Discord & Notion|
-&nbsp;
 ## 4️⃣ 사용 라이브러리 및 프로토콜
 ### (1) 사용 라이브러리
 |라이브러리명|버전명|용도|
 |------|---|---|
-|HikariCP|OS| Java Swing GUI 구현, 보고서-시퀀스 다이어그램 작성 및 리더 |
-|Lombok|Browser| DAO, 타이머 기능 구현 및 프로그램 전체 UI 디자인 |
-|MySQL Connector Java|Tool| MySQL 테이블, DAO&DTO, 검색 기능 및 페이징 기능 구현 |
+|HikariCP|HikariCP 5.1.0| Connection Pool을 통한 효율적인 DB 연결 관리 |
+|Lombok|Lombok| 간편한 생성자 및 메서드 사용 |
+|MySQL Connector Java|MySQL Connector Java 8.0.21| MySQL 테이블, DAO&DTO, 검색 기능 및 페이징 기능 구현 |
+|SLF4J|BackEnd| Socket을 사용한 회원정보 관리, 프로토콜, 경매가격 시스템 구현|
 |SLF4J|BackEnd| Socket을 사용한 회원정보 관리, 프로토콜, 경매가격 시스템 구현|
 &nbsp;
 ### (2) 사용 프로토콜
