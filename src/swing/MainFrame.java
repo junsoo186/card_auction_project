@@ -302,12 +302,12 @@ public class MainFrame extends JFrame implements Runnable {
 		backgroundPanel.add(panels.get(state));
 	}
 
-//	public void removePanel() {
-//		backgroundPanel.remove(7);
-//		panels.remove(6);
-//		auctionPanel.removeData();
-//		System.out.println("판넬 사이즈 : " + panels.size());
-//	}
+	public void removePanel() {
+		backgroundPanel.remove(panels.get(8));
+		panels.remove(8);
+		auctionPanel.removeData();
+		System.out.println("판넬 사이즈 : " + panels.size());
+	}
 
 	private void initListener() {
 
@@ -315,9 +315,9 @@ public class MainFrame extends JFrame implements Runnable {
 		buttons[0].addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				System.out.println("진행중 경매로 이동");
-//				if (panels.size() > 6) {
-//					removePanel();
-//				}
+				if (panels.size() > 8) {
+					removePanel();
+				}
 				auctionPanel.removeData();
 				auctionPanel.addAuction();
 				setVisible(0);
@@ -328,9 +328,9 @@ public class MainFrame extends JFrame implements Runnable {
 		buttons[1].addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				System.out.println("종료된 경매로 이동");
-//				if (panels.size() > 6) {
-//					removePanel();
-//				}
+				if (panels.size() > 8) {
+					removePanel();
+				}
 				setVisible(1);
 			}
 		});
@@ -339,9 +339,9 @@ public class MainFrame extends JFrame implements Runnable {
 		buttons[2].addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				System.out.println("시세 체크로 이동");
-//				if (panels.size() > 6) {
-//					removePanel();
-//				}
+				if (panels.size() > 8) {
+					removePanel();
+				}
 				setVisible(2);
 			}
 		});
@@ -350,9 +350,9 @@ public class MainFrame extends JFrame implements Runnable {
 		buttons[3].addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				System.out.println("경매 출품으로 이동");
-//				if (panels.size() > 6) {
-//					removePanel();
-//				}
+				if (panels.size() > 8) {
+					removePanel();
+				}
 				setVisible(3);
 			}
 		});
@@ -361,9 +361,9 @@ public class MainFrame extends JFrame implements Runnable {
 		buttons[4].addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				System.out.println("마이페이지로 이동");
-//				if (panels.size() > 6) {
-//					removePanel();
-//				}
+				if (panels.size() > 8) {
+					removePanel();
+				}
 				setVisible(4);
 			}
 		});
@@ -372,10 +372,10 @@ public class MainFrame extends JFrame implements Runnable {
 		buttons[5].addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				System.out.println("인벤토리로 이동");
-//				// 보관함 정보가 열려있으면 닫아주기
-//				if (panels.size() > 6) {
-//					removePanel();
-//				}
+				// 보관함 정보가 열려있으면 닫아주기
+				if (panels.size() > 8) {
+					removePanel();
+				}
 				setVisible(5);
 			}
 		});
