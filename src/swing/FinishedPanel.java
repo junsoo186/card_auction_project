@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -46,6 +47,7 @@ public class FinishedPanel extends JPanel {
 	// 페이지 버튼
 	private JButton nextPage;
 	private JButton previousPage;
+	
 
 	// 페이지 변수
 	private int page = 1;
@@ -69,12 +71,21 @@ public class FinishedPanel extends JPanel {
 	}
 
 	private void setInitLayout() {
-		nextPage = new JButton("다음");
+		nextPage = new JButton(new ImageIcon("image/오른쪽.png"));
+		nextPage.setBackground(null);
+		nextPage.setBorderPainted(false);
+		nextPage.setContentAreaFilled(false);
 		nextPage.setBounds(1500, 50, 150, 50);
 		add(nextPage);
-		previousPage = new JButton("이전");
+		previousPage = new JButton(new ImageIcon("image/왼쪽.png"));
+		previousPage.setBackground(null);
+		previousPage.setBorderPainted(false);
+		previousPage.setContentAreaFilled(false);
 		previousPage.setBounds(300, 50, 150, 50);
 		add(previousPage);
+		
+		
+	
 
 		setSize(1920, 630);
 		setLocation(0, 400);
