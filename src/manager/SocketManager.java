@@ -84,7 +84,12 @@ public class SocketManager implements Runnable {
 					hour.add(hourDB);
 					min.add(minDB);
 					startBid.add(startBidDB);
-					highBid.add(startBidDB);
+					if(cardId.length > 8) {
+						int price = Integer.valueOf(cardId[7]);
+						highBid.add(price);
+					} else {
+						highBid.add(startBidDB);
+					}
 				} else if (message.startsWith("bid")) {
 					String[] bid = message.split("#");
 					int money = Integer.valueOf(bid[1]);
