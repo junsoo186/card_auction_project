@@ -102,6 +102,17 @@ public class UserDAO {
 			System.out.println("포인트 수정완료");
 		}
 	}
+	
+	// 구매 유저 포인트 차감
+	public static void subtractPoint(String name, int point) throws SQLException {
+		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
+			PreparedStatement pstmt = conn.prepareStatement(Query.USER_SUBTARCT_POINT);
+			pstmt.setInt(1, point);
+			pstmt.setString(2, name);
+			pstmt.executeUpdate();
+			System.out.println("포인트 차감완료");
+		}
+	}
 
 	// 유저 이름으로 유저 삭제 (회원탈퇴) delete
 	public static void deleteUser(String name) throws SQLException {
@@ -112,6 +123,7 @@ public class UserDAO {
 			System.out.println(name + " 유저 삭제완료");
 		}
 	}
+	
 
 	// 유저 로그인 확인
 	public static boolean loginUser(String name, String password) {

@@ -21,6 +21,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import dao.InventoryDAO;
+import dao.UserDAO;
 import dto.CardDTO;
 import dto.UserDTO;
 import lombok.Data;
@@ -215,8 +216,15 @@ public class MainFrame extends JFrame implements Runnable {
 			panels.get(i).setVisible(false);
 		}
 		panels.get(state).setVisible(true);
-		System.out.println("판넬 선택 : " + panels.get(state));
 		this.state = state;
+		UserDAO dao = new UserDAO();
+		try {
+			dao.infoUser(user.getName());
+			cash.setText(user.getPoint() + " 원");
+			myPagePanel.getPoint().setText(" 포인트 : " + user.getPoint());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void addPanel(int state) {
