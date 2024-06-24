@@ -226,7 +226,19 @@ public class MainFrame extends JFrame implements Runnable {
 			@Override
 			public void run() {
 			ad.setIcon(new ImageIcon("image/광고3.png"));
+			ad2.setIcon(new ImageIcon("image/광고4.png"));
 			adFinder = 2;
+			try {
+				Thread.sleep(5000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if(adFinder == 2 ) {
+				adFinder =1;
+				ad.setIcon(new ImageIcon("image/광고.png"));
+				ad2.setIcon(new ImageIcon("image/광고2.png"));
+			}
 			}
 		};
 		
@@ -402,6 +414,12 @@ public class MainFrame extends JFrame implements Runnable {
 				 } catch (URISyntaxException | IOException e1) {
 					e1.printStackTrace();
 				}
+				}else if(adFinder ==2) {
+					try {
+						URI uri = new URI("https://lineagem.plaync.com/conts/2024/240529_update");
+						desktop.browse(uri);
+					 } catch (URISyntaxException | IOException e1) {
+						e1.printStackTrace();}
 				}
 				
 			}
