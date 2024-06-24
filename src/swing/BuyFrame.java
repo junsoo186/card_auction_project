@@ -92,9 +92,8 @@ public class BuyFrame extends JFrame {
 				} else if(checkPrice < price){
 					JOptionPane.showMessageDialog(null,"현재 가격보다 낮은 금액을 제시할수없습니다.");
 				} else {
-					mconText.socket.sendOrder("bid#" + checkPrice + "#" + page);
+					mconText.socket.sendOrder("bid#" + checkPrice + "#" + page + "#" + user.getName());
 					JOptionPane.showMessageDialog(null,checkPrice + "원을 제시했습니다.");
-				JOptionPane.showMessageDialog(null, addPriceField.getText() + "원 을 제시합니다");
 				} 
 				dispose();
 			}

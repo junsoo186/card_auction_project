@@ -14,6 +14,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
 import dto.UserDTO;
+import lombok.Data;
 
 public class MyPagePanel extends JPanel {
 
@@ -45,6 +46,10 @@ public class MyPagePanel extends JPanel {
 		initListener();
 	}
 
+	public JLabel getPoint() {
+		return currentPoint;
+	}
+	
 	private void initData() {
 		backgroundPanel = new JPanel();
 	}
