@@ -163,8 +163,8 @@ public class AuctionPanel extends JPanel {
 					detailPage = new AuctionDetailedPanel(cardList.get(num), user, auctionManager, hour.get(num),
 							min.get(num), startBid.get(num), mconText, num);
 					panel.add(detailPage);
-					mconText.addPanel(7);
-					setVisible(7);
+					mconText.addPanel(8);
+					setVisible(8);
 				}
 			});
 		}
