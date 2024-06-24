@@ -21,7 +21,7 @@ import manager.SocketManager;
 
 public class AuctionPanel extends JPanel {
 
-	private MainFrame mContext;
+	private MainFrame mconText;
 
 	private ArrayList<JButton> productList = new ArrayList<>();
 	private ArrayList<String> productTitleList = new ArrayList<>();
@@ -55,7 +55,7 @@ public class AuctionPanel extends JPanel {
 	private int y;
 
 	public AuctionPanel(List<JPanel> panels, MainFrame mContext) {
-		this.mContext = mContext;
+		this.mconText = mContext;
 		this.panel = panels;
 		this.user = mContext.getUser();
 		this.socket = mContext.getSocket();
@@ -157,10 +157,9 @@ public class AuctionPanel extends JPanel {
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					System.out.println(cardList.size());
-					detailPage = new AuctionDetailedPanel(mContext, cardList.get(num), auctionManager, hour.get(num),
-							min.get(num), startBid.get(num));
+					detailPage = new AuctionDetailedPanel(cardList.get(num), user,auctionManager,hour.get(num),min.get(num),startBid.get(num),mconText,num);
 					panel.add(detailPage);
-					mContext.addPanel(7);
+					mconText.addPanel(7);
 					setVisible(7);
 				}
 			});

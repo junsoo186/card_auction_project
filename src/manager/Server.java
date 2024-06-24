@@ -90,14 +90,7 @@ public class Server {
 					System.out.println(message + " Server에서 읽음 ");
 					if (message.startsWith("chat")) {
 						broadCast(message);
-					} else if (message.startsWith("bid")) {
-						String[] bid = message.split("#");
-						int id = Integer.valueOf(bid[1]);
-						int bidmoney = Integer.valueOf(bid[2]);
-						if (productId.get(id) < bidmoney) {
-							productId.set(id, bidmoney);
-						}
-					} else if (message.startsWith("sell")) {
+					}  else if (message.startsWith("sell")) {
 						String[] sell = message.split("#");
 						productName.add(sell[1]);
 					} else if (message.startsWith("sendDB")) {
@@ -129,6 +122,8 @@ public class Server {
 						} else {
 							printWriter.println("wrong");
 						}
+					} else if (message.startsWith("bid")) {
+						broadCast(message);
 					} else if (message.startsWith("cash")) {
 						String[] cash = message.split("#");
 						UserDAO.updatePoint(cash[1], Integer.parseInt(cash[2]));
