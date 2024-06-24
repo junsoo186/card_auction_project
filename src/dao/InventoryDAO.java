@@ -25,20 +25,18 @@ public class InventoryDAO {
 
 	// 해당 유저 번호가 가지고 있는 카드이미지경로, 카드이름 조회
 	public static ArrayList<CardDTO> invenInfo(String name) throws SQLException {
+		ArrayList<CardDTO> card = new ArrayList<>();
 		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
 			PreparedStatement pstmt = conn.prepareStatement(Query.INVEN_INFO_ID);
 			pstmt.setString(1, name);
 			ResultSet rs = pstmt.executeQuery();
-			ArrayList<CardDTO> card = new ArrayList<>();
 			while (rs.next()) {
-				int num = 0;
 				CardDTO add = new CardDTO();
 				add.setId(rs.getInt("c.id"));
 				add.setName(rs.getString("c.name"));
 				add.setPrice(rs.getInt("c.price"));
 				add.setUrl(rs.getString("c.url"));
 				card.add(add);
-				num++;
 			}
 			return card;
 		}

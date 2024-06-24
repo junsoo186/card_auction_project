@@ -27,6 +27,7 @@ public class SocketManager implements Runnable {
 	private AuctionDTO auctionDTO = new AuctionDTO();
 
 	private ArrayList<CardDTO> allCardList = new ArrayList<>(); // 모든 카드 목록
+	private ArrayList<CardDTO> userInventory = new ArrayList<>(); // 보관함 카드 목록
 	private ArrayList<AuctionDTO> endAuctionList = new ArrayList<>(); // 모든 종료된 경매목록
 
 	private ArrayList<Integer> auctionList = new ArrayList<>(); // 카드 id 저장
@@ -45,6 +46,8 @@ public class SocketManager implements Runnable {
 		highBid.remove(num);
 		bidUser.remove(num);
 		System.out.println("데이터 지움");
+	}
+	public SocketManager() {
 	}
 
 	public void sendOrder(String order) {
@@ -78,8 +81,8 @@ public class SocketManager implements Runnable {
 					int money = Integer.valueOf(bid[1]);
 					int page = Integer.valueOf(bid[2]);
 					String user = bid[3];
-					highBid.add(page,money);
-					bidUser.add(page,user);
+					highBid.add(page, money);
+					bidUser.add(page, user);
 				} else if (message.startsWith("auction")) {
 
 				} else if (message.startsWith("EndAuctionList")) {
@@ -100,6 +103,14 @@ public class SocketManager implements Runnable {
 					cardDTO.setName(msg[3]);
 					cardDTO.setPrice(Integer.parseInt(msg[4]));
 					allCardList.add(cardDTO);
+				} else if (message.startsWith("UserInventory")) {
+					String[] msg = message.split("#");
+					CardDTO cardDTO = new CardDTO();
+					cardDTO.setId(Integer.parseInt(msg[1]));
+					cardDTO.setUrl(msg[2]);
+					cardDTO.setName(msg[3]);
+					cardDTO.setPrice(Integer.parseInt(msg[4]));
+					userInventory.add(cardDTO);
 				}
 			}
 		} catch (IOException e) {
