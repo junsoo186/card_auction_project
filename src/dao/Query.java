@@ -19,7 +19,7 @@ public class Query {
 	public static final String CARD_UPDATE_ID = " UPDATE card SET url = ?, name = ?, price = ? WHERE id = ? ";
 	public static final String CARD_UPDATE_NAME = " UPDATE card SET url = ?, name = ?, price = ? WHERE name = ? ";
 	public static final String CARD_DELETE_ID = " DELETE FROM card WHERE id = ? ";
-	public static final String CARD_AVGPRICE = "SELECT name,AVG(price) from card where name =?  group by name =? ;";
+	public static final String CARD_AVGPRICE = " SELECT name, AVG(price) as price FROM card WHERE name = ? GROUP BY name = ? ";
 
 	// AuctionDAO 쿼리
 	public static final String AUCTION_ADD = " INSERT INTO auction(name, card_id, bid_price, start_date, end_date) VALUES(?, ?, ?, ?, ?) ";
