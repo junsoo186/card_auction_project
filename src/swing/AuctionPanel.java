@@ -90,17 +90,12 @@ public class AuctionPanel extends JPanel {
 
 	public void addAuction() {
 		for (int i = 0; i < socket.getAuctionList().size(); i++) {
-			CardDAO dao = new CardDAO();
 			CardDTO card;
 			hour.add(socket.getHour().get(i));
 			min.add(socket.getMin().get(i));
 			startBid.add(socket.getStartBid().get(i));
-			try {
-				card = dao.infoCard(socket.getAuctionList().get(i));
-				cardList.add(card);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			card = socket.getAuctionList().get(i);
+			cardList.add(card);
 		}
 		for (int i = 0; i < cardList.size(); i++) {
 			System.out.println("경매 카드리스트 사이즈 : " + cardList.size());

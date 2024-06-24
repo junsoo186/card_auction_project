@@ -148,7 +148,11 @@ public class Server {
 						auctionList.add(id);
 						hour.add(hourDB);
 						min.add(minDB);
-						broadCast("list#" + id + "#" + startBid + "#" + hourDB + "#" + minDB);
+						CardDTO dto = new CardDTO();
+						dto = CardDAO.infoCard(id);
+						broadCast("list#" + dto.getId() + "#" + dto.getName() + "#" + dto.getUrl() + "#" + startBid
+								+ "#" + hourDB + "#" + minDB);
+
 					} else if (message.startsWith("EndAuctionList")) {
 						ArrayList<AuctionDTO> endAuctionList = new ArrayList<>();
 						endAuctionList = AuctionDAO.endAuctionList();
@@ -174,6 +178,25 @@ public class Server {
 									+ userInventory.get(i).getUrl() + "#" + userInventory.get(i).getName() + "#"
 									+ userInventory.get(i).getPrice());
 						}
+					} else if (message.startsWith("endAuctionDB")) {
+						String[] msg = message.split("#");
+						AuctionDTO dto = new AuctionDTO();
+						int price = Integer.valueOf(msg[3]);
+						int card = Integer.valueOf(msg[4]);
+						int money = Integer.valueOf(msg[7]);
+						dto.setBidPrice(price);
+						dto.setCardId(card);
+						dto.setEndDate(msg[1]);
+						dto.setStartDate(msg[2]);
+						dto.setName(msg[5]);
+						AuctionDAO.addAuction(dto);
+						UserDAO.subtractPoint(msg[6], money);
+					} else if (message.startsWith("refresh")) {
+						String[] msg = message.split("#");
+						UserDTO dto = new UserDTO();
+						dto = UserDAO.infoUser(msg[1]);
+						sendOrder("userDTO#" + dto.getName() + "#" + dto.getNickname() + "#" + dto.getPassword() + "#"
+								+ dto.getPoint());
 					}
 				}
 			} catch (IOException e) {

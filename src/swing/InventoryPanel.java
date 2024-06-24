@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import dto.CardDTO;
@@ -74,6 +75,9 @@ public class InventoryPanel extends JPanel {
 //		title.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 32));
 //		title.setBounds(860, 10, 800, 50);
 //		add(title);
+		JLabel bag = new JLabel(new ImageIcon("image/가방.png"));
+		bag.setBounds(575, 1890, 10, 10);
+		add(bag);
 
 		nextPage = new JButton(new ImageIcon("image/오른쪽.png"));
 		nextPage.setBackground(null);
@@ -87,7 +91,6 @@ public class InventoryPanel extends JPanel {
 		previousPage.setContentAreaFilled(false);
 		previousPage.setBounds(300, 50, 150, 50);
 		add(previousPage);
-
 		productButton();
 		createProduct(userInventory);
 		addActionListner(userInventory);

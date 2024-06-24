@@ -298,15 +298,10 @@ public class MainFrame extends JFrame implements Runnable {
 		}
 		panels.get(state).setVisible(true);
 		this.state = state;
-		UserDAO dao = new UserDAO();
-		try {
-			user = dao.infoUser(user.getName());
-			System.out.println("잔돈 : " + user.getPoint());
-			cash.setText(user.getPoint() + " 원");
-			myPagePanel.getPoint().setText(" 포인트 : " + user.getPoint());
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		socket.sendOrder("refresh#" + user.getName());
+		System.out.println("잔돈 : " + user.getPoint());
+		cash.setText(user.getPoint() + " 원");
+		myPagePanel.getPoint().setText(" 포인트 : " + user.getPoint());
 	}
 
 	public void addPanel(int state) {
