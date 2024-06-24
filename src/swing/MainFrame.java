@@ -469,6 +469,13 @@ public class MainFrame extends JFrame implements Runnable {
 		});
 
 	}
+	
+	 void logout() {
+
+		 
+		 
+	 }
+	
 
 	@Override
 	public void run() {
