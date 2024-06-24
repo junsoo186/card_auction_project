@@ -4,12 +4,9 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -17,9 +14,10 @@ import javax.swing.JScrollPane;
 import dto.CardDTO;
 import dto.UserDTO;
 import manager.AuctionManager;
-import manager.Server;
 
 public class AuctionDetailedPanel extends JPanel {
+
+	private MainFrame mContext;
 
 	private AuctionPanel auctionPanel;
 
@@ -32,6 +30,13 @@ public class AuctionDetailedPanel extends JPanel {
 	private JButton buyCard;
 	private JButton goBackButton;
 	private BuyFrame buyFrame;
+
+	private JLabel cardId;
+	private JLabel cardName;
+	private JLabel cardPrice;
+	private JLabel cardBid;
+	private JLabel cardIcon;
+	private JLabel endTime;
 
 	// 옥션 매니저
 	private AuctionManager auctionManager;
@@ -48,7 +53,7 @@ public class AuctionDetailedPanel extends JPanel {
 		this.bid = startbid;
 		this.card = card;
 		this.user = user;
-		auctionManager = new AuctionManager(bid,user,card,hour,min);
+		auctionManager = new AuctionManager(bid, user, card, hour, min);
 		this.auctionManager = auctionManager;
 		sell = new SellProductPanel(user);
 		initData();
@@ -75,12 +80,13 @@ public class AuctionDetailedPanel extends JPanel {
 		title.setBounds(860, 10, 800, 50);
 		add(title);
 
-		JLabel cardId = new JLabel(" 카드 ID : " + card.getId());
-		JLabel cardName = new JLabel(" 카드명 : " + card.getName());
-		JLabel cardPrice = new JLabel(" 시작 가격 : " + auctionManager.getStartBid());
-		JLabel cardBid = new JLabel(" 현재 비드 가격 : " + auctionManager.getHighbid());
-		JLabel cardIcon = new JLabel(new ImageIcon(card.getUrl()));
-		JLabel endTime = new JLabel("종료시간" + auctionManager.getCurrent_time());
+		cardId = new JLabel(" 카드 ID : " + card.getId());
+		cardIcon = new JLabel(new ImageIcon(card.getUrl()));
+		cardName = new JLabel(" 카드명 : " + card.getName());
+		cardPrice = new JLabel(" 시작 가격 : " + auctionManager.getStartBid());
+		cardBid = new JLabel(" 현재 비드 가격 : " + auctionManager.getHighbid());
+		endTime = new JLabel("종료시간" + auctionManager.getCurrent_time());
+
 		buyCard = new JButton("가격 제시하기");
 		goBackButton = new JButton("뒤로 가기");
 
@@ -105,7 +111,7 @@ public class AuctionDetailedPanel extends JPanel {
 		goBackButton.setBounds(600, 20, 130, 50);
 		goBackButton.setBackground(new Color(255, 204, 3));
 		goBackButton.setBorderPainted(false);
-		
+
 		add(cardBid);
 		add(endTime);
 		add(cardId);
@@ -115,7 +121,6 @@ public class AuctionDetailedPanel extends JPanel {
 		add(buyCard);
 		add(goBackButton);
 // 시간 확인 쓰레드
-		time = "19시 55분 50초";
 		new Thread(() -> {
 			while (flag) {
 				String s = Long.toString(auctionManager.getCurrent_time());
@@ -165,7 +170,6 @@ public class AuctionDetailedPanel extends JPanel {
 				setVisible(false);
 				backgroundPanel.add(auctionPanel);
 			}
-
 		});
 	}
 

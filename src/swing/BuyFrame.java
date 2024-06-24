@@ -14,16 +14,14 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import com.sun.java.accessibility.util.GUIInitializedListener;
-
 import dto.CardDTO;
 import dto.UserDTO;
 
 public class BuyFrame extends JFrame {
-	
+
 	private CardDTO card;
 	private UserDTO user;
-	
+
 	private JPanel backgroundPanel;
 	private JTextField addPriceField;
 	private JButton exitButton;
@@ -48,41 +46,41 @@ public class BuyFrame extends JFrame {
 		setLocationRelativeTo(null);
 		setResizable(false);
 		setLayout(null);
-		getContentPane().setBackground(new Color(255,204,3));
+		getContentPane().setBackground(new Color(255, 204, 3));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+
 		backgroundPanel = new JPanel();
-		backgroundPanel.setBounds(80,60,350,500);
+		backgroundPanel.setBounds(80, 60, 350, 500);
 		backgroundPanel.setLayout(null);
 		backgroundPanel.setBackground(Color.WHITE);
 		add(backgroundPanel);
-		
-		JLabel cardTitle=new JLabel(card.getName());
-		JLabel guidText=new JLabel(" 얼마를 제시할까요? (현재 가격 :"+card.getPrice()+")");
+
+		JLabel cardTitle = new JLabel(card.getName());
+		JLabel guidText = new JLabel(" 얼마를 제시할까요? (현재 가격 :" + card.getPrice() + ")");
 		cardTitle.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 30));
 		guidText.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 18));
-		addPriceField=new JTextField(20);
-		decidePriceButton=new JButton("가격 제시");
-		exitButton=new JButton("나가기");
+		addPriceField = new JTextField(20);
+		decidePriceButton = new JButton("가격 제시");
+		exitButton = new JButton("나가기");
 		cardTitle.setBounds(55, 40, 400, 50);
 		guidText.setBounds(40, 335, 400, 50);
 		addPriceField.setBounds(80, 385, 200, 30);
 		decidePriceButton.setBounds(80, 425, 90, 30);
 		exitButton.setBounds(185, 425, 90, 30);
-		
+
 		backgroundPanel.add(cardTitle);
 		backgroundPanel.add(guidText);
 		backgroundPanel.add(addPriceField);
 		backgroundPanel.add(decidePriceButton);
 		backgroundPanel.add(exitButton);
-		
-		Icon cardImage=new ImageIcon(card.getUrl());
-		JLabel cardLabel=new JLabel();
+
+		Icon cardImage = new ImageIcon(card.getUrl());
+		JLabel cardLabel = new JLabel();
 		cardLabel.setIcon(cardImage);
 		cardLabel.setBounds(100, 110, 150, 210);
 		backgroundPanel.add(cardLabel);
-		
-		setVisible(true);	
+
+		setVisible(true);
 	}
 
 	private void initListener() {
@@ -103,11 +101,12 @@ public class BuyFrame extends JFrame {
 		});
 		exitButton.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				JOptionPane.showMessageDialog(null,"입찰을 종료합니다");
+				JOptionPane.showMessageDialog(null, "입찰을 종료합니다");
 				dispose();
 			}
 
 		});
-	}
+	
 
+}
 }

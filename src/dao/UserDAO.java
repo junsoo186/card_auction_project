@@ -47,7 +47,7 @@ public class UserDAO {
 
 	// 유저 전체 조회하기
 
-	public void infoUser() throws SQLException {
+	public static void infoUser() throws SQLException {
 		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
 			PreparedStatement pstmt = conn.prepareStatement(Query.USER_INFO_ALL);
 			ResultSet rs = pstmt.executeQuery();
@@ -81,7 +81,7 @@ public class UserDAO {
 	}
 
 	// 유저 이름으로 수정 ( 비밀번호, 닉네임)
-	public void updateUser(String name, UserDTO dto) throws SQLException {
+	public static void updateUser(String name, UserDTO dto) throws SQLException {
 		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
 			PreparedStatement pstmt = conn.prepareStatement(Query.USER_UPDATE_NAME);
 			pstmt.setString(1, dto.getPassword());
@@ -93,7 +93,7 @@ public class UserDAO {
 	}
 
 	// 유저 이름으로 포인트 수정
-	public void updatePoint(String name, int point) throws SQLException {
+	public static void updatePoint(String name, int point) throws SQLException {
 		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
 			PreparedStatement pstmt = conn.prepareStatement(Query.USER_POINT_NAME);
 			pstmt.setInt(1, point);
@@ -104,7 +104,7 @@ public class UserDAO {
 	}
 
 	// 유저 이름으로 유저 삭제 (회원탈퇴) delete
-	public void deleteUser(String name) throws SQLException {
+	public static void deleteUser(String name) throws SQLException {
 		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
 			PreparedStatement pstmt = conn.prepareStatement(Query.USER_DELETE_ID);
 			pstmt.setString(1, name);
@@ -114,7 +114,7 @@ public class UserDAO {
 	}
 
 	// 유저 로그인 확인
-	public boolean loginUser(String name, String password) {
+	public static boolean loginUser(String name, String password) {
 		boolean login = false;
 		try (Connection conn = DBConnectionManager.getInstance().getConnection();) {
 			System.out.println(name + " : " + password);

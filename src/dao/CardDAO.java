@@ -19,7 +19,7 @@ import manager.DBConnectionManager;
 public class CardDAO {
 
 	// 카드 추가 ( 이미지경로, 이름, 가격 )
-	public void addCard(CardDTO dto) throws SQLException {
+	public static void addCard(CardDTO dto) throws SQLException {
 		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
 			PreparedStatement pstmt = conn.prepareStatement(Query.CARD_ADD);
 			pstmt.setString(1, dto.getUrl());
@@ -31,7 +31,7 @@ public class CardDAO {
 	}
 
 	// 카드 번호로 조회
-	public CardDTO infoCard(int id) throws SQLException {
+	public static CardDTO infoCard(int id) throws SQLException {
 		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
 			PreparedStatement pstmt = conn.prepareStatement(Query.CARD_INFO_ID);
 			pstmt.setInt(1, id);
@@ -47,7 +47,7 @@ public class CardDAO {
 	}
 
 	// 카드 이름으로 조회
-	public void infoCard(String name) throws SQLException {
+	public static void infoCard(String name) throws SQLException {
 		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
 			PreparedStatement pstmt = conn.prepareStatement(Query.CARD_INFO_NAME);
 			pstmt.setString(1, name);
@@ -63,7 +63,7 @@ public class CardDAO {
 	}
 
 	// 카드 번호로 수정 ( 경로, 이름, 가격 )
-	public void updateCard(int id, CardDTO dto) throws SQLException {
+	public static void updateCard(int id, CardDTO dto) throws SQLException {
 		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
 			PreparedStatement pstmt = conn.prepareStatement(Query.CARD_UPDATE_ID);
 			pstmt.setString(1, dto.getUrl());
@@ -76,7 +76,7 @@ public class CardDAO {
 	}
 
 	// 카드 이름으로 수정 ( 경로, 이름, 가격 )
-	public void updateCard(String name, CardDTO dto) throws SQLException {
+	public static void updateCard(String name, CardDTO dto) throws SQLException {
 		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
 			PreparedStatement pstmt = conn.prepareStatement(Query.CARD_UPDATE_NAME);
 			pstmt.setString(1, dto.getUrl());
@@ -89,7 +89,7 @@ public class CardDAO {
 	}
 
 	// 카드 번호로 카드 삭제하기
-	public void deleteCard(int id) throws SQLException {
+	public static void deleteCard(int id) throws SQLException {
 		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
 			PreparedStatement pstmt = conn.prepareStatement(Query.CARD_DELETE_ID);
 			pstmt.setInt(1, id);
@@ -97,12 +97,9 @@ public class CardDAO {
 			System.out.println("해당 카드 번호 삭제완료");
 		}
 	}
-	
-	public void cardAvg(String name) {
-		
-		
-		
-		try(Connection conn = DBConnectionManager.getInstance().getConnection()){
+
+	public static void cardAvg(String name) {
+		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
 			PreparedStatement pstmt = conn.prepareStatement(Query.CARD_AVGPRICE);
 			pstmt.setString(1, name);
 			pstmt.setString(2, name);
@@ -115,8 +112,8 @@ public class CardDAO {
 				System.out.println("카드가격 : " + rs.getInt("price"));
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
-	
-	
+
 }
