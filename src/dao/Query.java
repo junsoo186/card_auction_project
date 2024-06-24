@@ -15,6 +15,7 @@ public class Query {
 
 	// CardDAO 쿼리
 	public static final String CARD_ADD = " INSERT INTO card(url, name, price) VALUES(?, ?, ?) ";
+	public static final String CARD_ALL = " SELECT * FROM card ";
 	public static final String CARD_INFO_ID = " SELECT * FROM card WHERE id = ? ";
 	public static final String CARD_INFO_NAME = " SELECT * FROM card WHERE name = ? ";
 	public static final String CARD_UPDATE_ID = " UPDATE card SET url = ?, name = ?, price = ? WHERE id = ? ";
@@ -26,6 +27,7 @@ public class Query {
 	public static final String AUCTION_ADD = " INSERT INTO auction(name, card_id, bid_price, start_date, end_date) VALUES(?, ?, ?, ?, ?) ";
 	public static final String AUCTION_UPDATE = " UPDATE auction SET name = ?, card_id = ?, end_date =? WHERE user_id = ? ";
 	public static final String AUCTION_DELETE = " DELETE FROM auction WHERE name = ? AND id = ? ";
+	public static final String AUCTION_LIST = " SELECT * FROM auction ";
 	public static final String AUCTION_INFO_ALL = " SELECT a.id FROM auction a JOIN card c ON a.card_id = c.id ";
 	public static final String AUCTION_INFO_CARD = " SELECT a.id FROM auction a JOIN card c ON a.card_id = c.id WHERE c.name = ? ";
 
