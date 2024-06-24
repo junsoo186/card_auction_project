@@ -9,19 +9,24 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import dto.CardDTO;
+import lombok.Data;
 import manager.AuctionManager;
 
+@Data
 public class FinishedDetailedPanel extends JPanel {
 
 	private JPanel backgroundPanel;
-	private JLabel title;
 	private JScrollPane scrollPane;
-	private CardDTO card;
+	private CardDTO cardDTO;
 	private BuyFrame buyFrame;
 	private AuctionManager auctionManager;
+	private JLabel title = new JLabel();
+	private JLabel cardId = new JLabel();
+	private JLabel cardName = new JLabel();
+	private JLabel cardPrice = new JLabel();
+	private JLabel cardIcon = new JLabel();
 
-	public FinishedDetailedPanel(CardDTO card) {
-		this.card = card;
+	public FinishedDetailedPanel(MainFrame mContext) {
 		initData();
 		setInitLayout();
 	}
@@ -35,15 +40,9 @@ public class FinishedDetailedPanel extends JPanel {
 		setLayout(null);
 		setBackground(Color.WHITE);
 
-		JLabel title = new JLabel("종료된 카드 보기 : " + card.getName());
 		title.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 32));
 		title.setBounds(860, 10, 800, 50);
 		add(title);
-
-		JLabel cardId = new JLabel(" 카드 ID : " + card.getId());
-		JLabel cardName = new JLabel(" 카드명 : " + card.getName());
-		JLabel cardPrice = new JLabel(" 판매된 카드 가격 : " + card.getPrice());
-		JLabel cardIcon = new JLabel(new ImageIcon(card.getUrl()));
 
 		cardId.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 24));
 		cardName.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 24));
@@ -62,6 +61,14 @@ public class FinishedDetailedPanel extends JPanel {
 
 		setVisible(true);
 
+	}
+
+	public void clickEndDetailButton() {
+		title.setText(" 종료된 카드 보기 : " + cardDTO.getName());
+		cardId.setText(" 카드 ID : " + cardDTO.getId());
+		cardName.setText(" 카드명 : " + cardDTO.getName());
+		cardPrice.setText(" 판매된 카드 가격 : " + cardDTO.getPrice());
+		cardIcon.setIcon(new ImageIcon(cardDTO.getUrl()));
 	}
 
 }
