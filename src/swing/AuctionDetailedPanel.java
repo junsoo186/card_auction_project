@@ -43,14 +43,16 @@ public class AuctionDetailedPanel extends JPanel {
 	boolean flag = true;
 	SellProductPanel sell;
 	String time; // 시간
+	MainFrame mconText;
 	int bid;
+	int page;
 
-	public AuctionDetailedPanel(MainFrame mContext, CardDTO card, AuctionManager auctionManager, int hour, int min,
-			int startbid) {
-		this.mContext = mContext;
+	public AuctionDetailedPanel(CardDTO card, UserDTO user, AuctionManager auctionManager,int hour , int min , int startbid, MainFrame mconText,int num) {
+		this.page = num;
+		this.mconText =mconText;
 		this.bid = startbid;
 		this.card = card;
-		this.user = mContext.getUser();
+		this.user = user;
 		auctionManager = new AuctionManager(bid, user, card, hour, min);
 		this.auctionManager = auctionManager;
 		sell = new SellProductPanel(user);
@@ -119,7 +121,6 @@ public class AuctionDetailedPanel extends JPanel {
 		add(buyCard);
 		add(goBackButton);
 // 시간 확인 쓰레드
-		time = "19시 55분 50초";
 		new Thread(() -> {
 			while (flag) {
 				String s = Long.toString(auctionManager.getCurrent_time());
@@ -134,8 +135,10 @@ public class AuctionDetailedPanel extends JPanel {
 						flag = false;
 					}
 				}
-				if (auctionManager.getHighbid() != bid) {
+				if(auctionManager.getHighbid() != mconText.socket.getHighBid().get(page)) {
+					auctionManager.setHighbid(mconText.socket.getHighBid().get(page));
 					cardBid.setText(" 현재 비드 가격 : " + auctionManager.getHighbid());
+					System.out.println("가격 변경됨 : " + mconText.socket.getHighBid().get(page));
 				}
 				try {
 					Thread.sleep(1000);
@@ -158,7 +161,7 @@ public class AuctionDetailedPanel extends JPanel {
 		});
 		buyCard.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				buyFrame = new BuyFrame(card, user);
+				buyFrame = new BuyFrame(card, user, mconText,auctionManager.getHighbid(),page);
 			}
 
 		});
