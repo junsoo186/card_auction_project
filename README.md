@@ -15,5 +15,9 @@
 7. ERD 다이어그램
 
 
-## 💻 My Stack
-<img alt="Html" src ="https://img.shields.io/badge/HTML5-E34F26.svg?&style=for-the-badge&logo=HTML5&logoColor=white"/> <img alt="Css" src ="https://img.shields.io/badge/CSS3-1572B6.svg?&style=for-the-badge&logo=CSS3&logoColor=white"/> <img alt="JavaScript" src ="https://img.shields.io/badge/JavaScriipt-F7DF1E.svg?&style=for-the-badge&logo=JavaScript&logoColor=black"/> <img alt="Python" src ="https://img.shields.io/badge/Python-3776AB.svg?&style=for-the-badge&logo=Python&logoColor=white"/> <img alt="Flutter" src ="https://img.shields.io/badge/Flutter-02569B.svg?&style=for-the-badge&logo=Flutter&logoColor=white"/> <img alt="Android" src ="https://img.shields.io/badge/Android-3DDC84.svg?&style=for-the-badge&logo=Android&logoColor=black"/>
+## 1️⃣ 프로젝트 개요
+* HikariCP, JDBC를 활용한 DB 관리 프로그램 제작
+* 최근 아이들에게 인기 많은 '포켓몬스터 카드'라는 아이템을 활용, MySQL과 Java로 회원관리 기능 및 경매 기능 구현
+
+## 2️⃣ 구성원 및 맡은 역할
+
