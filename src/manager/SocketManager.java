@@ -37,8 +37,14 @@ public class SocketManager implements Runnable {
 	private ArrayList<Integer> highBid = new ArrayList<>(); // 최고 비드
 	private ArrayList<String> bidUser = new ArrayList<>(); // 비드한 유저
 	
-
-	public SocketManager() {
+	public void deleteData(int num) {
+		auctionList.remove(num);
+		hour.remove(num);
+		min.remove(num);
+		startBid.remove(num);
+		highBid.remove(num);
+		bidUser.remove(num);
+		System.out.println("데이터 지움");
 	}
 
 	public void sendOrder(String order) {
