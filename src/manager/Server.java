@@ -147,7 +147,11 @@ public class Server {
 						auctionList.add(id);
 						hour.add(hourDB);
 						min.add(minDB);
-						broadCast("list#" + id + "#" + startBid + "#" + hourDB + "#" + minDB);
+						CardDTO dto = new CardDTO();
+						dto = CardDAO.infoCard(id);
+						broadCast("list#" + dto.getId() + "#" + dto.getName() + "#" + dto.getUrl()
+					+ "#" + startBid + "#" + hourDB + "#" + minDB);
+						
 					} else if (message.startsWith("EndAuctionList")) {
 						ArrayList<AuctionDTO> endAuctionList = new ArrayList<>();
 						endAuctionList = AuctionDAO.endAuctionList();

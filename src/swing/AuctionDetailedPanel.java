@@ -166,7 +166,8 @@ public class AuctionDetailedPanel extends JPanel {
 		auction.setBidPrice(auctionManager.getHighbid());
 		auction.setCardId(card.getId());
 		auction.setName(mconText.socket.getBidUser().get(page));
-		System.out.println("데이터 보냄 (경매종료)");
+		mconText.socket.sendOrder("endAuctionDB#" + auction.getEndDate() + "#" + auction.getStartDate() + "#" 
+		+ auction.getBidPrice() + "#" + auction.getCardId() + "#" + auction.getName());
 		AuctionDAO dao = new AuctionDAO();
 		UserDAO dao2 = new UserDAO();
 		try {
