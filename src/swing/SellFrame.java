@@ -88,7 +88,7 @@ public class SellFrame extends JFrame {
 		Icon cardImage = new ImageIcon(cardDTO.getUrl());
 		JLabel cardLabel = new JLabel();
 		cardLabel.setIcon(cardImage);
-		cardLabel.setBounds(100, 50, 150, 210);
+		cardLabel.setBounds(100, 50, 120, 167);
 		backgroundPanel.add(cardLabel);
 
 		setVisible(true);

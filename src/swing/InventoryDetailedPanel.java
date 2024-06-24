@@ -64,7 +64,7 @@ public class InventoryDetailedPanel extends JPanel {
 		cardId.setBounds(900, 100, 400, 100);
 		cardName.setBounds(900, 150, 400, 100);
 		cardPrice.setBounds(900, 200, 400, 100);
-		cardIcon.setBounds(600, 150, 150, 200);
+		cardIcon.setBounds(600, 150, 120, 167);
 
 		sellCard = new JButton("판매하기");
 		sellCard.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 24));

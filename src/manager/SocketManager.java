@@ -30,7 +30,7 @@ public class SocketManager implements Runnable {
 	private ArrayList<CardDTO> userInventory = new ArrayList<>(); // 보관함 카드 목록
 	private ArrayList<AuctionDTO> endAuctionList = new ArrayList<>(); // 모든 종료된 경매목록
 
-	private ArrayList<Integer> auctionList = new ArrayList<>(); // 카드 id 저장
+	private ArrayList<CardDTO> auctionList = new ArrayList<>(); // 카드 정보 저장
 	private ArrayList<Integer> hour = new ArrayList<>(); // 사용자가 지정한 종료 시간
 	private ArrayList<Integer> min = new ArrayList<>(); // 사용자가 지정한 종료 분
 	private ArrayList<Integer> startBid = new ArrayList<>(); // 사용자가 지정한 시작가격
@@ -64,17 +64,23 @@ public class SocketManager implements Runnable {
 			socket = new Socket("localhost", 5000);
 			userOrder = new PrintWriter(socket.getOutputStream(), true);
 			serverOrder = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+			System.out.println("소켓 프로토콜 스레드 실행");
 			while ((message = serverOrder.readLine()) != null) {
 				System.out.println(message + " Socket에서 읽음");
 				if (message.startsWith("list")) {
 					String[] cardId = message.split("#");
 					int id = Integer.valueOf(cardId[1]);
-					int startBidDB = Integer.valueOf(cardId[2]);
-					int hourDB = Integer.valueOf(cardId[3]);
-					int minDB = Integer.valueOf(cardId[4]);
+					String name = cardId[2];
+					String url = cardId[3];
+					int startBidDB = Integer.valueOf(cardId[4]);
+					int hourDB = Integer.valueOf(cardId[5]);
+					int minDB = Integer.valueOf(cardId[6]);
 					System.out.println("서버에서 카드 id 보냄 : " + id);
 					System.out.println("서버에서 보낸 분 : " + minDB);
-					auctionList.add(id);
+					cardDTO.setId(id);
+					cardDTO.setName(name);
+					cardDTO.setUrl(url);
+					auctionList.add(cardDTO);
 					hour.add(hourDB);
 					min.add(minDB);
 					startBid.add(startBidDB);
@@ -121,6 +127,13 @@ public class SocketManager implements Runnable {
 					userDTO.setPassword(msg[2]);
 					userDTO.setNickname(msg[3]);
 					userDTO.setPoint(Integer.parseInt(msg[4]));
+				} else if (message.startsWith("userDTO")) {
+					String[] msg = message.split("#");
+					int point = Integer.valueOf(msg[4]);
+					userDTO.setName(msg[1]);
+					userDTO.setNickname(msg[2]);
+					userDTO.setPassword(msg[3]);
+					userDTO.setPoint(point);
 				}
 			}
 		} catch (IOException e) {

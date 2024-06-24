@@ -77,11 +77,11 @@ public class AuctionPanel extends JPanel {
 		for (int i = 0; i < 10; i++) {
 			if (i < 5) {
 				buttons.add(i, new JButton());
-				buttons.get(i).setBounds(x + i * 200, 70, 150, 200);
+				buttons.get(i).setBounds(x + i * 200, 70, 120, 167);
 			} else {
 				x = -500;
 				buttons.add(i, new JButton());
-				buttons.get(i).setBounds(x + i * 200, 320, 150, 200);
+				buttons.get(i).setBounds(x + i * 200, 320, 120, 167);
 			}
 			add(buttons.get(i));
 			setVisible(true);
@@ -90,17 +90,12 @@ public class AuctionPanel extends JPanel {
 
 	public void addAuction() {
 		for (int i = 0; i < socket.getAuctionList().size(); i++) {
-			CardDAO dao = new CardDAO();
 			CardDTO card;
 			hour.add(socket.getHour().get(i));
 			min.add(socket.getMin().get(i));
 			startBid.add(socket.getStartBid().get(i));
-			try {
-				card = dao.infoCard(socket.getAuctionList().get(i));
-				cardList.add(card);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			card = socket.getAuctionList().get(i);
+			cardList.add(card);
 		}
 		for (int i = 0; i < cardList.size(); i++) {
 			System.out.println("경매 카드리스트 사이즈 : " + cardList.size());

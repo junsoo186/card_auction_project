@@ -47,7 +47,6 @@ public class FinishedPanel extends JPanel {
 	// 페이지 버튼
 	private JButton nextPage;
 	private JButton previousPage;
-	
 
 	// 페이지 변수
 	private int page = 1;
@@ -57,10 +56,10 @@ public class FinishedPanel extends JPanel {
 		this.mContext = mContext;
 		this.user = mContext.getUser();
 		this.socket = mContext.getSocket();
-		socket.sendOrder("AllCardList");
-		socket.sendOrder("EndAuctionList");
+		this.allCardList = mContext.getAllCardList();
+		this.endAuctionList = mContext.getEndAuctionList();
+		this.endCardList = mContext.getEndCardList();
 
-		getList();
 		initData();
 		setInitLayout();
 		clickPage();
@@ -83,9 +82,6 @@ public class FinishedPanel extends JPanel {
 		previousPage.setContentAreaFilled(false);
 		previousPage.setBounds(300, 50, 150, 50);
 		add(previousPage);
-		
-		
-	
 
 		setSize(1920, 630);
 		setLocation(0, 400);
@@ -101,25 +97,6 @@ public class FinishedPanel extends JPanel {
 		productButton();
 		createProduct(endCardList);
 		addActionListner(endCardList);
-	}
-
-	public void getList() {
-		// 프로토콜 주고받는데 최소0.05초 필요했음
-		try {
-			Thread.sleep(100);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		allCardList = socket.getAllCardList();
-		endAuctionList = socket.getEndAuctionList();
-
-		for (int i = 0; i < endAuctionList.size(); i++) {
-			for (int j = 0; j < allCardList.size(); j++) {
-				if (endAuctionList.get(i).getCardId() == allCardList.get(j).getId()) {
-					endCardList.add(i, allCardList.get(j));
-				}
-			}
-		}
 	}
 
 	// 버튼에 카드이미지 URL 삽입함수
@@ -142,11 +119,11 @@ public class FinishedPanel extends JPanel {
 		for (int i = 0; i < 10; i++) {
 			if (i < 5) {
 				buttons.add(i, new JButton());
-				buttons.get(i).setBounds(x + i * y, 50, 150, 200);
+				buttons.get(i).setBounds(x + i * y, 50, 120, 167);
 			} else {
 				x = -500;
 				buttons.add(i, new JButton());
-				buttons.get(i).setBounds(x + i * y, 300, 150, 200);
+				buttons.get(i).setBounds(x + i * y, 300, 120, 167);
 			}
 			add(buttons.get(i));
 			setVisible(true);

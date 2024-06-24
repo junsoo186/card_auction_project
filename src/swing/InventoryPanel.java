@@ -28,7 +28,7 @@ public class InventoryPanel extends JPanel {
 
 //	private ArrayList<JButton> productList = new ArrayList<>();
 //	private ArrayList<String> productTitleList = new ArrayList<>();
-	private ArrayList<CardDTO> userInventory = new ArrayList<>(); // 보관함 전체 카드목록
+	private ArrayList<CardDTO> userInventory = new ArrayList<>(); // 보관함 카드목록
 	private ArrayList<CardDTO> pageInventory = new ArrayList<>(); // 현재페이지 카드목록
 	private ArrayList<CardDTO> searchInventory = new ArrayList<>(); // 검색된 카드목록
 
@@ -42,6 +42,7 @@ public class InventoryPanel extends JPanel {
 	private JButton nextPage;
 	private JButton previousPage;
 	
+	// 가방
 	private JLabel bag;
 
 	// 페이지 변수
@@ -54,10 +55,8 @@ public class InventoryPanel extends JPanel {
 	public InventoryPanel(MainFrame mContext) {
 		this.mContext = mContext;
 		this.socket = mContext.socket;
+		this.userInventory = mContext.getUserInventory();
 
-		socket.sendOrder("UserInventory#" + mContext.getUser().getName()); // DB에서 유저인벤토리 불러오기
-
-		getList();
 		initData();
 		setInitLayout();
 		clickPage();
@@ -79,13 +78,10 @@ public class InventoryPanel extends JPanel {
 //		title.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 32));
 //		title.setBounds(860, 10, 800, 50);
 //		add(title);
-		ImageIcon aIcon=new ImageIcon("image/가방.png");
-		bag = new JLabel(aIcon);
-		bag.setBounds(1089,575,10,10);
+		bag = new JLabel(new ImageIcon("image/가방.png"));
+		bag.setBounds(400,10,1090,575);
 		add(bag);
-		System.out.println(bag+"백 출력");
-		System.out.println("A");
-		
+
 		nextPage = new JButton(new ImageIcon("image/오른쪽.png"));
 		nextPage.setBackground(null);
 		nextPage.setBorderPainted(false);
@@ -98,42 +94,29 @@ public class InventoryPanel extends JPanel {
 		previousPage.setContentAreaFilled(false);
 		previousPage.setBounds(300, 50, 150, 50);
 		add(previousPage);
-		
-		
-		
-		
 		productButton();
 		createProduct(userInventory);
 		addActionListner(userInventory);
 	}
 
-	public void getList() {
-		// 프로토콜 주고받는데 최소0.05초 필요했음
-		try {
-			Thread.sleep(100);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		userInventory = socket.getUserInventory();
-	}
-
 	// 버튼 10개 생성
 	public void productButton() {
-		x = 500;
-		y = 200;
-		for (int i = 0; i < 10; i++) {
-			if (i < 5) {
-				buttons.add(i, new JButton());
-				buttons.get(i).setBounds(x + i * y, 50, 150, 200);
-			} else {
-				x = -500;
-				buttons.add(i, new JButton());
-				buttons.get(i).setBounds(x + i * y, 300, 150, 200);
-			}
-			add(buttons.get(i));
-			setVisible(true);
-		}
-	}
+        x = 106;
+        y = 190;
+        for (int i = 0; i < 10; i++) {
+            if (i < 5) {
+                buttons.add(i, new JButton());
+                buttons.get(i).setBounds(x + i * y, 120, 120, 167);
+            } else {
+                x = -500;
+             
+                buttons.add(i, new JButton());
+                buttons.get(i).setBounds(x + i * y, 300, 150, 200);
+            }
+        bag.add(buttons.get(i));
+            setVisible(true);
+        }
+    }
 
 	// 버튼에 카드이미지 URL 삽입함수
 	public void createProduct(ArrayList<CardDTO> inventory) {

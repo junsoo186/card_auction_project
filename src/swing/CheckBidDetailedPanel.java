@@ -53,7 +53,7 @@ public class CheckBidDetailedPanel extends JPanel {
 		cardId.setBounds(900, 100, 400, 100);
 		cardName.setBounds(900, 150, 400, 100);
 		cardPrice.setBounds(900, 200, 400, 100);
-		cardIcon.setBounds(600, 150, 150, 200);
+		cardIcon.setBounds(600, 150, 120, 167);
 
 		add(cardId);
 		add(cardName);
