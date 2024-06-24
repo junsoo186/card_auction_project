@@ -105,7 +105,8 @@ public class MainFrame extends JFrame implements Runnable {
 		setInitLayout();
 		initListener();
 		adTimmer = new Timer();
-		adTimmer.schedule(task,5000,5000);
+		adTimmer.schedule(task,3000,3000);
+		
 	}
 
 	public JPanel getBackgroundPanel() {
@@ -212,42 +213,38 @@ public class MainFrame extends JFrame implements Runnable {
 		backgroundPanel.add(ad, 0);
 		backgroundPanel.add(ad2, 0);
 		adFinder = 1;
-		adButton = new JButton("광고");
+		adButton = new JButton();
 		adButton.setBounds(0, 275, 300, 680);
 		adButton.setBackground(null);
 		adButton.setBorderPainted(false);
 		adButton.setContentAreaFilled(false);
 		backgroundPanel.add(adButton, 0);
-		adButton2 = new JButton("광고");
+		adButton2 = new JButton();
 		adButton2.setBounds(1650, 275, 300, 680);
 		adButton2.setBackground(null);
 		adButton2.setBorderPainted(false);
 		adButton2.setContentAreaFilled(false);
 		backgroundPanel.add(adButton2, 0);
-		
-		
 		task = new TimerTask() {
 			
+		
 			@Override
 			public void run() {
-			ad.setIcon(new ImageIcon("image/광고3.png"));
-			ad2.setIcon(new ImageIcon("image/광고4.png"));
-			adFinder = 2;
-			try {
-				Thread.sleep(5000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+				
+			
 			if(adFinder == 2 ) {
-				adFinder =1;
 				ad.setIcon(new ImageIcon("image/광고.png"));
 				ad2.setIcon(new ImageIcon("image/광고2.png"));
+				adFinder = 1;
+				
+			}else if (adFinder == 1) {
+				ad.setIcon(new ImageIcon("image/광고3.png"));
+				ad2.setIcon(new ImageIcon("image/광고4.png"));
+				adFinder = 2;
+				
 			}
 			}
 		};
-		
-
 
 	
 		// 버튼 설정 0.진행중경매 1.종료된경매 2.시세체크 3.경매출품 4.마이페이지 5.인벤토리
