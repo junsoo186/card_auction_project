@@ -28,12 +28,12 @@
 ## 3️⃣ 서비스 환경
 |유형|구분|서비스 배포 환경|
 |------|---|---|
-|SW|OS| Java Swing GUI 구현, 보고서-시퀀스 다이어그램 작성 및 리더 |
-||Browser| DAO, 타이머 기능 구현 및 프로그램 전체 UI 디자인 |
-||Tool| MySQL 테이블, DAO&DTO, 검색 기능 및 페이징 기능 구현 |
-||BackEnd| Socket을 사용한 회원정보 관리, 프로토콜, 경매가격 시스템 구현|
-||Version/Issue 관리| Socket을 사용한 회원정보 관리, 프로토콜, 경매가격 시스템 구현|
-||Communication| Socket을 사용한 회원정보 관리, 프로토콜, 경매가격 시스템 구현|
+|SW|OS| Windows10 |
+||Browser| Chrome 121.0.6167.161 |
+||Tool| Spring Tool Suite |
+||BackEnd| Java 17 7 MySQL 8.0.26 |
+||Version/Issue 관리| GitHub & GitBash |
+||Communication| Discord & Notion|
 &nbsp;
 ## 4️⃣ 사용 라이브러리 및 프로토콜
 ### (1) 사용 라이브러리
