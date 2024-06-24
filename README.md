@@ -39,14 +39,17 @@
 |HikariCP|HikariCP 5.1.0| Connection Pool을 통한 효율적인 DB 연결 관리 |
 |Lombok|Lombok| 간편한 생성자 및 메서드 사용 |
 |MySQL Connector Java|MySQL Connector Java 8.0.21| MySQL 테이블, DAO&DTO, 검색 기능 및 페이징 기능 구현 |
-|SLF4J|BackEnd| Socket을 사용한 회원정보 관리, 프로토콜, 경매가격 시스템 구현|
-|SLF4J|BackEnd| Socket을 사용한 회원정보 관리, 프로토콜, 경매가격 시스템 구현|
-&nbsp;
+|SLF4J|SLF4J API 2.0.0| 다양한 로깅 프레임워크에 대한 추상화 및 연결 |
+|SLF4J|SLF4J simple 2.0.0| SLF4J 인터페이스를 로깅 구현체와 연결 |
 ### (2) 사용 프로토콜
 |기능명|프로토콜명|용도|
 |------|---|---|
-|회원가입|/sendDB/| Java Swing GUI 구현, 보고서-시퀀스 다이어그램 작성 및 리더 |
-||/login/| DAO, 타이머 기능 구현 및 프로그램 전체 UI 디자인 |
-|경매|/bid/| MySQL 테이블, DAO&DTO, 검색 기능 및 페이징 기능 구현 |
-||/cash/| Socket을 사용한 회원정보 관리, 프로토콜, 경매가격 시스템 구현|
-||BackEnd| Socket을 사용한 회원정보 관리, 프로토콜, 경매가격 시스템 구현|
+|회원가입|/sendDB/| User 데이터 생성 및 카드 랜덤 5개 증정 |
+||/login/| User 데이터 조회 후 success/wrong 출력 |
+|경매|/bid/| 상품 현재 가격 변경 (최고가) |
+||/cash/| 충전 후 User 보유 포인트 동기화|
+||BackEnd| 경매에 상품 판매 |
+## 5️⃣ 시퀀스 다이어그램
+### (1) 로그인 시퀀스
+### (2) 회원가입 시퀀스
+### (3) 경매 시퀀스
