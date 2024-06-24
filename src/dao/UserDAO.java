@@ -4,7 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
+import dto.CardDTO;
 import dto.UserDTO;
 import manager.DBConnectionManager;
 
@@ -68,7 +70,6 @@ public class UserDAO {
 		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
 			PreparedStatement pstmt = conn.prepareStatement(Query.USER_INFO_NAME);
 			pstmt.setString(1, name);
-			System.out.println(name);
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
 				user.setName(rs.getString("name"));
@@ -102,7 +103,7 @@ public class UserDAO {
 			System.out.println("포인트 수정완료");
 		}
 	}
-	
+
 	// 구매 유저 포인트 차감
 	public static void subtractPoint(String name, int point) throws SQLException {
 		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
@@ -123,10 +124,9 @@ public class UserDAO {
 			System.out.println(name + " 유저 삭제완료");
 		}
 	}
-	
 
 	// 유저 로그인 확인
-	public static boolean loginUser(String name, String password) {
+	public static boolean CheckLogin(String name, String password) {
 		boolean login = false;
 		try (Connection conn = DBConnectionManager.getInstance().getConnection();) {
 			System.out.println(name + " : " + password);

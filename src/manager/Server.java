@@ -102,10 +102,10 @@ public class Server {
 							user.setName(DB[2]);
 							user.setPassword(DB[3]);
 							user.setPoint(500);
-							// 회원가입시 카드 5개 랜덤으로 증정
+							// 회원가입시 카드 15개 랜덤으로 증정
 							if (UserDAO.addUser(user)) {
-								for (int i = 0; i < 5; i++) {
-									int cardId = random.nextInt(4) + 1;
+								for (int i = 0; i < 15; i++) {
+									int cardId = random.nextInt(14) + 1;
 									invenDTO.setName(user.getName());
 									invenDTO.setCardId(cardId);
 									InventoryDAO.invenAdd(invenDTO);
@@ -117,10 +117,13 @@ public class Server {
 						} catch (SQLException e) {
 							e.printStackTrace();
 						}
-					} else if (message.startsWith("login")) {
+					} else if (message.startsWith("Login")) {
 						String[] login = message.split("#");
-						if (UserDAO.loginUser(login[1], login[2])) {
-							printWriter.println("success");
+						if (UserDAO.CheckLogin(login[1], login[2])) {
+							UserDTO userDTO = new UserDTO();
+							userDTO = UserDAO.infoUser(login[1]);
+							sendOrder("Login#" + userDTO.getName() + "#" + userDTO.getPassword() + "#"
+									+ userDTO.getNickname() + "#" + userDTO.getPoint());
 						} else {
 							printWriter.println("wrong");
 						}
