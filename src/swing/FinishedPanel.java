@@ -4,143 +4,218 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 
+import dto.AuctionDTO;
 import dto.CardDTO;
 import dto.UserDTO;
+import manager.SocketManager;
 
 public class FinishedPanel extends JPanel {
 
+	private MainFrame mContext;
+	private SocketManager socket;
 	private ArrayList<JButton> productList = new ArrayList<>(12);
 	private ArrayList<String> productTitleList = new ArrayList<>(12);
-	public ArrayList<CardDTO> cardList = new ArrayList(10);
+	private ArrayList<AuctionDTO> endAuctionList = new ArrayList(); // 모든 종료된 경매 목록
+	private ArrayList<CardDTO> allCardList = new ArrayList<>(); // 모든 카드 목록
+	private ArrayList<CardDTO> endCardList = new ArrayList<>(); // 종료된 경매의 카드목록
+
+	private ArrayList<CardDTO> pageInventory = new ArrayList<>(); // 현재페이지 카드목록
+	private ArrayList<CardDTO> searchInventory = new ArrayList<>(); // 검색된 카드목록
+
 	private JPanel backgroundPanel;
 	private JLabel title;
-	private JScrollPane scrollPane;
 	private UserDTO user;
-	private MainFrame mContext;
+	private MouseListener[] listener = new MouseListener[10];
 
 	private FinishedDetailedPanel finishedDetailedPanel;
 
-	ArrayList<JButton> product = new ArrayList<>(8);
-	ArrayList<Integer> serialNum = new ArrayList<>(8);
+	private ArrayList<JButton> buttons = new ArrayList<>();
+	private ArrayList<Integer> serialNum = new ArrayList<>();
+
 	private int x = 500;
 	private int y = 100;
 
+	// 페이지 버튼
+	private JButton nextPage;
+	private JButton previousPage;
+
+	// 페이지 변수
+	private int page = 1;
+	private int pageEnd;
+
 	public FinishedPanel(MainFrame mContext) {
-		this.user = mContext.getUser();
 		this.mContext = mContext;
+		this.user = mContext.getUser();
+		this.socket = mContext.getSocket();
+		socket.sendOrder("AllCardList");
+		socket.sendOrder("EndAuctionList");
+
+		insertList();
 		initData();
 		setInitLayout();
-		initListener();
+		clickPage();
 	}
 
 	private void initData() {
 		backgroundPanel = mContext.getBackgroundPanel();
+
 	}
 
-	public void createProduct(CardDTO card) {
-		System.out.println(serialNum.size()); // 시리얼 넘버 사이즈로 product버튼 인덱스 번호 지정
-		product.get(serialNum.size()).setIcon(new ImageIcon(card.getUrl())); // 유저가 올린 판매카드 이미지 버튼에 삽입
-		// cardList.add(serialNum.size(),card); // 카드 정보 불러오기
-		System.out.println(cardList.get(serialNum.size()));
-		serialNum.add(1); // 시리얼 넘버 사이즈도 증가
-	}
+	public void insertList() {
+		try {
+			Thread.sleep(300);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		allCardList = socket.getAllCardList();
+		endAuctionList = socket.getEndAuctionList();
 
-	public void ProductButton() {
-		// 처음 생성 될때 8개 버튼 생성
-		for (int i = 1; i < 6; i++) {
-			product.add(i - 1, new JButton());
-			product.get(i - 1).setBounds(x, y, 150, 200);
-
-			if ((i / 5) >= 1 && i % 5 == 0) {
-				x = 500;
-				y += 220;
-			} else {
-				x += 200;
+		for (int i = 0; i < endAuctionList.size(); i++) {
+			for (int j = 0; j < allCardList.size(); j++) {
+				if (endAuctionList.get(i).getCardId() == allCardList.get(j).getId()) {
+					endCardList.add(i, allCardList.get(j));
+				}
 			}
-			add(product.get(i - 1));
-			setVisible(true);
 		}
 	}
 
 	private void setInitLayout() {
+		nextPage = new JButton("다음");
+		nextPage.setBounds(1500, 50, 150, 50);
+		add(nextPage);
+		previousPage = new JButton("이전");
+		previousPage.setBounds(300, 50, 150, 50);
+		add(previousPage);
+
 		setSize(1920, 630);
 		setLocation(0, 400);
 		setLayout(null);
 		setBackground(Color.WHITE);
 		add(backgroundPanel);
 
-		scrollPane = new JScrollPane();
-		scrollPane.setBounds(4, 4, 950, 330);
-		ProductButton();
-
-		cardList.add(new CardDTO(0, "image/card6.png", "[포켓몬스터] 루카리오 카드", 1000));
-		cardList.add(new CardDTO(1, "image/card2.png", "[포켓몬스터] 개굴닌자 카드", 2000));
-		cardList.add(new CardDTO(2, "image/card7.jpg", "[포켓몬스터] 레시라무 카드", 4000));
-		cardList.add(new CardDTO(3, "image/card4.jpg", "[포켓몬스터] 라이츄 카드", 7000));
-		cardList.add(new CardDTO(4, "image/card5.jpg", "[포켓몬스터] 리자몽 카드", 50000));
-
-		createProduct(cardList.get(0));
-		createProduct(cardList.get(1));
-		createProduct(cardList.get(2));
-		createProduct(cardList.get(3));
-		createProduct(cardList.get(4));
-
-		JLabel title = new JLabel("종료된 경매" + "(" + product.size() + ")");
+		title = new JLabel("종료된 경매" + "(" + endCardList.size() + ")");
 		title.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 32));
-		title.setBounds(860, 10, 800, 50);
+		title.setBounds(860, 5, 800, 50);
 		add(title);
 
+		productButton();
+		createProduct(endCardList);
+		addActionListner(endCardList);
 	}
 
-	private void initListener() {
+	// 버튼에 카드이미지 URL 삽입함수
+	public void createProduct(ArrayList<CardDTO> inventory) {
+		for (int i = 0; i < buttons.size(); i++) {
+			if (i < inventory.size()) {
+				ImageIcon imageIcon = new ImageIcon(inventory.get(i).getUrl());
+				buttons.get(i).setIcon(imageIcon);
+				buttons.get(i).setVisible(true);
+			} else {
+				buttons.get(i).setVisible(false);
+			}
+		}
+	}
 
-		// 진행중인 경매 이동
-		product.get(0).addMouseListener(new MouseAdapter() {
+	// 버튼 10개 생성
+	public void productButton() {
+		x = 500;
+		y = 200;
+		for (int i = 0; i < 10; i++) {
+			if (i < 5) {
+				buttons.add(i, new JButton());
+				buttons.get(i).setBounds(x + i * y, 50, 150, 200);
+			} else {
+				x = -500;
+				buttons.add(i, new JButton());
+				buttons.get(i).setBounds(x + i * y, 300, 150, 200);
+			}
+			add(buttons.get(i));
+			setVisible(true);
+		}
+	}
+
+	// 카드 상세보기 기능
+	public void addActionListner(ArrayList<CardDTO> inventory) {
+		for (int i = 0; i < buttons.size(); i++) {
+			int num = i;
+			listener[i] = new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					mContext.getFinishedDetailedPanel().setCardDTO(inventory.get(num));
+					mContext.getFinishedDetailedPanel().clickEndDetailButton();
+					setVisible(false);
+					mContext.setState(7);
+					mContext.setVisible(7);
+				}
+			};
+			buttons.get(i).addMouseListener(listener[i]);
+		}
+	}
+
+	// 카드이름으로 검색 기능
+	public void searchEndAuction(String card_name) {
+		page = 1;
+		searchInventory.clear();
+		if (card_name.equals("")) {
+			for (int i = 0; i < endCardList.size(); i++) {
+				searchInventory.add(endCardList.get(i));
+			}
+		} else {
+			for (int i = 0; i < endCardList.size(); i++) {
+				if (endCardList.get(i).getName().contains(card_name)) {
+					searchInventory.add(endCardList.get(i));
+				}
+			}
+		}
+		createProduct(searchInventory);
+		addActionListner(searchInventory);
+	};
+
+	// 다음페이지, 이전페이지 버튼 MouseListener
+	public void clickPage() {
+		nextPage.addMouseListener(new MouseAdapter() {
+			@Override
 			public void mouseClicked(MouseEvent e) {
-				setVisible(false);
-				finishedDetailedPanel = new FinishedDetailedPanel(cardList.get(0));
-				backgroundPanel.add(finishedDetailedPanel);
-				finishedDetailedPanel.setVisible(true);
+				pageInventory.clear();
+				pageEnd = ((endCardList.size() - 1) / 10) + 1;
+				if (page < pageEnd) {
+					System.out.println("다음페이지로 넘김");
+					page++;
+					if (page == pageEnd) {
+						for (int i = 0; i < (endCardList.size() % 10); i++) {
+							pageInventory.add(endCardList.get(i + (page - 1) * 10));
+						}
+					} else {
+						for (int i = 0; i < buttons.size(); i++) {
+							pageInventory.add(endCardList.get(i + (page - 1) * 10));
+						}
+					}
+					createProduct(pageInventory);
+					addActionListner(pageInventory);
+				}
 			}
 		});
-		product.get(1).addMouseListener(new MouseAdapter() {
+		previousPage.addMouseListener(new MouseAdapter() {
+			@Override
 			public void mouseClicked(MouseEvent e) {
-				setVisible(false);
-				finishedDetailedPanel = new FinishedDetailedPanel(cardList.get(1));
-				backgroundPanel.add(finishedDetailedPanel);
-				finishedDetailedPanel.setVisible(true);
-			}
-		});
-		product.get(2).addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				setVisible(false);
-				finishedDetailedPanel = new FinishedDetailedPanel(cardList.get(2));
-				backgroundPanel.add(finishedDetailedPanel);
-				finishedDetailedPanel.setVisible(true);
-			}
-		});
-		product.get(3).addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				setVisible(false);
-				finishedDetailedPanel = new FinishedDetailedPanel(cardList.get(3));
-				backgroundPanel.add(finishedDetailedPanel);
-				finishedDetailedPanel.setVisible(true);
-			}
-		});
-		product.get(4).addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				setVisible(false);
-				finishedDetailedPanel = new FinishedDetailedPanel(cardList.get(4));
-				backgroundPanel.add(finishedDetailedPanel);
-				finishedDetailedPanel.setVisible(true);
+				pageInventory.clear();
+				if (page > 1) {
+					System.out.println("이전페이지로 넘김");
+					page--;
+					for (int i = 0; i < buttons.size(); i++) {
+						pageInventory.add(endCardList.get(i + (page - 1) * 10));
+					}
+					createProduct(pageInventory);
+					addActionListner(pageInventory);
+				}
 			}
 		});
 	}

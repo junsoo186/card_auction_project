@@ -1,16 +1,22 @@
 package swing;
 
 import java.awt.Color;
+import java.awt.Desktop;
 import java.awt.Font;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -20,7 +26,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+
 import dao.InventoryDAO;
+import dto.AuctionDTO;
 import dto.CardDTO;
 import dto.UserDTO;
 import lombok.Data;
@@ -30,7 +38,7 @@ import manager.SocketManager;
 @ToString
 @Data
 public class MainFrame extends JFrame implements Runnable {
-
+	int adFinder;
 	public SocketManager socket;
 
 	private UserDTO user;
@@ -51,10 +59,12 @@ public class MainFrame extends JFrame implements Runnable {
 	private JButton signUpButton;
 	private JButton sellButton; // 판매 버튼
 	private JButton directoryButton;
+	private JButton adButton;
+	private JButton adButton2;
 
 	private Icon pointIcon;
 
-	private JButton[] buttons = new JButton[6];
+	private JButton[] buttons = new JButton[7];
 
 	// 아래 패널들을 관리하기위한 리스트
 	private List<JPanel> panels = new ArrayList<>();
@@ -67,6 +77,7 @@ public class MainFrame extends JFrame implements Runnable {
 	private InventoryPanel inventoryPanel; // 보관함 패널
 	private InventoryDetailedPanel inventoryDetailedPanel; // 보관함 상세보기 패널
 	private AuctionDetailedPanel auctionDetailedPanel; // 경매 상세보기 패널
+	private FinishedDetailedPanel finishedDetailedPanel; // 종료된경매 상세보기 패널
 
 	private ArrayList<CardDTO> userInventory = new ArrayList<>(); // 보관함 카드목록
 
@@ -74,27 +85,26 @@ public class MainFrame extends JFrame implements Runnable {
 	private ChargeFrame chargeFrame;
 
 	// 0.진행중경매 1.종료된경매 2.시세체크 3.경매출품 4. 마이페이지 5.인벤토리
-	// 6.보관함상세보기 7.경매상세보기
+	// 6.보관함상세보기 7.경매상세보기 8.종료된경매상세보기
 	private int state = 0; // 현재 메뉴 상태 표시
 
 	private JButton poketPoint;
 
 	private BufferedReader serverOrder; // 서버 명령
 	private PrintWriter userOrder; // 유저 명령
+	Timer adTimmer;
+	TimerTask task;
 //	private int size; // 경매중인 카드 수
 
 	public MainFrame(UserDTO user, SocketManager socket) {
 //		size = 0;
 		this.socket = socket;
 		this.user = user;
-		try {
-			userInventory = InventoryDAO.invenInfo(user.getName()); // 유저가 가지고있는 카드 목록 호출
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
 		initData();
 		setInitLayout();
 		initListener();
+		adTimmer = new Timer();
+		adTimmer.schedule(task,5000,5000);
 	}
 
 	public JPanel getBackgroundPanel() {
@@ -107,6 +117,11 @@ public class MainFrame extends JFrame implements Runnable {
 
 	private void initData() {
 
+		try {
+			userInventory = InventoryDAO.invenInfo(user.getName()); // 유저가 가지고있는 카드 목록 호출
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		backgroundPanel = new JPanel();
 
 		auctionPanel = new AuctionPanel(panels, this);
@@ -116,6 +131,7 @@ public class MainFrame extends JFrame implements Runnable {
 		myPagePanel = new MyPagePanel(this);
 		inventoryPanel = new InventoryPanel(this);
 		inventoryDetailedPanel = new InventoryDetailedPanel(this);
+		finishedDetailedPanel = new FinishedDetailedPanel(this);
 
 		chargeFrame = new ChargeFrame(this);
 
@@ -126,6 +142,7 @@ public class MainFrame extends JFrame implements Runnable {
 		panels.add(myPagePanel);
 		panels.add(inventoryPanel);
 		panels.add(inventoryDetailedPanel);
+		panels.add(finishedDetailedPanel);
 
 		add(backgroundPanel);
 	}
@@ -143,7 +160,9 @@ public class MainFrame extends JFrame implements Runnable {
 		backgroundPanel.setSize(getWidth(), getHeight());
 		backgroundPanel.setLayout(null);
 		backgroundPanel.setBackground(Color.white);
-
+	
+		
+			
 		Icon backgroundIcon = new ImageIcon("image/background.png");
 		backgroundLabel = new JLabel(backgroundIcon);
 		backgroundLabel.setSize(1920, 414);
@@ -179,6 +198,45 @@ public class MainFrame extends JFrame implements Runnable {
 		searchButton.setFocusPainted(false);
 		backgroundLabel.add(searchButton);
 
+		// ------------광고 --------------
+		
+		Icon adIcon = new ImageIcon("image/광고.png");
+		JLabel ad = new JLabel(adIcon);
+		
+		ad.setBounds(0, 275, 300, 680);
+		Icon adIcon2 = new ImageIcon("image/광고2.png");
+		JLabel ad2 = new JLabel(adIcon2);
+		ad2.setBounds(1650, 275, 300, 680);
+		
+		backgroundPanel.add(ad, 0);
+		backgroundPanel.add(ad2, 0);
+		adFinder = 1;
+		adButton = new JButton("광고");
+		adButton.setBounds(0, 275, 300, 680);
+		adButton.setBackground(null);
+		adButton.setBorderPainted(false);
+		adButton.setContentAreaFilled(false);
+		backgroundPanel.add(adButton, 0);
+		adButton2 = new JButton("광고");
+		adButton2.setBounds(1650, 275, 300, 680);
+		adButton2.setBackground(null);
+		adButton2.setBorderPainted(false);
+		adButton2.setContentAreaFilled(false);
+		backgroundPanel.add(adButton2, 0);
+		
+		
+		task = new TimerTask() {
+			
+			@Override
+			public void run() {
+			ad.setIcon(new ImageIcon("image/광고3.png"));
+			adFinder = 2;
+			}
+		};
+		
+
+
+	
 		// 버튼 설정 0.진행중경매 1.종료된경매 2.시세체크 3.경매출품 4.마이페이지 5.인벤토리
 		buttons[0] = new JButton("진행 중인 경매");
 		buttons[1] = new JButton("종료된 경매");
@@ -190,6 +248,7 @@ public class MainFrame extends JFrame implements Runnable {
 		buttons[5].setBackground(null);
 		buttons[5].setBorderPainted(true);
 		buttons[5].setContentAreaFilled(false);
+
 		backgroundLabel.add(buttons[5]);
 		for (int i = 0; i < 5; i++) {
 			buttons[i].setBounds(300 + i * 300, 175, 200, 50);
@@ -215,7 +274,6 @@ public class MainFrame extends JFrame implements Runnable {
 			panels.get(i).setVisible(false);
 		}
 		panels.get(state).setVisible(true);
-		System.out.println("판넬 선택 : " + panels.get(state));
 		this.state = state;
 	}
 
@@ -313,13 +371,18 @@ public class MainFrame extends JFrame implements Runnable {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				// 보관함에서 검색
-				if (state == 5) {
+				if (state == 5 || state == 6) {
 					inventoryPanel.searchInventory(searchBar.getText());
+					setVisible(5);
+				} else if (state == 1 || state == 8) {
+					finishedPanel.searchEndAuction(searchBar.getText());
+					setVisible(1);
 				}
 			}
 		});
 
 		searchBar.addKeyListener(new KeyAdapter() {
+
 			@Override
 			public void keyPressed(KeyEvent e) {
 				switch (e.getKeyCode()) {
@@ -327,12 +390,58 @@ public class MainFrame extends JFrame implements Runnable {
 					if (state == 5 || state == 6) {
 						inventoryPanel.searchInventory(searchBar.getText());
 						setVisible(5);
+					} else if (state == 1 || state == 7) {
+						finishedPanel.searchEndAuction(searchBar.getText());
+						setVisible(1);
 					}
 					break;
 				default:
 					break;
 				}
 			}
+
+		});
+
+		adButton2.addMouseListener(new MouseAdapter() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				Desktop desktop = Desktop.getDesktop();
+				if(adFinder == 1) {
+				 try {
+					URI uri = new URI("https://df.nexon.com/pg/summerbingo?bn=gdnbasic&st=displayB&ev=240620&gclid=EAIaIQobChMIzobr-6DzhgMVcOlMAh2Y6QiKEAEYASAAEgLM4fD_BwE");
+					desktop.browse(uri);
+				 } catch (URISyntaxException | IOException e1) {
+					e1.printStackTrace();
+				}
+				}
+				
+			}
+
+		});
+		adButton.addMouseListener(new MouseAdapter() {
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				Desktop desktop = Desktop.getDesktop();
+				if(adFinder == 1) {
+				try {
+					URI uri = new URI("https://playeternalreturn.com/main?hl=ko-KR");
+					desktop.browse(uri);
+				} catch (URISyntaxException | IOException e1) {
+					e1.printStackTrace();
+				}
+				} else if(adFinder ==2) {
+					
+					try {
+						URI uri = new URI("https://www.ktmmobile.com/event/eventDetail.do?ntcartSeq=940&sbstCtg=E&pageNo=1&utm_source=gdn&utm_medium=display&utm_campaign=pcpromo_2401_SL&utm_content=bn175&gclid=EAIaIQobChMIk-OeuJ3zhgMVnuZMAh1TGQg9EAEYASAAEgJUMvD_BwE");
+						desktop.browse(uri);
+					} catch (URISyntaxException | IOException e1) {
+						e1.printStackTrace();
+					}
+				}
+			}
+			
 		});
 
 	}
@@ -340,4 +449,9 @@ public class MainFrame extends JFrame implements Runnable {
 	@Override
 	public void run() {
 	}
+	
+
+	
+
+	
 }
