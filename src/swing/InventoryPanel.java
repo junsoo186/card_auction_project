@@ -116,7 +116,7 @@ public class InventoryPanel extends JPanel {
         bag.add(buttons.get(i));
             setVisible(true);
         }
-    }
+        }
 
 	// 버튼에 카드이미지 URL 삽입함수
 	public void createProduct(ArrayList<CardDTO> inventory) {
