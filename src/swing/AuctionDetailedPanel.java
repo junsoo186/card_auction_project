@@ -52,9 +52,10 @@ public class AuctionDetailedPanel extends JPanel {
 	int bid;
 	int page;
 
-	public AuctionDetailedPanel(CardDTO card, UserDTO user, AuctionManager auctionManager,int hour , int min , int startbid, MainFrame mconText,int num) {
+	public AuctionDetailedPanel(CardDTO card, UserDTO user, AuctionManager auctionManager, int hour, int min,
+			int startbid, MainFrame mconText, int num) {
 		this.page = num;
-		this.mconText =mconText;
+		this.mconText = mconText;
 		this.bid = startbid;
 		this.card = card;
 		this.user = user;
@@ -137,11 +138,13 @@ public class AuctionDetailedPanel extends JPanel {
 						endTime.setText("경매 종료");
 						endTime.setForeground(Color.RED);
 						addDto();
+						mconText.socket.deleteData(page);
+						mconText.getAuctionPanel().buttons.get(page).setIcon(null);
 						buyCard.setVisible(false);
 						flag = false;
 					}
 				}
-				if(auctionManager.getHighbid() != mconText.socket.getHighBid().get(page)) {
+				if (auctionManager.getHighbid() != mconText.socket.getHighBid().get(page)) {
 					auctionManager.setHighbid(mconText.socket.getHighBid().get(page));
 					cardBid.setText(" 현재 비드 가격 : " + auctionManager.getHighbid());
 					System.out.println("가격 변경됨 : " + mconText.socket.getHighBid().get(page));
@@ -156,7 +159,7 @@ public class AuctionDetailedPanel extends JPanel {
 		}).start();
 
 	}
-	
+
 	private void addDto() {
 		AuctionDTO auction = new AuctionDTO();
 		auction.setEndDate(LocalDateTime.now().toString());
@@ -169,6 +172,7 @@ public class AuctionDetailedPanel extends JPanel {
 		UserDAO dao2 = new UserDAO();
 		try {
 			dao.addAuction(auction);
+			System.out.println(mconText.socket.getBidUser().get(page) + "는 구매한사람");
 			dao2.subtractPoint(mconText.socket.getBidUser().get(page), auctionManager.getHighbid());
 			System.out.println("구매한 사람 : " + mconText.socket.getBidUser().get(page));
 			System.out.println("차감되는 포인트 : " + auctionManager.getHighbid());
@@ -187,7 +191,7 @@ public class AuctionDetailedPanel extends JPanel {
 		});
 		buyCard.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				buyFrame = new BuyFrame(card, user, mconText,auctionManager.getHighbid(),page);
+				buyFrame = new BuyFrame(card, user, mconText, auctionManager.getHighbid(), page);
 			}
 
 		});

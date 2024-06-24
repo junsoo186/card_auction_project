@@ -38,6 +38,18 @@ public class SocketManager implements Runnable {
 	private ArrayList<Integer> highBid = new ArrayList<>(); // 최고 비드
 	private ArrayList<String> bidUser = new ArrayList<>(); // 비드한 유저
 
+	private boolean login = false;
+
+	public void deleteData(int num) {
+		auctionList.remove(num);
+		hour.remove(num);
+		min.remove(num);
+		startBid.remove(num);
+		highBid.remove(num);
+		bidUser.remove(num);
+		System.out.println("데이터 지움");
+	}
+
 	public SocketManager() {
 	}
 
@@ -102,6 +114,13 @@ public class SocketManager implements Runnable {
 					cardDTO.setName(msg[3]);
 					cardDTO.setPrice(Integer.parseInt(msg[4]));
 					userInventory.add(cardDTO);
+				} else if (message.startsWith("Login")) {
+					login = true;
+					String[] msg = message.split("#");
+					userDTO.setName(msg[1]);
+					userDTO.setPassword(msg[2]);
+					userDTO.setNickname(msg[3]);
+					userDTO.setPoint(Integer.parseInt(msg[4]));
 				}
 			}
 		} catch (IOException e) {

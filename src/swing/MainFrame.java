@@ -265,7 +265,8 @@ public class MainFrame extends JFrame implements Runnable {
 		this.state = state;
 		UserDAO dao = new UserDAO();
 		try {
-			dao.infoUser(user.getName());
+			user = dao.infoUser(user.getName());
+			System.out.println("잔돈 : " + user.getPoint());
 			cash.setText(user.getPoint() + " 원");
 			myPagePanel.getPoint().setText(" 포인트 : " + user.getPoint());
 		} catch (SQLException e) {
@@ -477,6 +478,10 @@ public class MainFrame extends JFrame implements Runnable {
 			}
 
 		});
+
+	}
+
+	void logout() {
 
 	}
 
