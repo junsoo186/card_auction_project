@@ -60,6 +60,10 @@ public class MyPagePanel extends JPanel {
 		setLayout(null);
 		setBackground(Color.WHITE);
 		add(backgroundPanel);
+		
+		JLabel myBack = new JLabel(new ImageIcon("image/마이페이지.png")); 
+		myBack.setBounds(400,2,1089,575);
+		add(myBack);
 
 		title = new JLabel("마이 페이지");
 		title.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 32));
