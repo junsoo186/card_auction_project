@@ -27,7 +27,7 @@ public class Server {
 	private static PrintWriter serverOrder; // 서버가 사용자들에게 보내는 메세지
 	private static ArrayList<Integer> productId; // 상품 id
 	private static ArrayList<String> productName; // 상품 이름
-	private static ArrayList<Integer> auctionList = new ArrayList<>(); // 경매 물품 리스트
+	private static ArrayList<CardDTO> auctionList = new ArrayList<>(); // 경매 물품 리스트
 	private static ArrayList<AuctionDTO> auctionData = new ArrayList<>();// 경매 물품 정보
 	private static ArrayList<Integer> hour = new ArrayList<>(); // 시간 저장
 	private static ArrayList<Integer> min = new ArrayList<>(); // 분 저장
@@ -79,6 +79,7 @@ public class Server {
 		@Override
 		public void run() {
 			try {
+				System.out.println("서버프로토콜 스레드실행");
 				userOrder = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 				printWriter = new PrintWriter(socket.getOutputStream(), true);
 				String message;
@@ -86,7 +87,8 @@ public class Server {
 				InventoryDTO invenDTO = new InventoryDTO();
 				// 처음에 들어온 사용자들에게 현재 경매물품 리스트 송출
 				for (int i = 0; i < auctionList.size(); i++) {
-					broadCast("list#" + auctionList.get(i));
+					broadCast("list#" + auctionList.get(i).getId() + "#" +auctionList.get(i).getName()
+							+ "#" + auctionList.get(i).getUrl() + "#");
 				}
 				while ((message = userOrder.readLine()) != null) {
 					System.out.println(message + " Server에서 읽음 ");
@@ -144,14 +146,16 @@ public class Server {
 						System.out.println("카드 id 받아옴 : " + id);
 						System.out.println("시간 받아옴 : " + hourDB);
 						System.out.println("분 받아옴 : " + minDB);
-						auctionList.add(id);
 						hour.add(hourDB);
 						min.add(minDB);
 						CardDTO dto = new CardDTO();
 						dto = CardDAO.infoCard(id);
-						broadCast("list#" + dto.getId() + "#" + dto.getName() + "#" + dto.getUrl()
-					+ "#" + startBid + "#" + hourDB + "#" + minDB);
-						
+						auctionList.add(dto);
+						System.out.println(dto.getName() + "카드 이름");
+						System.out.println(dto.getUrl() + " 카드 가격");
+						broadCast("list#" + dto.getId() + "#" + dto.getName() + "#" + dto.getUrl() + "#" + startBid
+								+ "#" + hourDB + "#" + minDB);
+
 					} else if (message.startsWith("EndAuctionList")) {
 						ArrayList<AuctionDTO> endAuctionList = new ArrayList<>();
 						endAuctionList = AuctionDAO.endAuctionList();
@@ -194,8 +198,8 @@ public class Server {
 						String[] msg = message.split("#");
 						UserDTO dto = new UserDTO();
 						dto = UserDAO.infoUser(msg[1]);
-						sendOrder("userDTO#" + dto.getName() + "#" + dto.getNickname() + "#" + dto.getPassword() + "#" +
-						dto.getPoint());
+						sendOrder("userDTO#" + dto.getName() + "#" + dto.getNickname() + "#" + dto.getPassword() + "#"
+								+ dto.getPoint());
 					}
 				}
 			} catch (IOException e) {

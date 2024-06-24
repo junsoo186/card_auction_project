@@ -64,6 +64,7 @@ public class SocketManager implements Runnable {
 			socket = new Socket("localhost", 5000);
 			userOrder = new PrintWriter(socket.getOutputStream(), true);
 			serverOrder = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+			System.out.println("소켓 프로토콜 스레드 실행");
 			while ((message = serverOrder.readLine()) != null) {
 				System.out.println(message + " Socket에서 읽음");
 				if (message.startsWith("list")) {
