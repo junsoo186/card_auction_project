@@ -42,6 +42,7 @@ public class InventoryPanel extends JPanel {
 	private JButton nextPage;
 	private JButton previousPage;
 	
+	private JLabel bag;
 
 	// 페이지 변수
 	private int page = 1;
@@ -78,9 +79,12 @@ public class InventoryPanel extends JPanel {
 //		title.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 32));
 //		title.setBounds(860, 10, 800, 50);
 //		add(title);
-		JLabel bag = new JLabel(new ImageIcon("image/가방.png"));
-		bag.setBounds(575,1890,10,10);
+		ImageIcon aIcon=new ImageIcon("image/가방.png");
+		bag = new JLabel(aIcon);
+		bag.setBounds(1089,575,10,10);
 		add(bag);
+		System.out.println(bag+"백 출력");
+		System.out.println("A");
 		
 		nextPage = new JButton(new ImageIcon("image/오른쪽.png"));
 		nextPage.setBackground(null);
