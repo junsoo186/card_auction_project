@@ -1,13 +1,7 @@
 package manager;
 
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import javax.swing.JLabel;
 
 public class AdManager extends Thread {
 	

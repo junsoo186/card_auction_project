@@ -54,7 +54,7 @@ public class MainFrame extends JFrame implements Runnable {
 
 	private Icon pointIcon;
 
-	private JButton[] buttons = new JButton[6];
+	private JButton[] buttons = new JButton[7];
 
 	// 아래 패널들을 관리하기위한 리스트
 	private List<JPanel> panels = new ArrayList<>();
@@ -190,6 +190,7 @@ public class MainFrame extends JFrame implements Runnable {
 		buttons[5].setBackground(null);
 		buttons[5].setBorderPainted(true);
 		buttons[5].setContentAreaFilled(false);
+		buttons[6].setBounds(300,700,0,0);
 		backgroundLabel.add(buttons[5]);
 		for (int i = 0; i < 5; i++) {
 			buttons[i].setBounds(300 + i * 300, 175, 200, 50);
@@ -300,6 +301,10 @@ public class MainFrame extends JFrame implements Runnable {
 				setVisible(5);
 			}
 		});
+		
+		buttons[6].addMouseListener(new MouseAdapter() {
+		});
+		
 
 		// 캐시충전 서브프레임 열기
 		poketPoint.addMouseListener(new MouseAdapter() {
