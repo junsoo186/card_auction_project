@@ -94,7 +94,8 @@ public class BuyFrame extends JFrame {
 				} else {
 					mconText.socket.sendOrder("bid#" + checkPrice + "#" + page);
 					JOptionPane.showMessageDialog(null,checkPrice + "원을 제시했습니다.");
-				}
+				JOptionPane.showMessageDialog(null, addPriceField.getText() + "원 을 제시합니다");
+				} 
 				dispose();
 			}
 
@@ -106,7 +107,6 @@ public class BuyFrame extends JFrame {
 			}
 
 		});
-	
+	}
+}
 
-}
-}

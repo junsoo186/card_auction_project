@@ -36,6 +36,7 @@ public class AuctionManager extends Thread {
 	public AuctionManager(int startBid, UserDTO user_DTO, CardDTO card_DTO, int hour, int min) {
 		sellProductPanel = new SellProductPanel(user_DTO);
 		this.endTime = LocalDateTime.of(2024, 06, 24, hour, min, 0); // 사용자가 지정한 종료시간
+		this.endTime = LocalDateTime.of(2024, 06, 21, hour, min, 0); // 사용자가 지정한 종료시간
 		this.startBid = startBid;
 		highbid = startBid; // 최종 비드
 		// DTO
