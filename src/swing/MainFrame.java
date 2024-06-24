@@ -28,6 +28,8 @@ import javax.swing.JTextField;
 
 
 import dao.InventoryDAO;
+import dao.UserDAO;
+import dto.AuctionDTO;
 import dto.CardDTO;
 import dto.UserDTO;
 import lombok.Data;
@@ -76,6 +78,7 @@ public class MainFrame extends JFrame implements Runnable {
 	private InventoryPanel inventoryPanel; // 보관함 패널
 	private InventoryDetailedPanel inventoryDetailedPanel; // 보관함 상세보기 패널
 	private AuctionDetailedPanel auctionDetailedPanel; // 경매 상세보기 패널
+	private FinishedDetailedPanel finishedDetailedPanel; // 종료된경매 상세보기 패널
 
 	private ArrayList<CardDTO> userInventory = new ArrayList<>(); // 보관함 카드목록
 
@@ -83,7 +86,7 @@ public class MainFrame extends JFrame implements Runnable {
 	private ChargeFrame chargeFrame;
 
 	// 0.진행중경매 1.종료된경매 2.시세체크 3.경매출품 4. 마이페이지 5.인벤토리
-	// 6.보관함상세보기 7.경매상세보기
+	// 6.보관함상세보기 7.경매상세보기 8.종료된경매상세보기
 	private int state = 0; // 현재 메뉴 상태 표시
 
 	private JButton poketPoint;
@@ -98,11 +101,6 @@ public class MainFrame extends JFrame implements Runnable {
 //		size = 0;
 		this.socket = socket;
 		this.user = user;
-		try {
-			userInventory = InventoryDAO.invenInfo(user.getName()); // 유저가 가지고있는 카드 목록 호출
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
 		initData();
 		setInitLayout();
 		initListener();
@@ -120,6 +118,11 @@ public class MainFrame extends JFrame implements Runnable {
 
 	private void initData() {
 
+		try {
+			userInventory = InventoryDAO.invenInfo(user.getName()); // 유저가 가지고있는 카드 목록 호출
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		backgroundPanel = new JPanel();
 
 		auctionPanel = new AuctionPanel(panels, this);
@@ -129,6 +132,7 @@ public class MainFrame extends JFrame implements Runnable {
 		myPagePanel = new MyPagePanel(this);
 		inventoryPanel = new InventoryPanel(this);
 		inventoryDetailedPanel = new InventoryDetailedPanel(this);
+		finishedDetailedPanel = new FinishedDetailedPanel(this);
 
 		chargeFrame = new ChargeFrame(this);
 
@@ -139,6 +143,7 @@ public class MainFrame extends JFrame implements Runnable {
 		panels.add(myPagePanel);
 		panels.add(inventoryPanel);
 		panels.add(inventoryDetailedPanel);
+		panels.add(finishedDetailedPanel);
 
 		add(backgroundPanel);
 	}
@@ -282,8 +287,15 @@ public class MainFrame extends JFrame implements Runnable {
 			panels.get(i).setVisible(false);
 		}
 		panels.get(state).setVisible(true);
-		System.out.println("판넬 선택 : " + panels.get(state));
 		this.state = state;
+		UserDAO dao = new UserDAO();
+		try {
+			dao.infoUser(user.getName());
+			cash.setText(user.getPoint() + " 원");
+			myPagePanel.getPoint().setText(" 포인트 : " + user.getPoint());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void addPanel(int state) {
@@ -380,13 +392,18 @@ public class MainFrame extends JFrame implements Runnable {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				// 보관함에서 검색
-				if (state == 5) {
+				if (state == 5 || state == 6) {
 					inventoryPanel.searchInventory(searchBar.getText());
+					setVisible(5);
+				} else if (state == 1 || state == 8) {
+					finishedPanel.searchEndAuction(searchBar.getText());
+					setVisible(1);
 				}
 			}
 		});
 
 		searchBar.addKeyListener(new KeyAdapter() {
+
 			@Override
 			public void keyPressed(KeyEvent e) {
 				switch (e.getKeyCode()) {
@@ -394,12 +411,16 @@ public class MainFrame extends JFrame implements Runnable {
 					if (state == 5 || state == 6) {
 						inventoryPanel.searchInventory(searchBar.getText());
 						setVisible(5);
+					} else if (state == 1 || state == 7) {
+						finishedPanel.searchEndAuction(searchBar.getText());
+						setVisible(1);
 					}
 					break;
 				default:
 					break;
 				}
 			}
+
 		});
 
 		adButton2.addMouseListener(new MouseAdapter() {

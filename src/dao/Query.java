@@ -8,12 +8,14 @@ public class Query {
 	public static final String USER_INFO_NAME = " SELECT * FROM user WHERE name = ? ";
 	public static final String USER_UPDATE_NAME = " UPDATE user SET password = ?, nickname = ? WHERE name = ? ";
 	public static final String USER_POINT_NAME = " UPDATE user SET point = ? WHERE name = ? ";
+	public static final String USER_SUBTARCT_POINT = " UPDATE user SET point = point - ? WHERE name = ? ";
 	public static final String USER_DELETE_ID = " DELETE FROM user WHERE name = ? ";
 	public static final String USER_LOGIN = " SELECT * FROM user WHERE name = ? and password = ? ";
 	public static final String USER_DUPLICATE_NAME = " SELECT * FROM user WHERE name = ? ";
 
 	// CardDAO 쿼리
 	public static final String CARD_ADD = " INSERT INTO card(url, name, price) VALUES(?, ?, ?) ";
+	public static final String CARD_ALL = " SELECT * FROM card ";
 	public static final String CARD_INFO_ID = " SELECT * FROM card WHERE id = ? ";
 	public static final String CARD_INFO_NAME = " SELECT * FROM card WHERE name = ? ";
 	public static final String CARD_UPDATE_ID = " UPDATE card SET url = ?, name = ?, price = ? WHERE id = ? ";

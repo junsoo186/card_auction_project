@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import dto.CardDTO;
 import manager.DBConnectionManager;
@@ -28,6 +29,24 @@ public class CardDAO {
 			pstmt.executeUpdate();
 			System.out.println("카드 추가완료");
 		}
+	}
+
+	// 모든 카드 정보 조회
+	public static ArrayList<CardDTO> allCardList() throws SQLException {
+		ArrayList<CardDTO> allCardList = new ArrayList<>();
+		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
+			PreparedStatement pstmt = conn.prepareStatement(Query.CARD_ALL);
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				CardDTO cardDTO = new CardDTO();
+				cardDTO.setId(rs.getInt("id"));
+				cardDTO.setUrl(rs.getString("url"));
+				cardDTO.setName(rs.getString("name"));
+				cardDTO.setPrice(rs.getInt("price"));
+				allCardList.add(cardDTO);
+			}
+		}
+		return allCardList;
 	}
 
 	// 카드 번호로 조회

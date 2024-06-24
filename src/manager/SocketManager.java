@@ -8,6 +8,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 import dto.AuctionDTO;
+import dto.CardDTO;
 import dto.UserDTO;
 import lombok.Data;
 import swing.LogInFrame;
@@ -22,15 +23,20 @@ public class SocketManager implements Runnable {
 	private BufferedReader serverOrder;
 
 	private UserDTO userDTO = new UserDTO();
+	private CardDTO cardDTO = new CardDTO();
+	private AuctionDTO auctionDTO = new AuctionDTO();
+
+	private ArrayList<CardDTO> allCardList = new ArrayList<>(); // 모든 카드 목록
+	private ArrayList<AuctionDTO> endAuctionList = new ArrayList<>(); // 모든 종료된 경매목록
 
 	private ArrayList<Integer> auctionList = new ArrayList<>(); // 카드 id 저장
 	private ArrayList<Integer> hour = new ArrayList<>(); // 사용자가 지정한 종료 시간
 	private ArrayList<Integer> min = new ArrayList<>(); // 사용자가 지정한 종료 분
 	private ArrayList<Integer> startBid = new ArrayList<>(); // 사용자가 지정한 시작가격
 
-	private ArrayList<AuctionDTO> endAuctionList = new ArrayList<>(); // 종료된 경매 리스트
-
 	private ArrayList<Integer> highBid = new ArrayList<>(); // 최고 비드
+	private ArrayList<String> bidUser = new ArrayList<>(); // 비드한 유저
+	
 
 	public SocketManager() {
 	}
@@ -63,13 +69,31 @@ public class SocketManager implements Runnable {
 					highBid.add(startBidDB);
 				} else if (message.startsWith("bid")) {
 					String[] bid = message.split("#");
-					int page = Integer.valueOf(bid[2]);
 					int money = Integer.valueOf(bid[1]);
-					highBid.add(page, money);
+					int page = Integer.valueOf(bid[2]);
+					String user = bid[3];
+					highBid.add(page,money);
+					bidUser.add(page,user);
 				} else if (message.startsWith("auction")) {
 
-				} else if (message.startsWith("endAuctionList")) {
-
+				} else if (message.startsWith("EndAuctionList")) {
+					String[] msg = message.split("#");
+					AuctionDTO auctionDTO = new AuctionDTO();
+					auctionDTO.setId(Integer.parseInt(msg[1]));
+					auctionDTO.setName((msg[2]));
+					auctionDTO.setCardId(Integer.parseInt(msg[3]));
+					auctionDTO.setBidPrice(Integer.parseInt(msg[4]));
+					auctionDTO.setStartDate((msg[5]));
+					auctionDTO.setEndDate((msg[6]));
+					endAuctionList.add(auctionDTO);
+				} else if (message.startsWith("AllCardList")) {
+					String[] msg = message.split("#");
+					CardDTO cardDTO = new CardDTO();
+					cardDTO.setId(Integer.parseInt(msg[1]));
+					cardDTO.setUrl(msg[2]);
+					cardDTO.setName(msg[3]);
+					cardDTO.setPrice(Integer.parseInt(msg[4]));
+					allCardList.add(cardDTO);
 				}
 			}
 		} catch (IOException e) {

@@ -66,12 +66,6 @@ public class InventoryPanel extends JPanel {
 		setBackground(Color.WHITE);
 		add(backgroundPanel);
 
-		productButton();
-		createProduct(userInventory);
-
-		System.out.println("카드 등록 까지 ");
-		addActionListner(userInventory);
-
 //		JLabel title=new JLabel("보유 카드 확인하기"+"("+product.size()+")");
 //		title.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 32));
 //		title.setBounds(860, 10, 800, 50);
@@ -84,6 +78,9 @@ public class InventoryPanel extends JPanel {
 		previousPage.setBounds(300, 50, 150, 50);
 		add(previousPage);
 
+		productButton();
+		createProduct(userInventory);
+		addActionListner(userInventory);
 	}
 
 	// 버튼 10개 생성
@@ -127,7 +124,7 @@ public class InventoryPanel extends JPanel {
 			}
 		} else {
 			for (int i = 0; i < userInventory.size(); i++) {
-				if (userInventory.get(i).getName().equals(card_name)) {
+				if (userInventory.get(i).getName().contains(card_name)) {
 					searchInventory.add(userInventory.get(i));
 				}
 			}
@@ -146,8 +143,8 @@ public class InventoryPanel extends JPanel {
 					mContext.getInventoryDetailedPanel().setCardDTO(inventory.get(num));
 					mContext.getInventoryDetailedPanel().clickDetailedButton();
 					setVisible(false);
+					mContext.setState(6);
 					mContext.setVisible(6);
-					System.out.println("보관함 클릭이벤트 : " + inventory.get(num));
 				}
 			};
 			buttons.get(i).addMouseListener(listener[i]);

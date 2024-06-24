@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.SQLException;
+import java.time.LocalDateTime;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -11,6 +13,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import dao.AuctionDAO;
+import dao.UserDAO;
+import dto.AuctionDTO;
 import dto.CardDTO;
 import dto.UserDTO;
 import manager.AuctionManager;
@@ -131,6 +136,7 @@ public class AuctionDetailedPanel extends JPanel {
 					if (time.equals("0")) {
 						endTime.setText("경매 종료");
 						endTime.setForeground(Color.RED);
+						addDto();
 						buyCard.setVisible(false);
 						flag = false;
 					}
@@ -149,6 +155,26 @@ public class AuctionDetailedPanel extends JPanel {
 
 		}).start();
 
+	}
+	
+	private void addDto() {
+		AuctionDTO auction = new AuctionDTO();
+		auction.setEndDate(LocalDateTime.now().toString());
+		auction.setStartDate(auctionManager.getStartTime());
+		auction.setBidPrice(auctionManager.getHighbid());
+		auction.setCardId(card.getId());
+		auction.setName(mconText.socket.getBidUser().get(page));
+		System.out.println("데이터 보냄 (경매종료)");
+		AuctionDAO dao = new AuctionDAO();
+		UserDAO dao2 = new UserDAO();
+		try {
+			dao.addAuction(auction);
+			dao2.subtractPoint(mconText.socket.getBidUser().get(page), auctionManager.getHighbid());
+			System.out.println("구매한 사람 : " + mconText.socket.getBidUser().get(page));
+			System.out.println("차감되는 포인트 : " + auctionManager.getHighbid());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private void initListener() {

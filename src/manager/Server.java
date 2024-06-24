@@ -12,9 +12,12 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Vector;
 
+import dao.AuctionDAO;
+import dao.CardDAO;
 import dao.InventoryDAO;
 import dao.UserDAO;
 import dto.AuctionDTO;
+import dto.CardDTO;
 import dto.InventoryDTO;
 import dto.UserDTO;
 
@@ -90,7 +93,7 @@ public class Server {
 					System.out.println(message + " Server에서 읽음 ");
 					if (message.startsWith("chat")) {
 						broadCast(message);
-					}  else if (message.startsWith("sell")) {
+					} else if (message.startsWith("sell")) {
 						String[] sell = message.split("#");
 						productName.add(sell[1]);
 					} else if (message.startsWith("sendDB")) {
@@ -143,8 +146,22 @@ public class Server {
 						hour.add(hourDB);
 						min.add(minDB);
 						broadCast("list#" + id + "#" + startBid + "#" + hourDB + "#" + minDB);
-					} else if (message.startsWith("endAuctionList")) {
-						
+					} else if (message.startsWith("EndAuctionList")) {
+						ArrayList<AuctionDTO> endAuctionList = new ArrayList<>();
+						endAuctionList = AuctionDAO.endAuctionList();
+						for (int i = 0; i < endAuctionList.size(); i++) {
+							broadCast("EndAuctionList#" + endAuctionList.get(i).getId() + "#"
+									+ endAuctionList.get(i).getName() + "#" + endAuctionList.get(i).getCardId() + "#"
+									+ endAuctionList.get(i).getBidPrice() + "#" + endAuctionList.get(i).getStartDate()
+									+ "#" + endAuctionList.get(i).getEndDate());
+						}
+					} else if (message.startsWith("AllCardList")) {
+						ArrayList<CardDTO> allCardList = new ArrayList<>();
+						allCardList = CardDAO.allCardList();
+						for (int i = 0; i < allCardList.size(); i++) {
+							broadCast("AllCardList#" + allCardList.get(i).getId() + "#" + allCardList.get(i).getUrl()
+									+ "#" + allCardList.get(i).getName() + "#" + allCardList.get(i).getPrice());
+						}
 					}
 				}
 			} catch (IOException e) {
