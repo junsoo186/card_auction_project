@@ -118,10 +118,16 @@ public class AuctionPanel extends JPanel {
 	}
 
 	private void setInitLayout() {
-		nextPage = new JButton("다음");
+		nextPage = new JButton(new ImageIcon("image/오른쪽.png"));
+		nextPage.setBackground(null);
+		nextPage.setBorderPainted(false);
+		nextPage.setContentAreaFilled(false);
 		nextPage.setBounds(1500, 50, 150, 50);
 		add(nextPage);
-		previousPage = new JButton("이전");
+		previousPage = new JButton(new ImageIcon("image/왼쪽.png"));
+		previousPage.setBackground(null);
+		previousPage.setBorderPainted(false);
+		previousPage.setContentAreaFilled(false);
 		previousPage.setBounds(300, 50, 150, 50);
 		add(previousPage);
 
