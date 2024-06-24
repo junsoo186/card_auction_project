@@ -41,6 +41,10 @@ public class SellProductPanel extends JPanel {
 	private JTextField pointField;
 
 	private JButton sellButton;
+	
+	private int checkHour;
+	private int checkMin;
+	private int checkPoint;
 
 	private int x = 500;
 	private int y = 100;
@@ -128,15 +132,27 @@ public class SellProductPanel extends JPanel {
 		infoPanel.add(minField);
 		infoPanel.add(sellButton);
 		infoPanel.add(pointField);
+	
 	}
 
 	private void initListener() {
 		// 진행중인 경매 이동
 		sellButton.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				int price = Integer.parseInt(pointField.getText());
-				JOptionPane.showMessageDialog(null, "경매 참여가 완료되었습니다.");
-				System.out.println("완료!");
+				checkHour=Integer.parseInt(hoursField.getText());
+				checkMin=Integer.parseInt(minField.getText());
+				checkPoint=Integer.parseInt(pointField.getText());
+				if(checkHour>24 || checkMin>60) {
+					JOptionPane.showMessageDialog(null, "올바른 시간을 입력해주세요.");
+				} else if (checkPoint>9999999) {
+					JOptionPane.showMessageDialog(null, "천 만원 이하로 입력해주세요.");
+				}
+				else {
+					int price = Integer.parseInt(pointField.getText());
+					JOptionPane.showMessageDialog(null, "경매 참여가 완료되었습니다.");
+					System.out.println("완료!");
+				}
+				
 			}
 
 		});
