@@ -79,6 +79,7 @@ public class Server {
 		@Override
 		public void run() {
 			try {
+				System.out.println("서버프로토콜 스레드실행");
 				userOrder = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 				printWriter = new PrintWriter(socket.getOutputStream(), true);
 				String message;

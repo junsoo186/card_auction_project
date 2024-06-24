@@ -27,7 +27,7 @@ public class InventoryPanel extends JPanel {
 
 //	private ArrayList<JButton> productList = new ArrayList<>();
 //	private ArrayList<String> productTitleList = new ArrayList<>();
-	private ArrayList<CardDTO> userInventory = new ArrayList<>(); // 보관함 전체 카드목록
+	private ArrayList<CardDTO> userInventory = new ArrayList<>(); // 보관함 카드목록
 	private ArrayList<CardDTO> pageInventory = new ArrayList<>(); // 현재페이지 카드목록
 	private ArrayList<CardDTO> searchInventory = new ArrayList<>(); // 검색된 카드목록
 
@@ -51,10 +51,8 @@ public class InventoryPanel extends JPanel {
 	public InventoryPanel(MainFrame mContext) {
 		this.mContext = mContext;
 		this.socket = mContext.socket;
+		this.userInventory = mContext.getUserInventory();
 
-		socket.sendOrder("UserInventory#" + mContext.getUser().getName()); // DB에서 유저인벤토리 불러오기
-
-		getList();
 		initData();
 		setInitLayout();
 		clickPage();
@@ -89,20 +87,10 @@ public class InventoryPanel extends JPanel {
 		previousPage.setContentAreaFilled(false);
 		previousPage.setBounds(300, 50, 150, 50);
 		add(previousPage);
-		
+
 		productButton();
 		createProduct(userInventory);
 		addActionListner(userInventory);
-	}
-
-	public void getList() {
-		// 프로토콜 주고받는데 최소0.05초 필요했음
-		try {
-			Thread.sleep(100);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		userInventory = socket.getUserInventory();
 	}
 
 	// 버튼 10개 생성

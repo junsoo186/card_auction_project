@@ -27,6 +27,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import dao.UserDAO;
+import dto.AuctionDTO;
 import dto.CardDTO;
 import dto.UserDTO;
 import lombok.Data;
@@ -78,6 +79,9 @@ public class MainFrame extends JFrame implements Runnable {
 	private FinishedDetailedPanel finishedDetailedPanel; // 종료된경매 상세보기 패널
 
 	private ArrayList<CardDTO> userInventory = new ArrayList<>(); // 보관함 카드목록
+	private ArrayList<CardDTO> allCardList = new ArrayList<>(); // 모든 카드 목록
+	private ArrayList<CardDTO> endCardList = new ArrayList<>(); // 종료된 경매의 카드목록
+	private ArrayList<AuctionDTO> endAuctionList = new ArrayList(); // 모든 종료된 경매 목록
 
 	// 캐시 충전하기 서브프레임
 	private ChargeFrame chargeFrame;
@@ -92,12 +96,12 @@ public class MainFrame extends JFrame implements Runnable {
 	private PrintWriter userOrder; // 유저 명령
 	Timer adTimmer;
 	TimerTask task;
-//	private int size; // 경매중인 카드 수
 
 	public MainFrame(UserDTO user, SocketManager socket) {
-//		size = 0;
 		this.socket = socket;
 		this.user = user;
+
+		getList();
 		initData();
 		setInitLayout();
 		initListener();
@@ -112,6 +116,29 @@ public class MainFrame extends JFrame implements Runnable {
 
 	public List<JPanel> getPanles() {
 		return this.panels;
+	}
+
+	private void getList() {
+		socket.sendOrder("AllCardList");
+		socket.sendOrder("EndAuctionList");
+		socket.sendOrder("UserInventory#" + user.getName()); // DB에서 유저인벤토리 불러오기
+
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		allCardList = socket.getAllCardList();
+		endAuctionList = socket.getEndAuctionList();
+		userInventory = socket.getUserInventory();
+
+		for (int i = 0; i < endAuctionList.size(); i++) {
+			for (int j = 0; j < allCardList.size(); j++) {
+				if (endAuctionList.get(i).getCardId() == allCardList.get(j).getId()) {
+					endCardList.add(i, allCardList.get(j));
+				}
+			}
+		}
 	}
 
 	private void initData() {
