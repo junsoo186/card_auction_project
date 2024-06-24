@@ -1,9 +1,17 @@
 package swing;
 
 import java.awt.Color;
+import java.awt.Desktop;
 import java.awt.Font;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -263,15 +271,10 @@ public class MainFrame extends JFrame implements Runnable {
 		}
 		panels.get(state).setVisible(true);
 		this.state = state;
-		UserDAO dao = new UserDAO();
-		try {
-			user = dao.infoUser(user.getName());
-			System.out.println("잔돈 : " + user.getPoint());
-			cash.setText(user.getPoint() + " 원");
-			myPagePanel.getPoint().setText(" 포인트 : " + user.getPoint());
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		socket.sendOrder("refresh#" + user.getName());
+		System.out.println("잔돈 : " + user.getPoint());
+		cash.setText(user.getPoint() + " 원");
+		myPagePanel.getPoint().setText(" 포인트 : " + user.getPoint());
 	}
 
 	public void addPanel(int state) {
@@ -280,6 +283,7 @@ public class MainFrame extends JFrame implements Runnable {
 
 	public void removePanel() {
 		backgroundPanel.remove(7);
+		backgroundPanel.remove(panels.get(8));
 		panels.remove(8);
 		auctionPanel.removeData();
 		System.out.println("판넬 사이즈 : " + panels.size());
@@ -291,7 +295,6 @@ public class MainFrame extends JFrame implements Runnable {
 		buttons[0].addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				System.out.println("진행중 경매로 이동");
-				if (panels.size() > 6) {
 				if (panels.size() > 8) {
 					removePanel();
 				}
@@ -305,11 +308,7 @@ public class MainFrame extends JFrame implements Runnable {
 		buttons[1].addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				System.out.println("종료된 경매로 이동");
-<<<<<<< HEAD
-				if (panels.size() > 6) {
-=======
 				if (panels.size() > 8) {
->>>>>>> 272ebe5ef20a2f83ed313dbf7123fce1b0a2d7cb
 					removePanel();
 				}
 				setVisible(1);
@@ -320,11 +319,7 @@ public class MainFrame extends JFrame implements Runnable {
 		buttons[2].addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				System.out.println("시세 체크로 이동");
-<<<<<<< HEAD
-				if (panels.size() > 6) {
-=======
 				if (panels.size() > 8) {
->>>>>>> 272ebe5ef20a2f83ed313dbf7123fce1b0a2d7cb
 					removePanel();
 				}
 				setVisible(2);
@@ -335,11 +330,7 @@ public class MainFrame extends JFrame implements Runnable {
 		buttons[3].addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				System.out.println("경매 출품으로 이동");
-<<<<<<< HEAD
-				if (panels.size() > 6) {
-=======
 				if (panels.size() > 8) {
->>>>>>> 272ebe5ef20a2f83ed313dbf7123fce1b0a2d7cb
 					removePanel();
 				}
 				setVisible(3);
@@ -350,11 +341,7 @@ public class MainFrame extends JFrame implements Runnable {
 		buttons[4].addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				System.out.println("마이페이지로 이동");
-<<<<<<< HEAD
-				if (panels.size() > 6) {
-=======
 				if (panels.size() > 8) {
->>>>>>> 272ebe5ef20a2f83ed313dbf7123fce1b0a2d7cb
 					removePanel();
 				}
 				setVisible(4);
@@ -366,11 +353,7 @@ public class MainFrame extends JFrame implements Runnable {
 			public void mouseClicked(MouseEvent e) {
 				System.out.println("인벤토리로 이동");
 				// 보관함 정보가 열려있으면 닫아주기
-<<<<<<< HEAD
-				if (panels.size() > 6) {
-=======
 				if (panels.size() > 8) {
->>>>>>> 272ebe5ef20a2f83ed313dbf7123fce1b0a2d7cb
 					removePanel();
 				}
 				setVisible(5);

@@ -170,8 +170,6 @@ public class AuctionDetailedPanel extends JPanel {
 		mconText.socket.sendOrder("endAuctionDB#" + auction.getEndDate() + "#" + auction.getStartDate() + "#" 
 		+ auction.getBidPrice() + "#" + auction.getCardId() + "#" + auction.getName() + "#" + 
 		mconText.socket.getBidUser().get(page) +"#" + auctionManager.getHighbid());
-		AuctionDAO dao = new AuctionDAO();
-		UserDAO dao2 = new UserDAO();
 	}
 
 	private void initListener() {

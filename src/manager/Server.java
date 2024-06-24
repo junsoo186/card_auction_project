@@ -190,6 +190,12 @@ public class Server {
 						dto.setName(msg[5]);
 						AuctionDAO.addAuction(dto);
 						UserDAO.subtractPoint(msg[6], money);
+					} else if (message.startsWith("refresh")) {
+						String[] msg = message.split("#");
+						UserDTO dto = new UserDTO();
+						dto = UserDAO.infoUser(msg[1]);
+						sendOrder("userDTO#" + dto.getName() + "#" + dto.getNickname() + "#" + dto.getPassword() + "#" +
+						dto.getPoint());
 					}
 				}
 			} catch (IOException e) {

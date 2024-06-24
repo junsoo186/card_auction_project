@@ -126,6 +126,13 @@ public class SocketManager implements Runnable {
 					userDTO.setPassword(msg[2]);
 					userDTO.setNickname(msg[3]);
 					userDTO.setPoint(Integer.parseInt(msg[4]));
+				} else if (message.startsWith("userDTO")) {
+					String[] msg = message.split("#");
+					int point = Integer.valueOf(msg[4]);
+					userDTO.setName(msg[1]);
+					userDTO.setNickname(msg[2]);
+					userDTO.setPassword(msg[3]);
+					userDTO.setPoint(point);
 				}
 			}
 		} catch (IOException e) {
