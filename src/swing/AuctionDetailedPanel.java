@@ -4,12 +4,9 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -17,9 +14,10 @@ import javax.swing.JScrollPane;
 import dto.CardDTO;
 import dto.UserDTO;
 import manager.AuctionManager;
-import manager.Server;
 
 public class AuctionDetailedPanel extends JPanel {
+
+	private MainFrame mContext;
 
 	private AuctionPanel auctionPanel;
 
@@ -33,19 +31,27 @@ public class AuctionDetailedPanel extends JPanel {
 	private JButton goBackButton;
 	private BuyFrame buyFrame;
 
+	private JLabel cardId;
+	private JLabel cardName;
+	private JLabel cardPrice;
+	private JLabel cardBid;
+	private JLabel cardIcon;
+	private JLabel endTime;
+
 	// 옥션 매니저
 	private AuctionManager auctionManager;
 	boolean flag = true;
 	SellProductPanel sell;
 	String time; // 시간
-	Server mContext;
 	int bid;
 
-	public AuctionDetailedPanel(CardDTO card, UserDTO user, AuctionManager auctionManager,int hour , int min , int startbid) {
+	public AuctionDetailedPanel(MainFrame mContext, CardDTO card, AuctionManager auctionManager, int hour, int min,
+			int startbid) {
+		this.mContext = mContext;
 		this.bid = startbid;
 		this.card = card;
-		this.user = user;
-		auctionManager = new AuctionManager(bid,user,card,hour,min);
+		this.user = mContext.getUser();
+		auctionManager = new AuctionManager(bid, user, card, hour, min);
 		this.auctionManager = auctionManager;
 		sell = new SellProductPanel(user);
 		initData();
@@ -72,17 +78,20 @@ public class AuctionDetailedPanel extends JPanel {
 		title.setBounds(860, 10, 800, 50);
 		add(title);
 
-		JLabel cardId = new JLabel(" 카드 ID : " + card.getId());
-		JLabel cardName = new JLabel(" 카드명 : " + card.getName());
-		JLabel cardPrice = new JLabel(" 현재 카드 가격 : " + auctionManager.getHighbid());
-		JLabel cardIcon = new JLabel(new ImageIcon(card.getUrl()));
-		JLabel endTime = new JLabel("종료시간" + auctionManager.getCurrent_time());
+		cardId = new JLabel(" 카드 ID : " + card.getId());
+		cardIcon = new JLabel(new ImageIcon(card.getUrl()));
+		cardName = new JLabel(" 카드명 : " + card.getName());
+		cardPrice = new JLabel(" 시작 가격 : " + auctionManager.getStartBid());
+		cardBid = new JLabel(" 현재 비드 가격 : " + auctionManager.getHighbid());
+		endTime = new JLabel("종료시간" + auctionManager.getCurrent_time());
+
 		buyCard = new JButton("가격 제시하기");
 		goBackButton = new JButton("뒤로 가기");
 
 		cardId.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 24));
 		cardName.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 24));
 		cardPrice.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 24));
+		cardBid.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 24));
 		cardIcon.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 24));
 		endTime.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 24));
 		buyCard.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 24));
@@ -91,15 +100,17 @@ public class AuctionDetailedPanel extends JPanel {
 		cardId.setBounds(900, 100, 400, 100);
 		cardName.setBounds(900, 150, 400, 100);
 		cardPrice.setBounds(900, 200, 400, 100);
+		cardBid.setBounds(900, 250, 400, 100);
 		cardIcon.setBounds(600, 150, 150, 200);
 		endTime.setBounds(900, 0, 400, 200);
-		buyCard.setBounds(900, 300, 200, 70);
+		buyCard.setBounds(900, 350, 200, 70);
 		buyCard.setBackground(new Color(255, 204, 3));
 		buyCard.setBorderPainted(false);
 		goBackButton.setBounds(600, 20, 130, 50);
 		goBackButton.setBackground(new Color(255, 204, 3));
 		goBackButton.setBorderPainted(false);
 
+		add(cardBid);
 		add(endTime);
 		add(cardId);
 		add(cardName);
@@ -122,6 +133,9 @@ public class AuctionDetailedPanel extends JPanel {
 						buyCard.setVisible(false);
 						flag = false;
 					}
+				}
+				if (auctionManager.getHighbid() != bid) {
+					cardBid.setText(" 현재 비드 가격 : " + auctionManager.getHighbid());
 				}
 				try {
 					Thread.sleep(1000);
@@ -153,7 +167,6 @@ public class AuctionDetailedPanel extends JPanel {
 				setVisible(false);
 				backgroundPanel.add(auctionPanel);
 			}
-
 		});
 	}
 

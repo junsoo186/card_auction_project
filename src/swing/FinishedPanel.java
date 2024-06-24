@@ -6,18 +6,14 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import dto.CardDTO;
 import dto.UserDTO;
-import dto.UserDTO;
-
 
 public class FinishedPanel extends JPanel {
 
@@ -29,7 +25,7 @@ public class FinishedPanel extends JPanel {
 	private JScrollPane scrollPane;
 	private UserDTO user;
 	private MainFrame mContext;
-	
+
 	private FinishedDetailedPanel finishedDetailedPanel;
 
 	ArrayList<JButton> product = new ArrayList<>(8);
@@ -37,16 +33,16 @@ public class FinishedPanel extends JPanel {
 	private int x = 500;
 	private int y = 100;
 
-	public FinishedPanel(UserDTO user, MainFrame mContext) {
-		this.user = user;
-		this.mContext=mContext;
+	public FinishedPanel(MainFrame mContext) {
+		this.user = mContext.getUser();
+		this.mContext = mContext;
 		initData();
 		setInitLayout();
 		initListener();
 	}
 
 	private void initData() {
-		backgroundPanel =mContext.getBackgroundPanel();
+		backgroundPanel = mContext.getBackgroundPanel();
 	}
 
 	public void createProduct(CardDTO card) {
@@ -96,7 +92,7 @@ public class FinishedPanel extends JPanel {
 		createProduct(cardList.get(2));
 		createProduct(cardList.get(3));
 		createProduct(cardList.get(4));
-		
+
 		JLabel title = new JLabel("종료된 경매" + "(" + product.size() + ")");
 		title.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 32));
 		title.setBounds(860, 10, 800, 50);

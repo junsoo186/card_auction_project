@@ -2,10 +2,13 @@ package swing;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,29 +20,32 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import dao.InventoryDAO;
+import dto.CardDTO;
 import dto.UserDTO;
 import lombok.Data;
 import lombok.ToString;
 import manager.SocketManager;
 
 @ToString
-public class MainFrame extends JFrame{
+@Data
+public class MainFrame extends JFrame implements Runnable {
+
+	private SocketManager socket;
 
 	private UserDTO user;
-	private ChargeFrame chargeFrame;
-
-	private JPanel backgroundPanel;
-
 	private JLabel id;
 	private JLabel password;
+
+	private JPanel backgroundPanel;
 	private JLabel backgroundLabel;
 	private Icon backgroundIcon;
-	private JTextField idField;
-	private JTextField passwordField;
 
 	private JLabel cash;
 
+	// 검색창
 	private JTextField searchBar;
+	private JButton searchButton;
 
 	private JButton logInButton;
 	private JButton signUpButton;
@@ -48,31 +54,44 @@ public class MainFrame extends JFrame{
 
 	private Icon pointIcon;
 
-	// 버튼 0.진행중경매 1.종료된경매 2.시세체크 3.경매출품 4.마이페이지 5.인벤토리
 	private JButton[] buttons = new JButton[6];
 
 	// 아래 패널들을 관리하기위한 리스트
 	private List<JPanel> panels = new ArrayList<>();
+
 	private AuctionPanel auctionPanel; // 진행중인 경매 패널
 	private FinishedPanel finishedPanel; // 종료된 경매 패널
 	private CheckBidPanel checkBidPanel; // 시세 알아보기 패널
 	private SellProductPanel sellProductPanel; // 경매 출품하기 패널
 	private MyPagePanel myPagePanel; // 마이 페이지 패널
 	private InventoryPanel inventoryPanel; // 보관함 패널
+	private InventoryDetailedPanel inventoryDetailedPanel; // 보관함 상세보기 패널
+	private AuctionDetailedPanel auctionDetailedPanel; // 경매 상세보기 패널
 
+	private ArrayList<CardDTO> userInventory = new ArrayList<>(); // 보관함 카드목록
+
+	// 캐시 충전하기 서브프레임
+	private ChargeFrame chargeFrame;
+
+	// 0.진행중경매 1.종료된경매 2.시세체크 3.경매출품 4. 마이페이지 5.인벤토리
+	// 6.보관함상세보기 7.경매상세보기
 	private int state = 0; // 현재 메뉴 상태 표시
+
 	private JButton poketPoint;
 
 	private BufferedReader serverOrder; // 서버 명령
 	private PrintWriter userOrder; // 유저 명령
-	private MainFrame mconText = this;
-	public SocketManager socket;
-	private int size; // 경매중인 카드 수
+//	private int size; // 경매중인 카드 수
 
-	public MainFrame(UserDTO user,SocketManager socket) {
-		size = 0;
+	public MainFrame(UserDTO user, SocketManager socket) {
+//		size = 0;
 		this.socket = socket;
 		this.user = user;
+		try {
+			userInventory = InventoryDAO.invenInfo(user.getName()); // 유저가 가지고있는 카드 목록 호출
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		initData();
 		setInitLayout();
 		initListener();
@@ -81,26 +100,32 @@ public class MainFrame extends JFrame{
 	public JPanel getBackgroundPanel() {
 		return this.backgroundPanel;
 	}
-	
+
 	public List<JPanel> getPanles() {
 		return this.panels;
 	}
-	
+
 	private void initData() {
 
 		backgroundPanel = new JPanel();
-		auctionPanel = new AuctionPanel(panels, user,socket,mconText);
-		finishedPanel = new FinishedPanel(user,this);
-		checkBidPanel = new CheckBidPanel(panels,mconText);
+
+		auctionPanel = new AuctionPanel(panels, this);
+		finishedPanel = new FinishedPanel(this);
+		checkBidPanel = new CheckBidPanel(this);
 		sellProductPanel = new SellProductPanel(user);
-		myPagePanel = new MyPagePanel(user);
-		inventoryPanel = new InventoryPanel(user, mconText);
+		myPagePanel = new MyPagePanel(this);
+		inventoryPanel = new InventoryPanel(this);
+		inventoryDetailedPanel = new InventoryDetailedPanel(this);
+
+		chargeFrame = new ChargeFrame(this);
+
 		panels.add(auctionPanel);
 		panels.add(finishedPanel);
 		panels.add(checkBidPanel);
 		panels.add(sellProductPanel);
 		panels.add(myPagePanel);
 		panels.add(inventoryPanel);
+		panels.add(inventoryDetailedPanel);
 
 		add(backgroundPanel);
 	}
@@ -126,9 +151,10 @@ public class MainFrame extends JFrame{
 		backgroundLabel.setHorizontalAlignment(JLabel.CENTER);
 		backgroundPanel.add(backgroundLabel);
 
-		cash = new JLabel(user.getPoint() + "");
+		// 캐시 라벨
+		cash = new JLabel(user.getPoint() + " 원");
 		cash.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 18));
-		cash.setBounds(1470, 64, 500, 20);
+		cash.setBounds(1460, 64, 500, 20);
 		backgroundLabel.add(cash);
 
 		pointIcon = new ImageIcon("image/poketpoint.gif");
@@ -145,7 +171,7 @@ public class MainFrame extends JFrame{
 		searchBar.setBorder(null);
 		backgroundLabel.add(searchBar);
 
-		JButton searchButton = new JButton();
+		searchButton = new JButton();
 		searchButton.setBounds(1175, 270, 60, 60);
 		searchButton.setBackground(null);
 		searchButton.setBorderPainted(false);
@@ -180,19 +206,8 @@ public class MainFrame extends JFrame{
 			panels.get(i).setVisible(false);
 		}
 		auctionPanel.setVisible(true);
-
 		backgroundPanel.setVisible(true);
 		setVisible(true);
-	}
-
-	// 포인트 갱신
-	public void changePoint(UserDTO user) {
-		remove(cash);
-		cash = new JLabel(user.getPoint() + "");
-		cash.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 18));
-		cash.setBounds(1470, 64, 500, 20);
-		backgroundLabel.add(cash);
-
 	}
 
 	public void setVisible(int state) {
@@ -203,108 +218,126 @@ public class MainFrame extends JFrame{
 		System.out.println("판넬 선택 : " + panels.get(state));
 		this.state = state;
 	}
-	
+
 	public void addPanel(int state) {
 		backgroundPanel.add(panels.get(state));
 	}
-	
-	public void removePanel() {
-		backgroundPanel.remove(7);
-		panels.remove(6);
-		auctionPanel.removeData();
-		System.out.println("판넬 사이즈 : " + panels.size());
-	}
+
+//	public void removePanel() {
+//		backgroundPanel.remove(7);
+//		panels.remove(6);
+//		auctionPanel.removeData();
+//		System.out.println("판넬 사이즈 : " + panels.size());
+//	}
 
 	private void initListener() {
 
 		// 0. 진행중인 경매 이동
 		buttons[0].addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				if (state != 0) {
-					System.out.println("진행중 경매로 이동");
-					if(panels.size() > 6) {
-						removePanel();
-					}
-					auctionPanel.removeData();
-					auctionPanel.addAuction();
-					setVisible(0);
-				}
+				System.out.println("진행중 경매로 이동");
+//				if (panels.size() > 6) {
+//					removePanel();
+//				}
+				auctionPanel.removeData();
+				auctionPanel.addAuction();
+				setVisible(0);
 			}
 		});
 
 		// 1. 종료된 경매 이동
 		buttons[1].addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				if (state != 1) {
-					System.out.println("종료된 경매로 이동");
-					if(panels.size() > 6) {
-						removePanel();
-					}
-					setVisible(1);
-				}
+				System.out.println("종료된 경매로 이동");
+//				if (panels.size() > 6) {
+//					removePanel();
+//				}
+				setVisible(1);
 			}
 		});
 
 		// 2. 시세 체크 이동
 		buttons[2].addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				if (state != 2) {
-					System.out.println("시세 체크로 이동");
-					if(panels.size() > 6) {
-						removePanel();
-					}
-					setVisible(2);
-				}
+				System.out.println("시세 체크로 이동");
+//				if (panels.size() > 6) {
+//					removePanel();
+//				}
+				setVisible(2);
 			}
 		});
 
 		// 3. 경매 출품 이동
 		buttons[3].addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				if (state != 3) {
-					System.out.println("경매 출품으로 이동");
-					if(panels.size() > 6) {
-						removePanel();
-					}
-					setVisible(3);
-				}
+				System.out.println("경매 출품으로 이동");
+//				if (panels.size() > 6) {
+//					removePanel();
+//				}
+				setVisible(3);
 			}
 		});
 
 		// 4. 마이페이지
 		buttons[4].addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				if (state != 4) {
-					System.out.println("마이페이지로 이동");
-					if(panels.size() > 6) {
-						removePanel();
-					}
-					setVisible(4);
-				}
+				System.out.println("마이페이지로 이동");
+//				if (panels.size() > 6) {
+//					removePanel();
+//				}
+				setVisible(4);
 			}
 		});
 
 		// 5. 인벤토리 이동
 		buttons[5].addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				if (state != 5) {
-					System.out.println("인벤토리로 이동");
-					// 보관함 정보가 열려있으면 닫아주기
-					if(panels.size() > 6) {
-						removePanel();
-					}
-					setVisible(5);
+				System.out.println("인벤토리로 이동");
+//				// 보관함 정보가 열려있으면 닫아주기
+//				if (panels.size() > 6) {
+//					removePanel();
+//				}
+				setVisible(5);
+			}
+		});
+
+		// 캐시충전 서브프레임 열기
+		poketPoint.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				chargeFrame.setVisible(true);
+			}
+		});
+
+		// 검색버튼
+		searchButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// 보관함에서 검색
+				if (state == 5) {
+					inventoryPanel.searchInventory(searchBar.getText());
 				}
 			}
 		});
 
-		// 포인트 충전
-		poketPoint.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				chargeFrame = new ChargeFrame(user);
-				changePoint(chargeFrame.getUser());
+		searchBar.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				switch (e.getKeyCode()) {
+				case KeyEvent.VK_ENTER:
+					if (state == 5 || state == 6) {
+						inventoryPanel.searchInventory(searchBar.getText());
+						setVisible(5);
+					}
+					break;
+				default:
+					break;
+				}
 			}
 		});
+
 	}
-	
+
+	@Override
+	public void run() {
+	}
 }
