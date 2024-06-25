@@ -154,7 +154,6 @@ public class AuctionPanel extends JPanel {
 		detailPage.removeAll(detailPage);
 	}
 
-<<<<<<< HEAD
     private void initListener() {
         // 진행중인 경매 이동
         buttons.get(0).addMouseListener(new MouseAdapter() {
@@ -175,27 +174,4 @@ public class AuctionPanel extends JPanel {
             });
         }
     }
-=======
-	private void initListener() {
-		// 진행중인 경매 이동
-		buttons.get(0).addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				setVisible(0);
-			}
-		});
-		for (int i = 0; i < buttons.size(); i++) {
-			int num = i;
-			buttons.get(i).addMouseListener(new MouseAdapter() {
-				@Override
-				public void mouseClicked(MouseEvent e) {
-					System.out.println(cardList.size());
-					panel.add(detailPage.get(num));
-					mconText.addPanel(9);
-					setVisible(9);
-				}
-			});
-		}
-	}
->>>>>>> 697c5de7fdd5fb5c6c4b2267612492f7fd74af22
-
 }

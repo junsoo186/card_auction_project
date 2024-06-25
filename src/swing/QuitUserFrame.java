@@ -16,6 +16,7 @@ import javax.swing.JTextField;
 
 import dao.UserDAO;
 import dto.UserDTO;
+import manager.SocketManager;
 
 public class QuitUserFrame extends JFrame {
 
@@ -26,10 +27,14 @@ public class QuitUserFrame extends JFrame {
 	private JButton exitButton;
 	private JButton decidePriceButton;
 	private Choice insertReason;
+	private MainFrame mContext;
+	
+	private SocketManager socket;
 
-	public QuitUserFrame(UserDTO user) throws SQLException {
+	public QuitUserFrame(UserDTO user,MainFrame mContext) throws SQLException {
 		System.out.println("회원 탈퇴");
 		this.user = user;
+		this.mContext=mContext;
 		setInitLayout();
 		initListener();
 	}

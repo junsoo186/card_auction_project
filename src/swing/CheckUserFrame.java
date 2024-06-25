@@ -17,6 +17,7 @@ import javax.swing.JTextField;
 
 import dao.UserDAO;
 import dto.UserDTO;
+import manager.SocketManager;
 
 public class CheckUserFrame extends JFrame {
 
@@ -25,6 +26,7 @@ public class CheckUserFrame extends JFrame {
 	// true: 회원정보 수정
 	// false: 회원 탈퇴
 	private boolean purpose;
+	private SocketManager socket;
 
 	private JPanel backgroundPanel;
 	private JTextField passwordField;
@@ -77,10 +79,10 @@ public class CheckUserFrame extends JFrame {
 					try {
 						if(user.getPassword().equals(passwordField.getText())) {
 							if(purpose==false) {
-								new QuitUserFrame(user);
+								new QuitUserFrame(user,mContext);
 								dispose();
 							} else {
-								new UpdateUserFrame(user);
+								new UpdateUserFrame(user,mContext);
 								dispose();
 							}
 						} else {
@@ -105,10 +107,10 @@ public class CheckUserFrame extends JFrame {
 				try {
 					if(user.getPassword().equals(passwordField.getText())) {
 						if(purpose==false) {
-							new QuitUserFrame(user);
+							new QuitUserFrame(user,mContext);
 							dispose();
 						} else {
-							new UpdateUserFrame(user);
+							new UpdateUserFrame(user,mContext);
 							dispose();
 						}
 					} else {

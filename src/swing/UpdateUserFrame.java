@@ -19,6 +19,7 @@ import dao.Query;
 import dao.UserDAO;
 import dto.UserDTO;
 import manager.DBConnectionManager;
+import manager.SocketManager;
 
 public class UpdateUserFrame extends JFrame {
 
@@ -29,12 +30,15 @@ public class UpdateUserFrame extends JFrame {
 	private JTextField passField;
 	private JButton exitButton;
 	private JButton insertButton;
+	private MainFrame mContext;
+	
+	private SocketManager socket;
 	
 	private UserDTO newUser;
 	private String newNick;
 	private String newPass;
 
-	public UpdateUserFrame(UserDTO user) {
+	public UpdateUserFrame(UserDTO user,MainFrame mContext) {
 		System.out.println("회원 정보 수정");
 		this.user = user;
 		setInitLayout();
@@ -65,6 +69,8 @@ public class UpdateUserFrame extends JFrame {
 		passField = new JTextField(20);
 		insertButton = new JButton("입력하기");
 		exitButton = new JButton("나가기");
+		
+		socket=mContext.socket;
 		
 		guidText.setBounds(120, 30, 400, 50);
 		changeNicknameText.setBounds(50, 75, 400, 50);

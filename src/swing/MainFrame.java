@@ -38,8 +38,7 @@ import manager.SocketManager;
 public class MainFrame extends JFrame implements Runnable {
 	private int adFinder;
 	public SocketManager socket;
-	public LogOut logOut;
-	MainFrame mainFrame;
+	MainFrame mainFrame ;
 
 	private UserDTO user;
 	private JLabel id;
@@ -81,7 +80,6 @@ public class MainFrame extends JFrame implements Runnable {
 	private FinishedDetailedPanel finishedDetailedPanel; // 종료된경매 상세보기 패널
 	private CheckBidDetailedPanel checkBidDetailedPanel; // 시세 상세보기 패널
 
-	
 	private ArrayList<CardDTO> userInventory = new ArrayList<>(); // 보관함 카드목록
 	private ArrayList<CardDTO> allCardList = new ArrayList<>(); // 모든 카드 목록
 	private ArrayList<CardDTO> endCardList = new ArrayList<>(); // 종료된 경매의 카드목록
@@ -104,7 +102,6 @@ public class MainFrame extends JFrame implements Runnable {
 	public MainFrame(UserDTO user, SocketManager socket) {
 		this.socket = socket;
 		this.user = user;
-
 		getList();
 		initData();
 		setInitLayout();
@@ -159,7 +156,7 @@ public class MainFrame extends JFrame implements Runnable {
 		checkBidDetailedPanel = new CheckBidDetailedPanel(this);
 
 		chargeFrame = new ChargeFrame(this);
-		
+
 		panels.add(auctionPanel);
 		panels.add(finishedPanel);
 		panels.add(checkBidPanel);
@@ -324,6 +321,7 @@ public class MainFrame extends JFrame implements Runnable {
 	public void addPanel(int state) {
 		backgroundPanel.add(panels.get(state));
 	}
+
 	public void removePanel() {
 		backgroundPanel.remove(7);
 		backgroundPanel.remove(panels.get(9));
@@ -504,13 +502,16 @@ public class MainFrame extends JFrame implements Runnable {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				JOptionPane.showMessageDialog(null,"로그아웃이 완료되었습니다.");
-				dispose();
 				new LogInFrame();
+				dispose();
 			}
 		});
 
 	}
 	
+	public void logout() {
+		this.dispose();
+	}
 
 	@Override
 	public void run() {
