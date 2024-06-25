@@ -23,6 +23,17 @@ public class InventoryDAO {
 		}
 	}
 
+	// 해당 유저 번호에 카드 제거
+	public static void invenRemove(InventoryDTO dto) throws SQLException {
+		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
+			PreparedStatement pstmt = conn.prepareStatement(Query.INVEN_REMOVE);
+			pstmt.setString(1, dto.getName());
+			pstmt.setInt(2, dto.getCardId());
+			pstmt.executeUpdate();
+			System.out.println("보관함에 카드 제거완료");
+		}
+	}
+	
 	// 해당 유저 번호가 가지고 있는 카드이미지경로, 카드이름 조회
 	public static ArrayList<CardDTO> invenInfo(String name) throws SQLException {
 		ArrayList<CardDTO> card = new ArrayList<>();

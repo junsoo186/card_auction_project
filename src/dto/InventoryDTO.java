@@ -14,4 +14,5 @@ import lombok.ToString;
 public class InventoryDTO {
 	private String name;
 	private int cardId;
+	private int id;
 }
