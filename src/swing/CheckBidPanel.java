@@ -94,13 +94,13 @@ public class CheckBidPanel extends JPanel {
 	private void checkBidThread() {
 		new Thread(() -> {
 			while (true) {
+				mContext.getSocket().getAllCardList().clear();
 				mContext.getSocket().sendOrder("AllCardList");
 				try {
 					Thread.sleep(10000);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				mContext.getSocket().getAllCardList().clear();
 				allCardList = mContext.getSocket().getAllCardList();
 				addActionListner(allCardList);
 			}
