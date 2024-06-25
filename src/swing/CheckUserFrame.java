@@ -41,14 +41,14 @@ public class CheckUserFrame extends JFrame {
 
 	private void setInitLayout() {
 		setTitle("[회원 정보 확인]");
-		setSize(500, 650);
+		setSize(500, 550);
 		setLocationRelativeTo(null);
 		setResizable(false);
 		setLayout(null);
 		getContentPane().setBackground(new Color(255, 204, 3));
 
 		backgroundPanel = new JPanel();
-		backgroundPanel.setBounds(80, 60, 350, 500);
+		backgroundPanel.setBounds(70, 60, 350, 370);
 		backgroundPanel.setLayout(null);
 		backgroundPanel.setBackground(Color.WHITE);
 		add(backgroundPanel);
@@ -56,12 +56,12 @@ public class CheckUserFrame extends JFrame {
 		JLabel guidText = new JLabel(" 비밀번호를 입력해주세요. ");
 		guidText.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 18));
 		passwordField = new JTextField(20);
-		decidePriceButton = new JButton("비밀번호 입력하기");
-		exitButton = new JButton("회원 정보 유지하기");
-		guidText.setBounds(60, 75, 400, 50);
+		decidePriceButton = new JButton("비밀번호 입력");
+		exitButton = new JButton("회원 정보 유지");
+		guidText.setBounds(90, 75, 400, 50);
 		passwordField.setBounds(80, 135, 200, 30);
-		decidePriceButton.setBounds(80, 185, 90, 30);
-		exitButton.setBounds(185, 185, 90, 30);
+		decidePriceButton.setBounds(50, 185, 110, 30);
+		exitButton.setBounds(190, 185, 110, 30);
 
 		backgroundPanel.add(guidText);
 		backgroundPanel.add(passwordField);

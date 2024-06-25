@@ -4,6 +4,9 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -11,7 +14,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import dao.Query;
+import dao.UserDAO;
 import dto.UserDTO;
+import manager.DBConnectionManager;
 
 public class UpdateUserFrame extends JFrame {
 
@@ -22,6 +28,10 @@ public class UpdateUserFrame extends JFrame {
 	private JTextField passField;
 	private JButton exitButton;
 	private JButton insertButton;
+	
+	private UserDTO newUser;
+	private String newNick;
+	private String newPass;
 
 	public UpdateUserFrame(UserDTO user) {
 		System.out.println("회원 정보 수정");
@@ -70,14 +80,25 @@ public class UpdateUserFrame extends JFrame {
 		backgroundPanel.add(passField);
 		backgroundPanel.add(insertButton);
 		backgroundPanel.add(exitButton);
+		
+		newNick=nickField.getText();
+		newPass=passField.getText();
 
 		setVisible(true);
 	}
 
 	private void initListener() {
 		// 회원정보 수정 버튼
-		exitButton.addMouseListener(new MouseAdapter() {
+		insertButton.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
+				newUser=new UserDTO(user.getName(),newPass,newNick,user.getPoint());
+				try {
+					UserDAO.updateUser(newPass,newUser);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				System.out.println();
 				dispose();
 			}
 

@@ -307,7 +307,6 @@ public class MainFrame extends JFrame implements Runnable {
 	public void addPanel(int state) {
 		backgroundPanel.add(panels.get(state));
 	}
-
 	public void removePanel() {
 		backgroundPanel.remove(7);
 		backgroundPanel.remove(panels.get(8));
