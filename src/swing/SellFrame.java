@@ -98,7 +98,7 @@ public class SellFrame extends JFrame {
 		decidePriceButton.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				socket.sendOrder("auction#" + cardDTO.getId() + "#" + addPriceField.getText() + "#"
-						+ addEndhour.getText() + "#" + addEndmin.getText());
+						+ addEndhour.getText() + "#" + addEndmin.getText() + "#" + userDTO.getName());
 				System.out.println("서버에 카드 아이디 전송");
 				dispose();
 			}

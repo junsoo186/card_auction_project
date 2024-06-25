@@ -34,10 +34,6 @@ public class InventoryPanel extends JPanel {
 
 	private JPanel backgroundPanel;
 
-	// 버튼 좌표
-	private int x;
-	private int y;
-
 	// 페이지 버튼
 	private JButton nextPage;
 	private JButton previousPage;
@@ -74,10 +70,6 @@ public class InventoryPanel extends JPanel {
 		setBackground(Color.WHITE);
 		add(backgroundPanel);
 
-//		JLabel title=new JLabel("보유 카드 확인하기"+"("+product.size()+")");
-//		title.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 32));
-//		title.setBounds(860, 10, 800, 50);
-//		add(title);
 		bag = new JLabel(new ImageIcon("image/가방.png"));
 		bag.setBounds(400, 10, 1090, 575);
 		add(bag);
@@ -101,17 +93,15 @@ public class InventoryPanel extends JPanel {
 
 	// 버튼 10개 생성
 	public void productButton() {
-		x = 106;
-		y = 190;
+		int x = 106;
 		for (int i = 0; i < 10; i++) {
 			if (i < 5) {
 				buttons.add(i, new JButton());
-				buttons.get(i).setBounds(x + i * y, 120, 120, 167);
+				buttons.get(i).setBounds(x + i * 190, 120, 120, 167);
 			} else {
 				x = -844;
-
 				buttons.add(i, new JButton());
-				buttons.get(i).setBounds(x + i * y, 330, 120, 167);
+				buttons.get(i).setBounds(x + i * 190, 330, 120, 167);
 			}
 			bag.add(buttons.get(i));
 			setVisible(true);

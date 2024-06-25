@@ -114,6 +114,17 @@ public class UserDAO {
 			System.out.println("포인트 차감완료");
 		}
 	}
+	
+	// 판매 유저 포인트 추가
+	public static void addPoint(String name, int point) throws SQLException {
+		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
+			PreparedStatement pstmt = conn.prepareStatement(Query.USER_ADD_POINT);
+			pstmt.setInt(1, point);
+			pstmt.setString(2, name);
+			pstmt.executeUpdate();
+			System.out.println("포인트 추가완료");
+		}
+	}
 
 	// 유저 이름으로 유저 삭제 (회원탈퇴) delete
 	public static void deleteUser(String name) throws SQLException {
