@@ -16,6 +16,7 @@ import javax.swing.JTextField;
 
 import dao.UserDAO;
 import dto.UserDTO;
+import manager.SocketManager;
 
 public class QuitUserFrame extends JFrame {
 
@@ -26,10 +27,15 @@ public class QuitUserFrame extends JFrame {
 	private JButton exitButton;
 	private JButton decidePriceButton;
 	private Choice insertReason;
+	private MainFrame mContext;
+	
+	private SocketManager socket;
+	private String userName;
 
-	public QuitUserFrame(UserDTO user) throws SQLException {
+	public QuitUserFrame(UserDTO user,MainFrame mContext) throws SQLException {
 		System.out.println("회원 탈퇴");
 		this.user = user;
+		this.mContext=mContext;
 		setInitLayout();
 		initListener();
 	}
@@ -80,6 +86,9 @@ public class QuitUserFrame extends JFrame {
 		backgroundPanel.add(decidePriceButton);
 		backgroundPanel.add(exitButton);
 
+		userName=user.getName();
+		socket=mContext.socket;
+		
 		setVisible(true);
 	}
 
@@ -90,14 +99,15 @@ public class QuitUserFrame extends JFrame {
 				String a=checkQuitField.getText();
 				boolean aa=a.equals("네, 탈퇴합니다.");
 				if(aa) {
-					JOptionPane.showMessageDialog(null,"회원 탈퇴가 완료되었습니다.");
+					socket.sendOrder("quitUser#"+userName);
 					try {
-						UserDAO.deleteUser(user.getName());
-						System.out.println(user.getName()+"의 회원 탈퇴 완료");
-					} catch (SQLException e1) {
+						Thread.sleep(500);
+					} catch (InterruptedException e1) {
+						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 					dispose();
+					new LogInFrame();
 				}
 			}
 

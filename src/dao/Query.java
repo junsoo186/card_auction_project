@@ -6,7 +6,7 @@ public class Query {
 	public static final String USER_ADD = " INSERT INTO user(name, password, nickname, point) VALUES(?, ?, ?, ?) ";
 	public static final String USER_INFO_ALL = " SELECT * FROM user ";
 	public static final String USER_INFO_NAME = " SELECT * FROM user WHERE name = ? ";
-	public static final String USER_UPDATE_NAME = " UPDATE user SET password = ?, nickname = ? WHERE name = ? ";
+	public static final String USER_UPDATE_NAME = " UPDATE user SET nickname = ?, password = ? WHERE name = ? ";
 	public static final String USER_POINT_NAME = " UPDATE user SET point = ? WHERE name = ? ";
 	public static final String USER_SUBTARCT_POINT = " UPDATE user SET point = point - ? WHERE name = ? ";
 	public static final String USER_ADD_POINT = " UPDATE user SET point = point + ? WHERE name = ? ";

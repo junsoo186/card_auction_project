@@ -270,20 +270,19 @@ public class MainFrame extends JFrame implements Runnable {
 			}
 		};
 
-		// 버튼 설정 0.진행중경매 1.종료된경매 2.시세체크 3.경매출품 4.마이페이지 5.인벤토리
+		// 버튼 설정 0.진행중경매 1.종료된경매 2.시세체크 3.마이페이지 4.인벤토리
 		buttons[0] = new JButton("진행 중인 경매");
 		buttons[1] = new JButton("종료된 경매");
 		buttons[2] = new JButton("시세 알아보기");
-		buttons[3] = new JButton("경매 출품하기");
-		buttons[4] = new JButton("마이 페이지");
-		buttons[5] = new JButton();
-		buttons[5].setBounds(1657, 50, 70, 70);
-		buttons[5].setBackground(null);
-		buttons[5].setBorderPainted(true);
-		buttons[5].setContentAreaFilled(false);
+		buttons[3] = new JButton("마이 페이지");
+		buttons[4] = new JButton();
+		buttons[4].setBounds(1657, 50, 70, 70);
+		buttons[4].setBackground(null);
+		buttons[4].setBorderPainted(false);
+		buttons[4].setContentAreaFilled(false);
 
-		backgroundLabel.add(buttons[5]);
-		for (int i = 0; i < 5; i++) {
+		backgroundLabel.add(buttons[4]);
+		for (int i = 0; i < 4; i++) {
 			buttons[i].setBounds(300 + i * 300, 175, 200, 50);
 			buttons[i].setBackground(new Color(255, 204, 3));
 			buttons[i].setFont(new Font("Freesentation 7 Bold", Font.BOLD, 32));
@@ -313,6 +312,7 @@ public class MainFrame extends JFrame implements Runnable {
 		System.out.println("잔돈 : " + user.getPoint());
 		cash.setText(user.getPoint() + " 원");
 		myPagePanel.getPoint().setText(" 포인트 : " + user.getPoint());
+		
 	}
 
 	public void addPanel(int state) {
@@ -365,19 +365,8 @@ public class MainFrame extends JFrame implements Runnable {
 			}
 		});
 
-		// 3. 경매 출품 이동
-		buttons[3].addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				System.out.println("경매 출품으로 이동");
-				if (panels.size() > 9) {
-					removePanel();
-				}
-				setVisible(3);
-			}
-		});
-
 		// 4. 마이페이지
-		buttons[4].addMouseListener(new MouseAdapter() {
+		buttons[3].addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				System.out.println("마이페이지로 이동");
 				if (panels.size() > 9) {
@@ -388,7 +377,7 @@ public class MainFrame extends JFrame implements Runnable {
 		});
 
 		// 5. 인벤토리 이동
-		buttons[5].addMouseListener(new MouseAdapter() {
+		buttons[4].addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				System.out.println("인벤토리로 이동");
 				// 보관함 정보가 열려있으면 닫아주기
