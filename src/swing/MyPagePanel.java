@@ -18,7 +18,16 @@ import dto.UserDTO;
 import lombok.Data;
 import manager.SocketManager;
 
+
 public class MyPagePanel extends JPanel {
+
+	public JLabel getNickName() {
+		return nickName;
+	}
+
+	public void setNickName(JLabel nickName) {
+		this.nickName = nickName;
+	}
 
 	private MainFrame mContext;
 	private SocketManager socket;
@@ -132,11 +141,7 @@ public class MyPagePanel extends JPanel {
 				} catch (SQLException | InterruptedException e1) {
 					e1.printStackTrace();
 				}
-				socket.sendOrder("refresh#" + user.getName());
-				System.out.println("유저 아이디 : "+user.getName());
-				System.out.println("유저 닉네임 : "+user.getNickname());
-				System.out.println("유저 비밀번호 : "+user.getPassword());
-				nickName.setText(" 닉네임 : " + user.getNickname());
+				
 			}
 			
 			

@@ -226,6 +226,8 @@ public class Server {
 						dto = UserDAO.infoUser(msg[1]);
 						sendOrder("userDTO#" + dto.getName() + "#" + dto.getNickname() + "#" + dto.getPassword() + "#"
 								+ dto.getPoint());
+						System.out.println("aaa"+dto.getNickname());
+						System.out.println("aaa"+dto.getPassword());
 					} else if (message.startsWith("remove")) {
 						String[] msg = message.split("#");
 						int num = Integer.valueOf(msg[1]);

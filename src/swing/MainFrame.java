@@ -384,6 +384,11 @@ public class MainFrame extends JFrame implements Runnable {
 				if (panels.size() > 9) {
 					removePanel();
 				}
+				socket.sendOrder("refresh#" + user.getName());
+				System.out.println("유저 아이디 : "+socket.getUserDTO().getName());
+				System.out.println("유저 닉네임 : "+socket.getUserDTO().getNickname());
+				System.out.println("유저 비밀번호 : "+socket.getUserDTO().getPoint());
+				myPagePanel.getNickName().setText(" 닉네임 : " + socket.getUserDTO().getNickname());
 				setVisible(4);
 			}
 		});
