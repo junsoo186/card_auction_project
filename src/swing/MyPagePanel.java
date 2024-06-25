@@ -116,7 +116,7 @@ public class MyPagePanel extends JPanel {
 			public void mouseClicked(MouseEvent e) {
 				System.out.println("회원정보수정 클릭");
 				try {
-					new CheckUserFrame(user,true);
+					new CheckUserFrame(user,true,mContext);
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
@@ -128,7 +128,7 @@ public class MyPagePanel extends JPanel {
 					public void mouseClicked(MouseEvent e) {
 						System.out.println("회원탈퇴 클릭");
 						try {
-							new CheckUserFrame(user,false);
+							new CheckUserFrame(user,false,mContext);
 						} catch (SQLException e1) {
 							e1.printStackTrace();
 						}

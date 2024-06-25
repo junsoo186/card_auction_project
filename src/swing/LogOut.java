@@ -23,7 +23,7 @@ public class LogOut extends JFrame {
 		initData();
 		setInitLayout();
 		initListener();
-		
+		System.out.println(mainFrame);
 	}
 	
 	public void initData() {
@@ -49,7 +49,9 @@ public class LogOut extends JFrame {
 		logoutButton.addMouseListener(new MouseAdapter() {
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			
+			mainFrame.dispose();
+			System.out.println(mainFrame);
+			dispose();
 			new LogInFrame();
 		}
 		});

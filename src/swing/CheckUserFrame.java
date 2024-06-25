@@ -30,11 +30,13 @@ public class CheckUserFrame extends JFrame {
 	private JTextField passwordField;
 	private JButton exitButton;
 	private JButton decidePriceButton;
+	private MainFrame mContext;
 
-	public CheckUserFrame(UserDTO user,Boolean purpose) throws SQLException {
+	public CheckUserFrame(UserDTO user,Boolean purpose,MainFrame mContext) throws SQLException {
 		System.out.println("회원 탈퇴");
 		this.user = user;
 		this.purpose=purpose;
+		this.mContext=mContext;
 		setInitLayout();
 		initListener();
 	}

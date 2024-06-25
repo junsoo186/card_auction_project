@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -106,7 +107,9 @@ public class UpdateUserFrame extends JFrame {
 		// 나가기 버튼
 		exitButton.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
+				JOptionPane.showMessageDialog(null,"로그아웃이 완료되었습니다.");
 				dispose();
+				new LogInFrame();
 			}
 
 		});

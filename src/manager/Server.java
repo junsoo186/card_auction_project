@@ -97,7 +97,6 @@ public class Server {
 				while ((message = userOrder.readLine()) != null) {
 					System.out.println(message + " Server에서 읽음 ");
 					if (message.startsWith("chat")) {
-						broadCast(message);
 					} else if (message.startsWith("sell")) {
 						String[] sell = message.split("#");
 						productName.add(sell[1]);
