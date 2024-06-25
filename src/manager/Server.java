@@ -32,6 +32,7 @@ public class Server {
 	private static ArrayList<Integer> hour = new ArrayList<>(); // 시간 저장
 	private static ArrayList<Integer> min = new ArrayList<>(); // 분 저장
 	private static ArrayList<Integer> highBid = new ArrayList<>(); // 경매 현재 가격
+	private static ArrayList<Integer> startBid = new ArrayList<>(); // 경매 시작 가격
 	private static Random random = new Random();
 
 	public Server() {
@@ -88,7 +89,8 @@ public class Server {
 				// 처음에 들어온 사용자들에게 현재 경매물품 리스트 송출
 				for (int i = 0; i < auctionList.size(); i++) {
 					broadCast("list#" + auctionList.get(i).getId() + "#" +auctionList.get(i).getName()
-							+ "#" + auctionList.get(i).getUrl() + "#");
+							+ "#" + auctionList.get(i).getUrl() + "#" + startBid.get(i) + "#" + hour.get(i) + "#" + min.get(i) + 
+							"#" + highBid.get(i));
 				}
 				while ((message = userOrder.readLine()) != null) {
 					System.out.println(message + " Server에서 읽음 ");
@@ -130,6 +132,10 @@ public class Server {
 							printWriter.println("wrong");
 						}
 					} else if (message.startsWith("bid")) {
+						String[] msg = message.split("#");
+						int price = Integer.valueOf(msg[1]);
+						int num = Integer.valueOf(msg[2]);
+						highBid.add(num,price);
 						broadCast(message);
 					} else if (message.startsWith("cash")) {
 						String[] cash = message.split("#");
@@ -140,7 +146,7 @@ public class Server {
 					} else if (message.startsWith("auction")) {
 						String[] cardId = message.split("#");
 						int id = Integer.valueOf(cardId[1]);
-						int startBid = Integer.valueOf(cardId[2]);
+						int price = Integer.valueOf(cardId[2]);
 						int hourDB = Integer.valueOf(cardId[3]);
 						int minDB = Integer.valueOf(cardId[4]);
 						System.out.println("카드 id 받아옴 : " + id);
@@ -148,6 +154,8 @@ public class Server {
 						System.out.println("분 받아옴 : " + minDB);
 						hour.add(hourDB);
 						min.add(minDB);
+						startBid.add(price);
+						highBid.add(price);
 						CardDTO dto = new CardDTO();
 						dto = CardDAO.infoCard(id);
 						auctionList.add(dto);

@@ -77,7 +77,7 @@ public class BuyFrame extends JFrame {
 		Icon cardImage = new ImageIcon(card.getUrl());
 		JLabel cardLabel = new JLabel();
 		cardLabel.setIcon(cardImage);
-		cardLabel.setBounds(100, 110, 150, 210);
+		cardLabel.setBounds(100, 110, 120, 167);
 		backgroundPanel.add(cardLabel);
 
 		setVisible(true);

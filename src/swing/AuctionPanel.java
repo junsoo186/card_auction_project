@@ -77,11 +77,11 @@ public class AuctionPanel extends JPanel {
 		for (int i = 0; i < 10; i++) {
 			if (i < 5) {
 				buttons.add(i, new JButton());
-				buttons.get(i).setBounds(x + i * 200, 70, 150, 200);
+				buttons.get(i).setBounds(x + i * 200, 70, 120, 167);
 			} else {
 				x = -500;
 				buttons.add(i, new JButton());
-				buttons.get(i).setBounds(x + i * 200, 320, 150, 200);
+				buttons.get(i).setBounds(x + i * 200, 320, 120, 167);
 			}
 			add(buttons.get(i));
 			setVisible(true);

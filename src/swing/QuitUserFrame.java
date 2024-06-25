@@ -13,7 +13,7 @@ import javax.swing.JTextField;
 
 import dto.UserDTO;
 
-public class UpdateUserFrame extends JFrame {
+public class QuitUserFrame extends JFrame {
 
 	private UserDTO user;
 
@@ -22,16 +22,16 @@ public class UpdateUserFrame extends JFrame {
 	private JButton exitButton;
 	private JButton decidePriceButton;
 
-	public UpdateUserFrame(UserDTO user) {
-		System.out.println("회원 정보 수정");
+	public QuitUserFrame(UserDTO user) {
+		System.out.println("회원 탈퇴");
 		this.user = user;
 		setInitLayout();
 		initListener();
 	}
 
 	private void setInitLayout() {
-		setTitle("[회원 정보 수정]");
-		setSize(500, 300);
+		setTitle("[회원 탈퇴]");
+		setSize(500, 650);
 		setLocationRelativeTo(null);
 		setResizable(false);
 		setLayout(null);
@@ -43,18 +43,15 @@ public class UpdateUserFrame extends JFrame {
 		backgroundPanel.setBackground(Color.WHITE);
 		add(backgroundPanel);
 
-		JLabel guidText = new JLabel(" 회원 정보 수정 ");
+		JLabel guidText = new JLabel(" 정말 탈퇴하시겠습니까? ");
 		guidText.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 18));
-		JLabel checkText = new JLabel(" 비밀번호를 입력해주세요. ");
-		checkText.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 14));
 		addPriceField = new JTextField(20);
-		decidePriceButton = new JButton("입력하기");
-		exitButton = new JButton("나가기");
-		guidText.setBounds(40, 335, 400, 50);
-		checkText.setBounds(40, 355, 400, 50);
-		addPriceField.setBounds(80, 385, 200, 30);
-		decidePriceButton.setBounds(80, 425, 90, 30);
-		exitButton.setBounds(185, 425, 90, 30);
+		decidePriceButton = new JButton("탈퇴하기");
+		exitButton = new JButton("회원 정보 유지하기");
+		guidText.setBounds(60, 75, 400, 50);
+		addPriceField.setBounds(80, 135, 200, 30);
+		decidePriceButton.setBounds(80, 185, 90, 30);
+		exitButton.setBounds(185, 185, 90, 30);
 
 		backgroundPanel.add(guidText);
 		backgroundPanel.add(addPriceField);

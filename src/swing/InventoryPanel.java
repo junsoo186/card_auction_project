@@ -79,9 +79,7 @@ public class InventoryPanel extends JPanel {
 //		title.setBounds(860, 10, 800, 50);
 //		add(title);
 		bag = new JLabel(new ImageIcon("image/가방.png"));
-		bag.setBounds(10,10,1890,575);
-		JLabel bag = new JLabel(new ImageIcon("image/가방.png"));
-		bag.setBounds(575, 1890, 10, 10);
+		bag.setBounds(400,10,1090,575);
 		add(bag);
 
 		nextPage = new JButton(new ImageIcon("image/오른쪽.png"));
@@ -103,21 +101,22 @@ public class InventoryPanel extends JPanel {
 
 	// 버튼 10개 생성
 	public void productButton() {
-		x = 506;
-		y = 190;
-		for (int i = 0; i < 10; i++) {
-			if (i < 5) {
-				buttons.add(i, new JButton());
-				buttons.get(i).setBounds(x + i * y, 120, 120, 167);
-			} else {
-				x = -500;
-				buttons.add(i, new JButton());
-				buttons.get(i).setBounds(x + i * y, 300, 150, 200);
-			}
-		bag.add(buttons.get(i));
-			setVisible(true);
-		}
-	}
+        x = 106;
+        y = 190;
+        for (int i = 0; i < 10; i++) {
+            if (i < 5) {
+                buttons.add(i, new JButton());
+                buttons.get(i).setBounds(x + i * y, 120, 120, 167);
+            } else {
+                x = -500;
+             
+                buttons.add(i, new JButton());
+                buttons.get(i).setBounds(x + i * y, 300, 150, 200);
+            }
+        bag.add(buttons.get(i));
+            setVisible(true);
+        }
+        }
 
 	// 버튼에 카드이미지 URL 삽입함수
 	public void createProduct(ArrayList<CardDTO> inventory) {

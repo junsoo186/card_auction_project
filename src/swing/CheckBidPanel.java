@@ -58,7 +58,7 @@ public class CheckBidPanel extends JPanel {
 		// 처음 생성 될때 8개 버튼 생성
 		for (int i = 0; i < 5; i++) {
 			product.add(i, new JButton());
-			product.get(i).setBounds(x, y, 150, 200);
+			product.get(i).setBounds(x, y, 120, 167);
 
 			if ((i / 4) >= 1 && i % 4 == 0) {
 				x = 500;
