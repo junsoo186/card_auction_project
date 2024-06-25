@@ -91,7 +91,7 @@ public class FinishedPanel extends JPanel {
 
 		title = new JLabel("종료된 경매" + "(" + endCardList.size() + ")");
 		title.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 32));
-		title.setBounds(860, 5, 800, 50);
+		title.setBounds(860, 10, 800, 50);
 		add(title);
 
 		productButton();
@@ -115,15 +115,14 @@ public class FinishedPanel extends JPanel {
 	// 버튼 10개 생성
 	public void productButton() {
 		x = 500;
-		y = 200;
 		for (int i = 0; i < 10; i++) {
 			if (i < 5) {
 				buttons.add(i, new JButton());
-				buttons.get(i).setBounds(x + i * y, 50, 120, 167);
+				buttons.get(i).setBounds(x + i * 200, 70, 120, 167);
 			} else {
 				x = -500;
 				buttons.add(i, new JButton());
-				buttons.get(i).setBounds(x + i * y, 300, 120, 167);
+				buttons.get(i).setBounds(x + i * 200, 320, 120, 167);
 			}
 			add(buttons.get(i));
 			setVisible(true);
