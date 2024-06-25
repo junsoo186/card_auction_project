@@ -108,10 +108,11 @@ public class InventoryPanel extends JPanel {
                 buttons.add(i, new JButton());
                 buttons.get(i).setBounds(x + i * y, 120, 120, 167);
             } else {
-				x = -895;
-				buttons.add(i, new JButton());
-				buttons.get(i).setBounds(x + i * 197, 320, 120, 167);
-			}
+                x = -844;
+             
+                buttons.add(i, new JButton());
+                buttons.get(i).setBounds(x + i * y, 330, 120, 167);
+            }
         bag.add(buttons.get(i));
             setVisible(true);
         }

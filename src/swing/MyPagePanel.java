@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.SQLException;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -122,7 +123,11 @@ public class MyPagePanel extends JPanel {
 		quitButton.addMouseListener(new MouseAdapter() {
 					public void mouseClicked(MouseEvent e) {
 						System.out.println("회원탈퇴 클릭");
-						new QuitUserFrame(user);
+						try {
+							new QuitUserFrame(user);
+						} catch (SQLException e1) {
+							e1.printStackTrace();
+						}
 					}
 					
 				});
