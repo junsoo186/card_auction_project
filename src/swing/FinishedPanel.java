@@ -34,7 +34,7 @@ public class FinishedPanel extends JPanel {
 	private JPanel backgroundPanel;
 	private JLabel title;
 	private UserDTO user;
-	JLabel backImage ;
+	JLabel backImage;
 	private MouseListener[] listener = new MouseListener[10];
 
 	private FinishedDetailedPanel finishedDetailedPanel;

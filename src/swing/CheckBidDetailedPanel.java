@@ -17,7 +17,7 @@ public class CheckBidDetailedPanel extends JPanel {
 
 	private MainFrame mContext;
 
-	private CardDTO cardDTO;
+	private CardDTO cardDTO = new CardDTO();
 
 	private JLabel cardId = new JLabel();
 	private JLabel cardName = new JLabel();

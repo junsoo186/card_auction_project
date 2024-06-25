@@ -270,7 +270,7 @@ public class MainFrame extends JFrame implements Runnable {
 			}
 		};
 
-		// 버튼 설정 0.진행중경매 1.종료된경매 2.시세체크 3.경매출품 4.마이페이지 5.인벤토리
+		// 버튼 설정 0.진행중경매 1.종료된경매 2.시세체크 3.마이페이지 4.인벤토리
 		buttons[0] = new JButton("진행 중인 경매");
 		buttons[1] = new JButton("종료된 경매");
 		buttons[2] = new JButton("시세 알아보기");
@@ -284,8 +284,9 @@ public class MainFrame extends JFrame implements Runnable {
 		backgroundLabel.add(buttons[4]);
 		for (int i = 0; i < 4; i++) {
 			buttons[i].setBounds(300 + i * 300, 195, 200, 50);
+			buttons[i].setBounds(300 + i * 300, 175, 200, 50);
 			buttons[i].setBackground(new Color(255, 204, 3));
-			buttons[i].setFont(new Font("Freesentation 7 Bold", Font.BOLD, 25));
+			buttons[i].setFont(new Font("Freesentation 7 Bold", Font.BOLD, 32));
 			buttons[i].setBorderPainted(false);
 			buttons[i].setForeground(Color.WHITE);
 			buttons[i].setFocusPainted(false);
@@ -365,8 +366,7 @@ public class MainFrame extends JFrame implements Runnable {
 			}
 		});
 
-
-		// 3. 마이페이지
+		// 4. 마이페이지
 		buttons[3].addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				System.out.println("마이페이지로 이동");
