@@ -61,8 +61,8 @@ public class MyPagePanel extends JPanel {
 		setBackground(Color.WHITE);
 		add(backgroundPanel);
 		
-		JLabel myBack = new JLabel(new ImageIcon("image/마이페이지.png")); 
-		myBack.setBounds(400,2,1089,575);
+		JLabel myBack = new JLabel(new ImageIcon("image/노이즈2.GIF")); 
+		myBack.setBounds(405,0,1089,575);
 		add(myBack);
 
 		title = new JLabel("마이 페이지");
