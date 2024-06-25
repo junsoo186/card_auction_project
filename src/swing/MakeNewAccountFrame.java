@@ -36,14 +36,14 @@ public class MakeNewAccountFrame extends JFrame implements ActionListener {
 	private JTextField passwordField;
 	private JTextField idField;
 
-	public MakeNewAccountFrame() {
+	public MakeNewAccountFrame(SocketManager socket) {
+		this.socket = socket;
 		setInitLayout();
 		initListener();
 	}
 
 	private void setInitLayout() {
 		System.out.println("확인");
-		new Thread(socket = new SocketManager()).start();
 		mainPanel = new JPanel();
 		setTitle("[회원가입]");
 		setSize(500, 700);

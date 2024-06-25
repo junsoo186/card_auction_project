@@ -12,6 +12,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -19,6 +20,8 @@ import manager.SocketManager;
 
 public class LogInFrame extends JFrame {
 
+	
+	private LogInFrame mContext;
 	private SocketManager socket;
 
 	private JPanel backgroundPanel1;
@@ -43,7 +46,7 @@ public class LogInFrame extends JFrame {
 	}
 
 	private void initData() {
-		new Thread(socket = new SocketManager()).start();
+		new Thread(socket = new SocketManager(this)).start();
 
 		backgroundPanel1 = new JPanel();
 		backgroundPanel2 = new JPanel();
@@ -141,10 +144,18 @@ public class LogInFrame extends JFrame {
 
 	}
 
+	public void failLogin() {
+		JOptionPane.showMessageDialog(null, "로그인정보가 틀렸습니다!");
+	}
+	
+	public void failSignUp() {
+		JOptionPane.showMessageDialog(null, "이미 있는 아이디입니다!");
+	}
+	
 	private void initListener() {
 		signUpButton.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				new MakeNewAccountFrame();
+				new MakeNewAccountFrame(socket);
 			}
 		});
 		logInButton.addMouseListener(new MouseAdapter() {

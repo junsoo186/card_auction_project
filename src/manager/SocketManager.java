@@ -52,7 +52,8 @@ public class SocketManager implements Runnable {
 		System.out.println("데이터 지움");
 	}
 
-	public SocketManager() {
+	public SocketManager(LogInFrame mContext) {
+		this.logInFrame = mContext;
 	}
 
 	public void sendOrder(String order) {
@@ -140,6 +141,11 @@ public class SocketManager implements Runnable {
 					userDTO.setNickname(msg[2]);
 					userDTO.setPassword(msg[3]);
 					userDTO.setPoint(point);
+				} else if (message.startsWith("failLogin")) {
+					logInFrame.failLogin();
+				} else if (message.startsWith("failSignUp")) {
+					System.out.println("회원가입 실패.,...");
+					logInFrame.failSignUp();
 				}
 			}
 		} catch (IOException e) {
