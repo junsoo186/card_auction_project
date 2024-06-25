@@ -75,8 +75,6 @@ public class SocketManager implements Runnable {
 					int startBidDB = Integer.valueOf(cardId[4]);
 					int hourDB = Integer.valueOf(cardId[5]);
 					int minDB = Integer.valueOf(cardId[6]);
-					System.out.println("서버에서 카드 id 보냄 : " + id);
-					System.out.println("서버에서 보낸 분 : " + minDB);
 					cardDTO.setId(id);
 					cardDTO.setName(name);
 					cardDTO.setUrl(url);
@@ -84,7 +82,7 @@ public class SocketManager implements Runnable {
 					hour.add(hourDB);
 					min.add(minDB);
 					startBid.add(startBidDB);
-					if(cardId.length > 8) {
+					if(cardId.length > 7) {
 						int price = Integer.valueOf(cardId[7]);
 						highBid.add(price);
 					} else {

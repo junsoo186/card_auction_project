@@ -37,6 +37,8 @@ import manager.SocketManager;
 public class MainFrame extends JFrame implements Runnable {
 	private int adFinder;
 	public SocketManager socket;
+	public LogOut logOut;
+	MainFrame mainFrame;
 
 	private UserDTO user;
 	private JLabel id;
@@ -221,12 +223,11 @@ public class MainFrame extends JFrame implements Runnable {
 		
 		
 		
-		logoutButton = new JButton("로그인");
-		searchButton.setBounds(1600, 270, 70, 70);
-		searchButton.setBackground(null);
-		searchButton.setBorderPainted(false);
-		searchButton.setContentAreaFilled(false);
-		searchButton.setFocusPainted(false);
+		logoutButton = new JButton(new ImageIcon("image/로그아웃.png"));
+		logoutButton.setBounds(1750,50 , 70, 70);
+		logoutButton.setBorderPainted(false);
+		logoutButton.setContentAreaFilled(false);
+		logoutButton.setFocusPainted(false);
 		backgroundLabel.add(logoutButton);
 		
 		// ------------광고 --------------
@@ -300,7 +301,9 @@ public class MainFrame extends JFrame implements Runnable {
 			backgroundPanel.add(panels.get(i));
 			panels.get(i).setVisible(false);
 		}
-		auctionPanel.setVisible(true);
+		auctionPanel.removeData();
+		auctionPanel.addAuction();
+		setVisible(0);
 		backgroundPanel.setVisible(true);
 		setVisible(true);
 	}
@@ -496,11 +499,18 @@ public class MainFrame extends JFrame implements Runnable {
 			}
 
 		});
+		
+		logoutButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				new LogOut(socket, mainFrame);
+			}
+		});
 
 	}
-
-	void logout() {
-
+	
+	public void logout() {
+		this.dispose();
 	}
 
 	@Override

@@ -140,6 +140,7 @@ public class CardDAO {
 		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
 			PreparedStatement pstmt = conn.prepareStatement(Query.CARD_SET_PRICE);
 			pstmt.setInt(1, id);
+			pstmt.setInt(2, id);
 			pstmt.executeUpdate();
 		}
 	}

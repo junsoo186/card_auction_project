@@ -15,6 +15,7 @@ public class LogOut extends JFrame {
 	MainFrame mainFrame;
 	JLabel logoutBack;
 	JButton logoutButton;
+	LogInFrame logInFrame;
 	
 	public LogOut(SocketManager mContext, MainFrame mainFrame) {
 		this.mContext = mContext;
@@ -49,7 +50,7 @@ public class LogOut extends JFrame {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			
-			dispose();
+			new LogInFrame();
 		}
 		});
 	}

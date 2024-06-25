@@ -132,7 +132,6 @@ public class AuctionDetailedPanel extends JPanel {
 				String s = Long.toString(auctionManager.getCurrent_time());
 				if (!s.equals(time)) {
 					time = s;
-					System.out.println("남은시간 dd : " + time);
 					endTime.setText("남은시간 :" + time + "초");
 					if (time.equals("0")) {
 						endTime.setText("경매 종료");
@@ -161,18 +160,20 @@ public class AuctionDetailedPanel extends JPanel {
 	}
 
 	private void addDto() {
-		if (user.getName().equals(mconText.socket.getBidUser().get(page))) {
-			AuctionDTO auction = new AuctionDTO();
-			auction.setEndDate(LocalDateTime.now().toString());
-			auction.setStartDate(auctionManager.getStartTime());
-			auction.setBidPrice(auctionManager.getHighbid());
-			auction.setCardId(card.getId());
-			auction.setName(mconText.socket.getBidUser().get(page));
-			mconText.socket.sendOrder("endAuctionDB#" + auction.getEndDate() + "#" + auction.getStartDate() + "#"
-					+ auction.getBidPrice() + "#" + auction.getCardId() + "#" + auction.getName() + "#"
-					+ mconText.socket.getBidUser().get(page) + "#" + auctionManager.getHighbid());
-			mconText.socket.sendOrder("remove#" + page);
-			System.out.println("addDto 발동 되버림");
+		if(user.getName().equals(mconText.socket.getBidUser().get(page))) {
+		System.out.println("현재 유저 네임 : " + user.getName());
+		System.out.println("최고비드 유저 네임 : " + mconText.socket.getBidUser().get(page));
+		AuctionDTO auction = new AuctionDTO();
+		auction.setEndDate(LocalDateTime.now().toString());
+		auction.setStartDate(auctionManager.getStartTime());
+		auction.setBidPrice(mconText.socket.getHighBid().get(page));
+		auction.setCardId(card.getId());
+		auction.setName(mconText.socket.getBidUser().get(page));
+		mconText.socket.sendOrder("endAuctionDB#" + auction.getEndDate() + "#" + auction.getStartDate() + "#" 
+		+ auction.getBidPrice() + "#" + auction.getCardId() + "#" + auction.getName() + "#" + 
+		mconText.socket.getBidUser().get(page) + "#" + page);
+		mconText.socket.sendOrder("remove#" + page);
+		System.out.println("addDto 발동 되버림");
 		}
 	}
 
@@ -192,8 +193,7 @@ public class AuctionDetailedPanel extends JPanel {
 		});
 		goBackButton.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				setVisible(false);
-				backgroundPanel.add(auctionPanel);
+				mconText.setVisible(0);
 			}
 		});
 	}
