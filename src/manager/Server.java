@@ -88,9 +88,9 @@ public class Server {
 				InventoryDTO invenDTO = new InventoryDTO();
 				// 처음에 들어온 사용자들에게 현재 경매물품 리스트 송출
 				for (int i = 0; i < auctionList.size(); i++) {
-					broadCast("list#" + auctionList.get(i).getId() + "#" +auctionList.get(i).getName()
-							+ "#" + auctionList.get(i).getUrl() + "#" + startBid.get(i) + "#" + hour.get(i) + "#" + min.get(i) + 
-							"#" + highBid.get(i));
+					broadCast("list#" + auctionList.get(i).getId() + "#" + auctionList.get(i).getName() + "#"
+							+ auctionList.get(i).getUrl() + "#" + startBid.get(i) + "#" + hour.get(i) + "#" + min.get(i)
+							+ "#" + highBid.get(i));
 				}
 				while ((message = userOrder.readLine()) != null) {
 					System.out.println(message + " Server에서 읽음 ");
@@ -135,7 +135,7 @@ public class Server {
 						String[] msg = message.split("#");
 						int price = Integer.valueOf(msg[1]);
 						int num = Integer.valueOf(msg[2]);
-						highBid.add(num,price);
+						highBid.add(num, price);
 						broadCast(message);
 					} else if (message.startsWith("cash")) {
 						String[] cash = message.split("#");
@@ -201,6 +201,7 @@ public class Server {
 						dto.setStartDate(msg[2]);
 						dto.setName(msg[5]);
 						AuctionDAO.addAuction(dto);
+						CardDAO.setCardPrice(card); // 카드가격갱신(옥션평균가로)
 						UserDAO.subtractPoint(msg[6], money);
 					} else if (message.startsWith("refresh")) {
 						String[] msg = message.split("#");
