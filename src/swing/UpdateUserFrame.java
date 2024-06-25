@@ -18,9 +18,10 @@ public class UpdateUserFrame extends JFrame {
 	private UserDTO user;
 
 	private JPanel backgroundPanel;
-	private JTextField addPriceField;
+	private JTextField nickField;
+	private JTextField passField;
 	private JButton exitButton;
-	private JButton decidePriceButton;
+	private JButton insertButton;
 
 	public UpdateUserFrame(UserDTO user) {
 		System.out.println("회원 정보 수정");
@@ -31,40 +32,57 @@ public class UpdateUserFrame extends JFrame {
 
 	private void setInitLayout() {
 		setTitle("[회원 정보 수정]");
-		setSize(500, 300);
+		setSize(500, 550);
 		setLocationRelativeTo(null);
 		setResizable(false);
 		setLayout(null);
 		getContentPane().setBackground(new Color(255, 204, 3));
 
 		backgroundPanel = new JPanel();
-		backgroundPanel.setBounds(80, 60, 350, 500);
+		backgroundPanel.setBounds(80, 60, 350, 370);
 		backgroundPanel.setLayout(null);
 		backgroundPanel.setBackground(Color.WHITE);
 		add(backgroundPanel);
 
 		JLabel guidText = new JLabel(" 회원 정보 수정 ");
-		guidText.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 18));
-		JLabel checkText = new JLabel(" 비밀번호를 입력해주세요. ");
-		checkText.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 14));
-		addPriceField = new JTextField(20);
-		decidePriceButton = new JButton("입력하기");
+		guidText.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 20));
+		JLabel changeNicknameText = new JLabel(" 변경할 닉네임을 입력해주세요. (현재 닉네임 :"+user.getName()+ ")");
+		changeNicknameText.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 14));
+		JLabel changePasswordText= new JLabel(" 비밀번호를 입력해주세요. (현재 비밀번호 :"+user.getPassword()+" )");
+		changePasswordText.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 14));
+		nickField = new JTextField(20);
+		passField = new JTextField(20);
+		insertButton = new JButton("입력하기");
 		exitButton = new JButton("나가기");
-		guidText.setBounds(40, 335, 400, 50);
-		checkText.setBounds(40, 355, 400, 50);
-		addPriceField.setBounds(80, 385, 200, 30);
-		decidePriceButton.setBounds(80, 425, 90, 30);
-		exitButton.setBounds(185, 425, 90, 30);
+		
+		guidText.setBounds(120, 30, 400, 50);
+		changeNicknameText.setBounds(50, 75, 400, 50);
+		nickField.setBounds(75, 120, 200, 30);
+		changePasswordText.setBounds(50, 155, 400, 50);
+		passField.setBounds(75, 200, 200, 30);
+		insertButton.setBounds(75, 255, 90, 30);
+		exitButton.setBounds(185, 255, 90, 30);
 
 		backgroundPanel.add(guidText);
-		backgroundPanel.add(addPriceField);
-		backgroundPanel.add(decidePriceButton);
+		backgroundPanel.add(changeNicknameText);
+		backgroundPanel.add(changePasswordText);
+		backgroundPanel.add(nickField);
+		backgroundPanel.add(passField);
+		backgroundPanel.add(insertButton);
 		backgroundPanel.add(exitButton);
 
 		setVisible(true);
 	}
 
 	private void initListener() {
+		// 회원정보 수정 버튼
+		exitButton.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				dispose();
+			}
+
+		});
+		// 나가기 버튼
 		exitButton.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				dispose();
