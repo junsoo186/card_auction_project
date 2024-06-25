@@ -69,5 +69,9 @@ public class QuitUserFrame extends JFrame {
 
 		});
 	}
+	
+	public static void main(String[] args) {
+		
+	}
 
 }

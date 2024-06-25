@@ -54,23 +54,23 @@ public class CheckBidPanel extends JPanel {
 		serialNum.add(1); // 시리얼 넘버 사이즈도 증가
 	}
 
-	public void ProductButton() {
-		// 처음 생성 될때 8개 버튼 생성
-		for (int i = 0; i < 5; i++) {
-			product.add(i, new JButton());
-			product.get(i).setBounds(x, y, 120, 167);
-
-			if ((i / 4) >= 1 && i % 4 == 0) {
-				x = 500;
-				y += 300;
-			} else {
-				x += 200;
+	// 버튼 10개 생성
+		public void productButton() {
+			x = 500;
+			for (int i = 0; i < 10; i++) {
+				if (i < 5) {
+					product.add(i, new JButton());
+					product.get(i).setBounds(x + i * 200, 70, 120, 167);
+				} else {
+					x = -500;
+					product.add(i, new JButton());
+					product.get(i).setBounds(x + i * 200, 320, 120, 167);
+				}
+				add(product.get(i));
+				setVisible(true);
 			}
-			add(product.get(i));
-			setVisible(true);
 		}
-	}
-
+		
 	private void setInitLayout() {
 		setSize(1920, 630);
 		setLocation(0, 400);
@@ -78,7 +78,7 @@ public class CheckBidPanel extends JPanel {
 		setBackground(Color.WHITE);
 		add(backgroundPanel);
 
-		ProductButton();
+		productButton();
 
 		cardList.add(new CardDTO(0, "image/card9.png", "[포켓몬스터] 파이리 카드", 1000));
 		cardList.add(new CardDTO(1, "image/card2.png", "[포켓몬스터] 개굴닌자 카드", 2000));
