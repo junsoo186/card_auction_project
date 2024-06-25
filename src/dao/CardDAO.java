@@ -135,4 +135,13 @@ public class CardDAO {
 		}
 	}
 
+	// 해당 id 카드의 가격 갱신 ( 종료된 옥션의 평균가로 )
+	public static void setCardPrice(int id) throws SQLException {
+		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
+			PreparedStatement pstmt = conn.prepareStatement(Query.CARD_SET_PRICE);
+			pstmt.setInt(1, id);
+			pstmt.executeUpdate();
+		}
+	}
+
 }
