@@ -88,9 +88,10 @@ public class Server {
 				InventoryDTO invenDTO = new InventoryDTO();
 				// 처음에 들어온 사용자들에게 현재 경매물품 리스트 송출
 				for (int i = 0; i < auctionList.size(); i++) {
-					broadCast("list#" + auctionList.get(i).getId() + "#" +auctionList.get(i).getName()
+					sendOrder("list#" + auctionList.get(i).getId() + "#" +auctionList.get(i).getName()
 							+ "#" + auctionList.get(i).getUrl() + "#" + startBid.get(i) + "#" + hour.get(i) + "#" + min.get(i) + 
 							"#" + highBid.get(i));
+					System.out.println("옥션 갯수 : " + auctionList.size());
 				}
 				while ((message = userOrder.readLine()) != null) {
 					System.out.println(message + " Server에서 읽음 ");
@@ -161,7 +162,7 @@ public class Server {
 						auctionList.add(dto);
 						System.out.println(dto.getName() + "카드 이름");
 						System.out.println(dto.getUrl() + " 카드 가격");
-						broadCast("list#" + dto.getId() + "#" + dto.getName() + "#" + dto.getUrl() + "#" + startBid
+						broadCast("list#" + dto.getId() + "#" + dto.getName() + "#" + dto.getUrl() + "#" + price
 								+ "#" + hourDB + "#" + minDB);
 
 					} else if (message.startsWith("EndAuctionList")) {
@@ -208,6 +209,15 @@ public class Server {
 						dto = UserDAO.infoUser(msg[1]);
 						sendOrder("userDTO#" + dto.getName() + "#" + dto.getNickname() + "#" + dto.getPassword() + "#"
 								+ dto.getPoint());
+					} else if (message.startsWith("remove")) {
+						String[] msg = message.split("#");
+						int num = Integer.valueOf(msg[1]);
+						auctionList.remove(num);
+						hour.remove(num);
+						min.remove(num);
+						startBid.remove(num);
+						highBid.remove(num);
+						System.out.println("경매 데이터 삭제 완료!!!!");
 					}
 				}
 			} catch (IOException e) {

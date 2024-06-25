@@ -90,7 +90,7 @@ public class AuctionDetailedPanel extends JPanel {
 		cardIcon = new JLabel(new ImageIcon(card.getUrl()));
 		cardName = new JLabel(" 카드명 : " + card.getName());
 		cardPrice = new JLabel(" 시작 가격 : " + auctionManager.getStartBid());
-		cardBid = new JLabel(" 현재 비드 가격 : " + auctionManager.getHighbid());
+		cardBid = new JLabel(" 현재 비드 가격 : " + mconText.socket.getHighBid().get(page));
 		endTime = new JLabel("종료시간" + auctionManager.getCurrent_time());
 
 		buyCard = new JButton("가격 제시하기");
@@ -161,6 +161,7 @@ public class AuctionDetailedPanel extends JPanel {
 	}
 
 	private void addDto() {
+		if(user.getName().equals(mconText.socket.getBidUser().get(page))) {		
 		AuctionDTO auction = new AuctionDTO();
 		auction.setEndDate(LocalDateTime.now().toString());
 		auction.setStartDate(auctionManager.getStartTime());
@@ -170,7 +171,9 @@ public class AuctionDetailedPanel extends JPanel {
 		mconText.socket.sendOrder("endAuctionDB#" + auction.getEndDate() + "#" + auction.getStartDate() + "#" 
 		+ auction.getBidPrice() + "#" + auction.getCardId() + "#" + auction.getName() + "#" + 
 		mconText.socket.getBidUser().get(page) +"#" + auctionManager.getHighbid());
+		mconText.socket.sendOrder("remove#" + page);
 		System.out.println("addDto 발동 되버림");
+		}
 	}
 
 	private void initListener() {
