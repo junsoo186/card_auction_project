@@ -95,6 +95,8 @@ public class AuctionPanel extends JPanel {
 			min.add(socket.getMin().get(i));
 			startBid.add(socket.getStartBid().get(i));
 			card = socket.getAuctionList().get(i);
+			System.out.println("소켓 사이즈 : " + socket.getAuctionList().size());
+			System.out.println("소켓 카드 리스트 URL!!!!!" + socket.getAuctionList().get(i));
 			cardList.add(card);
 		}
 		for (int i = 0; i < cardList.size(); i++) {
@@ -166,8 +168,8 @@ public class AuctionPanel extends JPanel {
 				public void mouseClicked(MouseEvent e) {
 					System.out.println(cardList.size());
 					panel.add(detailPage.get(num));
-					mconText.addPanel(8);
-					setVisible(8);
+					mconText.addPanel(9);
+					setVisible(9);
 				}
 			});
 		}
