@@ -147,6 +147,7 @@ public class AuctionPanel extends JPanel {
 		title.setBounds(860, 10, 800, 50);
 		add(title);
 		productButton();
+		
 	}
 
 	public void removeData() {
