@@ -68,15 +68,14 @@ public class QuitUserFrame extends JFrame {
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					try {
-						UserDTO checkUser=UserDAO.infoUser(user.getName());
-						if(user.getPassword()!=checkUser.getPassword()) {
-							System.out.println("유저 비밀번호 : "+user.getPassword());
-							System.out.println("체크 유저 비밀번호 : "+checkUser.getPassword());
-							JOptionPane.showMessageDialog(null,"비밀번호가 일치하지 않습니다.");
-							JOptionPane.showMessageDialog(null,"회원 탈퇴를 종료합니다.");
+						if(user.getPassword()==passwordField.getText()) {
+							new QuitFrame(user);
 							dispose();
 						} else {
-							new QuitFrame(user);
+							System.out.println("유저 비밀번호 : "+user.getPassword());
+							System.out.println("입력한 값 : "+passwordField.getText());
+							JOptionPane.showMessageDialog(null,"비밀번호가 일치하지 않습니다.");
+							JOptionPane.showMessageDialog(null,"회원 탈퇴를 종료합니다.");
 							dispose();
 						}
 					} catch (SQLException e1) {
@@ -94,11 +93,15 @@ public class QuitUserFrame extends JFrame {
 		decidePriceButton.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				try {
-					UserDTO checkUser=UserDAO.infoUser(user.getName());
-					if(user.getPassword()==checkUser.getPassword()) {
+					if(user.getPassword()==passwordField.getText()) {
 						new QuitFrame(user);
 						dispose();
 					} else {
+						System.out.println("유저 비밀번호 : "+user.getPassword());
+						System.out.println("입력한 값 : "+passwordField.getText());
+						Boolean a=user.getPassword().equals(passwordField.getText());
+						System.out.println(a);
+						System.out.println("입력한 값 : "+passwordField.getText());
 						JOptionPane.showMessageDialog(null,"비밀번호가 일치하지 않습니다.");
 						JOptionPane.showMessageDialog(null,"회원 탈퇴를 종료합니다.");
 						dispose();
