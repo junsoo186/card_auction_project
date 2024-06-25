@@ -1,9 +1,8 @@
 package swing;
 
+import java.awt.Choice;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
@@ -18,16 +17,17 @@ import javax.swing.JTextField;
 import dao.UserDAO;
 import dto.UserDTO;
 
-public class QuitUserFrame extends JFrame {
+public class QuitFrame extends JFrame {
 
 	private UserDTO user;
 
 	private JPanel backgroundPanel;
-	private JTextField passwordField;
+	private JTextField checkQuitField;
 	private JButton exitButton;
 	private JButton decidePriceButton;
+	private Choice insertReason;
 
-	public QuitUserFrame(UserDTO user) throws SQLException {
+	public QuitFrame(UserDTO user) throws SQLException {
 		System.out.println("회원 탈퇴");
 		this.user = user;
 		setInitLayout();
@@ -35,7 +35,7 @@ public class QuitUserFrame extends JFrame {
 	}
 
 	private void setInitLayout() {
-		setTitle("[회원 정보 확인]");
+		setTitle("[회원 탈퇴]");
 		setSize(500, 650);
 		setLocationRelativeTo(null);
 		setResizable(false);
@@ -48,42 +48,31 @@ public class QuitUserFrame extends JFrame {
 		backgroundPanel.setBackground(Color.WHITE);
 		add(backgroundPanel);
 
-		JLabel guidText = new JLabel(" 비밀번호를 입력해주세요. ");
+		JLabel guidText = new JLabel(" 정말로 탈퇴하시겠어요? 탈퇴하실 경우 '네, 탈퇴합니다.'를 입력해주세요.");
 		guidText.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 18));
-		passwordField = new JTextField(20);
-		decidePriceButton = new JButton("비밀번호 입력하기");
-		exitButton = new JButton("회원 정보 유지하기");
+		checkQuitField = new JTextField(20);
 		guidText.setBounds(60, 75, 400, 50);
-		passwordField.setBounds(80, 135, 200, 30);
+		checkQuitField.setBounds(80, 135, 200, 30);
+		
+		insertReason.add("서비스가 아쉬워서");
+		insertReason.add("찾는 카드가 존재하지 않아서");
+		insertReason.add("상품들의 가격이 비싸서");
+		insertReason.add("사이트 사용이 불편해서");
+		insertReason.add("더 편한 사이트를 찾게 되어서");
+		insertReason.add("포켓몬스터 카드에 흥미가 떨어져서");
+		insertReason.add("현생이 너무 힘들어서");
+		insertReason.setBounds(100,100,300,70);
+		add(insertReason);
+		
+		decidePriceButton = new JButton("회원 탈퇴하기");
+		exitButton = new JButton("회원 정보 유지하기");
 		decidePriceButton.setBounds(80, 185, 90, 30);
 		exitButton.setBounds(185, 185, 90, 30);
 
 		backgroundPanel.add(guidText);
-		backgroundPanel.add(passwordField);
+		backgroundPanel.add(checkQuitField);
 		backgroundPanel.add(decidePriceButton);
 		backgroundPanel.add(exitButton);
-		
-		passwordField.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(KeyEvent e) {
-				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-					try {
-						if(user.getPassword()==passwordField.getText()) {
-							new QuitFrame(user);
-							dispose();
-						} else {
-							System.out.println("유저 비밀번호 : "+user.getPassword());
-							System.out.println("입력한 값 : "+passwordField.getText());
-							JOptionPane.showMessageDialog(null,"비밀번호가 일치하지 않습니다.");
-							JOptionPane.showMessageDialog(null,"회원 탈퇴를 종료합니다.");
-							dispose();
-						}
-					} catch (SQLException e1) {
-						e1.printStackTrace();
-					}
-				}
-			}
-		});
 
 		setVisible(true);
 	}
@@ -93,15 +82,11 @@ public class QuitUserFrame extends JFrame {
 		decidePriceButton.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				try {
-					if(user.getPassword()==passwordField.getText()) {
+					UserDTO checkUser=UserDAO.infoUser(user.getName());
+					if(user.getPassword()==checkUser.getPassword()) {
 						new QuitFrame(user);
 						dispose();
 					} else {
-						System.out.println("유저 비밀번호 : "+user.getPassword());
-						System.out.println("입력한 값 : "+passwordField.getText());
-						Boolean a=user.getPassword().equals(passwordField.getText());
-						System.out.println(a);
-						System.out.println("입력한 값 : "+passwordField.getText());
 						JOptionPane.showMessageDialog(null,"비밀번호가 일치하지 않습니다.");
 						JOptionPane.showMessageDialog(null,"회원 탈퇴를 종료합니다.");
 						dispose();
@@ -123,5 +108,5 @@ public class QuitUserFrame extends JFrame {
 	public static void main(String[] args) {
 		
 	}
-
+	
 }

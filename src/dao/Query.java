@@ -20,6 +20,7 @@ public class Query {
 	public static final String CARD_INFO_NAME = " SELECT * FROM card WHERE name = ? ";
 	public static final String CARD_UPDATE_ID = " UPDATE card SET url = ?, name = ?, price = ? WHERE id = ? ";
 	public static final String CARD_UPDATE_NAME = " UPDATE card SET url = ?, name = ?, price = ? WHERE name = ? ";
+	public static final String CARD_SET_PRICE = " UPDATE card SET price = (SELECT ROUND(AVG(bid_price)) FROM auction WHERE card_id = ?) WHERE id = ?  ";
 	public static final String CARD_DELETE_ID = " DELETE FROM card WHERE id = ? ";
 	public static final String CARD_AVGPRICE = " SELECT name, AVG(price) as price FROM card WHERE name = ? GROUP BY name = ? ";
 
