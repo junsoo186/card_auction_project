@@ -82,12 +82,12 @@ public class UserDAO {
 	}
 
 	// 유저 이름으로 수정 ( 비밀번호, 닉네임)
-	public static void updateUser(String name, UserDTO dto) throws SQLException {
+	public static void updateUser(String nickName,String password, UserDTO dto) throws SQLException {
 		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
 			PreparedStatement pstmt = conn.prepareStatement(Query.USER_UPDATE_NAME);
-			pstmt.setString(1, dto.getPassword());
-			pstmt.setString(2, dto.getNickname());
-			pstmt.setString(3, name);
+			pstmt.setString(1, password);
+			pstmt.setString(2, nickName);
+			pstmt.setString(3, dto.getName());
 			pstmt.executeUpdate();
 			System.out.println("비번,닉네임 수정완료");
 		}

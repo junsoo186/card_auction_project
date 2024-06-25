@@ -22,6 +22,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -37,8 +38,7 @@ import manager.SocketManager;
 public class MainFrame extends JFrame implements Runnable {
 	private int adFinder;
 	public SocketManager socket;
-	public LogOut logOut;
-	MainFrame mainFrame;
+	MainFrame mainFrame ;
 
 	private UserDTO user;
 	private JLabel id;
@@ -102,7 +102,6 @@ public class MainFrame extends JFrame implements Runnable {
 	public MainFrame(UserDTO user, SocketManager socket) {
 		this.socket = socket;
 		this.user = user;
-
 		getList();
 		initData();
 		setInitLayout();
@@ -298,11 +297,10 @@ public class MainFrame extends JFrame implements Runnable {
 			backgroundPanel.add(panels.get(i));
 			panels.get(i).setVisible(false);
 		}
-		auctionPanel.removeData();
+		setVisible(true);
+		backgroundPanel.setVisible(true);
 		auctionPanel.addAuction();
 		setVisible(0);
-		backgroundPanel.setVisible(true);
-		setVisible(true);
 	}
 
 	public void setVisible(int state) {
@@ -501,7 +499,9 @@ public class MainFrame extends JFrame implements Runnable {
 		logoutButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				new LogOut(socket, mainFrame);
+				JOptionPane.showMessageDialog(null,"로그아웃이 완료되었습니다.");
+				new LogInFrame();
+				dispose();
 			}
 		});
 
