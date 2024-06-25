@@ -78,6 +78,9 @@
 
 &nbsp; 
 ![캐시 충전](https://github.com/junsoo186/card_auction_project/assets/169410809/1a8816d0-37ce-4c68-a8e5-7208de39c897)
+
+
+
 9. 광고 배너
 ![Screenshot_2](https://github.com/junsoo186/card_auction_project/assets/169410809/55c2c5d0-a5f9-442e-bc56-aff179821730)
 
