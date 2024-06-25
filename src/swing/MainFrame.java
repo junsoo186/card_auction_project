@@ -220,16 +220,13 @@ public class MainFrame extends JFrame implements Runnable {
 		searchButton.setFocusPainted(false);
 		backgroundLabel.add(searchButton);
 
-		
-		
-		
 		logoutButton = new JButton(new ImageIcon("image/로그아웃.png"));
-		logoutButton.setBounds(1750,50 , 70, 70);
+		logoutButton.setBounds(1750, 50, 70, 70);
 		logoutButton.setBorderPainted(false);
 		logoutButton.setContentAreaFilled(false);
 		logoutButton.setFocusPainted(false);
 		backgroundLabel.add(logoutButton);
-		
+
 		// ------------광고 --------------
 
 		Icon adIcon = new ImageIcon("image/광고.png");
@@ -362,6 +359,7 @@ public class MainFrame extends JFrame implements Runnable {
 		buttons[2].addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				System.out.println("시세 체크로 이동");
+				checkBidPanel.clickBidCheckPanel();
 				if (panels.size() > 9) {
 					removePanel();
 				}
@@ -499,7 +497,7 @@ public class MainFrame extends JFrame implements Runnable {
 			}
 
 		});
-		
+
 		logoutButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -508,7 +506,7 @@ public class MainFrame extends JFrame implements Runnable {
 		});
 
 	}
-	
+
 	public void logout() {
 		this.dispose();
 	}
