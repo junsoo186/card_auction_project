@@ -21,12 +21,12 @@ import manager.SocketManager;
 
 public class MyPagePanel extends JPanel {
 
-	public JLabel getNickName() {
+	public static JLabel getNickName() {
 		return nickName;
 	}
 
-	public void setNickName(JLabel nickName) {
-		this.nickName = nickName;
+	public static void setNickName(JLabel nickName1) {
+		nickName = nickName1;
 	}
 
 	private MainFrame mContext;
@@ -39,7 +39,7 @@ public class MyPagePanel extends JPanel {
 	private JButton quitButton;
 
 	private JLabel name;
-	private JLabel nickName;
+	private static JLabel nickName;
 	private JLabel currentPoint;
 	private JLabel cardNumber;
 	private JLabel profileLabel;
