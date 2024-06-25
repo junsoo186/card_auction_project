@@ -38,7 +38,7 @@ import manager.SocketManager;
 public class MainFrame extends JFrame implements Runnable {
 	private int adFinder;
 	public SocketManager socket;
-	MainFrame mainFrame ;
+	MainFrame mainFrame;
 
 	private UserDTO user;
 	private JLabel id;
@@ -312,7 +312,7 @@ public class MainFrame extends JFrame implements Runnable {
 		System.out.println("잔돈 : " + user.getPoint());
 		cash.setText(user.getPoint() + " 원");
 		myPagePanel.getPoint().setText(" 포인트 : " + user.getPoint());
-		
+
 	}
 
 	public void addPanel(int state) {
@@ -405,9 +405,12 @@ public class MainFrame extends JFrame implements Runnable {
 				if (state == 5 || state == 6) {
 					inventoryPanel.searchInventory(searchBar.getText());
 					setVisible(5);
-				} else if (state == 1 || state == 8) {
+				} else if (state == 1 || state == 7) {
 					finishedPanel.searchEndAuction(searchBar.getText());
 					setVisible(1);
+				} else if (state == 2 || state == 8) {
+					checkBidPanel.searchInventory(searchBar.getText());
+					setVisible(2);
 				}
 			}
 		});
@@ -490,7 +493,7 @@ public class MainFrame extends JFrame implements Runnable {
 		logoutButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				JOptionPane.showMessageDialog(null,"로그아웃이 완료되었습니다.");
+				JOptionPane.showMessageDialog(null, "로그아웃이 완료되었습니다.");
 				new LogInFrame();
 				dispose();
 			}
