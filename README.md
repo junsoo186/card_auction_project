@@ -83,7 +83,9 @@
 
 
 9. 광고 배너
-![Screenshot_2](https://github.com/junsoo186/card_auction_project/assets/169410809/55c2c5d0-a5f9-442e-bc56-aff179821730)
+![Screenshot_5](https://github.com/junsoo186/card_auction_project/assets/169410809/01ecca12-7ca8-4130-b78a-a4f2690cd78f)
+
+![Screenshot_4](https://github.com/junsoo186/card_auction_project/assets/169410809/9f02b22c-2faf-41d7-9090-6ed2879210ac)
 
 
 
