@@ -16,10 +16,12 @@ import javax.swing.border.TitledBorder;
 
 import dto.UserDTO;
 import lombok.Data;
+import manager.SocketManager;
 
 public class MyPagePanel extends JPanel {
 
 	private MainFrame mContext;
+	private SocketManager socket;
 
 	private JPanel backgroundPanel;
 	private JLabel title;
@@ -41,7 +43,8 @@ public class MyPagePanel extends JPanel {
 
 	public MyPagePanel(MainFrame mContext) {
 		this.mContext = mContext;
-		user = mContext.getUser();
+		this.user = mContext.getUser();
+		this.socket=mContext.socket;
 		initData();
 		setInitLayout();
 		initListener();
@@ -119,16 +122,23 @@ public class MyPagePanel extends JPanel {
 	}
 
 	private void initListener() {
-		// 진행중인 경매 이동
+		// 회원 정보 수정
 		updateButton.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				System.out.println("회원정보수정 클릭");
 				try {
 					new CheckUserFrame(user,true,mContext);
-				} catch (SQLException e1) {
+					Thread.sleep(5000);
+				} catch (SQLException | InterruptedException e1) {
 					e1.printStackTrace();
 				}
+				socket.sendOrder("refresh#" + user.getName());
+				System.out.println("유저 아이디 : "+user.getName());
+				System.out.println("유저 닉네임 : "+user.getNickname());
+				System.out.println("유저 비밀번호 : "+user.getPassword());
+				nickName.setText(" 닉네임 : " + user.getNickname());
 			}
+			
 			
 		});
 		// 진행중인 경매 이동

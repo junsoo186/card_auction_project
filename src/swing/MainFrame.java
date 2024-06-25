@@ -279,7 +279,7 @@ public class MainFrame extends JFrame implements Runnable {
 		buttons[5] = new JButton();
 		buttons[5].setBounds(1657, 50, 70, 70);
 		buttons[5].setBackground(null);
-		buttons[5].setBorderPainted(true);
+		buttons[5].setBorderPainted(false);
 		buttons[5].setContentAreaFilled(false);
 
 		backgroundLabel.add(buttons[5]);
@@ -313,6 +313,7 @@ public class MainFrame extends JFrame implements Runnable {
 		System.out.println("잔돈 : " + user.getPoint());
 		cash.setText(user.getPoint() + " 원");
 		myPagePanel.getPoint().setText(" 포인트 : " + user.getPoint());
+		
 	}
 
 	public void addPanel(int state) {
