@@ -274,6 +274,7 @@ public class MainFrame extends JFrame implements Runnable {
 		buttons[0] = new JButton("진행 중인 경매");
 		buttons[1] = new JButton("종료된 경매");
 		buttons[2] = new JButton("시세 알아보기");
+<<<<<<< HEAD
 		buttons[3] = new JButton("마이 페이지");
 		buttons[4] = new JButton();
 		buttons[4].setBounds(1657, 50, 70, 70);
@@ -303,6 +304,19 @@ public class MainFrame extends JFrame implements Runnable {
 		backgroundLabel.add(buttons[4]);
 		for (int i = 0; i < 4; i++) {
 			buttons[i].setBounds(300 + i * 300, 195, 200, 50);
+=======
+		buttons[3] = new JButton("경매 출품하기");
+		buttons[4] = new JButton("마이 페이지");
+		buttons[5] = new JButton();
+		buttons[5].setBounds(1657, 50, 70, 70);
+		buttons[5].setBackground(null);
+		buttons[5].setBorderPainted(false);
+		buttons[5].setContentAreaFilled(false);
+
+		backgroundLabel.add(buttons[5]);
+		for (int i = 0; i < 5; i++) {
+			buttons[i].setBounds(300 + i * 300, 175, 200, 50);
+>>>>>>> f92ce5a248b0b194342fd8704c1c127df832eec4
 			buttons[i].setBackground(new Color(255, 204, 3));
 			buttons[i].setFont(new Font("Freesentation 7 Bold", Font.BOLD, 25));
 			buttons[i].setBorderPainted(false);
@@ -331,6 +345,7 @@ public class MainFrame extends JFrame implements Runnable {
 		System.out.println("잔돈 : " + user.getPoint());
 		cash.setText(user.getPoint() + " 원");
 		myPagePanel.getPoint().setText(" 포인트 : " + user.getPoint());
+		
 	}
 
 	public void addPanel(int state) {

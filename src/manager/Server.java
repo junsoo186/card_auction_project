@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Vector;
 
+import javax.swing.JOptionPane;
+
 import dao.AuctionDAO;
 import dao.CardDAO;
 import dao.InventoryDAO;
@@ -20,6 +22,7 @@ import dto.AuctionDTO;
 import dto.CardDTO;
 import dto.InventoryDTO;
 import dto.UserDTO;
+import swing.LogInFrame;
 
 public class Server {
 
@@ -97,7 +100,6 @@ public class Server {
 				while ((message = userOrder.readLine()) != null) {
 					System.out.println(message + " Server에서 읽음 ");
 					if (message.startsWith("chat")) {
-						broadCast(message);
 					} else if (message.startsWith("sell")) {
 						String[] sell = message.split("#");
 						productName.add(sell[1]);
@@ -234,6 +236,20 @@ public class Server {
 						highBid.remove(num);
 						seller.remove(num);
 						System.out.println("경매 데이터 삭제 완료!!!!");
+						
+						// 회원 정보 수정 프로토콜
+					} else if(message.startsWith("updateUserInfo")) {
+						String [] msg=message.split("#");
+						UserDAO.updateUser(msg[1], msg[2], msg[3]);
+						System.out.println("회원 정보 수정 완료");
+						JOptionPane.showMessageDialog(null,"회원 정보 수정이 완료되었습니다.");
+						
+						// 회원 탈퇴 프로토콜
+					} else if(message.startsWith("quitUser")) {
+						String [] msg=message.split("#");
+						UserDAO.deleteUser(msg[1]);
+						System.out.println("회원 탈퇴 완료");
+						JOptionPane.showMessageDialog(null,"회원 탈퇴가 완료되었습니다.");
 					}
 				}
 			} catch (IOException e) {
