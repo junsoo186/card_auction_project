@@ -108,6 +108,14 @@ public class InventoryPanel extends JPanel {
 		}
 	}
 
+	// 버튼에 이미지 다 삭제
+	public void reset() {
+		for (int i = 0; i < buttons.size(); i++) {
+			buttons.get(i).setIcon(null);
+			buttons.get(i).setVisible(false);
+		}
+	}
+	
 	// 버튼에 카드이미지 URL 삽입함수
 	public void createProduct(ArrayList<CardDTO> inventory) {
 		for (int i = 0; i < buttons.size(); i++) {

@@ -6,7 +6,7 @@ public class Query {
 	public static final String USER_ADD = " INSERT INTO user(name, password, nickname, point) VALUES(?, ?, ?, ?) ";
 	public static final String USER_INFO_ALL = " SELECT * FROM user ";
 	public static final String USER_INFO_NAME = " SELECT * FROM user WHERE name = ? ";
-	public static final String USER_UPDATE_NAME = " UPDATE user SET password = ?, nickname = ? WHERE name = ? ";
+	public static final String USER_UPDATE_NAME = " UPDATE user SET nickname = ?, password = ? WHERE name = ? ";
 	public static final String USER_POINT_NAME = " UPDATE user SET point = ? WHERE name = ? ";
 	public static final String USER_SUBTARCT_POINT = " UPDATE user SET point = point - ? WHERE name = ? ";
 	public static final String USER_ADD_POINT = " UPDATE user SET point = point + ? WHERE name = ? ";
@@ -35,5 +35,6 @@ public class Query {
 
 	// InventoryDAO 쿼리
 	public static final String INVEN_ADD = " INSERT INTO inventory(name, card_id) VALUES(?, ?) ";
+	public static final String INVEN_REMOVE = " DELETE FROM inventory WHERE NAME = ? AND card_id = ? limit 1 ";
 	public static final String INVEN_INFO_ID = " SELECT c.url, c.name , c.id , c.price FROM inventory i JOIN user u ON i.name = u.name JOIN card c ON i.card_id = c.id WHERE i.name = ? ";
 }

@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Vector;
 
+import javax.swing.JOptionPane;
+
 import dao.AuctionDAO;
 import dao.CardDAO;
 import dao.InventoryDAO;
@@ -20,6 +22,7 @@ import dto.AuctionDTO;
 import dto.CardDTO;
 import dto.InventoryDTO;
 import dto.UserDTO;
+import swing.LogInFrame;
 
 public class Server {
 
@@ -97,7 +100,6 @@ public class Server {
 				while ((message = userOrder.readLine()) != null) {
 					System.out.println(message + " Server에서 읽음 ");
 					if (message.startsWith("chat")) {
-						broadCast(message);
 					} else if (message.startsWith("sell")) {
 						String[] sell = message.split("#");
 						productName.add(sell[1]);
@@ -197,6 +199,7 @@ public class Server {
 					} else if (message.startsWith("endAuctionDB")) {
 						String[] msg = message.split("#");
 						AuctionDTO dto = new AuctionDTO();
+						InventoryDTO inven = new InventoryDTO();
 						int price = Integer.valueOf(msg[3]);
 						int card = Integer.valueOf(msg[4]);
 						int num = Integer.valueOf(msg[7]);
@@ -205,16 +208,26 @@ public class Server {
 						dto.setEndDate(msg[1]);
 						dto.setStartDate(msg[2]);
 						dto.setName(msg[5]);
+						inven.setCardId(card);
+						inven.setName(msg[5]);
+						InventoryDAO.invenAdd(inven); // 구매 유저 카드 추가
+						System.out.println(msg[5] + " : 카드 추가");
+						inven.setCardId(card);
+						inven.setName(seller.get(num));
+						InventoryDAO.invenRemove(inven); // 판매 유저 카드 제거
+						System.out.println(seller.get(num) + "  : 카드 제거");
 						AuctionDAO.addAuction(dto);
 						CardDAO.setCardPrice(card); // 카드가격갱신(옥션평균가로)
-						UserDAO.subtractPoint(msg[6], price);
-						UserDAO.addPoint(seller.get(num), price);
+						UserDAO.subtractPoint(msg[6], price); // 구매 유저 포인트 제거
+						UserDAO.addPoint(seller.get(num), price); // 판매 유저 포인트 추가
 					} else if (message.startsWith("refresh")) {
 						String[] msg = message.split("#");
 						UserDTO dto = new UserDTO();
 						dto = UserDAO.infoUser(msg[1]);
 						sendOrder("userDTO#" + dto.getName() + "#" + dto.getNickname() + "#" + dto.getPassword() + "#"
 								+ dto.getPoint());
+						System.out.println("aaa"+dto.getNickname());
+						System.out.println("aaa"+dto.getPassword());
 					} else if (message.startsWith("remove")) {
 						String[] msg = message.split("#");
 						int num = Integer.valueOf(msg[1]);
@@ -225,6 +238,20 @@ public class Server {
 						highBid.remove(num);
 						seller.remove(num);
 						System.out.println("경매 데이터 삭제 완료!!!!");
+						
+						// 회원 정보 수정 프로토콜
+					} else if(message.startsWith("updateUserInfo")) {
+						String [] msg=message.split("#");
+						UserDAO.updateUser(msg[1], msg[2], msg[3]);
+						System.out.println("회원 정보 수정 완료");
+						JOptionPane.showMessageDialog(null,"회원 정보 수정이 완료되었습니다.");
+						
+						// 회원 탈퇴 프로토콜
+					} else if(message.startsWith("quitUser")) {
+						String [] msg=message.split("#");
+						UserDAO.deleteUser(msg[1]);
+						System.out.println("회원 탈퇴 완료");
+						JOptionPane.showMessageDialog(null,"회원 탈퇴가 완료되었습니다.");
 					}
 				}
 			} catch (IOException e) {

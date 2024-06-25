@@ -30,12 +30,14 @@ public class SellFrame extends JFrame {
 	private JButton exitButton;
 	private JButton decidePriceButton;
 	private SocketManager socket;
+	private MainFrame mContext;
 
-	public SellFrame(UserDTO userDTO, CardDTO cardDTO, SocketManager socket) {
+	public SellFrame(UserDTO userDTO, CardDTO cardDTO, SocketManager socket , MainFrame mContext) {
 		System.out.println("가격제시 생성");
 		this.socket = socket;
 		this.cardDTO = cardDTO;
 		this.userDTO = userDTO;
+		this.mContext = mContext;
 		setInitLayout();
 		initListener();
 		addEventListener();
@@ -97,6 +99,7 @@ public class SellFrame extends JFrame {
 	private void initListener() {
 		decidePriceButton.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
+				
 				socket.sendOrder("auction#" + cardDTO.getId() + "#" + addPriceField.getText() + "#"
 						+ addEndhour.getText() + "#" + addEndmin.getText() + "#" + userDTO.getName());
 				System.out.println("서버에 카드 아이디 전송");

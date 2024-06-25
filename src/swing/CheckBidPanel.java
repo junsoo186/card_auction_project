@@ -118,15 +118,15 @@ public class CheckBidPanel extends JPanel {
 
 	// 버튼 10개 생성
 	public void productButton() {
-		int x = 106;
+		int x = 45;
 		for (int i = 0; i < 10; i++) {
 			if (i < 5) {
 				buttons.add(i, new JButton());
-				buttons.get(i).setBounds(x + i * 190, 120, 120, 167);
+				buttons.get(i).setBounds(x + i * 200, 65, 120, 167);
 			} else {
-				x = -844;
+				x = -958;
 				buttons.add(i, new JButton());
-				buttons.get(i).setBounds(x + i * 190, 330, 120, 167);
+				buttons.get(i).setBounds(x + i * 200, 315, 120, 167);
 			}
 			bag.add(buttons.get(i));
 			setVisible(true);
