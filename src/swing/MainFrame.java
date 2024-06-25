@@ -380,12 +380,13 @@ public class MainFrame extends JFrame implements Runnable {
 		buttons[4].addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				System.out.println("인벤토리로 이동");
+				inventoryPanel.clickInventoryPanel();
 				// 보관함 정보가 열려있으면 닫아주기
 				if (panels.size() > 9) {
 					removePanel();
 				}
-				inventoryPanel.reset();
-				inventoryPanel.createProduct(userInventory);
+//				inventoryPanel.reset();
+//				inventoryPanel.createProduct(userInventory);
 				setVisible(5);
 			}
 		});
