@@ -33,6 +33,7 @@ public class Server {
 	private static ArrayList<Integer> min = new ArrayList<>(); // 분 저장
 	private static ArrayList<Integer> highBid = new ArrayList<>(); // 경매 현재 가격
 	private static ArrayList<Integer> startBid = new ArrayList<>(); // 경매 시작 가격
+	private static ArrayList<String> seller = new ArrayList<>(); // 판매자 이름
 	private static Random random = new Random();
 
 	public Server() {
@@ -137,6 +138,7 @@ public class Server {
 						int price = Integer.valueOf(msg[1]);
 						int num = Integer.valueOf(msg[2]);
 						highBid.add(num, price);
+						System.out.println(highBid.get(num) + " 하이비드 변경 완료");
 						broadCast(message);
 					} else if (message.startsWith("cash")) {
 						String[] cash = message.split("#");
@@ -150,6 +152,7 @@ public class Server {
 						int price = Integer.valueOf(cardId[2]);
 						int hourDB = Integer.valueOf(cardId[3]);
 						int minDB = Integer.valueOf(cardId[4]);
+						String name = cardId[5];
 						System.out.println("카드 id 받아옴 : " + id);
 						System.out.println("시간 받아옴 : " + hourDB);
 						System.out.println("분 받아옴 : " + minDB);
@@ -157,6 +160,7 @@ public class Server {
 						min.add(minDB);
 						startBid.add(price);
 						highBid.add(price);
+						seller.add(name);
 						CardDTO dto = new CardDTO();
 						dto = CardDAO.infoCard(id);
 						auctionList.add(dto);
@@ -195,7 +199,7 @@ public class Server {
 						AuctionDTO dto = new AuctionDTO();
 						int price = Integer.valueOf(msg[3]);
 						int card = Integer.valueOf(msg[4]);
-						int money = Integer.valueOf(msg[7]);
+						int num = Integer.valueOf(msg[7]);
 						dto.setBidPrice(price);
 						dto.setCardId(card);
 						dto.setEndDate(msg[1]);
@@ -203,7 +207,8 @@ public class Server {
 						dto.setName(msg[5]);
 						AuctionDAO.addAuction(dto);
 						CardDAO.setCardPrice(card); // 카드가격갱신(옥션평균가로)
-						UserDAO.subtractPoint(msg[6], money);
+						UserDAO.subtractPoint(msg[6], price);
+						UserDAO.addPoint(seller.get(num), price);
 					} else if (message.startsWith("refresh")) {
 						String[] msg = message.split("#");
 						UserDTO dto = new UserDTO();
@@ -218,6 +223,7 @@ public class Server {
 						min.remove(num);
 						startBid.remove(num);
 						highBid.remove(num);
+						seller.remove(num);
 						System.out.println("경매 데이터 삭제 완료!!!!");
 					}
 				}

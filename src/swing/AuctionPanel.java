@@ -29,7 +29,7 @@ public class AuctionPanel extends JPanel {
 	private JLabel title;
 	private CardDTO cardDTO;
 	private UserDTO user;
-	private AuctionDetailedPanel detailPage;
+	private ArrayList<AuctionDetailedPanel> detailPage = new ArrayList<>();
 	private AuctionManager auctionManager;
 	private SocketManager socket;
 	private ArrayList<Integer> hour = new ArrayList<>();
@@ -101,6 +101,10 @@ public class AuctionPanel extends JPanel {
 			System.out.println("경매 카드리스트 사이즈 : " + cardList.size());
 			createProduct(cardList.get(i));
 		}
+		for (int i = 0; i < cardList.size(); i++) {
+			detailPage.add(new AuctionDetailedPanel(cardList.get(i), user, auctionManager, hour.get(i),
+					min.get(i), startBid.get(i), mconText, i));
+		}
 	}
 
 	private void setVisible(int state) {
@@ -145,6 +149,7 @@ public class AuctionPanel extends JPanel {
 		startBid.removeAll(startBid);
 		hour.removeAll(hour);
 		min.removeAll(min);
+		detailPage.removeAll(detailPage);
 	}
 
 	private void initListener() {
@@ -160,9 +165,7 @@ public class AuctionPanel extends JPanel {
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					System.out.println(cardList.size());
-					detailPage = new AuctionDetailedPanel(cardList.get(num), user, auctionManager, hour.get(num),
-							min.get(num), startBid.get(num), mconText, num);
-					panel.add(detailPage);
+					panel.add(detailPage.get(num));
 					mconText.addPanel(8);
 					setVisible(8);
 				}
