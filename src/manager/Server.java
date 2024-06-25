@@ -196,6 +196,7 @@ public class Server {
 					} else if (message.startsWith("endAuctionDB")) {
 						String[] msg = message.split("#");
 						AuctionDTO dto = new AuctionDTO();
+						InventoryDTO inven = new InventoryDTO();
 						int price = Integer.valueOf(msg[3]);
 						int card = Integer.valueOf(msg[4]);
 						int num = Integer.valueOf(msg[7]);
@@ -204,10 +205,18 @@ public class Server {
 						dto.setEndDate(msg[1]);
 						dto.setStartDate(msg[2]);
 						dto.setName(msg[5]);
+						inven.setCardId(card);
+						inven.setName(msg[5]);
+						InventoryDAO.invenAdd(inven); // 구매 유저 카드 추가
+						System.out.println(msg[5] + " : 카드 추가");
+						inven.setCardId(card);
+						inven.setName(seller.get(num));
+						InventoryDAO.invenRemove(inven); // 판매 유저 카드 제거
+						System.out.println(seller.get(num) + "  : 카드 제거");
 						AuctionDAO.addAuction(dto);
 						CardDAO.setCardPrice(card); // 카드가격갱신(옥션평균가로)
-						UserDAO.subtractPoint(msg[6], price);
-						UserDAO.addPoint(seller.get(num), price);
+						UserDAO.subtractPoint(msg[6], price); // 구매 유저 포인트 제거
+						UserDAO.addPoint(seller.get(num), price); // 판매 유저 포인트 추가
 					} else if (message.startsWith("refresh")) {
 						String[] msg = message.split("#");
 						UserDTO dto = new UserDTO();
