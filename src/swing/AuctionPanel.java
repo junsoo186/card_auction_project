@@ -79,6 +79,7 @@ public class AuctionPanel extends JPanel {
 			if (i < 5) {
 				buttons.add(i, new JButton());
 				buttons.get(i).setBounds(x + i * 200, 65, 120, 167);
+				
 			} else {
 				x = -958;
 				buttons.add(i, new JButton());
@@ -86,6 +87,8 @@ public class AuctionPanel extends JPanel {
 			}
 			backImage.add(buttons.get(i));
 			setVisible(true);
+			
+			
 		}
 	}
 
@@ -136,6 +139,7 @@ public class AuctionPanel extends JPanel {
 		previousPage.setBounds(300, 50, 150, 50);
 		add(previousPage);
 
+		
 		
 		setSize(1920, 630);
 		setLocation(0, 400);
