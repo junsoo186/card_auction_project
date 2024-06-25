@@ -86,9 +86,15 @@ public class CheckUserFrame extends JFrame {
 								dispose();
 							}
 						} else {
-							JOptionPane.showMessageDialog(null,"비밀번호가 일치하지 않습니다.");
-							JOptionPane.showMessageDialog(null,"회원 탈퇴를 종료합니다.");
-							dispose();
+							if(purpose==true) {
+								JOptionPane.showMessageDialog(null,"비밀번호가 일치하지 않습니다.");
+								JOptionPane.showMessageDialog(null,"회원 정보 수정을 종료합니다.");
+								dispose();
+							} else {
+								JOptionPane.showMessageDialog(null,"비밀번호가 일치하지 않습니다.");
+								JOptionPane.showMessageDialog(null,"회원 탈퇴를 종료합니다.");
+								dispose();
+							}
 						}
 					} catch (SQLException e1) {
 						e1.printStackTrace();

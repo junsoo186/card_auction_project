@@ -35,12 +35,14 @@ public class UpdateUserFrame extends JFrame {
 	private SocketManager socket;
 	
 	private UserDTO newUser;
+	private String userName;
 	private String newNick;
 	private String newPass;
 
 	public UpdateUserFrame(UserDTO user,MainFrame mContext) {
 		System.out.println("회원 정보 수정");
 		this.user = user;
+		this.mContext=mContext;
 		setInitLayout();
 		initListener();
 	}
@@ -88,9 +90,8 @@ public class UpdateUserFrame extends JFrame {
 		backgroundPanel.add(insertButton);
 		backgroundPanel.add(exitButton);
 		
-		newNick=nickField.getText();
-		newPass=passField.getText();
-
+		
+		
 		setVisible(true);
 	}
 
@@ -98,15 +99,26 @@ public class UpdateUserFrame extends JFrame {
 		// 회원정보 수정 버튼
 		insertButton.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				newUser=new UserDTO(user.getName(),newPass,newNick,user.getPoint());
-				try {
-					UserDAO.updateUser(newPass,newUser);
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				System.out.println();
-				dispose();
+				newNick=nickField.getText();
+				newPass=passField.getText();
+				userName=user.getName();
+				if(newNick.equals("")||newPass.equals("")||userName.equals("")) {
+					JOptionPane.showMessageDialog(null,"잘못된 정보를 입력했습니다. 다시 입력해주세요.");
+				}else {
+					socket.sendOrder("updateUserInfo#"+newNick+"#"+newPass+"#"+userName);
+					System.out.println("새로운 닉네임 : " + newNick);
+					System.out.println("새로운 패스워드 : " + newPass);
+					JOptionPane.showMessageDialog(null,"회원 정보가 성공적으로 수정되었습니다.");
+					try {
+						Thread.sleep(500);
+					} catch (InterruptedException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					System.out.println(user);
+						//UserDAO.updateUser(newPass,newUser);
+					dispose();
+				}	
 			}
 
 		});
