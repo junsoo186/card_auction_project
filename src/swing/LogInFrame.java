@@ -33,6 +33,7 @@ public class LogInFrame extends JFrame {
 	private JButton logInButton;
 	private JButton signUpButton;
 
+
 	private JLabel title;
 
 	public LogInFrame() {
@@ -111,7 +112,6 @@ public class LogInFrame extends JFrame {
 		logInButton.setBorderPainted(false);
 		logInButton.setContentAreaFilled(false);
 		backgroundLabel.add(logInButton);
-
 		signUpButton = new JButton();
 		signUpButton.setBounds(965, 852, 233, 95);
 		signUpButton.setBackground(null);

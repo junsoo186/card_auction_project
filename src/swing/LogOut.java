@@ -1,19 +1,27 @@
 package swing;
 
 import java.awt.Color;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import manager.SocketManager;
+
 public class LogOut extends JFrame {
-	
+	SocketManager mContext;
+	MainFrame mainFrame;
 	JLabel logoutBack;
 	JButton logoutButton;
 	
-	public LogOut() {
+	public LogOut(SocketManager mContext, MainFrame mainFrame) {
+		this.mContext = mContext;
+		this.mainFrame = mainFrame;
 		initData();
 		setInitLayout();
+		initListener();
 		
 	}
 	
@@ -36,9 +44,16 @@ public class LogOut extends JFrame {
 		logoutButton.setBounds(90,90,100,30);
 		add(logoutButton);
 	}
-	
-	
-	public static void main(String[] args) {
-		new LogOut();
+	public void initListener() {
+		logoutButton.addMouseListener(new MouseAdapter() {
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			
+			dispose();
+		}
+		});
 	}
+	
+	
+	
 }

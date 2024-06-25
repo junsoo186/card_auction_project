@@ -60,6 +60,7 @@ public class MainFrame extends JFrame implements Runnable {
 	private JButton directoryButton;
 	private JButton adButton;
 	private JButton adButton2;
+	private JButton logoutButton;
 
 	private Icon pointIcon;
 
@@ -216,6 +217,17 @@ public class MainFrame extends JFrame implements Runnable {
 		searchButton.setFocusPainted(false);
 		backgroundLabel.add(searchButton);
 
+		
+		
+		
+		logoutButton = new JButton("로그인");
+		searchButton.setBounds(1600, 270, 70, 70);
+		searchButton.setBackground(null);
+		searchButton.setBorderPainted(false);
+		searchButton.setContentAreaFilled(false);
+		searchButton.setFocusPainted(false);
+		backgroundLabel.add(logoutButton);
+		
 		// ------------광고 --------------
 
 		Icon adIcon = new ImageIcon("image/광고.png");
