@@ -53,7 +53,7 @@ public class CheckBidPanel extends JPanel {
 	}
 
 	private void initData() {
-
+		checkBidThread();
 	}
 
 	private void setInitLayout() {
@@ -88,6 +88,23 @@ public class CheckBidPanel extends JPanel {
 		title.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 32));
 		title.setBounds(860, 10, 800, 50);
 		add(title);
+	}
+
+	// 10초에 한번씩 모든 카드 정보(가격)를 갱신
+	private void checkBidThread() {
+		new Thread(() -> {
+			while (true) {
+				mContext.getSocket().sendOrder("AllCardList");
+				try {
+					Thread.sleep(10000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				mContext.getSocket().getAllCardList().clear();
+				allCardList = mContext.getSocket().getAllCardList();
+				addActionListner(allCardList);
+			}
+		}).start();
 	}
 
 	// 버튼 10개 생성
