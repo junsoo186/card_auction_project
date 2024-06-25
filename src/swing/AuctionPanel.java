@@ -45,6 +45,7 @@ public class AuctionPanel extends JPanel {
 	// 페이지 버튼
 	private JButton nextPage;
 	private JButton previousPage;
+	JLabel backImage ;
 
 
 	// 페이지 변수
@@ -73,17 +74,17 @@ public class AuctionPanel extends JPanel {
 
 	// 버튼 10개 생성
 	public void productButton() {
-		x = 500;
+		x = 45;
 		for (int i = 0; i < 10; i++) {
 			if (i < 5) {
 				buttons.add(i, new JButton());
-				buttons.get(i).setBounds(x + i * 200, 70, 120, 167);
+				buttons.get(i).setBounds(x + i * 200, 65, 120, 167);
 			} else {
-				x = -500;
+				x = -958;
 				buttons.add(i, new JButton());
-				buttons.get(i).setBounds(x + i * 200, 320, 120, 167);
+				buttons.get(i).setBounds(x + i * 200, 315, 120, 167);
 			}
-			add(buttons.get(i));
+			backImage.add(buttons.get(i));
 			setVisible(true);
 		}
 	}
@@ -119,6 +120,9 @@ public class AuctionPanel extends JPanel {
 	}
 
 	private void setInitLayout() {
+		backImage = new JLabel(new ImageIcon("image/배경.png")); 
+		backImage.setBounds(450,0,1007,534);
+		add(backImage);
 		nextPage = new JButton(new ImageIcon("image/오른쪽.png"));
 		nextPage.setBackground(null);
 		nextPage.setBorderPainted(false);

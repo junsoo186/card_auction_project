@@ -274,19 +274,37 @@ public class MainFrame extends JFrame implements Runnable {
 		buttons[0] = new JButton("진행 중인 경매");
 		buttons[1] = new JButton("종료된 경매");
 		buttons[2] = new JButton("시세 알아보기");
-		buttons[3] = new JButton("경매 출품하기");
-		buttons[4] = new JButton("마이 페이지");
-		buttons[5] = new JButton();
-		buttons[5].setBounds(1657, 50, 70, 70);
-		buttons[5].setBackground(null);
-		buttons[5].setBorderPainted(true);
-		buttons[5].setContentAreaFilled(false);
-
-		backgroundLabel.add(buttons[5]);
-		for (int i = 0; i < 5; i++) {
-			buttons[i].setBounds(300 + i * 300, 175, 200, 50);
+		buttons[3] = new JButton("마이 페이지");
+		buttons[4] = new JButton();
+		buttons[4].setBounds(1657, 50, 70, 70);
+		buttons[4].setBackground(null);
+		buttons[4].setBorderPainted(true);
+		buttons[4].setContentAreaFilled(false);
+		//	패널 위 아이콘들 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//		JLabel one = new  JLabel(new ImageIcon("image/1.png"));
+//		JLabel two = new  JLabel(new ImageIcon("image/2.png"));
+//		JLabel tree = new  JLabel(new ImageIcon("image/3.png"));
+//		JLabel four = new  JLabel(new ImageIcon("image/4.png"));
+//		JLabel five = new  JLabel(new ImageIcon("image/5.png"));
+//		one.setBounds(385, 150, 30, 30);
+//		backgroundLabel.add(one);
+//		two.setBounds(435, 100, 70, 70);
+//		backgroundLabel.add(two);
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+		backgroundLabel.add(buttons[4]);
+		for (int i = 0; i < 4; i++) {
+			buttons[i].setBounds(300 + i * 300, 195, 200, 50);
 			buttons[i].setBackground(new Color(255, 204, 3));
-			buttons[i].setFont(new Font("Freesentation 7 Bold", Font.BOLD, 32));
+			buttons[i].setFont(new Font("Freesentation 7 Bold", Font.BOLD, 25));
 			buttons[i].setBorderPainted(false);
 			buttons[i].setForeground(Color.WHITE);
 			buttons[i].setFocusPainted(false);
@@ -365,19 +383,9 @@ public class MainFrame extends JFrame implements Runnable {
 			}
 		});
 
-		// 3. 경매 출품 이동
-		buttons[3].addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				System.out.println("경매 출품으로 이동");
-				if (panels.size() > 9) {
-					removePanel();
-				}
-				setVisible(3);
-			}
-		});
 
-		// 4. 마이페이지
-		buttons[4].addMouseListener(new MouseAdapter() {
+		// 3. 마이페이지
+		buttons[3].addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				System.out.println("마이페이지로 이동");
 				if (panels.size() > 9) {
@@ -387,8 +395,8 @@ public class MainFrame extends JFrame implements Runnable {
 			}
 		});
 
-		// 5. 인벤토리 이동
-		buttons[5].addMouseListener(new MouseAdapter() {
+		// 4. 인벤토리 이동
+		buttons[4].addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				System.out.println("인벤토리로 이동");
 				// 보관함 정보가 열려있으면 닫아주기
