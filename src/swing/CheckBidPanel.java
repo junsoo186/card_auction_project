@@ -20,8 +20,7 @@ public class CheckBidPanel extends JPanel {
 
 	private MouseListener[] listener = new MouseListener[10];
 	private ArrayList<CardDTO> allCardList = new ArrayList<>(); // 모든 카드 목록
-	private ArrayList<CardDTO> pageInventory = new ArrayList<>(); // 현재페이지 카드목록
-	private ArrayList<CardDTO> searchInventory = new ArrayList<>(); // 검색된 카드목록
+	private ArrayList<CardDTO> currentCardList = new ArrayList<>(); // 현재 카드 목록
 
 	private JPanel backgroundPanel;
 	private JLabel title;
@@ -46,48 +45,50 @@ public class CheckBidPanel extends JPanel {
 
 	public CheckBidPanel(MainFrame mContext) {
 		this.mContext = mContext;
-		this.backgroundPanel = mContext.getBackgroundPanel();
-		this.allCardList = mContext.getAllCardList();
+		backgroundPanel = mContext.getBackgroundPanel();
+		allCardList = mContext.getAllCardList();
+		currentCardList = allCardList;
+		checkBidThread();
 		initData();
 		setInitLayout();
 	}
 
 	private void initData() {
-		checkBidThread();
-	}
+		title = new JLabel("카드 시세 확인하기" + "(" + allCardList.size() + ")");
+		title.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 32));
+		title.setBounds(500, 50, 800, 50);
 
-	private void setInitLayout() {
 		bag = new JLabel(new ImageIcon("image/가방.png"));
 		bag.setBounds(400, 10, 1090, 575);
-		add(bag);
+
 		nextPage = new JButton(new ImageIcon("image/오른쪽.png"));
 		nextPage.setBackground(null);
 		nextPage.setBorderPainted(false);
 		nextPage.setContentAreaFilled(false);
 		nextPage.setBounds(1500, 50, 150, 50);
-		add(nextPage);
+
 		previousPage = new JButton(new ImageIcon("image/왼쪽.png"));
 		previousPage.setBackground(null);
 		previousPage.setBorderPainted(false);
 		previousPage.setContentAreaFilled(false);
 		previousPage.setBounds(300, 50, 150, 50);
-		add(previousPage);
 
+		productButton();
+		createProduct(allCardList);
+		addActionListner();
+		clickPage(allCardList);
+	}
+
+	private void setInitLayout() {
 		setSize(1920, 630);
 		setLocation(0, 400);
 		setLayout(null);
 		setBackground(Color.WHITE);
 		add(backgroundPanel);
-
-		productButton();
-		createProduct(allCardList);
-		addActionListner(allCardList);
-		clickPage(allCardList);
-
-		title = new JLabel("시세 확인하기" + "(" + product.size() + ")");
-		title.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 32));
-		title.setBounds(860, 10, 800, 50);
 		add(title);
+		add(bag);
+		add(nextPage);
+		add(previousPage);
 	}
 
 	// 10초에 한번씩 모든 카드 정보(가격)를 갱신
@@ -106,10 +107,11 @@ public class CheckBidPanel extends JPanel {
 		}).start();
 	}
 
+	// 시세 체크 클릭시 초기화
 	public void clickBidCheckPanel() {
 		page = 1;
 		createProduct(allCardList);
-		addActionListner(allCardList);
+		currentCardList = allCardList;
 	}
 
 	// 버튼 10개 생성
@@ -143,13 +145,13 @@ public class CheckBidPanel extends JPanel {
 	}
 
 	// 카드 상세보기 MouseEvent 삽입
-	public void addActionListner(ArrayList<CardDTO> inventory) {
+	public void addActionListner() {
 		for (int i = 0; i < buttons.size(); i++) {
 			int num = i;
 			listener[i] = new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					mContext.getCheckBidDetailedPanel().setCardDTO(inventory.get(num));
+					mContext.getCheckBidDetailedPanel().setCardDTO(currentCardList.get(num));
 					mContext.getCheckBidDetailedPanel().clickCheckBidDetail();
 					setVisible(false);
 					mContext.setState(8);
@@ -162,8 +164,8 @@ public class CheckBidPanel extends JPanel {
 
 	// 카드이름으로 검색 기능
 	public void searchInventory(String card_name) {
+		ArrayList<CardDTO> searchInventory = new ArrayList<>();
 		page = 1;
-		searchInventory.clear();
 		if (card_name.equals("")) {
 			for (int i = 0; i < allCardList.size(); i++) {
 				searchInventory.add(allCardList.get(i));
@@ -176,7 +178,8 @@ public class CheckBidPanel extends JPanel {
 			}
 		}
 		createProduct(searchInventory);
-		addActionListner(searchInventory);
+		currentCardList = searchInventory;
+		title.setText("카드 시세 확인하기" + "(" + currentCardList.size() + ")");
 	};
 
 	// 다음페이지, 이전페이지 버튼 MouseListener
@@ -184,7 +187,7 @@ public class CheckBidPanel extends JPanel {
 		nextPage.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				pageInventory.clear();
+				ArrayList<CardDTO> pageInventory = new ArrayList<>();
 				pageEnd = ((inventory.size() - 1) / 10) + 1;
 				if (page < pageEnd) {
 					System.out.println("다음페이지로 넘김");
@@ -199,14 +202,14 @@ public class CheckBidPanel extends JPanel {
 						}
 					}
 					createProduct(pageInventory);
-					addActionListner(pageInventory);
+					currentCardList = pageInventory;
 				}
 			}
 		});
 		previousPage.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				pageInventory.clear();
+				ArrayList<CardDTO> pageInventory = new ArrayList<>();
 				if (page > 1) {
 					System.out.println("이전페이지로 넘김");
 					page--;
@@ -214,7 +217,7 @@ public class CheckBidPanel extends JPanel {
 						pageInventory.add(inventory.get(i + (page - 1) * 10));
 					}
 					createProduct(pageInventory);
-					addActionListner(pageInventory);
+					currentCardList = pageInventory;
 				}
 			}
 		});
