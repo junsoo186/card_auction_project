@@ -137,8 +137,7 @@ public class MyPagePanel extends JPanel {
 				System.out.println("회원정보수정 클릭");
 				try {
 					new CheckUserFrame(user,true,mContext);
-					Thread.sleep(5000);
-				} catch (SQLException | InterruptedException e1) {
+				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
 				
