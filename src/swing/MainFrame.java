@@ -283,10 +283,9 @@ public class MainFrame extends JFrame implements Runnable {
 
 		backgroundLabel.add(buttons[4]);
 		for (int i = 0; i < 4; i++) {
-			buttons[i].setBounds(300 + i * 300, 195, 200, 50);
-			buttons[i].setBounds(300 + i * 300, 175, 200, 50);
+			buttons[i].setBounds(300 + i * 300, 190, 200, 50);
 			buttons[i].setBackground(new Color(255, 204, 3));
-			buttons[i].setFont(new Font("Freesentation 7 Bold", Font.BOLD, 32));
+			buttons[i].setFont(new Font("Freesentation 7 Bold", Font.BOLD, 25));
 			buttons[i].setBorderPainted(false);
 			buttons[i].setForeground(Color.WHITE);
 			buttons[i].setFocusPainted(false);
