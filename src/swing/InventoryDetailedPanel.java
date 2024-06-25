@@ -13,10 +13,13 @@ import javax.swing.JPanel;
 import dto.CardDTO;
 import dto.UserDTO;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import manager.AuctionManager;
 import manager.SocketManager;
 
-@Data
+@Getter
+@Setter
 public class InventoryDetailedPanel extends JPanel {
 
 	private JPanel backgroundPanel1;
@@ -34,10 +37,12 @@ public class InventoryDetailedPanel extends JPanel {
 	private BuyFrame buyFrame;
 	private AuctionManager auctionManager;
 	private SocketManager socket;
+	private MainFrame mContext;
 
 	public InventoryDetailedPanel(MainFrame mContext) {
 		this.userDTO = mContext.getUser();
 		this.socket = mContext.getSocket();
+		this.mContext = mContext;
 		initData();
 		setInitLayout();
 	}
@@ -75,7 +80,7 @@ public class InventoryDetailedPanel extends JPanel {
 		sellCard.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				new SellFrame(userDTO, cardDTO, socket);
+				new SellFrame(userDTO, cardDTO, socket , mContext);
 			}
 		});
 
