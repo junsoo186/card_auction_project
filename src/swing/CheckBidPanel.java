@@ -102,9 +102,14 @@ public class CheckBidPanel extends JPanel {
 					e.printStackTrace();
 				}
 				allCardList = mContext.getSocket().getAllCardList();
-				addActionListner(allCardList);
 			}
 		}).start();
+	}
+
+	public void clickBidCheckPanel() {
+		page = 1;
+		createProduct(allCardList);
+		addActionListner(allCardList);
 	}
 
 	// 버튼 10개 생성
@@ -137,7 +142,7 @@ public class CheckBidPanel extends JPanel {
 		}
 	}
 
-	// 카드 상세보기 기능
+	// 카드 상세보기 MouseEvent 삽입
 	public void addActionListner(ArrayList<CardDTO> inventory) {
 		for (int i = 0; i < buttons.size(); i++) {
 			int num = i;

@@ -22,6 +22,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -37,8 +38,7 @@ import manager.SocketManager;
 public class MainFrame extends JFrame implements Runnable {
 	private int adFinder;
 	public SocketManager socket;
-	public LogOut logOut;
-	MainFrame mainFrame;
+	MainFrame mainFrame ;
 
 	private UserDTO user;
 	private JLabel id;
@@ -102,7 +102,6 @@ public class MainFrame extends JFrame implements Runnable {
 	public MainFrame(UserDTO user, SocketManager socket) {
 		this.socket = socket;
 		this.user = user;
-
 		getList();
 		initData();
 		setInitLayout();
@@ -220,16 +219,13 @@ public class MainFrame extends JFrame implements Runnable {
 		searchButton.setFocusPainted(false);
 		backgroundLabel.add(searchButton);
 
-		
-		
-		
 		logoutButton = new JButton(new ImageIcon("image/로그아웃.png"));
-		logoutButton.setBounds(1750,50 , 70, 70);
+		logoutButton.setBounds(1750, 50, 70, 70);
 		logoutButton.setBorderPainted(false);
 		logoutButton.setContentAreaFilled(false);
 		logoutButton.setFocusPainted(false);
 		backgroundLabel.add(logoutButton);
-		
+
 		// ------------광고 --------------
 
 		Icon adIcon = new ImageIcon("image/광고.png");
@@ -361,6 +357,7 @@ public class MainFrame extends JFrame implements Runnable {
 		buttons[2].addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				System.out.println("시세 체크로 이동");
+				checkBidPanel.clickBidCheckPanel();
 				if (panels.size() > 9) {
 					removePanel();
 				}
@@ -500,16 +497,18 @@ public class MainFrame extends JFrame implements Runnable {
 			}
 
 		});
-		
+
 		logoutButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				new LogOut(socket, mainFrame);
+				JOptionPane.showMessageDialog(null,"로그아웃이 완료되었습니다.");
+				new LogInFrame();
+				dispose();
 			}
 		});
 
 	}
-	
+
 	public void logout() {
 		this.dispose();
 	}
