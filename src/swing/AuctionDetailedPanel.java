@@ -161,18 +161,18 @@ public class AuctionDetailedPanel extends JPanel {
 	}
 
 	private void addDto() {
-		if(user.getName().equals(mconText.socket.getBidUser().get(page))) {		
-		AuctionDTO auction = new AuctionDTO();
-		auction.setEndDate(LocalDateTime.now().toString());
-		auction.setStartDate(auctionManager.getStartTime());
-		auction.setBidPrice(auctionManager.getHighbid());
-		auction.setCardId(card.getId());
-		auction.setName(mconText.socket.getBidUser().get(page));
-		mconText.socket.sendOrder("endAuctionDB#" + auction.getEndDate() + "#" + auction.getStartDate() + "#" 
-		+ auction.getBidPrice() + "#" + auction.getCardId() + "#" + auction.getName() + "#" + 
-		mconText.socket.getBidUser().get(page) +"#" + auctionManager.getHighbid());
-		mconText.socket.sendOrder("remove#" + page);
-		System.out.println("addDto 발동 되버림");
+		if (user.getName().equals(mconText.socket.getBidUser().get(page))) {
+			AuctionDTO auction = new AuctionDTO();
+			auction.setEndDate(LocalDateTime.now().toString());
+			auction.setStartDate(auctionManager.getStartTime());
+			auction.setBidPrice(auctionManager.getHighbid());
+			auction.setCardId(card.getId());
+			auction.setName(mconText.socket.getBidUser().get(page));
+			mconText.socket.sendOrder("endAuctionDB#" + auction.getEndDate() + "#" + auction.getStartDate() + "#"
+					+ auction.getBidPrice() + "#" + auction.getCardId() + "#" + auction.getName() + "#"
+					+ mconText.socket.getBidUser().get(page) + "#" + auctionManager.getHighbid());
+			mconText.socket.sendOrder("remove#" + page);
+			System.out.println("addDto 발동 되버림");
 		}
 	}
 
