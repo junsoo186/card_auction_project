@@ -9,19 +9,24 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import dto.CardDTO;
+import lombok.Setter;
 import manager.AuctionManager;
 
+@Setter
 public class CheckBidDetailedPanel extends JPanel {
 
-	private JPanel backgroundPanel;
-	private JLabel title;
-	private JScrollPane scrollPane;
-	private CardDTO card;
-	private BuyFrame buyFrame;
-	private AuctionManager auctionManager;
+	private MainFrame mContext;
 
-	public CheckBidDetailedPanel(CardDTO card) {
-		this.card = card;
+	private CardDTO cardDTO;
+
+	private JLabel cardId = new JLabel();
+	private JLabel cardName = new JLabel();
+	private JLabel cardPrice = new JLabel();
+	private JLabel cardIcon = new JLabel();
+	private JLabel title = new JLabel();
+
+	public CheckBidDetailedPanel(MainFrame mContext) {
+		this.mContext = mContext;
 		initData();
 		setInitLayout();
 	}
@@ -35,15 +40,9 @@ public class CheckBidDetailedPanel extends JPanel {
 		setLayout(null);
 		setBackground(Color.WHITE);
 
-		JLabel title = new JLabel("카드 시세 확인 : " + card.getName());
 		title.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 32));
 		title.setBounds(860, 10, 800, 50);
 		add(title);
-
-		JLabel cardId = new JLabel(" 카드 ID : " + card.getId());
-		JLabel cardName = new JLabel(" 카드명 : " + card.getName());
-		JLabel cardPrice = new JLabel(" 카드 평균 가격 : " + card.getPrice());
-		JLabel cardIcon = new JLabel(new ImageIcon(card.getUrl()));
 
 		cardId.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 24));
 		cardName.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 24));
@@ -62,6 +61,14 @@ public class CheckBidDetailedPanel extends JPanel {
 
 		setVisible(true);
 
+	}
+
+	public void clickCheckBidDetail() {
+		title.setText("카드 시세 확인 : " + cardDTO.getName());
+		cardId.setText(" 카드 ID : " + cardDTO.getId());
+		cardName.setText(" 카드명 : " + cardDTO.getName());
+		cardPrice.setText(" 카드 평균 가격 : " + cardDTO.getPrice());
+		cardIcon.setIcon(new ImageIcon(cardDTO.getUrl()));
 	}
 
 }
