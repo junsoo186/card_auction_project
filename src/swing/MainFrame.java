@@ -398,6 +398,8 @@ public class MainFrame extends JFrame implements Runnable {
 				if (panels.size() > 9) {
 					removePanel();
 				}
+				inventoryPanel.reset();
+				inventoryPanel.createProduct(userInventory);
 				setVisible(5);
 			}
 		});
