@@ -46,7 +46,9 @@ public class SocketManager implements Runnable {
 		min.remove(num);
 		startBid.remove(num);
 		highBid.remove(num);
-		bidUser.remove(num);
+		if(!bidUser.isEmpty()) {
+			bidUser.remove(num);
+		}
 		System.out.println("데이터 지움");
 	}
 

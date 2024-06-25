@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
@@ -136,11 +137,20 @@ public class AuctionDetailedPanel extends JPanel {
 					if (time.equals("0")) {
 						endTime.setText("경매 종료");
 						endTime.setForeground(Color.RED);
+						if(mconText.socket.getHighBid().get(page) == auctionManager.getStartBid()){
+							mconText.socket.deleteData(page);
+							mconText.getAuctionPanel().buttons.get(page).setIcon(null);
+							flag = false;
+							mconText.socket.sendOrder("remove#" + page);
+							System.out.println("유찰되었습니다!!!!!");
+							break;
+						}
 						addDto();
 						mconText.socket.deleteData(page);
 						mconText.getAuctionPanel().buttons.get(page).setIcon(null);
 						buyCard.setVisible(false);
 						flag = false;
+						break;
 					}
 				}
 				if (auctionManager.getHighbid() != mconText.socket.getHighBid().get(page)) {
