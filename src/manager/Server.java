@@ -121,6 +121,7 @@ public class Server {
 								System.out.println("DB보냄");
 							} else {
 								System.out.println("회원 가입 실패 !! 중복아이디");
+								sendOrder("failSignUp");
 							}
 						} catch (SQLException e) {
 							e.printStackTrace();
@@ -133,7 +134,7 @@ public class Server {
 							sendOrder("Login#" + userDTO.getName() + "#" + userDTO.getPassword() + "#"
 									+ userDTO.getNickname() + "#" + userDTO.getPoint());
 						} else {
-							printWriter.println("wrong");
+							sendOrder("failLogin");
 						}
 					} else if (message.startsWith("bid")) {
 						String[] msg = message.split("#");
