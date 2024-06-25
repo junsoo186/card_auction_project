@@ -68,6 +68,7 @@ public class SocketManager implements Runnable {
 			while ((message = serverOrder.readLine()) != null) {
 				System.out.println(message + " Socket에서 읽음");
 				if (message.startsWith("list")) {
+					CardDTO dto = new CardDTO();
 					String[] cardId = message.split("#");
 					int id = Integer.valueOf(cardId[1]);
 					String name = cardId[2];
@@ -75,10 +76,10 @@ public class SocketManager implements Runnable {
 					int startBidDB = Integer.valueOf(cardId[4]);
 					int hourDB = Integer.valueOf(cardId[5]);
 					int minDB = Integer.valueOf(cardId[6]);
-					cardDTO.setId(id);
-					cardDTO.setName(name);
-					cardDTO.setUrl(url);
-					auctionList.add(cardDTO);
+					dto.setId(id);
+					dto.setName(name);
+					dto.setUrl(url);
+					auctionList.add(dto);
 					hour.add(hourDB);
 					min.add(minDB);
 					startBid.add(startBidDB);

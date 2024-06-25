@@ -300,11 +300,10 @@ public class MainFrame extends JFrame implements Runnable {
 			backgroundPanel.add(panels.get(i));
 			panels.get(i).setVisible(false);
 		}
-		auctionPanel.removeData();
+		setVisible(true);
+		backgroundPanel.setVisible(true);
 		auctionPanel.addAuction();
 		setVisible(0);
-		backgroundPanel.setVisible(true);
-		setVisible(true);
 	}
 
 	public void setVisible(int state) {
