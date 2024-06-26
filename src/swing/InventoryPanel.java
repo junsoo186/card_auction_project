@@ -13,7 +13,6 @@ import javax.swing.JPanel;
 
 import dto.CardDTO;
 import lombok.Setter;
-import manager.SocketManager;
 
 @Setter
 
@@ -22,15 +21,11 @@ import manager.SocketManager;
 public class InventoryPanel extends JPanel {
 
 	private MainFrame mContext;
-	private SocketManager socket;
 
 	private MouseListener[] listener = new MouseListener[10];
 
-//	private ArrayList<JButton> productList = new ArrayList<>();
-//	private ArrayList<String> productTitleList = new ArrayList<>();
-	private ArrayList<CardDTO> userInventory = new ArrayList<>(); // 보관함 카드목록
-	private ArrayList<CardDTO> pageInventory = new ArrayList<>(); // 현재페이지 카드목록
-	private ArrayList<CardDTO> searchInventory = new ArrayList<>(); // 검색된 카드목록
+	private ArrayList<CardDTO> userInventory; // 보관함 카드목록
+	private ArrayList<CardDTO> currentInventory; // 현재 보관함 카드목록
 
 	private JPanel backgroundPanel;
 
@@ -50,8 +45,8 @@ public class InventoryPanel extends JPanel {
 
 	public InventoryPanel(MainFrame mContext) {
 		this.mContext = mContext;
-		this.socket = mContext.socket;
-		this.userInventory = mContext.getUserInventory();
+		userInventory = mContext.getUserInventory();
+		currentInventory = userInventory;
 
 		initData();
 		setInitLayout();
@@ -60,35 +55,44 @@ public class InventoryPanel extends JPanel {
 
 	private void initData() {
 		backgroundPanel = new JPanel();
-	}
-
-	private void setInitLayout() {
-
-		setSize(1920, 630);
-		setLocation(0, 400);
-		setLayout(null);
-		setBackground(Color.WHITE);
-		add(backgroundPanel);
 
 		bag = new JLabel(new ImageIcon("image/가방.png"));
 		bag.setBounds(400, 10, 1090, 575);
-		add(bag);
 
 		nextPage = new JButton(new ImageIcon("image/오른쪽.png"));
 		nextPage.setBackground(null);
 		nextPage.setBorderPainted(false);
 		nextPage.setContentAreaFilled(false);
 		nextPage.setBounds(1500, 50, 150, 50);
-		add(nextPage);
+
 		previousPage = new JButton(new ImageIcon("image/왼쪽.png"));
 		previousPage.setBackground(null);
 		previousPage.setBorderPainted(false);
 		previousPage.setContentAreaFilled(false);
 		previousPage.setBounds(300, 50, 150, 50);
-		add(previousPage);
+
 		productButton();
 		createProduct(userInventory);
-		addActionListner(userInventory);
+		addActionListner();
+	}
+
+	private void setInitLayout() {
+		setSize(1920, 630);
+		setLocation(0, 400);
+		setLayout(null);
+		setBackground(Color.WHITE);
+
+		add(backgroundPanel);
+		add(bag);
+		add(nextPage);
+		add(previousPage);
+	}
+
+	// 시세 체크 클릭시 초기화
+	public void clickInventoryPanel() {
+		page = 1;
+		createProduct(userInventory);
+		currentInventory = userInventory;
 	}
 
 	// 버튼 10개 생성
@@ -108,14 +112,14 @@ public class InventoryPanel extends JPanel {
 		}
 	}
 
-	// 버튼에 이미지 다 삭제
-	public void reset() {
-		for (int i = 0; i < buttons.size(); i++) {
-			buttons.get(i).setIcon(null);
-			buttons.get(i).setVisible(false);
-		}
-	}
-	
+//	// 버튼에 이미지 다 삭제
+//	public void reset() {
+//		for (int i = 0; i < buttons.size(); i++) {
+//			buttons.get(i).setIcon(null);
+//			buttons.get(i).setVisible(false);
+//		}
+//	}
+
 	// 버튼에 카드이미지 URL 삽입함수
 	public void createProduct(ArrayList<CardDTO> inventory) {
 		for (int i = 0; i < buttons.size(); i++) {
@@ -131,6 +135,7 @@ public class InventoryPanel extends JPanel {
 
 	// 카드이름으로 검색 기능
 	public void searchInventory(String card_name) {
+		ArrayList<CardDTO> searchInventory = new ArrayList<>();
 		page = 1;
 		searchInventory.clear();
 		if (card_name.equals("")) {
@@ -145,17 +150,17 @@ public class InventoryPanel extends JPanel {
 			}
 		}
 		createProduct(searchInventory);
-		addActionListner(searchInventory);
+		currentInventory = searchInventory;
 	};
 
 	// 카드 상세보기 기능
-	public void addActionListner(ArrayList<CardDTO> inventory) {
+	public void addActionListner() {
 		for (int i = 0; i < buttons.size(); i++) {
 			int num = i;
 			listener[i] = new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					mContext.getInventoryDetailedPanel().setCardDTO(inventory.get(num));
+					mContext.getInventoryDetailedPanel().setCardDTO(currentInventory.get(num));
 					mContext.getInventoryDetailedPanel().clickDetailedButton();
 					setVisible(false);
 					mContext.setState(6);
@@ -171,6 +176,7 @@ public class InventoryPanel extends JPanel {
 		nextPage.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				ArrayList<CardDTO> pageInventory = new ArrayList<>();
 				pageInventory.clear();
 				pageEnd = ((userInventory.size() - 1) / 10) + 1;
 				if (page < pageEnd) {
@@ -186,13 +192,14 @@ public class InventoryPanel extends JPanel {
 						}
 					}
 					createProduct(pageInventory);
-					addActionListner(pageInventory);
+					currentInventory = pageInventory;
 				}
 			}
 		});
 		previousPage.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				ArrayList<CardDTO> pageInventory = new ArrayList<>();
 				pageInventory.clear();
 				if (page > 1) {
 					System.out.println("이전페이지로 넘김");
@@ -201,7 +208,7 @@ public class InventoryPanel extends JPanel {
 						pageInventory.add(userInventory.get(i + (page - 1) * 10));
 					}
 					createProduct(pageInventory);
-					addActionListner(pageInventory);
+					currentInventory = pageInventory;
 				}
 			}
 		});
