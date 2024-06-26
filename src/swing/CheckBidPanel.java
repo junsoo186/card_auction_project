@@ -80,14 +80,14 @@ public class CheckBidPanel extends JPanel {
 		add(previousPage);
 	}
 
-	// 10초에 한번씩 모든 카드 정보(가격)를 갱신
+	// 1초에 한번씩 모든 카드 정보(가격)를 갱신
 	private void checkBidThread() {
 		new Thread(() -> {
 			while (true) {
 				mContext.getSocket().getAllCardList().clear();
 				mContext.getSocket().sendOrder("AllCardList");
 				try {
-					Thread.sleep(10000);
+					Thread.sleep(1000);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -133,7 +133,7 @@ public class CheckBidPanel extends JPanel {
 		}
 	}
 
-	// 카드 상세보기 MouseEvent 삽입
+	// 카드 상세보기 기능
 	public void addActionListner() {
 		for (int i = 0; i < buttons.size(); i++) {
 			int num = i;

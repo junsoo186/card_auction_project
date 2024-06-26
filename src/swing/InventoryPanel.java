@@ -51,7 +51,6 @@ public class InventoryPanel extends JPanel {
 		checkInvenThread();
 		initData();
 		setInitLayout();
-		clickPage();
 	}
 
 	private void initData() {
@@ -75,6 +74,7 @@ public class InventoryPanel extends JPanel {
 		productButton();
 		createProduct(userInventory);
 		addActionListner();
+		clickPage(userInventory);
 	}
 
 	private void setInitLayout() {
@@ -96,11 +96,11 @@ public class InventoryPanel extends JPanel {
 				mContext.getSocket().getUserInventory().clear();
 				mContext.getSocket().sendOrder("UserInventory#" + mContext.getUser().getName());
 				try {
-					Thread.sleep(1000);
+					Thread.sleep(300);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				currentInventory = mContext.getSocket().getUserInventory();
+				userInventory = mContext.getSocket().getUserInventory();
 			}
 		}).start();
 	}
@@ -181,23 +181,22 @@ public class InventoryPanel extends JPanel {
 	}
 
 	// 다음페이지, 이전페이지 버튼 MouseListener
-	public void clickPage() {
+	public void clickPage(ArrayList<CardDTO> inventory) {
 		nextPage.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				ArrayList<CardDTO> pageInventory = new ArrayList<>();
-				pageInventory.clear();
-				pageEnd = ((userInventory.size() - 1) / 10) + 1;
+				pageEnd = ((inventory.size() - 1) / 10) + 1;
 				if (page < pageEnd) {
 					System.out.println("다음페이지로 넘김");
 					page++;
 					if (page == pageEnd) {
-						for (int i = 0; i < (userInventory.size() % 10); i++) {
-							pageInventory.add(userInventory.get(i + (page - 1) * 10));
+						for (int i = 0; i < (inventory.size() % 10); i++) {
+							pageInventory.add(inventory.get(i + (page - 1) * 10));
 						}
 					} else {
 						for (int i = 0; i < buttons.size(); i++) {
-							pageInventory.add(userInventory.get(i + (page - 1) * 10));
+							pageInventory.add(inventory.get(i + (page - 1) * 10));
 						}
 					}
 					createProduct(pageInventory);
@@ -209,12 +208,11 @@ public class InventoryPanel extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				ArrayList<CardDTO> pageInventory = new ArrayList<>();
-				pageInventory.clear();
 				if (page > 1) {
 					System.out.println("이전페이지로 넘김");
 					page--;
 					for (int i = 0; i < buttons.size(); i++) {
-						pageInventory.add(userInventory.get(i + (page - 1) * 10));
+						pageInventory.add(inventory.get(i + (page - 1) * 10));
 					}
 					createProduct(pageInventory);
 					currentInventory = pageInventory;
