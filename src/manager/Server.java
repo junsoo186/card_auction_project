@@ -99,8 +99,7 @@ public class Server {
 				}
 				while ((message = userOrder.readLine()) != null) {
 					System.out.println(message + " Server에서 읽음 ");
-					if (message.startsWith("chat")) {
-					} else if (message.startsWith("sell")) {
+					if (message.startsWith("sell")) {
 						String[] sell = message.split("#");
 						productName.add(sell[1]);
 					} else if (message.startsWith("sendDB")) {
@@ -146,9 +145,6 @@ public class Server {
 					} else if (message.startsWith("cash")) {
 						String[] cash = message.split("#");
 						UserDAO.updatePoint(cash[1], Integer.parseInt(cash[2]));
-					} else if (message.startsWith("addCard")) {
-						String[] card = message.split("#");
-
 					} else if (message.startsWith("auction")) {
 						String[] cardId = message.split("#");
 						InventoryDTO inven = new InventoryDTO();
@@ -244,7 +240,6 @@ public class Server {
 						highBid.remove(num);
 						seller.remove(num);
 						System.out.println("경매 데이터 삭제 완료!!!!");
-						
 						// 회원 정보 수정 프로토콜
 					} else if(message.startsWith("updateUserInfo")) {
 						String [] msg=message.split("#");
