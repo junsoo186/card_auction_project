@@ -126,7 +126,7 @@ public class FinishedPanel extends JPanel {
 			} else {
 				x = -958;
 				buttons.add(i, new JButton());
-				buttons.get(i).setBounds(x + i * 200, 6000, 120, 167);
+				buttons.get(i).setBounds(x + i * 200, 200, 120, 167);
 			}
 			backImage.add(buttons.get(i));
 			setVisible(true);
