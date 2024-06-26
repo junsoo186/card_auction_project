@@ -48,6 +48,7 @@ public class InventoryPanel extends JPanel {
 		userInventory = mContext.getUserInventory();
 		currentInventory = userInventory;
 
+		checkInvenThread();
 		initData();
 		setInitLayout();
 		clickPage();
@@ -86,6 +87,23 @@ public class InventoryPanel extends JPanel {
 		add(bag);
 		add(nextPage);
 		add(previousPage);
+	}
+
+	// 인벤토리 카드 정보를 갱신
+	private void checkInvenThread() {
+		new Thread(() -> {
+			while (true) {
+				mContext.getSocket().getUserInventory().clear();
+				mContext.getSocket().sendOrder("UserInventory#" + mContext.getUser().getName());
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				createProduct(mContext.getSocket().getUserInventory());
+				currentInventory = mContext.getSocket().getUserInventory();
+			}
+		}).start();
 	}
 
 	// 시세 체크 클릭시 초기화
