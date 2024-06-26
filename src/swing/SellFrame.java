@@ -69,12 +69,12 @@ public class SellFrame extends JFrame {
 		exitButton = new JButton("나가기");
 		addEndhour = new JTextField();
 		addEndmin = new JTextField();
-		cardTitle.setBounds(30, 5, 400, 50);
+		cardTitle.setBounds(100, 20, 400, 50);
 		guidText.setBounds(30, 250, 400, 50);
 		guidText2.setBounds(30, 330, 400, 50);
 		addPriceField.setBounds(80, 300, 200, 30);
-		addEndhour.setBounds(80, 380, 100, 20);
-		addEndmin.setBounds(200, 380, 100, 20);
+		addEndhour.setBounds(80, 380, 90, 30);
+		addEndmin.setBounds(185, 380, 90, 30);
 		decidePriceButton.setBounds(80, 425, 90, 30);
 		exitButton.setBounds(185, 425, 90, 30);
 
@@ -90,7 +90,7 @@ public class SellFrame extends JFrame {
 		Icon cardImage = new ImageIcon(cardDTO.getUrl());
 		JLabel cardLabel = new JLabel();
 		cardLabel.setIcon(cardImage);
-		cardLabel.setBounds(100, 50, 120, 167);
+		cardLabel.setBounds(120, 80, 120, 167);
 		backgroundPanel.add(cardLabel);
 
 		setVisible(true);
