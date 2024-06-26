@@ -50,7 +50,8 @@ public class CheckUserFrame extends JFrame {
 		setResizable(false);
 		setLayout(null);
 		getContentPane().setBackground(new Color(255, 204, 3));
-
+		setIconImage(java.awt.Toolkit.getDefaultToolkit().getImage("image/파비콘2.png"));
+		
 		backgroundPanel = new JPanel();
 		backgroundPanel.setBounds(70, 60, 350, 370);
 		backgroundPanel.setLayout(null);

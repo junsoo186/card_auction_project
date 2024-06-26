@@ -48,7 +48,7 @@ public class BuyFrame extends JFrame {
 		setLayout(null);
 		getContentPane().setBackground(new Color(255, 204, 3));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+		setIconImage(java.awt.Toolkit.getDefaultToolkit().getImage("image/파비콘2.png"));
 		backgroundPanel = new JPanel();
 		backgroundPanel.setBounds(80, 60, 350, 500);
 		backgroundPanel.setLayout(null);

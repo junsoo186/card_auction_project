@@ -15,7 +15,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import dao.Query;
 import dao.UserDAO;
 import dto.UserDTO;
 import manager.DBConnectionManager;
@@ -54,6 +53,7 @@ public class UpdateUserFrame extends JFrame {
 		setResizable(false);
 		setLayout(null);
 		getContentPane().setBackground(new Color(255, 204, 3));
+		setIconImage(java.awt.Toolkit.getDefaultToolkit().getImage("image/파비콘2.png"));
 
 		backgroundPanel = new JPanel();
 		backgroundPanel.setBounds(75, 60, 350, 370);
@@ -121,9 +121,8 @@ public class UpdateUserFrame extends JFrame {
 		// 나가기 버튼
 		exitButton.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				JOptionPane.showMessageDialog(null,"로그아웃이 완료되었습니다.");
+				JOptionPane.showMessageDialog(null,"회원정보 수정이 취소되었습니다.");
 				dispose();
-				new LogInFrame();
 			}
 
 		});
