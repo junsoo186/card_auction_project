@@ -24,24 +24,20 @@ public class InventoryPanel extends JPanel {
 
 	private MouseListener[] listener = new MouseListener[10];
 
-	private ArrayList<CardDTO> userInventory; // 보관함 카드목록
+	private ArrayList<JButton> buttons = new ArrayList<>(); // 버튼 목록
+	private ArrayList<CardDTO> userInventory; // 유저의 보관함 카드목록
 	private ArrayList<CardDTO> currentInventory; // 현재 보관함 카드목록
 
 	private JPanel backgroundPanel;
+	private JLabel bag;
 
 	// 페이지 버튼
 	private JButton nextPage;
 	private JButton previousPage;
 
-	// 가방
-	private JLabel bag;
-
 	// 페이지 변수
 	private int page = 1;
 	private int pageEnd;
-
-	ArrayList<JButton> buttons = new ArrayList<>();
-	ArrayList<Integer> serialNum = new ArrayList<>();
 
 	public InventoryPanel(MainFrame mContext) {
 		this.mContext = mContext;
@@ -54,8 +50,6 @@ public class InventoryPanel extends JPanel {
 	}
 
 	private void initData() {
-		backgroundPanel = new JPanel();
-
 		bag = new JLabel(new ImageIcon("image/가방.png"));
 		bag.setBounds(400, 10, 1090, 575);
 
@@ -83,7 +77,6 @@ public class InventoryPanel extends JPanel {
 		setLayout(null);
 		setBackground(Color.WHITE);
 
-		add(backgroundPanel);
 		add(bag);
 		add(nextPage);
 		add(previousPage);
@@ -105,7 +98,7 @@ public class InventoryPanel extends JPanel {
 		}).start();
 	}
 
-	// 시세 체크 클릭시 초기화
+	// 패널 클릭시 초기화
 	public void clickInventoryPanel() {
 		page = 1;
 		createProduct(userInventory);
@@ -146,7 +139,6 @@ public class InventoryPanel extends JPanel {
 	public void searchInventory(String card_name) {
 		ArrayList<CardDTO> searchInventory = new ArrayList<>();
 		page = 1;
-		searchInventory.clear();
 		if (card_name.equals("")) {
 			for (int i = 0; i < userInventory.size(); i++) {
 				searchInventory.add(userInventory.get(i));

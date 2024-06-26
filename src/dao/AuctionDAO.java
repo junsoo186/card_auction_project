@@ -85,7 +85,7 @@ public class AuctionDAO {
 		}
 	}
 
-	// 모든 종료된 경매 목록 조회
+	// 모든 종료된 경매 목록의 카드 목록 조회
 	public static ArrayList<AuctionDTO> endAuctionList() throws SQLException {
 		ArrayList<AuctionDTO> endAuctionList = new ArrayList<>();
 		try (Connection conn = DBConnectionManager.getInstance().getConnection()) {

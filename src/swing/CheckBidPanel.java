@@ -23,8 +23,6 @@ public class CheckBidPanel extends JPanel {
 	private ArrayList<CardDTO> currentCardList = new ArrayList<>(); // 현재 카드 목록
 
 	private JPanel backgroundPanel;
-
-	// 가방
 	private JLabel bag;
 
 	// 페이지 버튼
@@ -47,6 +45,7 @@ public class CheckBidPanel extends JPanel {
 	}
 
 	private void initData() {
+
 		bag = new JLabel(new ImageIcon("image/배경.png"));
 		bag.setBounds(450, 0, 1007, 534);
 
