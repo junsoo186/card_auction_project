@@ -69,7 +69,6 @@ public class AuctionPanel extends JPanel {
 	public void createProduct(CardDTO card) {
 		buttons.get(serialNum.size()).setIcon(new ImageIcon(card.getUrl())); // 유저가 올린 판매카드 이미지 버튼에 삽입
 		serialNum.add(1); // 시리얼 넘버 사이즈도 증가
-		
 	}
 
 	// 버튼 10개 생성
