@@ -7,43 +7,25 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import dto.AuctionDTO;
 import dto.CardDTO;
-import dto.UserDTO;
-import manager.SocketManager;
 
 public class FinishedPanel extends JPanel {
 
 	private MainFrame mContext;
-	private SocketManager socket;
-	private ArrayList<JButton> productList = new ArrayList<>(12);
-	private ArrayList<String> productTitleList = new ArrayList<>(12);
-	private ArrayList<AuctionDTO> endAuctionList = new ArrayList(); // 모든 종료된 경매 목록
-	private ArrayList<CardDTO> allCardList = new ArrayList<>(); // 모든 카드 목록
-	private ArrayList<CardDTO> endCardList = new ArrayList<>(); // 종료된 경매의 카드목록
 
-	private ArrayList<CardDTO> pageInventory = new ArrayList<>(); // 현재페이지 카드목록
-	private ArrayList<CardDTO> searchInventory = new ArrayList<>(); // 검색된 카드목록
+	private MouseListener[] listener = new MouseListener[10];
+	private ArrayList<CardDTO> endAuctionList; // 종료된 경매의 카드목록
+	private ArrayList<CardDTO> currentAuctionList = new ArrayList<>(); // 현재 목록
 
 	private JPanel backgroundPanel;
-	private JLabel title;
-	private UserDTO user;
-	JLabel backImage;
-	private MouseListener[] listener = new MouseListener[10];
-
-	private FinishedDetailedPanel finishedDetailedPanel;
+	private JLabel backImage;
 
 	private ArrayList<JButton> buttons = new ArrayList<>();
-	private ArrayList<Integer> serialNum = new ArrayList<>();
-
-	private int x = 500;
-	private int y = 100;
 
 	// 페이지 버튼
 	private JButton nextPage;
@@ -55,52 +37,69 @@ public class FinishedPanel extends JPanel {
 
 	public FinishedPanel(MainFrame mContext) {
 		this.mContext = mContext;
-		this.user = mContext.getUser();
-		this.socket = mContext.getSocket();
-		this.allCardList = mContext.getAllCardList();
-		this.endAuctionList = mContext.getEndAuctionList();
-		this.endCardList = mContext.getEndCardList();
+		backgroundPanel = mContext.getBackgroundPanel();
+		endAuctionList = mContext.getEndCardList();
 
 		initData();
 		setInitLayout();
-		clickPage();
 	}
 
 	private void initData() {
-		backgroundPanel = mContext.getBackgroundPanel();
-	}
+		backImage = new JLabel(new ImageIcon("image/배경.png"));
+		backImage.setBounds(450, 0, 1007, 534);
 
-	private void setInitLayout() {
-		backImage = new JLabel(new ImageIcon("image/배경.png")); 
-		backImage.setBounds(450,0,1007,534);
-		add(backImage);
 		nextPage = new JButton(new ImageIcon("image/오른쪽.png"));
 		nextPage.setBackground(null);
 		nextPage.setBorderPainted(false);
 		nextPage.setContentAreaFilled(false);
 		nextPage.setBounds(1500, 50, 150, 50);
-		add(nextPage);
+
 		previousPage = new JButton(new ImageIcon("image/왼쪽.png"));
 		previousPage.setBackground(null);
 		previousPage.setBorderPainted(false);
 		previousPage.setContentAreaFilled(false);
 		previousPage.setBounds(300, 50, 150, 50);
-		add(previousPage);
 
+		productButton();
+		createProduct(endAuctionList);
+		addActionListner();
+		clickPage(endAuctionList);
+	}
+
+	private void setInitLayout() {
 		setSize(1920, 630);
 		setLocation(0, 400);
 		setLayout(null);
 		setBackground(Color.WHITE);
+
 		add(backgroundPanel);
+		add(backImage);
+		add(nextPage);
+		add(previousPage);
+	}
 
-		title = new JLabel("종료된 경매" + "(" + endCardList.size() + ")");
-		title.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 32));
-		title.setBounds(860, 10, 800, 50);
-		add(title);
+	// 시세 체크 클릭시 초기화
+	public void clickEndAuctionPanel() {
+		page = 1;
+		createProduct(endAuctionList);
+		currentAuctionList = endAuctionList;
+	}
 
-		productButton();
-		createProduct(endCardList);
-		addActionListner(endCardList);
+	// 버튼 10개 생성
+	public void productButton() {
+		int x = 45;
+		for (int i = 0; i < 10; i++) {
+			if (i < 5) {
+				buttons.add(i, new JButton());
+				buttons.get(i).setBounds(x + i * 199, 65, 120, 167);
+			} else {
+				x = -957;
+				buttons.add(i, new JButton());
+				buttons.get(i).setBounds(x + i * 200, 315, 120, 167);
+			}
+			backImage.add(buttons.get(i));
+			setVisible(true);
+		}
 	}
 
 	// 버튼에 카드이미지 URL 삽입함수
@@ -116,32 +115,14 @@ public class FinishedPanel extends JPanel {
 		}
 	}
 
-	// 버튼 10개 생성
-	public void productButton() {
-		x = 45;
-		for (int i = 0; i < 10; i++) {
-			if (i < 5) {
-				buttons.add(i, new JButton());
-				buttons.get(i).setBounds(x + i * 199, 65, 120, 167);
-			} else {
-				x = -957;
-				buttons.add(i, new JButton());
-				buttons.get(i).setBounds(x + i * 200, 6000, 120, 167);
-			}
-			backImage.add(buttons.get(i));
-			setVisible(true);
-		}
-	}
-
-
 	// 카드 상세보기 기능
-	public void addActionListner(ArrayList<CardDTO> inventory) {
+	public void addActionListner() {
 		for (int i = 0; i < buttons.size(); i++) {
 			int num = i;
 			listener[i] = new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					mContext.getFinishedDetailedPanel().setCardDTO(inventory.get(num));
+					mContext.getFinishedDetailedPanel().setCardDTO(currentAuctionList.get(num));
 					mContext.getFinishedDetailedPanel().clickEndDetailButton();
 					setVisible(false);
 					mContext.setState(7);
@@ -154,59 +135,60 @@ public class FinishedPanel extends JPanel {
 
 	// 카드이름으로 검색 기능
 	public void searchEndAuction(String card_name) {
+		ArrayList<CardDTO> searchInventory = new ArrayList<>();
 		page = 1;
 		searchInventory.clear();
 		if (card_name.equals("")) {
-			for (int i = 0; i < endCardList.size(); i++) {
-				searchInventory.add(endCardList.get(i));
+			for (int i = 0; i < endAuctionList.size(); i++) {
+				searchInventory.add(endAuctionList.get(i));
 			}
 		} else {
-			for (int i = 0; i < endCardList.size(); i++) {
-				if (endCardList.get(i).getName().contains(card_name)) {
-					searchInventory.add(endCardList.get(i));
+			for (int i = 0; i < endAuctionList.size(); i++) {
+				if (endAuctionList.get(i).getName().contains(card_name)) {
+					searchInventory.add(endAuctionList.get(i));
 				}
 			}
 		}
 		createProduct(searchInventory);
-		addActionListner(searchInventory);
+		currentAuctionList = searchInventory;
 	};
 
 	// 다음페이지, 이전페이지 버튼 MouseListener
-	public void clickPage() {
+	public void clickPage(ArrayList<CardDTO> inventory) {
 		nextPage.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				pageInventory.clear();
-				pageEnd = ((endCardList.size() - 1) / 10) + 1;
+				ArrayList<CardDTO> pageInventory = new ArrayList<>();
+				pageEnd = ((inventory.size() - 1) / 10) + 1;
 				if (page < pageEnd) {
 					System.out.println("다음페이지로 넘김");
 					page++;
 					if (page == pageEnd) {
-						for (int i = 0; i < (endCardList.size() % 10); i++) {
-							pageInventory.add(endCardList.get(i + (page - 1) * 10));
+						for (int i = 0; i < (inventory.size() % 10); i++) {
+							pageInventory.add(inventory.get(i + (page - 1) * 10));
 						}
 					} else {
 						for (int i = 0; i < buttons.size(); i++) {
-							pageInventory.add(endCardList.get(i + (page - 1) * 10));
+							pageInventory.add(inventory.get(i + (page - 1) * 10));
 						}
 					}
 					createProduct(pageInventory);
-					addActionListner(pageInventory);
+					currentAuctionList = pageInventory;
 				}
 			}
 		});
 		previousPage.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				pageInventory.clear();
+				ArrayList<CardDTO> pageInventory = new ArrayList<>();
 				if (page > 1) {
 					System.out.println("이전페이지로 넘김");
 					page--;
 					for (int i = 0; i < buttons.size(); i++) {
-						pageInventory.add(endCardList.get(i + (page - 1) * 10));
+						pageInventory.add(endAuctionList.get(i + (page - 1) * 10));
 					}
 					createProduct(pageInventory);
-					addActionListner(pageInventory);
+					currentAuctionList = pageInventory;
 				}
 			}
 		});

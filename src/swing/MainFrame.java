@@ -346,6 +346,7 @@ public class MainFrame extends JFrame implements Runnable {
 		buttons[1].addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				System.out.println("종료된 경매로 이동");
+				finishedPanel.clickEndAuctionPanel();
 				if (panels.size() > 9) {
 					removePanel();
 				}
@@ -372,8 +373,8 @@ public class MainFrame extends JFrame implements Runnable {
 				if (panels.size() > 9) {
 					removePanel();
 				}
-				MyPagePanel.getNickName().setText("닉네임 : "+user.getNickname());
-				System.out.println("닉네임 수정 확인 : "+user.getNickname());
+				MyPagePanel.getNickName().setText("닉네임 : " + user.getNickname());
+				System.out.println("닉네임 수정 확인 : " + user.getNickname());
 				setVisible(4);
 			}
 		});
