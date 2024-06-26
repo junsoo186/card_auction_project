@@ -20,6 +20,7 @@ import manager.SocketManager;
 
 public class LogInFrame extends JFrame {
 
+	
 	private LogInFrame mContext;
 	private SocketManager socket;
 
@@ -34,6 +35,7 @@ public class LogInFrame extends JFrame {
 
 	private JButton logInButton;
 	private JButton signUpButton;
+
 
 	private JLabel title;
 
@@ -108,7 +110,7 @@ public class LogInFrame extends JFrame {
 		backgroundLabel.add(signUp);
 
 		logInButton = new JButton();
-		logInButton.setBounds(710, 850, 233, 95);
+		logInButton.setBounds(710, 850, 233,95);
 		logInButton.setBounds(100, 850, 233, 95);
 		logInButton.setBackground(null);
 		logInButton.setBorderPainted(false);
@@ -145,11 +147,11 @@ public class LogInFrame extends JFrame {
 	public void failLogin() {
 		JOptionPane.showMessageDialog(null, "로그인정보가 틀렸습니다!");
 	}
-
+	
 	public void failSignUp() {
 		JOptionPane.showMessageDialog(null, "이미 있는 아이디입니다!");
 	}
-
+	
 	private void initListener() {
 		signUpButton.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {

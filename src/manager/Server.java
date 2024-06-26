@@ -250,6 +250,7 @@ public class Server {
 						// 회원 탈퇴 프로토콜
 					} else if(message.startsWith("quitUser")) {
 						String [] msg=message.split("#");
+						UserDAO.deleteUserInventory(msg[1]);
 						UserDAO.deleteUser(msg[1]);
 						System.out.println("회원 탈퇴 완료");
 						JOptionPane.showMessageDialog(null,"회원 탈퇴가 완료되었습니다.");

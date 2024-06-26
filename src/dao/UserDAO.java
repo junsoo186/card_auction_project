@@ -136,17 +136,6 @@ public class UserDAO {
 		}
 		
 	}
-		
-		// 유저 이름으로 유저 삭제 (회원탈퇴) delete
-		public static void deleteUserID(String name) throws SQLException {
-			try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
-				PreparedStatement pstmt = conn.prepareStatement(" DELETE FROM user WHERE name = ? ");
-				pstmt.setString(1, name);
-				pstmt.executeUpdate();
-				System.out.println(name + " 유저 삭제완료");
-			}
-	}
-		
 		// 유저 이름으로 인벤토리 삭제 (회원탈퇴) delete
 		public static void deleteUserInventory(String name) throws SQLException {
 			try (Connection conn = DBConnectionManager.getInstance().getConnection()) {
