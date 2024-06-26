@@ -23,7 +23,6 @@ public class CheckBidPanel extends JPanel {
 	private ArrayList<CardDTO> currentCardList = new ArrayList<>(); // 현재 카드 목록
 
 	private JPanel backgroundPanel;
-	private JLabel title;
 
 	// 가방
 	private JLabel bag;
@@ -113,7 +112,6 @@ public class CheckBidPanel extends JPanel {
 				buttons.get(i).setBounds(x + i * 199, 65, 120, 167);
 			} else {
 				x = -957;
-				;
 				buttons.add(i, new JButton());
 				buttons.get(i).setBounds(x + i * 200, 315, 120, 167);
 			}

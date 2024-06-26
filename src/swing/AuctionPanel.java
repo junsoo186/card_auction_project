@@ -78,13 +78,18 @@ public class AuctionPanel extends JPanel {
 			if (i < 5) {
 				buttons.add(i, new JButton());
 				buttons.get(i).setBounds(x + i * 199, 65, 120, 167);
+				buttons.get(i).setBorderPainted(false);
+				buttons.get(i).setContentAreaFilled(false);
 			} else {
 				x = -957;
 				buttons.add(i, new JButton());
 				buttons.get(i).setBounds(x + i * 200, 315, 120, 167);
+				buttons.get(i).setBorderPainted(false);
+				buttons.get(i).setContentAreaFilled(false);
 			}
 			backImage.add(buttons.get(i));
-			setVisible(true);
+			
+			setVisible(false);
 			
 			
 		}
