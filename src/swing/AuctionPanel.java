@@ -35,6 +35,7 @@ public class AuctionPanel extends JPanel {
 	private ArrayList<Integer> hour = new ArrayList<>();
 	private ArrayList<Integer> min = new ArrayList<>();
 	private ArrayList<Integer> startBid = new ArrayList<>();
+	private ArrayList<String> seller = new ArrayList<>();
 
 	int state;
 	List<JPanel> panel;
@@ -65,16 +66,9 @@ public class AuctionPanel extends JPanel {
 		initListener();
 	}
 
-	public void createProduct(ArrayList<CardDTO> cardList) {
-		for (int i = 0; i < buttons.size(); i++) {
-			if (i < cardList.size()) {
-				ImageIcon imageIcon = new ImageIcon(cardList.get(i).getUrl());
-				buttons.get(i).setIcon(imageIcon);
-				buttons.get(i).setVisible(true);
-			} else {
-				buttons.get(i).setVisible(false);
-			}
-		}
+	public void createProduct(CardDTO card) {
+		buttons.get(serialNum.size()).setIcon(new ImageIcon(card.getUrl())); // 유저가 올린 판매카드 이미지 버튼에 삽입
+		serialNum.add(1); // 시리얼 넘버 사이즈도 증가
 	}
 
 	// 버튼 10개 생성
@@ -83,9 +77,9 @@ public class AuctionPanel extends JPanel {
 		for (int i = 0; i < 10; i++) {
 			if (i < 5) {
 				buttons.add(i, new JButton());
-				buttons.get(i).setBounds(x + i * 200, 65, 120, 167);
+				buttons.get(i).setBounds(x + i * 199, 65, 120, 167);
 			} else {
-				x = -958;
+				x = -957;
 				buttons.add(i, new JButton());
 				buttons.get(i).setBounds(x + i * 200, 315, 120, 167);
 			}
@@ -102,6 +96,7 @@ public class AuctionPanel extends JPanel {
 			hour.add(socket.getHour().get(i));
 			min.add(socket.getMin().get(i));
 			startBid.add(socket.getStartBid().get(i));
+			seller.add(socket.getSeller().get(i));
 			card = socket.getAuctionList().get(i);
 			System.out.println("소켓 사이즈 : " + socket.getAuctionList().size());
 			System.out.println("소켓 카드 리스트 URL!!!!!" + socket.getAuctionList().get(i));
@@ -109,11 +104,11 @@ public class AuctionPanel extends JPanel {
 		}
 		for (int i = 0; i < cardList.size(); i++) {
 			System.out.println("경매 카드리스트 사이즈 : " + cardList.size());
-					createProduct(cardList);
+					createProduct(cardList.get(i));
 		}
 		for (int i = 0; i < cardList.size(); i++) {
 			detailPage.add(new AuctionDetailedPanel(cardList.get(i), user, auctionManager, hour.get(i),
-					min.get(i), startBid.get(i), mconText, i));
+					min.get(i), startBid.get(i), mconText, i , seller.get(i)));
 		}
 	}
 
@@ -155,7 +150,7 @@ public class AuctionPanel extends JPanel {
 		title.setBounds(860, 10, 800, 50);
 		add(title);
 		productButton();
-		createProduct(cardList);
+		
 	}
 
 	public void removeData() {
