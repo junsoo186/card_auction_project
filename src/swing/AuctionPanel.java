@@ -35,6 +35,7 @@ public class AuctionPanel extends JPanel {
 	private ArrayList<Integer> hour = new ArrayList<>();
 	private ArrayList<Integer> min = new ArrayList<>();
 	private ArrayList<Integer> startBid = new ArrayList<>();
+	private ArrayList<String> seller = new ArrayList<>();
 
 	int state;
 	List<JPanel> panel;
@@ -96,6 +97,7 @@ public class AuctionPanel extends JPanel {
 			hour.add(socket.getHour().get(i));
 			min.add(socket.getMin().get(i));
 			startBid.add(socket.getStartBid().get(i));
+			seller.add(socket.getSeller().get(i));
 			card = socket.getAuctionList().get(i);
 			System.out.println("소켓 사이즈 : " + socket.getAuctionList().size());
 			System.out.println("소켓 카드 리스트 URL!!!!!" + socket.getAuctionList().get(i));
@@ -107,7 +109,7 @@ public class AuctionPanel extends JPanel {
 		}
 		for (int i = 0; i < cardList.size(); i++) {
 			detailPage.add(new AuctionDetailedPanel(cardList.get(i), user, auctionManager, hour.get(i),
-					min.get(i), startBid.get(i), mconText, i));
+					min.get(i), startBid.get(i), mconText, i , seller.get(i)));
 		}
 	}
 

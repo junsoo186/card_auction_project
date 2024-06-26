@@ -6,6 +6,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -46,20 +47,22 @@ public class AuctionDetailedPanel extends JPanel {
 
 	// 옥션 매니저
 	private AuctionManager auctionManager;
-	boolean flag = true;
-	SellProductPanel sell;
-	String time; // 시간
-	MainFrame mconText;
-	int bid;
-	int page;
+	private boolean flag = true;
+	private SellProductPanel sell;
+	private int time; // 시간
+	private MainFrame mconText;
+	private int bid;
+	private int page;
+	private String seller;
 
 	public AuctionDetailedPanel(CardDTO card, UserDTO user, AuctionManager auctionManager, int hour, int min,
-			int startbid, MainFrame mconText, int num) {
+			int startbid, MainFrame mconText, int num ,String seller) {
 		this.page = num;
 		this.mconText = mconText;
 		this.bid = startbid;
 		this.card = card;
 		this.user = user;
+		this.seller = seller;
 		auctionManager = new AuctionManager(bid, user, card, hour, min);
 		this.auctionManager = auctionManager;
 		sell = new SellProductPanel(user);
@@ -130,27 +133,33 @@ public class AuctionDetailedPanel extends JPanel {
 // 시간 확인 쓰레드
 		new Thread(() -> {
 			while (flag) {
-				String s = Long.toString(auctionManager.getCurrent_time());
-				if (!s.equals(time)) {
+				String m = Long.toString(auctionManager.getCurrent_time());
+				int s = Integer.valueOf(m);
+				if (time != s) {
 					time = s;
 					endTime.setText("남은시간 :" + time + "초");
-					if (time.equals("0")) {
+					if (time <= 0) {
 						endTime.setText("경매 종료");
 						endTime.setForeground(Color.RED);
 						if(mconText.socket.getHighBid().get(page) == auctionManager.getStartBid()){
 							mconText.socket.deleteData(page);
 							mconText.getAuctionPanel().buttons.get(page).setIcon(null);
 							flag = false;
-							mconText.socket.sendOrder("remove#" + page);
 							System.out.println("유찰되었습니다!!!!!");
+							if(seller.equals(user.getName())) {
+								mconText.socket.sendOrder("remove#" + page);
+								mconText.socket.sendOrder("return#" + seller + "#" + card.getId());
+								System.out.println("돌려받는 유저 이름 : " + seller);
+							}
+							break;
+						} else {
+							addDto();
+							mconText.socket.deleteData(page);
+							mconText.getAuctionPanel().buttons.get(page).setIcon(null);
+							buyCard.setVisible(false);
+							flag = false;
 							break;
 						}
-						addDto();
-						mconText.socket.deleteData(page);
-						mconText.getAuctionPanel().buttons.get(page).setIcon(null);
-						buyCard.setVisible(false);
-						flag = false;
-						break;
 					}
 				}
 				if (auctionManager.getHighbid() != mconText.socket.getHighBid().get(page)) {
