@@ -134,7 +134,6 @@ public class MyPagePanel extends JPanel {
 		// 회원 정보 수정
 		updateButton.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				System.out.println("회원정보수정 클릭");
 				try {
 					new CheckUserFrame(user,true,mContext);
 				} catch (SQLException e1) {
@@ -148,7 +147,6 @@ public class MyPagePanel extends JPanel {
 		// 진행중인 경매 이동
 		quitButton.addMouseListener(new MouseAdapter() {
 					public void mouseClicked(MouseEvent e) {
-						System.out.println("회원탈퇴 클릭");
 						try {
 							new CheckUserFrame(user,false,mContext);
 						} catch (SQLException e1) {
