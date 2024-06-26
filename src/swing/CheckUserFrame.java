@@ -64,8 +64,8 @@ public class CheckUserFrame extends JFrame {
 		exitButton = new JButton("회원 정보 유지");
 		guidText.setBounds(90, 75, 400, 50);
 		passwordField.setBounds(80, 135, 200, 30);
-		decidePriceButton.setBounds(50, 185, 110, 30);
-		exitButton.setBounds(190, 185, 110, 30);
+		decidePriceButton.setBounds(50, 185, 120, 30);
+		exitButton.setBounds(190, 185, 120, 30);
 
 		backgroundPanel.add(guidText);
 		backgroundPanel.add(passwordField);

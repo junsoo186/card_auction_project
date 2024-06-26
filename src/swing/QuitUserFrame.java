@@ -24,8 +24,8 @@ public class QuitUserFrame extends JFrame {
 
 	private JPanel backgroundPanel;
 	private JTextField checkQuitField;
-	private JButton exitButton;
-	private JButton decidePriceButton;
+	private JButton remainButton;
+	private JButton quitButton;
 	private Choice insertReason;
 	private MainFrame mContext;
 	
@@ -42,49 +42,37 @@ public class QuitUserFrame extends JFrame {
 
 	private void setInitLayout() {
 		setTitle("[회원 탈퇴]");
-		setSize(500, 650);
+		setSize(500, 420);
 		setLocationRelativeTo(null);
 		setResizable(false);
 		setLayout(null);
 		getContentPane().setBackground(new Color(255, 204, 3));
 
 		backgroundPanel = new JPanel();
-		backgroundPanel.setBounds(80, 60, 350, 500);
+		backgroundPanel.setBounds(80, 60, 350, 250);
 		backgroundPanel.setLayout(null);
 		backgroundPanel.setBackground(Color.WHITE);
 		add(backgroundPanel);
 
 		JLabel guidText1 = new JLabel(" 정말로 탈퇴하시겠어요? ");
-		JLabel guidText2 = new JLabel(" 탈퇴하실 경우 '네, 탈퇴합니다.'를 입력해주세요. ");
+		JLabel guidText2 = new JLabel(" 탈퇴하실 경우 '포켓 옥션 탈퇴'를 입력해주세요. ");
 		guidText1.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 18));
 		guidText2.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 18));
 		checkQuitField = new JTextField(20);
 		guidText1.setBounds(90, 25, 400, 50);
 		guidText2.setBounds(20, 55, 400, 50);
-		checkQuitField.setBounds(80, 105, 200, 30);
+		checkQuitField.setBounds(80, 110, 200, 30);
 		
-		insertReason=new Choice();
-		insertReason.add("서비스가 아쉬워서");
-		insertReason.add("찾는 카드가 존재하지 않아서");
-		insertReason.add("상품들의 가격이 비싸서");
-		insertReason.add("사이트 사용이 불편해서");
-		insertReason.add("더 편한 사이트를 찾게 되어서");
-		insertReason.add("포켓몬스터 카드에 흥미가 떨어져서");
-		insertReason.add("현생이 너무 힘들어서");
-		insertReason.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 12));
-		insertReason.setBounds(40,200,300,70);
-		backgroundPanel.add(insertReason);
-		
-		decidePriceButton = new JButton("회원 탈퇴하기");
-		exitButton = new JButton("회원 정보 유지하기");
-		decidePriceButton.setBounds(40, 255, 90, 30);
-		exitButton.setBounds(90, 255, 90, 30);
+		quitButton = new JButton("회원 탈퇴");
+		remainButton = new JButton("회원 정보 유지");
+		quitButton.setBounds(50, 160, 120, 30);
+		remainButton.setBounds(190, 160, 120, 30);
 
 		backgroundPanel.add(guidText1);
 		backgroundPanel.add(guidText2);
 		backgroundPanel.add(checkQuitField);
-		backgroundPanel.add(decidePriceButton);
-		backgroundPanel.add(exitButton);
+		backgroundPanel.add(quitButton);
+		backgroundPanel.add(remainButton);
 
 		userName=user.getName();
 		socket=mContext.socket;
@@ -94,11 +82,13 @@ public class QuitUserFrame extends JFrame {
 
 	private void initListener() throws SQLException {
 		// 비밀번호 입력 후 회원정보와 대조
-		decidePriceButton.addMouseListener(new MouseAdapter() {
+		quitButton.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				String a=checkQuitField.getText();
-				boolean aa=a.equals("네, 탈퇴합니다.");
-				if(aa) {
+				boolean aa=a.equals("포켓 옥션 탈퇴");
+				boolean ab=a.equals("포켓옥션탈퇴");
+				if(aa||ab) {
+					JOptionPane.showMessageDialog(null,"회원 탈퇴가 완료되었습니다.");
 					socket.sendOrder("quitUser#"+userName);
 					try {
 						Thread.sleep(500);
@@ -112,7 +102,7 @@ public class QuitUserFrame extends JFrame {
 			}
 
 		});
-		exitButton.addMouseListener(new MouseAdapter() {
+		remainButton.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				dispose();
 			}

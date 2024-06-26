@@ -372,6 +372,8 @@ public class MainFrame extends JFrame implements Runnable {
 				if (panels.size() > 9) {
 					removePanel();
 				}
+				MyPagePanel.getNickName().setText("닉네임 : "+user.getNickname());
+				System.out.println("닉네임 수정 확인 : "+user.getNickname());
 				setVisible(4);
 			}
 		});

@@ -56,14 +56,14 @@ public class UpdateUserFrame extends JFrame {
 		getContentPane().setBackground(new Color(255, 204, 3));
 
 		backgroundPanel = new JPanel();
-		backgroundPanel.setBounds(80, 60, 350, 370);
+		backgroundPanel.setBounds(75, 60, 350, 370);
 		backgroundPanel.setLayout(null);
 		backgroundPanel.setBackground(Color.WHITE);
 		add(backgroundPanel);
 
 		JLabel guidText = new JLabel(" 회원 정보 수정 ");
 		guidText.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 20));
-		JLabel changeNicknameText = new JLabel(" 변경할 닉네임을 입력해주세요. (현재 닉네임 :"+user.getName()+ ")");
+		JLabel changeNicknameText = new JLabel(" 변경할 닉네임을 입력해주세요. (현재 닉네임 :"+user.getNickname()+ ")");
 		changeNicknameText.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 14));
 		JLabel changePasswordText= new JLabel(" 비밀번호를 입력해주세요. (현재 비밀번호 :"+user.getPassword()+" )");
 		changePasswordText.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 14));
@@ -106,17 +106,13 @@ public class UpdateUserFrame extends JFrame {
 					JOptionPane.showMessageDialog(null,"잘못된 정보를 입력했습니다. 다시 입력해주세요.");
 				}else {
 					socket.sendOrder("updateUserInfo#"+newNick+"#"+newPass+"#"+userName);
-					System.out.println("새로운 닉네임 : " + newNick);
-					System.out.println("새로운 패스워드 : " + newPass);
 					JOptionPane.showMessageDialog(null,"회원 정보가 성공적으로 수정되었습니다.");
 					try {
 						Thread.sleep(500);
 					} catch (InterruptedException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 					System.out.println(user);
-						//UserDAO.updateUser(newPass,newUser);
 					dispose();
 				}	
 			}
