@@ -121,6 +121,7 @@ public class Server {
 								System.out.println("DB보냄");
 							} else {
 								System.out.println("회원 가입 실패 !! 중복아이디");
+								sendOrder("failSignUp");
 							}
 						} catch (SQLException e) {
 							e.printStackTrace();
@@ -133,7 +134,7 @@ public class Server {
 							sendOrder("Login#" + userDTO.getName() + "#" + userDTO.getPassword() + "#"
 									+ userDTO.getNickname() + "#" + userDTO.getPoint());
 						} else {
-							printWriter.println("wrong");
+							sendOrder("failLogin");
 						}
 					} else if (message.startsWith("bid")) {
 						String[] msg = message.split("#");
@@ -163,6 +164,7 @@ public class Server {
 						startBid.add(price);
 						highBid.add(price);
 						seller.add(name);
+						System.out.println("판매자 : " +  name);
 						CardDTO dto = new CardDTO();
 						dto = CardDAO.infoCard(id);
 						auctionList.add(dto);
@@ -200,6 +202,7 @@ public class Server {
 						String[] msg = message.split("#");
 						AuctionDTO dto = new AuctionDTO();
 						InventoryDTO inven = new InventoryDTO();
+						InventoryDTO inven2 = new InventoryDTO();
 						int price = Integer.valueOf(msg[3]);
 						int card = Integer.valueOf(msg[4]);
 						int num = Integer.valueOf(msg[7]);
@@ -212,8 +215,8 @@ public class Server {
 						inven.setName(msg[5]);
 						InventoryDAO.invenAdd(inven); // 구매 유저 카드 추가
 						System.out.println(msg[5] + " : 카드 추가");
-						inven.setCardId(card);
-						inven.setName(seller.get(num));
+						inven2.setCardId(card);
+						inven2.setName(seller.get(num));
 						InventoryDAO.invenRemove(inven); // 판매 유저 카드 제거
 						System.out.println(seller.get(num) + "  : 카드 제거");
 						AuctionDAO.addAuction(dto);
