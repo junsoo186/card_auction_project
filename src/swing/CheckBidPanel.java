@@ -110,9 +110,10 @@ public class CheckBidPanel extends JPanel {
 		for (int i = 0; i < 10; i++) {
 			if (i < 5) {
 				buttons.add(i, new JButton());
-				buttons.get(i).setBounds(x + i * 200, 65, 120, 167);
+				buttons.get(i).setBounds(x + i * 199, 65, 120, 167);
 			} else {
-				x = -958;
+				x = -957;
+				;
 				buttons.add(i, new JButton());
 				buttons.get(i).setBounds(x + i * 200, 315, 120, 167);
 			}

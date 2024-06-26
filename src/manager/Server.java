@@ -151,6 +151,7 @@ public class Server {
 
 					} else if (message.startsWith("auction")) {
 						String[] cardId = message.split("#");
+						InventoryDTO inven = new InventoryDTO();
 						int id = Integer.valueOf(cardId[1]);
 						int price = Integer.valueOf(cardId[2]);
 						int hourDB = Integer.valueOf(cardId[3]);
@@ -164,14 +165,18 @@ public class Server {
 						startBid.add(price);
 						highBid.add(price);
 						seller.add(name);
+						inven.setCardId(id);
+						inven.setName(name);
 						System.out.println("판매자 : " +  name);
+						InventoryDAO.invenRemove(inven);
+						System.out.println("판매자 카드 제거!!");
 						CardDTO dto = new CardDTO();
 						dto = CardDAO.infoCard(id);
 						auctionList.add(dto);
 						System.out.println(dto.getName() + "카드 이름");
 						System.out.println(dto.getUrl() + " 카드 가격");
 						broadCast("list#" + dto.getId() + "#" + dto.getName() + "#" + dto.getUrl() + "#" + price
-								+ "#" + hourDB + "#" + minDB);
+								+ "#" + hourDB + "#" + minDB + "#" + name);
 
 					} else if (message.startsWith("EndAuctionList")) {
 						ArrayList<AuctionDTO> endAuctionList = new ArrayList<>();
@@ -217,8 +222,6 @@ public class Server {
 						System.out.println(msg[5] + " : 카드 추가");
 						inven2.setCardId(card);
 						inven2.setName(seller.get(num));
-						InventoryDAO.invenRemove(inven); // 판매 유저 카드 제거
-						System.out.println(seller.get(num) + "  : 카드 제거");
 						AuctionDAO.addAuction(dto);
 						CardDAO.setCardPrice(card); // 카드가격갱신(옥션평균가로)
 						UserDAO.subtractPoint(msg[6], price); // 구매 유저 포인트 제거
@@ -255,6 +258,14 @@ public class Server {
 						UserDAO.deleteUser(msg[1]);
 						System.out.println("회원 탈퇴 완료");
 						JOptionPane.showMessageDialog(null,"회원 탈퇴가 완료되었습니다.");
+					} else if(message.startsWith("return")) {
+						String[] msg = message.split("#");
+						int card = Integer.valueOf(msg[2]);
+						InventoryDTO inven = new InventoryDTO();
+						inven.setCardId(card);
+						inven.setName(msg[1]);
+						InventoryDAO.invenAdd(inven);
+						System.out.println(inven.getName() + "에게 카드 리턴 완료!!");
 					}
 				}
 			} catch (IOException e) {
