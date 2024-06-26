@@ -56,7 +56,7 @@ public class UpdateUserFrame extends JFrame {
 		getContentPane().setBackground(new Color(255, 204, 3));
 
 		backgroundPanel = new JPanel();
-		backgroundPanel.setBounds(80, 60, 350, 370);
+		backgroundPanel.setBounds(75, 60, 350, 370);
 		backgroundPanel.setLayout(null);
 		backgroundPanel.setBackground(Color.WHITE);
 		add(backgroundPanel);
