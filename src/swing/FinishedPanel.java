@@ -51,7 +51,6 @@ public class FinishedPanel extends JPanel {
 		}
 		currentCardList = endCardList;
 
-		checkEndAuctionThread();
 		initData();
 		setInitLayout();
 	}
@@ -88,32 +87,6 @@ public class FinishedPanel extends JPanel {
 		add(backImage);
 		add(nextPage);
 		add(previousPage);
-	}
-
-	// 종료된 경매 정보 갱신
-	private void checkEndAuctionThread() {
-		new Thread(() -> {
-			while (true) {
-				mContext.getSocket().getEndAuctionList().clear();
-				mContext.getSocket().sendOrder("EndAuctionList");
-				try {
-					Thread.sleep(300);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-
-				ArrayList<CardDTO> endCardList = new ArrayList<>();
-				for (int i = 0; i < mContext.getSocket().getEndAuctionList().size(); i++) {
-					for (int j = 0; j < mContext.getSocket().getAllCardList().size(); j++) {
-						if (mContext.getSocket().getEndAuctionList().get(i).getCardId() == mContext.getSocket()
-								.getAllCardList().get(j).getId()) {
-							endCardList.add(mContext.getSocket().getAllCardList().get(j));
-						}
-					}
-				}
-				this.endCardList = endCardList;
-			}
-		}).start();
 	}
 
 	// 패널 클릭시 초기화
