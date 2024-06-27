@@ -66,7 +66,7 @@ public class SocketManager implements Runnable {
 	public void run() {
 		String message;
 		try {
-			socket = new Socket("localhost", 5000);
+			socket = new Socket("192.168.0.29", 5000);
 			userOrder = new PrintWriter(socket.getOutputStream(), true);
 			serverOrder = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			System.out.println("소켓 프로토콜 스레드 실행");

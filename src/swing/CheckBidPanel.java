@@ -39,7 +39,6 @@ public class CheckBidPanel extends JPanel {
 		allCardList = mContext.getAllCardList();
 		currentCardList = allCardList;
 
-		checkBidThread();
 		initData();
 		setInitLayout();
 	}
@@ -79,21 +78,6 @@ public class CheckBidPanel extends JPanel {
 		add(previousPage);
 	}
 
-	// 1초에 한번씩 모든 카드 정보(가격)를 갱신
-	private void checkBidThread() {
-		new Thread(() -> {
-			while (true) {
-				mContext.getSocket().getAllCardList().clear();
-				mContext.getSocket().sendOrder("AllCardList");
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-				allCardList = mContext.getSocket().getAllCardList();
-			}
-		}).start();
-	}
 
 	// 시세 체크 클릭시 초기화
 	public void clickBidCheckPanel() {
