@@ -47,6 +47,7 @@ public class QuitUserFrame extends JFrame {
 		setResizable(false);
 		setLayout(null);
 		getContentPane().setBackground(new Color(255, 204, 3));
+		setIconImage(java.awt.Toolkit.getDefaultToolkit().getImage("image/파비콘2.png"));
 
 		backgroundPanel = new JPanel();
 		backgroundPanel.setBounds(80, 60, 350, 250);
@@ -74,7 +75,6 @@ public class QuitUserFrame extends JFrame {
 		backgroundPanel.add(quitButton);
 		backgroundPanel.add(remainButton);
 
-		userName=user.getName();
 		socket=mContext.socket;
 		
 		setVisible(true);
@@ -89,15 +89,19 @@ public class QuitUserFrame extends JFrame {
 				boolean ab=a.equals("포켓옥션탈퇴");
 				if(aa||ab) {
 					JOptionPane.showMessageDialog(null,"회원 탈퇴가 완료되었습니다.");
+					userName=user.getName();
 					socket.sendOrder("quitUser#"+userName);
 					try {
 						Thread.sleep(500);
 					} catch (InterruptedException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
-					}
+					} 
 					dispose();
 					new LogInFrame();
+				} else {
+					JOptionPane.showMessageDialog(null,"잘못된 입력입니다.");
+					JOptionPane.showMessageDialog(null,"회원 탈퇴가 종료됩니다.");
 				}
 			}
 

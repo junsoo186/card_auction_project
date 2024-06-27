@@ -48,7 +48,7 @@ public class SocketManager implements Runnable {
 		startBid.remove(num);
 		highBid.remove(num);
 		seller.remove(num);
-		if(!bidUser.isEmpty()) {
+		if (!bidUser.isEmpty()) {
 			bidUser.remove(num);
 		}
 		System.out.println("데이터 지움");
@@ -71,7 +71,6 @@ public class SocketManager implements Runnable {
 			serverOrder = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			System.out.println("소켓 프로토콜 스레드 실행");
 			while ((message = serverOrder.readLine()) != null) {
-				System.out.println(message + " Socket에서 읽음");
 				if (message.startsWith("list")) {
 					CardDTO dto = new CardDTO();
 					String[] cardId = message.split("#");
@@ -89,7 +88,7 @@ public class SocketManager implements Runnable {
 					min.add(minDB);
 					startBid.add(startBidDB);
 					seller.add(cardId[7]);
-					if(cardId.length > 8) {
+					if (cardId.length > 8) {
 						int price = Integer.valueOf(cardId[8]);
 						highBid.add(price);
 					} else {

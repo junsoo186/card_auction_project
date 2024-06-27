@@ -11,13 +11,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.LineBorder;
-import javax.swing.border.TitledBorder;
 
 import dto.UserDTO;
-import lombok.Data;
 import manager.SocketManager;
-
 
 public class MyPagePanel extends JPanel {
 
@@ -53,7 +49,7 @@ public class MyPagePanel extends JPanel {
 	public MyPagePanel(MainFrame mContext) {
 		this.mContext = mContext;
 		this.user = mContext.getUser();
-		this.socket=mContext.socket;
+		this.socket = mContext.socket;
 		initData();
 		setInitLayout();
 		initListener();
@@ -62,7 +58,7 @@ public class MyPagePanel extends JPanel {
 	public JLabel getPoint() {
 		return currentPoint;
 	}
-	
+
 	private void initData() {
 		backgroundPanel = new JPanel();
 	}
@@ -73,13 +69,13 @@ public class MyPagePanel extends JPanel {
 		setLayout(null);
 		setBackground(Color.WHITE);
 		add(backgroundPanel);
-		
-		JLabel myBack = new JLabel(new ImageIcon("image/마이페이지.png")); 
+
+		JLabel myBack = new JLabel(new ImageIcon("image/마이페이지.png"));
 		JLabel metmong = new JLabel(new ImageIcon("image/메타몽.gif"));
-		
-		myBack.setBounds(450,0,1089,575);
+
+		myBack.setBounds(450, 0, 1089, 575);
 		add(myBack);
-		metmong.setBounds(200,100,640,360);
+		metmong.setBounds(200, 100, 640, 360);
 		myBack.add(metmong);
 		title = new JLabel("마이 페이지");
 		title.setFont(new Font("Freesentation 7 Bold", Font.BOLD, 32));
@@ -91,8 +87,7 @@ public class MyPagePanel extends JPanel {
 		updateButton.setBorderPainted(false);
 		updateButton.setContentAreaFilled(false);
 		updateButton.setFocusPainted(false);
-		
-		
+
 		quitButton = new JButton(new ImageIcon("image/탈퇴.png"));
 		quitButton.setBounds(950, 250, 150, 50);
 		quitButton.setBorderPainted(false);
@@ -135,25 +130,24 @@ public class MyPagePanel extends JPanel {
 		updateButton.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				try {
-					new CheckUserFrame(user,true,mContext);
+					new CheckUserFrame(user, true, mContext);
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
-				
+
 			}
-			
-			
+
 		});
 		// 진행중인 경매 이동
 		quitButton.addMouseListener(new MouseAdapter() {
-					public void mouseClicked(MouseEvent e) {
-						try {
-							new CheckUserFrame(user,false,mContext);
-						} catch (SQLException e1) {
-							e1.printStackTrace();
-						}
-					}
-					
-				});
+			public void mouseClicked(MouseEvent e) {
+				try {
+					new CheckUserFrame(user, false, mContext);
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+			}
+
+		});
 	}
 }

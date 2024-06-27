@@ -23,8 +23,6 @@ public class CheckBidPanel extends JPanel {
 	private ArrayList<CardDTO> currentCardList = new ArrayList<>(); // 현재 카드 목록
 
 	private JPanel backgroundPanel;
-
-	// 가방
 	private JLabel bag;
 
 	// 페이지 버튼
@@ -47,6 +45,7 @@ public class CheckBidPanel extends JPanel {
 	}
 
 	private void initData() {
+
 		bag = new JLabel(new ImageIcon("image/배경.png"));
 		bag.setBounds(450, 0, 1007, 534);
 
@@ -80,14 +79,14 @@ public class CheckBidPanel extends JPanel {
 		add(previousPage);
 	}
 
-	// 10초에 한번씩 모든 카드 정보(가격)를 갱신
+	// 1초에 한번씩 모든 카드 정보(가격)를 갱신
 	private void checkBidThread() {
 		new Thread(() -> {
 			while (true) {
 				mContext.getSocket().getAllCardList().clear();
 				mContext.getSocket().sendOrder("AllCardList");
 				try {
-					Thread.sleep(10000);
+					Thread.sleep(1000);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -133,7 +132,7 @@ public class CheckBidPanel extends JPanel {
 		}
 	}
 
-	// 카드 상세보기 MouseEvent 삽입
+	// 카드 상세보기 기능
 	public void addActionListner() {
 		for (int i = 0; i < buttons.size(); i++) {
 			int num = i;

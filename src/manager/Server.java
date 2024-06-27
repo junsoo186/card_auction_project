@@ -98,7 +98,6 @@ public class Server {
 					System.out.println("옥션 갯수 : " + auctionList.size());
 				}
 				while ((message = userOrder.readLine()) != null) {
-					System.out.println(message + " Server에서 읽음 ");
 					if (message.startsWith("sell")) {
 						String[] sell = message.split("#");
 						productName.add(sell[1]);
@@ -250,6 +249,7 @@ public class Server {
 						// 회원 탈퇴 프로토콜
 					} else if(message.startsWith("quitUser")) {
 						String [] msg=message.split("#");
+						UserDAO.deleteUserInventory(msg[1]);
 						UserDAO.deleteUser(msg[1]);
 						System.out.println("회원 탈퇴 완료");
 						JOptionPane.showMessageDialog(null,"회원 탈퇴가 완료되었습니다.");

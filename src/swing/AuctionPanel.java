@@ -68,6 +68,7 @@ public class AuctionPanel extends JPanel {
 
 	public void createProduct(CardDTO card) {
 		buttons.get(serialNum.size()).setIcon(new ImageIcon(card.getUrl())); // 유저가 올린 판매카드 이미지 버튼에 삽입
+		System.out.println("카드 URL : " + card.getUrl());
 		serialNum.add(1); // 시리얼 넘버 사이즈도 증가
 	}
 
@@ -78,13 +79,18 @@ public class AuctionPanel extends JPanel {
 			if (i < 5) {
 				buttons.add(i, new JButton());
 				buttons.get(i).setBounds(x + i * 199, 65, 120, 167);
+				buttons.get(i).setBorderPainted(false);
+				buttons.get(i).setContentAreaFilled(false);
 			} else {
 				x = -957;
 				buttons.add(i, new JButton());
 				buttons.get(i).setBounds(x + i * 200, 315, 120, 167);
+				buttons.get(i).setBorderPainted(false);
+				buttons.get(i).setContentAreaFilled(false);
 			}
 			backImage.add(buttons.get(i));
-			setVisible(true);
+			
+			setVisible(false);
 			
 			
 		}
@@ -107,6 +113,7 @@ public class AuctionPanel extends JPanel {
 					createProduct(cardList.get(i));
 		}
 		for (int i = 0; i < cardList.size(); i++) {
+			System.out.println(cardList.get(i).getName() + " : 경매에 등록된 카드이름");
 			detailPage.add(new AuctionDetailedPanel(cardList.get(i), user, auctionManager, hour.get(i),
 					min.get(i), startBid.get(i), mconText, i , seller.get(i)));
 		}
@@ -117,7 +124,7 @@ public class AuctionPanel extends JPanel {
 			panel.get(i).setVisible(false);
 		}
 		panel.get(state).setVisible(true);
-		System.out.println("판넬 선택 : " + panel.get(state));
+		System.out.println("판넬 선택 : ");
 		this.state = state;
 	}
 
@@ -160,6 +167,7 @@ public class AuctionPanel extends JPanel {
 		hour.removeAll(hour);
 		min.removeAll(min);
 		detailPage.removeAll(detailPage);
+		seller.removeAll(seller);
 	}
 
     private void initListener() {
@@ -176,8 +184,9 @@ public class AuctionPanel extends JPanel {
                 public void mouseClicked(MouseEvent e) {
                     System.out.println(cardList.size());
                     panel.add(detailPage.get(num));
-                    mconText.addPanel(9);
-                    setVisible(9);
+                    System.out.println(detailPage.get(num).getCard().getName() + " : 버튼 클릭 이름");
+                    mconText.addPanel(9 + num);
+                    setVisible(9 + num);
                 }
             });
         }

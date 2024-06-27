@@ -51,6 +51,7 @@ public class MakeNewAccountFrame extends JFrame implements ActionListener {
 		setResizable(false);
 		setLayout(null);
 		getContentPane().setBackground(Color.white);
+		setIconImage(java.awt.Toolkit.getDefaultToolkit().getImage("image/파비콘2.png"));
 
 		backgroundPanel = new JPanel();
 		backgroundPanel.setSize(getWidth(), getHeight());

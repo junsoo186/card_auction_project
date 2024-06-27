@@ -80,10 +80,9 @@ public class MainFrame extends JFrame implements Runnable {
 	private FinishedDetailedPanel finishedDetailedPanel; // 종료된경매 상세보기 패널
 	private CheckBidDetailedPanel checkBidDetailedPanel; // 시세 상세보기 패널
 
-	private ArrayList<CardDTO> userInventory = new ArrayList<>(); // 보관함 카드목록
-	private ArrayList<CardDTO> allCardList = new ArrayList<>(); // 모든 카드 목록
-	private ArrayList<CardDTO> endCardList = new ArrayList<>(); // 종료된 경매의 카드목록
-	private ArrayList<AuctionDTO> endAuctionList = new ArrayList(); // 모든 종료된 경매 목록
+	private ArrayList<CardDTO> userInventory; // 보관함 카드목록
+	private ArrayList<CardDTO> allCardList; // 모든 카드 목록
+	private ArrayList<AuctionDTO> endAuctionList; // 모든 종료된 경매 목록
 
 	// 캐시 충전하기 서브프레임
 	private ChargeFrame chargeFrame;
@@ -132,14 +131,6 @@ public class MainFrame extends JFrame implements Runnable {
 		allCardList = socket.getAllCardList();
 		endAuctionList = socket.getEndAuctionList();
 		userInventory = socket.getUserInventory();
-
-		for (int i = 0; i < endAuctionList.size(); i++) {
-			for (int j = 0; j < allCardList.size(); j++) {
-				if (endAuctionList.get(i).getCardId() == allCardList.get(j).getId()) {
-					endCardList.add(i, allCardList.get(j));
-				}
-			}
-		}
 	}
 
 	private void initData() {

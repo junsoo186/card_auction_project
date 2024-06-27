@@ -20,8 +20,10 @@ import dao.UserDAO;
 import dto.AuctionDTO;
 import dto.CardDTO;
 import dto.UserDTO;
+import lombok.Data;
 import manager.AuctionManager;
 
+@Data
 public class AuctionDetailedPanel extends JPanel {
 
 	private MainFrame mContext;
@@ -69,6 +71,7 @@ public class AuctionDetailedPanel extends JPanel {
 		initData();
 		setInitLayout();
 		initListener();
+		System.out.println("경매 선택됨 : " + card.getUrl());
 	}
 
 	private void initData() {
